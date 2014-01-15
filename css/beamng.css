@@ -1,0 +1,127 @@
+html,body{
+	background: transparent !important;
+	background-image: url('') !important;
+	height:100%;
+	width:100%;
+	padding:0px;
+	margin:0px;
+}
+
+* {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+}
+
+#speed {
+	float:left;
+	background-color: white;
+}
+
+#objdebug {
+	clear:both;
+	float:none;
+	position:absolute;
+	bottom:0px;
+	left:250px;
+	font-family:monospace;
+	font-weight:bold;
+	font-size:1.1em;
+	width:550px;
+	height:800px;
+	background-color:rgba(255,255,255,0.7);
+	overflow:auto;
+	visibility:hidden;
+}
+
+.wheelcanvas {
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
+/* transparent left panel */
+/*
+#leftMenu, #leftMenu div:first-child {
+	background:rgba(200,200,200,0.3) !important;
+}
+
+#wheelInfo h3:first-child a:first-child, #wheelInfo div:first-of-type, #wheelInfo div:first-of-type canvas:first-of-type {
+	background:transparent !important;
+}
+
+#engineInfo h3:first-child a:first-child, #engineInfo div:first-of-type {
+	background:transparent !important;
+}
+
+#vehicleInfo .ui-collapsible-content {
+	padding:0;
+}
+*/
+
+.engineGauge {
+	width:100%; height:200px;
+	display: inline-block;
+	margin:0;
+}
+
+
+#test {
+	float:none;
+	clear:both;
+	position:absolute;
+	bottom:10px;
+	right:20px;
+	width:300px
+	
+}
+
+.top-right{
+	position:absolute;
+	top:-2px;
+	right:5px;
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+.top-left{
+	position:absolute;
+	top:-2px;
+	left:5px;
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+
+.ui-panel {
+    width:18em !important;
+}
+
+
+.ui-panel-animate {
+    transition: transform 1350ms ease 0s !important;
+}
+
+.ui-panel-inner {
+	padding: 0 !important
+}
+
+.ui-collapsible {
+	margin: 0 !important
+}
+
+.ui-page-theme-a {
+	background:transparent !important;
+}
+
+/* remove text thingy on the slider */
+.ui-mobile .ui-page .ui-slider-input,
+.ui-mobile .ui-dialog .ui-slider-input {
+	display : none;
+}
+.ui-mobile .ui-page .ui-slider-track,
+.ui-mobile .ui-dialog .ui-slider-track {
+	margin : 0;
+}
