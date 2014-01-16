@@ -1,5 +1,5 @@
 // od - The object data
-var objectData = {}
+var objectData = {};
 
 var state = {'changes':[], 'streams':{}};
 
@@ -27,7 +27,7 @@ function updateSparcLines()
 				var attr2 = keys[i];
 				objDataDump += "<tr><td width='15'>&nbsp;</td><td>" + attr2 + "</td><td><span id='sl_"+attr2+"'></span></td><td>" + JSON.stringify(objectData[attr][attr2]) + "</td></tr>";
 				if(typeof objectData[attr][attr2] == 'number') {
-					if(sparkPoints[attr2] == undefined)
+					if(sparkPoints[attr2] === undefined)
 						sparkPoints[attr2] = [];
 					sparkPoints[attr2].push(objectData[attr][attr2]);
 					if (sparkPoints[attr2].length > 40)
@@ -87,13 +87,13 @@ function wheelsScreenUpdate(value)
 	ctx.restore();
 	ctx.textAlign = 'center';
 	var fontSize = 12;
-	ctx.font = 'bold ' + fontSize + 'pt monospace'
+	ctx.font = 'bold ' + fontSize + 'pt monospace';
 	var r = 50;
 	var rs = 5;
 	var b = 5;
 	var x = r + b;
 	var y = r + b;
-	for(i in value) {
+	for(var i in value) {
 		var w = value[i];
 		// then draw
 		ctx.fillText('wheel' + w[0], x, y);
@@ -128,7 +128,7 @@ function wheelsScreenUpdate(value)
 		c.height = y;
 }
 
-var rpmGauge = undefined;
+var rpmGauge;
 
 function engineScreenUpdate(v)
 {
@@ -150,7 +150,7 @@ function engineScreenUpdate(v)
 	14, Settings.gravity	
 	*/
 
-	if(rpmGauge == undefined) {
+	if(rpmGauge === undefined) {
 		rpmGauge = new JustGage({
 			id: "rpmGauge",
 			value: Math.floor(v[4]),
@@ -185,7 +185,7 @@ function streamUpdate()
 		if(k in objectData) {
 			streamReceived(k, objectData[k]);
 		}
-	}	
+	}
 }
 
 
@@ -218,12 +218,12 @@ $(document).ready(function() {
 			$('#objdebug').css('visibility', 'visible');
 		}
 		return true;
-	});	
+	});
 	
 	// info panel
 	collapsibleStreamEventHandler('wheelInfo', 'vehicleInfo');
 	collapsibleStreamEventHandler('leftMenu', 'vehicleInfo');
-	collapsibleStreamEventHandler('engineInfo', 'vehicleInfo');	
+	collapsibleStreamEventHandler('engineInfo', 'vehicleInfo');
 	//beamng.sendActiveObjectLua('gui.register()');
 
 	setTimeout(updateSparcLines, 10);
@@ -248,7 +248,7 @@ function sendObjectState()
 
 function serializeToLua(obj)
 {
-	if(obj == undefined) return ''; //nil';
+	if(obj === undefined) return ''; //nil';
 	switch(obj.constructor) {
 		case String:
 			return '"' + obj + '"';
@@ -262,7 +262,7 @@ function serializeToLua(obj)
 			{
 				tmp.push(serializeToLua(obj[i]));
 			}
-			return '{' + tmp.join(',') + '}'
+			return '{' + tmp.join(',') + '}';
 		default:
 			if(typeof obj == "object")
 			{
@@ -272,7 +272,7 @@ function serializeToLua(obj)
 					if(typeof obj[attr] != "function")
 						tmp.push('' + attr + '=' + serializeToLua(obj[attr]));
 				}
-				return '{' + tmp.join(',') + '}'				
+				return '{' + tmp.join(',') + '}';
 			} else {
 				return obj.toString();
 			}
@@ -292,7 +292,7 @@ function streamStateChanged(streamName, streamState)
 // listens on the collapsible events
 function collapsibleStreamEventHandler(name, streamName)
 {
-	if(streamName == undefined) streamName = name;
+	if(streamName === undefined) streamName = name;
 	var dataRole = $("#" + name).attr('data-role');
 	if(dataRole == 'collapsible') {
 		$("#" + name).collapsible({
@@ -302,7 +302,7 @@ function collapsibleStreamEventHandler(name, streamName)
 			expand: function( event, ui ) {
 				streamStateChanged(streamName, 1);
 			}
-		});		
+		});	
 	} else if(dataRole == 'panel') {
 		$("#" + name).panel({
 			open: function( event, ui ) {
@@ -311,7 +311,7 @@ function collapsibleStreamEventHandler(name, streamName)
 			close: function( event, ui ) {
 				streamStateChanged(streamName, 3);
 			}
-		});		
+		});
 	}
 }
 
@@ -327,7 +327,7 @@ function callGameEngineFunc(func)
 
 function updateSingleValue(module, key, value)
 {
-	if(state[module] == undefined) {
+	if(state[module] === undefined) {
 		state[module] = {};
 	}
 
@@ -361,7 +361,7 @@ function widgetEventHandler()
 				var funcArgsNow = funcArgs.slice(0);
 				funcArgsNow.push($(this).val());
 				return func.apply(this, funcArgsNow);
-			});		
+			});
 			return true;
 		} else if(ctrlType == 'button') {
 			c.click(function(e) {
@@ -378,12 +378,12 @@ function widgetEventHandler()
 		return true;
 	} else if(tagName == 'FIELDSET') {
 		c = $('input[name='+widgetName+']');
-		var ctrlType = c.attr('data-type') || c.attr('type');;
+		var ctrlType = c.attr('data-type') || c.attr('type');
 		if(ctrlType == 'radio') {
 			c.change(function(e) {
 				var ctrl = $( 'input[name='+widgetName+']:checked' );
-				var v = ctrl.val()
-				if(ctrl.attr('value-is-numeric') != undefined)
+				var v = ctrl.val();
+				if(ctrl.attr('value-is-numeric') !== undefined);
 					v = +v;
 				var funcArgsNow = funcArgs.slice(0);
 				funcArgsNow.push(v);
