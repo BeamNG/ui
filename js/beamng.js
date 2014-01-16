@@ -3,6 +3,8 @@ var objectData = {};
 
 var state = {'changes':[], 'streams':{}};
 
+var streamCount = {};
+
 var debugObjectData = false;
 
 var sparkPoints = {};
@@ -279,15 +281,42 @@ function serializeToLua(obj)
 	}
 }
 
-function streamStateChanged(streamName, streamState)
+function streamAdd(streamName)
 {
-	// panel reopened?
-	if(streamState == 2 && state.streams[streamName] == 3) streamState = 1;
-	else if(streamState == 3 && state.streams[streamName] == 0) streamState = 0;
-	state.streams[streamName] = streamState;
-	state['changes'].push('streams');
-	sendObjectState();
+	if(streamCount[streamName]===undefined)
+	{
+		streamCount[streamName] = 0;
+	}
+	console.log("Stream added: "+streamName+", Count: "+(streamCount[streamName]+1));
+	streamCount[streamName] += 1;
+	if(streamCount[streamName] == 1)
+	{
+		// stream was inactive, activate stream
+		console.log("Stream activated: "+streamName);
+		state.streams[streamName] = 1;
+		state['changes'].push('streams');
+		sendObjectState();
+	}
 }
+
+function streamRemove(streamName)
+{
+	console.log("Stream removed: "+streamName+", Count: "+(streamCount[streamName]-1));
+	streamCount[streamName] -=1 ;
+	if(streamCount[streamName] == 0)
+	{
+		console.log("Stream disactivated: "+streamName);
+		// stream was active, disactivate stream
+		state.streams[streamName] = 0;
+		state['changes'].push('streams');
+		sendObjectState();
+	}
+	else if(streamCount[streamName] < 0)
+	{
+		streamCount[streamName] = 0;
+	}
+}
+
 
 // listens on the collapsible events
 function collapsibleStreamEventHandler(name, streamName)
@@ -297,19 +326,19 @@ function collapsibleStreamEventHandler(name, streamName)
 	if(dataRole == 'collapsible') {
 		$("#" + name).collapsible({
 			collapse: function( event, ui ) {
-				streamStateChanged(streamName, 0);
+				streamRemove(streamName);
 			},
 			expand: function( event, ui ) {
-				streamStateChanged(streamName, 1);
+				streamAdd(streamName);
 			}
 		});	
 	} else if(dataRole == 'panel') {
 		$("#" + name).panel({
 			open: function( event, ui ) {
-				streamStateChanged(streamName, 2);
+				streamAdd(streamName);
 			},
 			close: function( event, ui ) {
-				streamStateChanged(streamName, 3);
+				streamRemove(streamName);
 			}
 		});
 	}
