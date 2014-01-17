@@ -15,6 +15,7 @@ function oUpdate(v)
 	//$('#speed').html('speed: ' + sprintf("%0.3f", objectData.electrics.airspeed * 3.6) + ' kph / ' + sprintf("%0.1f", objectData.electrics.airspeed * 2.23694) + ' mph<br/>rpm: ' + objectData.electrics.rpm.toFixed(0));
 
 	streamUpdate();
+	AppEngine.update(v);
 }
 
 function updateSparcLines()
@@ -173,7 +174,7 @@ function engineScreenUpdate(v)
 
 function streamReceived(streamName, value)
 {
-	//alert("got stream data: " + streamName + " = " + value);
+//	console.log("got stream data: " + streamName + " = " + value);
 	if(streamName == 'vehicleInfo') {
 		wheelsScreenUpdate(value[0]);
 		engineScreenUpdate(value[1]);
@@ -183,7 +184,6 @@ function streamReceived(streamName, value)
 function streamUpdate()
 {
 	for(var k in state.streams) {
-		if(state.streams[k] == 2) continue; // panel closed state
 		if(k in objectData) {
 			streamReceived(k, objectData[k]);
 		}
