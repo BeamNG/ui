@@ -60,7 +60,7 @@ function Tach(){
 	this.info = {
 		title: "Tacho",
 		preferredSize: [300,"auto"],
-		streams: ["vehicleInfo"]
+		streams: ["vehicleInfo", "electrics"]
 	};
 }
 
@@ -68,21 +68,22 @@ Tach.prototype.initialize = function(){
 };
 
 Tach.prototype.update = function(streams){
-	$(this.rootElement).html("rpm: "+streams["vehicleInfo"][1][4]);//streams["vehicleinfo"]);
+	$(this.rootElement).html("rpm: "+streams["vehicleInfo"][1][4].toFixed() + "<br /> Speed: "+(streams["electrics"]["wheelspeed"]*3.6).toFixed());//streams["vehicleinfo"]);
 };
 
 // Wheelsscreen ---------------------------------------------------
 function WheelsScreen(){
 	this.info = {
 		title: "Wheelsdebug",
-		preferredSize: [300,"auto"],
+		preferredSize: [260,"auto"],
 		streams: ["vehicleInfo"]
 	};
 }
 
 WheelsScreen.prototype.initialize = function(){
 	$(this.rootElement).html("<canvas class='drawingcanvas'></canvas>");
-	this.canvas = $(this.rootElement).children('.drawingcanvas');
+	this.canvas = $(this.rootElement).children('.drawingcanvas')[0];
+	this.canvas.width=220;
 	$(this.rootElement).css("background-color","white");
 };
 
@@ -175,7 +176,8 @@ var AppEngine = {
 			var streamList = {};
 			for(var i=0; i<app.info.streams.length; i++){
 				stream = app.info.streams[i];
-				if(state.streams[stream] == 1){
+				if(state.streams[stream] == 1 || stream == "electrics"){ // hack
+					console.log(data["electrics"]["wheelspeed"]);
 					streamList[stream] = data[stream];
 				}
 			}
@@ -186,6 +188,8 @@ var AppEngine = {
 		this.appList.push(app);
 		//Adding streams
 		for(var i=0; i<app.info.streams.length; i++){
+			if(app.info.streams[i] == "electrics") // hack
+				continue;
 			streamAdd(app.info.streams[i]);
 		}
 	},
