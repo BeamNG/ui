@@ -9,6 +9,7 @@ As BeamNG uses the [Chromium Embedded Framework (CEF)](https://code.google.com/p
 ## Contributing
 
 We suggest that you contact us upfront in case you want to help us, so maybe we can help you along a bit :)
+Please contact Thomas via http://www.beamng.com/contactus/
 
 ## Testing
 
