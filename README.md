@@ -45,5 +45,5 @@ The BeamNG.ui project is licensed under the MIT license, see file LICENSE.
 ## Contributors
 
 * Thomas Fischer [tdev] <support@beamng.com>
-* theshark
+* Mirco Weigel [theshark] <theshark@rigsofrods.com>
 * Lefteris Stamatogiannakis [estama]
