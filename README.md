@@ -40,3 +40,9 @@ If you want to contribute to this project and have not entered the Alpha Testing
 ## License
 
 The BeamNG.ui project is licensed under the MIT license, see file LICENSE.
+
+
+## Contributors
+
+* Thomas Fischer [tdev] <support@beamng.com>
+* theshark
