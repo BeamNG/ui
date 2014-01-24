@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/beamng.css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
+
+	<script src="js/sprintf.min.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+
+	<script src="js/propertygrid.js"></script>
+	<link rel="stylesheet" href="css/propertygrid.css">
+
+
+</head>
+<body>
+
+<button onclick="javascript:location.reload();" style="width:60px;height:20px;position:absolute;right:0px;bottom:0px;margin:0;padding:0;">ReloadUI</button>
+<button onclick="sendTestData();" style="width:60px;height:20px;position:absolute;right:60px;bottom:0px;margin:0;padding:0;">TEST</button>
+
+<div id="pg1" style="width:350px;background-color:#ddd"></div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	if(typeof beamng === 'undefined') {
+		sendTestData();
+	} else {
+		beamng.sendGameEngine('getCEFOptions();');
+	}
+});	
+
+function sendTestData() {
+	var data = {};
+	data.childs = {
+		graphics:{
+			name:"graphics",
+			childs:{
+				display_driver:{type:'combo',options:['Screen 1 - this is a huge option','Screen 2'],val:'800x600'},
+				resolutions:{type:'combo',options:['1024x768','800x600'],val:'800x600'},
+				fullscreen:{type:'bool',val:true},
+				borderless:{type:'bool',val:true},
+				sync:{name:'Vertical Sync', type:'bool',val:true},
+				refresh_rate:{name:'Refresh Rate',type:'combo',options:[59,60,75,120],val:60},
+				mesh_quality:{name:'Mesh Quality',type:'combo',options:['Lowest','Low','Normal','High'],val:'Normal'},
+				texture_quality:{name:'Texture Quality',type:'combo',options:['Lowest','Low','Normal','High'],val:'Normal',description:"This determines the sharpness of the textures."},
+				lighting_quality:{name:'Lighting Quality',type:'combo',options:['Lowest','Low','Normal','High'],val:'Normal'},
+				antialias:{name:'Anisotropic Filtering',type:'combo',options:['Off','1x','2x','3x'],val:'1x'},
+				shader_quality:{name:'Shader Quality',type:'combo',options:['Lowest','Low','Normal','High'],val:'Normal'},
+				gamma:{type:'slider',min:0,max:1,val:0.5},
+			}
+		},
+		audio:{
+			name:"Audio",
+			childs:{
+				audio_provider:{type:'combo',options:['Soundcard 1','Soundcard 2'],val:'1'},
+				audio_device:{type:'combo',options:['speakers','speakers'],val:'speakers'},
+				master_vol:{name:'Master Volume', type:'slider',min:0,max:1,val:0.5},
+				interface_vol:{name:'Interface Volume', type:'slider',min:0,max:1,val:0.5},
+				effects_vol:{name:'Effects Volume', type:'slider',min:0,max:1,val:0.5},
+				music_vol:{name:'Music Volume', type:'slider',min:0,max:1,val:0.5},
+			},
+		},
+		settings:{
+			description:"normal game settings",
+			childs:{
+				gravity:{type:'combo',options:{5:'Earth',9:'Moon'},val:'800x600'},
+				debug:{type:'bool',val:true},
+				settings2:{
+					description:"something else",
+					childs:{
+						gravity2:{type:'combo',options:{5:'Earth',9:'Moon'},val:'800x600'},
+						debug2:{type:'bool',val:true},
+						settings3:{
+							description:"yet something else",
+							childs:{
+								gravity3:{type:'combo',options:{5:'Earth',9:'Moon'},val:'800x600'},
+								debug3:{type:'bool',val:true},
+							}
+						},
+					}
+				},
+			}
+		},
+	};
+
+	receiveOptions(data);
+}
+
+function receiveOptions(data) {
+
+	data.div = 'pg1';
+	var pg = new BeamNGPropertyGrid(data);
+	pg.init();
+}
+
+
+</script>
+
+
+</body>
+
+
+</html>

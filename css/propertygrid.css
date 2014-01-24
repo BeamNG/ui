@@ -1,0 +1,224 @@
+.propertyGridContainer
+{
+    width: 100%;
+    font-size: 11px;
+    font-family: arial;
+    border-collapse:collapse;
+    border-spacing:0px;
+}
+
+.propertyGridContainer td {
+    vertical-align:middle;
+    padding:0px;
+    margin:0px;
+}
+.propertyGridContainer tr {
+    vertical-align:middle;
+    padding:0px;
+    margin:0px;
+}
+.pgGroupItem
+{
+    width: auto;
+    height: 20px;
+    padding: 0px 0px 0px 7px;
+    border-left: 17px solid lightgray;
+    border-bottom: 1px solid #EAEBED;
+    border-width: 0px;
+}
+
+.pgGroupItemText
+{
+    padding:2px !important;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.pgInputHolder
+{
+    background-color: whitesmoke;
+    width: 100px;
+    border-left:1px solid #eaebed;
+}
+
+.pgGroup
+{
+    width: auto;
+}
+.pgGroupTitle {
+    border-bottom: 1px solid #EAEBED;
+    background-color: #C1D2EE;
+    cursor: pointer;
+
+    font-weight: bold;
+    padding: 2px 0px 0px 5px;
+    font-size: 1.2em;
+}
+
+.pgPlus
+{
+    background-image: url('../images/plusSmall.png');
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    cursor: pointer;
+    padding-left:16px !important;
+}
+.pgMinus
+{
+    background-image: url('../images/minusSmall.png');
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    cursor: pointer;
+    padding-left:16px !important;
+}
+
+.pgSpacer
+{
+    background-color:lightgray;
+    width:16px;
+    min-width:16px;
+    max-width:16px;
+}
+
+.pgItemRow
+{
+    border-bottom:1px solid #eaebed;
+}
+
+/*
+.pgItemRow :hover {
+    background-color:#2d6db5;
+    color:white;
+}
+*/
+
+/********************************************/
+
+.pgInputHolder select
+{
+    /* width: 100px; */
+    border-width: 0px;
+    height: 20px;
+    background-color: whitesmoke;
+    padding: 2px 0px 0px 2px;
+    outline: none;
+    border: none;
+    border-color: transparent;
+}
+
+.regular-checkbox {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 6px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+.regular-checkbox:active, .regular-checkbox:checked:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.regular-checkbox:checked {
+    background-color: #e9ecee;
+    border: 1px solid #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+    color: #99a1a7;
+}
+.regular-checkbox:checked:after {
+    content: '\2714';
+    font-size: 10px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: #99a1a7;
+}
+/********************************************/
+
+#pg1
+{
+    overflow: auto;
+}
+
+
+.pgGroupShrink
+{
+    width: auto;
+    display: inline-block;
+    width: 17px;
+    height: 20px;
+    top: -3px;
+}
+
+.pgSubGroup
+{
+    width: auto;
+    background-color: #EAEBED;
+    height: 20px;
+    padding: 0px;
+    cursor: pointer;
+}
+.pgSubGroupShrink
+{
+    width: 17px;
+    display: inline-block;
+    margin-left: 17px;
+    height: 20px;
+}
+.pgSubGroupText
+{
+    width:100%;
+    font-weight: bold;
+    padding: 2px 0px 0px 5px;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+
+
+
+.bkExpandSub
+{
+    background-image: url('../images/plusSmall.png');
+    background-repeat: no-repeat;
+    background-position: 2px 1px;
+    cursor: pointer;
+}
+.bkMinimiseSub
+{
+    background-image: url('../images/minusSmall.png');
+    background-repeat: no-repeat;
+    background-position: 2px 1px;
+    cursor: pointer;
+}
+
+.pgInputColor
+{
+    width: 79px;
+    border-width: 0px;
+    height: 18px;
+    background-color: whitesmoke;
+    padding: 2px 0px 0px 2px;
+}
+
+.pgInputNum
+{
+    width: 100px;
+    border-width: 0px;
+    height: 18px;
+    background-color: whitesmoke;
+    padding: 2px 0px 0px 2px;
+}
+.pgBtnColor
+{
+    width: 20px;
+    height: 18px;
+    float: right;
+    padding: 2px 0px 0px 0px;
+    border-left: 1px solid #eaebed;
+    background-image: url('../images/bkCpicker.png');
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

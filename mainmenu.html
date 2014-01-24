@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="css/minimal.css"></head>
+<body>
+<div style="position:fixed; right:0px; top: 250px;padding:0px;text-align:right;width:300px">
+<a class="rbutton" href="#" onclick="window.location.href='file:///html/browser.html';" >Browser</a><br/>
+<a class="rbutton" href="#" onclick="" >Repository</a><br/>
+<a class="rbutton" href="#" onclick="beamng.sendGameEngine('MainMenuGui.onBtnPlay();')" >Play</a><br/>
+<a class="rbutton" href="#" onclick="beamng.sendGameEngine('Canvas.pushDialog(optionsDlg); Canvas.pushDialog(PostFXManager);')" >Options</a><br/>
+<a class="rbutton" href="#" onclick="window.location.href='file:///html/credits.html'; beamng.sendGameEngine('MainMenuGui.creditsToggle();')" >The team</a><br/>
+<a class="rbutton" href="#" onclick="window.location.href='file:///html/chat.html';">Chat</a><br/>
+<a class="rbutton" href="#" onclick="beamng.sendGameEngine('quit();')" >Exit</a><br/>
+</div>
+
+<button onclick="javascript:location.reload();" style="width:60px;height:20px;position:absolute;right:0px;bottom:0px;margin:0;padding:0;">ReloadUI</button>
+</body>
+</html>
