@@ -34,8 +34,8 @@ If you want to contribute to this project and have not entered the Alpha Testing
 ## Planned Things
 
 * Internationalization
-* system tests and unit tests
-* usage of jquery widgets to make the UI Much more modular
+* System tests and unit tests
+* Usage of jQuery widgets to make the UI Much more modular
 
 ## License
 
