@@ -1,6 +1,6 @@
 # _BeamNG.ui_
 
-This project is working on improving the way the User interface in the vehicle simulator [BeamNG](http://www.beamng.com).
+This project is working on the User interface in the vehicle simulator [BeamNG](http://www.beamng.com).
 
 ## Project Setup
 
