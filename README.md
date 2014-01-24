@@ -9,8 +9,8 @@ As BeamNG uses the [Chromium Embedded Framework (CEF)](https://code.google.com/p
 ## Demo
 
 The links below point to the latest development version, so it might be broken:
-* [http://rawgithub.com/BeamNG/ui/master/mainmenu.html](Main Menu)
-* [http://rawgithub.com/BeamNG/ui/master/options.html](Options Menu)
+* [Main Menu](http://rawgithub.com/BeamNG/ui/master/mainmenu.html)
+* [Options Menu](http://rawgithub.com/BeamNG/ui/master/options.html)
 
 ## Contributing
 
