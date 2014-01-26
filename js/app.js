@@ -177,7 +177,6 @@ var AppEngine = {
 			for(var i=0; i<app.info.streams.length; i++){
 				stream = app.info.streams[i];
 				if(state.streams[stream] == 1 || stream == "electrics"){ // hack
-					console.log(data["electrics"]["wheelspeed"]);
 					streamList[stream] = data[stream];
 				}
 			}

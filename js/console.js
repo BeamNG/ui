@@ -1,9 +1,12 @@
 oldconsole = window.console
 
 $(document).ready(function() {
-	$("body").append("<div id='debugConsole'><div id='consoleOutput'></div><div id='consoleInput'><input /></div><div id='consoleMinimize'>_</div></div><div id='consoleShow'>show Console</div>");
+	$("body").append("<div id='debugConsole'>Console<hr/><div id='consoleOutput'></div><div id='consoleInput'><input /></div><div id='consoleMinimize'>_</div></div><div id='consoleShow'>show Console</div>");
 
 	$("head").append('<style> \
+		#debugConsole, #consoleMinimize, #consoleShow { \
+			background: white; \
+		} \
 		#debugConsole { \
 			position: absolute; \
 			bottom: 20px; \
@@ -105,5 +108,6 @@ console = {
 	_addMessage: function(cssClass, txt)
 	{
 		$("#consoleOutput").append("<div class='"+cssClass+"'>"+txt+"</div>");
+		$('#consoleOutput').animate({ scrollTop: ($("#consoleOutput div").last().position().top)}, 0);
 	}
 }
