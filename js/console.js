@@ -18,6 +18,7 @@ $(document).ready(function() {
 		#debugConsole #consoleOutput { \
 			overflow: auto; \
 			max-width: 600px; \
+			min-width: 400px; \
 			max-height: 400px; \
 		} \
 		#debugConsole input { \
@@ -30,7 +31,7 @@ $(document).ready(function() {
 			border: 1px solid black; \
 			display: inline; \
 			position: absolute; \
-			padding: 1px; \
+			padding: 2px; \
 		} \
 		#consoleMinimize { \
 			top : 2px; \
@@ -108,6 +109,6 @@ console = {
 	_addMessage: function(cssClass, txt)
 	{
 		$("#consoleOutput").append("<div class='"+cssClass+"'>"+txt+"</div>");
-		$('#consoleOutput').animate({ scrollTop: ($("#consoleOutput div").last().position().top)}, 0);
+		$('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
 	}
 }
