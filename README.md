@@ -23,7 +23,7 @@ There are no (automated) tests yet, but they will be done at some point.
 
 ## Deploying
 
-If you entered the BeamNG Alpha and are using at least version 0.3.1 (which is not released to general public as of 24/11/2014), you can replace the content of the /html/ folder with this repository's content.
+If you entered the BeamNG Alpha and are using at least version 0.3.1 (which is not released to general public as of 24/01/2014), you can replace the content of the /html/ folder with this repository's content.
 
 If you want to contribute to this project and have not entered the Alpha Testing yet, we will happily provide you with keys :)
 
