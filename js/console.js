@@ -108,7 +108,16 @@ console = {
 	},
 	_addMessage: function(cssClass, txt)
 	{
-		$("#consoleOutput").append("<div class='"+cssClass+"'>"+txt+"</div>");
+		$("#consoleOutput").append("<div class='"+cssClass+"'>"+escapeHtml(txt)+"</div>");
 		$('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
 	}
 }
+
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }

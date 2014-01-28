@@ -40,6 +40,12 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		AppEngine.unregisterApp(this.app);
 
 		this.element.remove();
+	},
+
+	close:function(){
+		AppEngine.unregisterApp(this.app);
+
+		this._super("close");
 	}
 
 });
@@ -157,6 +163,7 @@ WheelsScreen.prototype.update = function(streams){
 
 //-----------------------------------------------------------------
 $(document).ready(function() {
+	AppEngine.initialize();
 	$('body').append('<div id="app001"></div>');
 	$('#app001').app({ app: new Tach() });
 
@@ -169,6 +176,22 @@ $(document).ready(function() {
 
 var AppEngine = {
 	appList : [],
+	installedApps : [],
+
+	initialize : function(){
+		installedApps = ["Tach","WheelsScreen"]; // Call a beamNG function later
+
+		// Load all apps
+		for (var i in installedApps) {
+			app = installedApps[i];
+			console.log("<script src='apps/"+app+"/"+app+".js' />");
+			$("head").append("<script src='apps/"+app+"/"+app+".js' />");
+		}
+	},
+
+	_setInstalledApps : function(appList){
+		installedApps = appList;
+	},
 
 	update : function(data){
 		for(var j = 0; j<this.appList.length; j++){
@@ -183,6 +206,7 @@ var AppEngine = {
 			app.update(streamList);
 		}
 	},
+
 	registerApp : function(app){
 		this.appList.push(app);
 		//Adding streams
@@ -192,19 +216,29 @@ var AppEngine = {
 			streamAdd(app.info.streams[i]);
 		}
 	},
+
 	unregisterApp : function(app){
-		appList.splice(appList.indexOf(app),1);
+		this.appList.splice(this.appList.indexOf(app),1);
 		// removing streams
 		for(var i=0; i<app.info.streams.length; i++){
+			if(app.info.streams[i] == "electrics") // hack
+				continue;
 			streamRemove(app.info.streams[i]);
 		}
 	},
-	loadDesktop : function(){
+
+	loadApp : function(appname){
 
 	},
-	saveDesktop : function(){
+
+	loadPreset : function(preset){
 
 	},
+
+	savePreset : function(preset){
+
+	},
+
 	toggleEditmode : function(){
 
 	}
