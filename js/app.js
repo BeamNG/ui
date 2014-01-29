@@ -72,7 +72,7 @@ var AppEngine = {
 	installedApps : [],
 
 	initialize : function(){
-		installedApps = ["Tach","WheelsScreen"]; // Call a beamNG function later
+		installedApps = ["Tacho","WheelsScreen","Tach"]; // Call a beamNG function later
 
 		$.ajaxPrefilter( "json script", function( options ) {
 			options.crossDomain = true;
