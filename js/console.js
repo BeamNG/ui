@@ -108,7 +108,11 @@ console = {
 	},
 	_addMessage: function(cssClass, txt)
 	{
-		$("#consoleOutput").append("<div class='"+cssClass+"'>"+escapeHtml(txt)+"</div>");
+		if(txt === undefined)
+			txt = "undefined";
+		if(txt === null)
+			txt = "null";
+		$("#consoleOutput").append("<div class='"+cssClass+"'>"+escapeHtml(txt.toString())+"</div>");
 		$('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
 	}
 }
