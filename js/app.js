@@ -31,7 +31,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Register App
 		AppEngine.registerApp(this.app);
 
-		this._tuneDialogStyle();
+//		this._tuneDialogStyle();
+//		$(this).parents('.ui-dialog').draggable({'option', 'snap',true});
 	},
 	_destroy:function(){
 		this._super("_destroy");
@@ -89,6 +90,7 @@ $(document).ready(function() {
 var AppEngine = {
 	appList : [],
 	installedApps : [],
+	loadedApps : [],
 
 	initialize : function(){
 		installedApps = ["Tacho","WheelsScreen","Tach"]; // Call a beamNG function later
@@ -106,12 +108,11 @@ var AppEngine = {
 	},
 
 	_loadAppJs : function(app){
-			$.getScript( "apps/"+app+"/"+app+".js", function( data, textStatus, jqxhr ) {
+			$.getScript( "apps/"+app+"/"+app+".js", function( data, textStatus, jqxhr) {
 				console.log( "loading app '"+app+"'" );
 				console.log( textStatus ); // Success
-				id = Math.random()*100;
-				$('body').append('<div id="app'+app+'"></div>');
-				$('#app'+app).app({ app: new window[app]() });
+				AppEngine.loadedApps.push(app);
+				AppEngine.loadApp(app);
 			});
 	},
 
@@ -153,8 +154,16 @@ var AppEngine = {
 		}
 	},
 
-	loadApp : function(appname){
-
+	loadApp : function(app){
+		for(var i = 0 ; i < this.loadedApps.length; i++){
+			if(this.loadedApps[i] == app){
+				$('body').append('<div id="app'+app+'"></div>');
+				$('#app'+app).app({ app: new window[app]() }).parents('.ui-dialog').draggable('option', 'snap', true);
+				return;
+			}
+		}
+		// App wasn't loaded before, getting the js
+		this._loadAppJs(app);
 	},
 
 	loadPreset : function(preset){
