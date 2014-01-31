@@ -170,7 +170,7 @@ html,body{
 
 .ui-dialog .ui-resizable-handle {
 	display:none;
-	background-color:red !important;
+	/* background-color:red !important; */
 }
 
 .ui-widget-content {
