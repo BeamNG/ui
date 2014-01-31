@@ -31,10 +31,13 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Register App
 		AppEngine.registerApp(this.app);
 
+		this._on(this.element.parent(), {
+			resize:"resize",
+		});
 //		this._tuneDialogStyle();
 //		$(this).parents('.ui-dialog').draggable({'option', 'snap',true});
 	},
-	_destroy:function(){
+	_destroy:function() {
 		this._super("_destroy");
 
 		// unregister App
@@ -43,10 +46,16 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.element.remove();
 	},
 
-	close:function(){
+	close:function() {
 		AppEngine.unregisterApp(this.app);
 
 		this._super("close");
+	},
+
+	resize: function() {
+		if (typeof this.app.resize === 'function') {
+			this.app.resize();
+		}
 	},
 
 	_tuneDialogStyle:function() {
@@ -67,6 +76,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	},
 
 });
+
 
 //----Template-----------------------------------------------------
 function HudApp () {
@@ -91,6 +101,7 @@ var AppEngine = {
 	appList : [],
 	installedApps : [],
 	loadedApps : [],
+	editMode : false,
 
 	initialize : function(){
 		installedApps = ["Tacho","WheelsScreen","Tach"]; // Call a beamNG function later
@@ -105,6 +116,25 @@ var AppEngine = {
 			app = installedApps[i];
 			this._loadAppJs(app);
 		}
+
+		//$('.ui-resizable-handle').addClass('.ui-resizable-disabled');
+		//$( "div.ui-dialog" ).resizable('disable');
+
+	},
+
+	toggleEditMode: function() {
+		this.editMode = !this.editMode;
+		$('.ui-dialog .ui-dialog-titlebar').toggle();
+		/*
+		$.each(this.loadedApps, function(index, value) {
+			console.log(value);
+		});
+		*/
+		//if(this.editMode)
+		//	$('.ui-dialog').resizable('disable');
+		//else
+		//	$('.ui-dialog').resizable('disable');
+		$('.ui-dialog .ui-widget-content').toggleClass('dialog-edit-content');
 	},
 
 	_loadAppJs : function(app){
@@ -158,7 +188,10 @@ var AppEngine = {
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
 				$('body').append('<div id="app'+app+'"></div>');
-				$('#app'+app).app({ app: new window[app]() }).parents('.ui-dialog').draggable('option', 'snap', true);
+				var la = $('#app'+app).app({ app: new window[app]() });
+				la.parents('.ui-dialog').draggable('option', 'snap', true);
+				la.parents('.ui-dialog').draggable('option', 'grid', [ 100, 100 ]);
+				app.element = $('#app'+app);
 				return;
 			}
 		}

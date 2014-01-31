@@ -19,8 +19,8 @@ Tacho.prototype.initialize = function(){
 	$(this.rootElement).append('<canvas id="hudCanvas"></canvas>');
 
 	$("#hudCanvas").css({
-		width: '300',
-		height: '300'
+		width: '100%',
+		height: '100%'
 	});
 
 	c = $("#hudCanvas")[0];
@@ -29,6 +29,14 @@ Tacho.prototype.initialize = function(){
 
 	this.hudAddMemoryCanvas('background');
 };
+
+Tacho.prototype.resize = function(){
+	//console.log($(this.rootElement).height());
+	//var c = $("#hudCanvas")[0];
+	//c.width = $(this.rootElement).width();
+	//c.height = $(this.rootElement).height();
+	//this.update();
+}
 
 Tacho.prototype.update = function(streams){
 //	$(this.rootElement).html("rpm: "+streams["vehicleInfo"][1][4].toFixed() + "<br /> Speed: "+(streams["electrics"]["wheelspeed"]*3.6).toFixed());//streams["vehicleinfo"]);

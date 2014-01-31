@@ -97,6 +97,15 @@ html,body{
 	border:0;
 }
 
+.bottom-right{
+	position:absolute;
+	bottom:0px;
+	right:5px;
+	margin:0;
+	padding:0;
+	border:0;
+}
+
 
 .ui-panel {
     width:18em !important;
@@ -136,16 +145,11 @@ html,body{
 
 .ui-dialog .ui-dialog-content
 {
-    position: relative;
-    border: 0;
-    padding: .5em 1em;
-    background: none;
-    overflow: auto;
-    zoom: 1;
 }
 
 .ui-dialog .ui-dialog-titlebar
 {
+	display:none;
 	height:20px;
 	padding:2px;
 	overflow:hidden;
@@ -158,8 +162,17 @@ html,body{
 	-webkit-border-radius: 0;
 }
 
-.ui-widget-content
+.dialog-edit-content
 {
 	background-color:#ddd !important;
-	border:1px solid black;
+	border:1px solid black !important;
+}
+
+.ui-dialog .ui-resizable-handle {
+	display:none;
+	background-color:red !important;
+}
+
+.ui-widget-content {
+	border:0;
 }
