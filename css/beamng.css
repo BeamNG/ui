@@ -1,10 +1,13 @@
 html,body{
-	background: transparent !important;
-	background-image: url('') !important;
 	height:100%;
 	width:100%;
 	padding:0px;
 	margin:0px;
+	background-color:black;
+	/*
+	background: transparent !important;
+	background-image: url('') !important;
+	*/
 }
 
 * {
@@ -113,7 +116,9 @@ html,body{
 }
 
 .ui-page-theme-a {
+	/*
 	background:transparent !important;
+	*/
 }
 
 /* remove text thingy on the slider */
@@ -124,4 +129,37 @@ html,body{
 .ui-mobile .ui-page .ui-slider-track,
 .ui-mobile .ui-dialog .ui-slider-track {
 	margin : 0;
+}
+
+
+/* custom jquery ui dialog style */
+
+.ui-dialog .ui-dialog-content
+{
+    position: relative;
+    border: 0;
+    padding: .5em 1em;
+    background: none;
+    overflow: auto;
+    zoom: 1;
+}
+
+.ui-dialog .ui-dialog-titlebar
+{
+	height:20px;
+	padding:2px;
+	overflow:hidden;
+	position:absolute;
+	left:0px;
+	right:0px;
+	top:0px;
+	z-index:10;
+	margin:0px;
+	-webkit-border-radius: 0;
+}
+
+.ui-widget-content
+{
+	background-color:#ddd !important;
+	border:1px solid black;
 }

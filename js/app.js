@@ -30,6 +30,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		// Register App
 		AppEngine.registerApp(this.app);
+
+		this._tuneDialogStyle();
 	},
 	_destroy:function(){
 		this._super("_destroy");
@@ -44,7 +46,24 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		AppEngine.unregisterApp(this.app);
 
 		this._super("close");
-	}
+	},
+
+	_tuneDialogStyle:function() {
+		$(this.element).parent().find(".ui-dialog-titlebar").hide();
+		this._on(this.element.parent(),
+		{
+			mouseenter:"mouseenter",
+			mouseleave:"mouseleave"
+		});
+		//$(this.element).prev().find(".ui-dialog-title").append("<button class='ui-button-icon-primary ui-icon ui-icon-closethick'>minimize</button>");
+	},
+
+	mouseenter: function (e) {
+		$(this.element).parent().find(".ui-dialog-titlebar").show('blind');
+	},
+	mouseleave: function (e) {
+		$(this.element).parent().find(".ui-dialog-titlebar").hide('blind');
+	},
 
 });
 
