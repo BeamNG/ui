@@ -33,3 +33,47 @@
 .ui-widget-content {
 	border:0;
 }
+/* CSS for beamNG.container-widget */
+.bNG-container {
+	position: absolute;
+	top: 50px;
+	left: 50px;
+}
+
+.bNG-container .bNG-container-titlebar {
+	display: none;
+}
+
+.bNG-container-title {
+	overflow: hidden;
+}
+
+.bNG-container-edit {
+	background: white;
+	border: 1px solid black;
+}
+
+.bNG-container-edit .bNG-container-content {
+	background: red;
+}
+
+.bNG-container-titlebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.bNG-container-edit .bNG-container-titlebar, .bNG-container-titlebuttons {
+	display: block;
+	background: black;
+	color: white;
+	padding: 4px;
+	font-size: 12px;
+	height: 20px;
+}
+
+.bNG-container-titlebuttons {
+	position: absolute;
+	top: 0;
+	right: 0;
+}

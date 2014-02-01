@@ -1,18 +1,56 @@
 $.widget( "beamNG.container", {
 	options: {
-		editMode: false
+		editMode: true,
+		title: ""
 	},
 	components : {},
 	_create: function() {
 		this.element.addClass("bNG-container-content");
 
-		this.components.container = $("<div class='bNG-container'></div>").appendTo($("body")).append(this.element);
+		this.components.container = $("<div class='bNG-container'><div></div></div>").appendTo($("body")).append(this.element);
 
-		this.components.titlebar = $("<div class='bNG-container-titlebar'></div>").prependTo(this.components.container);
+		this.components.titlebar = $("<div class='bNG-container-titlebar'></div>").prependTo(this.components.container.children().first());
 
-		this.components.title  = $("<div class='bNG-container-title'></div>").prependTo(this.components.titlebar);
 
-		this.components.closebutton = $("<a href=''>X</a>").appendTo(this.components.titlebar);
+		this.components.title  = $("<div class='bNG-container-title'>"+this.options.title+"</div>").prependTo(this.components.titlebar);
+
+		this.components.titlebuttons  = $("<div class='bNG-container-titlebuttons'></div>").appendTo(this.components.titlebar);
+
+		this.components.optionbutton = $("<a href='' class='bNG-container-titlebutton'>O</a>").appendTo(this.components.titlebuttons);
+		this.components.closebutton = $("<a href='' class='bNG-container-titlebutton'>X</a>").appendTo(this.components.titlebuttons);
+
+		this.components.container.draggable({ handle: ".bNG-container-titlebar", stack: ".bNG-container" });
+		this.components.container.resizable();
+		this._on(this.components.container, {
+			resize:"_resize",
+		});
+
+		this._setEditMode(this.options.editMode);
+		this._resize();
+	},
+	_setEditMode: function(mode) {
+		if(mode){
+			this.components.container.addClass('bNG-container-edit');
+		}else{
+			this.components.container.removeClass('bNG-container-edit');
+		}
+	},
+	_setOption: function(key, value) {
+		if(key == "editMode"){
+			this._setEditMode(value);
+		}else if(key == "title"){
+			this.components.title.html(value);
+		}
+		this._super(key, value);
+	},
+	_resize: function(){
+		this.components.titlebar.outerWidth(this.element.outerWidth());
+	},
+
+	_destroy: function(){
+		for(var element in this.components){
+			element.remove();
+		}
 	}
 
 });
@@ -71,9 +109,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	_setOption: function( key, value ) {
 		if(key == "editMode"){
 			this._setEditMode(value);
-		}else{
-			this._super(key, value);
 		}
+		this._super(key, value);
 	},
 
 	_setEditMode: function( value ){
@@ -127,6 +164,8 @@ var AppEngine = {
 	editMode : false,
 
 	initialize : function(){
+
+
 		installedApps = ["Tacho","WheelsScreen","Tach"]; // Call a beamNG function later
 
 		$.ajaxPrefilter( "json script", function( options ) {
