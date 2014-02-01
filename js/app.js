@@ -1,6 +1,27 @@
+$.widget( "beamNG.container", {
+	options: {
+		editMode: false
+	},
+	components : {},
+	_create: function() {
+		this.element.addClass("bNG-container-content");
+
+		this.components.container = $("<div class='bNG-container'></div>").appendTo($("body")).append(this.element);
+
+		this.components.titlebar = $("<div class='bNG-container-titlebar'></div>").prependTo(this.components.container);
+
+		this.components.title  = $("<div class='bNG-container-title'></div>").prependTo(this.components.titlebar);
+
+		this.components.closebutton = $("<a href=''>X</a>").appendTo(this.components.titlebar);
+	}
+
+});
+
+
 $.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
+		editMode: false
 	},
 
 	_init:function(){
@@ -34,8 +55,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this._on(this.element.parent(), {
 			resize:"resize",
 		});
-//		this._tuneDialogStyle();
-//		$(this).parents('.ui-dialog').draggable({'option', 'snap',true});
+
+		$(this.element).parents('.ui-dialog').addClass("app");
+		this.dialogParent = $(this.element).parents('.ui-dialog');
 	},
 	_destroy:function() {
 		this._super("_destroy");
@@ -46,34 +68,35 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.element.remove();
 	},
 
+	_setOption: function( key, value ) {
+		if(key == "editMode"){
+			this._setEditMode(value);
+		}else{
+			this._super(key, value);
+		}
+	},
+
+	_setEditMode: function( value ){
+		if(value){
+			this.element.addClass('dialog-edit-content');
+			this.dialogParent.children('.ui-dialog-titlebar').show();
+		}else{
+			this.element.removeClass('dialog-edit-content');
+			this.dialogParent.children('.ui-dialog-titlebar').hide();
+		}
+	},
+
 	close:function() {
 		AppEngine.unregisterApp(this.app);
 
-		this._super("close");
+		this._super();
 	},
 
 	resize: function() {
 		if (typeof this.app.resize === 'function') {
 			this.app.resize();
 		}
-	},
-
-	_tuneDialogStyle:function() {
-		$(this.element).parent().find(".ui-dialog-titlebar").hide();
-		this._on(this.element.parent(),
-		{
-			mouseenter:"mouseenter",
-			mouseleave:"mouseleave"
-		});
-		//$(this.element).prev().find(".ui-dialog-title").append("<button class='ui-button-icon-primary ui-icon ui-icon-closethick'>minimize</button>");
-	},
-
-	mouseenter: function (e) {
-		$(this.element).parent().find(".ui-dialog-titlebar").show('blind');
-	},
-	mouseleave: function (e) {
-		$(this.element).parent().find(".ui-dialog-titlebar").hide('blind');
-	},
+	}
 
 });
 
@@ -124,17 +147,10 @@ var AppEngine = {
 
 	toggleEditMode: function() {
 		this.editMode = !this.editMode;
-		$('.ui-dialog .ui-dialog-titlebar').toggle();
-		/*
-		$.each(this.loadedApps, function(index, value) {
-			console.log(value);
+
+		$.each(this.appList, function(index, app){
+			app.rootElement.app("option", "editMode", AppEngine.editMode);
 		});
-		*/
-		//if(this.editMode)
-		//	$('.ui-dialog').resizable('disable');
-		//else
-		//	$('.ui-dialog').resizable('disable');
-		$('.ui-dialog .ui-widget-content').toggleClass('dialog-edit-content');
 	},
 
 	_loadAppJs : function(app){
@@ -190,8 +206,7 @@ var AppEngine = {
 				$('body').append('<div id="app'+app+'"></div>');
 				var la = $('#app'+app).app({ app: new window[app]() });
 				la.parents('.ui-dialog').draggable('option', 'snap', true);
-				la.parents('.ui-dialog').draggable('option', 'grid', [ 100, 100 ]);
-				app.element = $('#app'+app);
+//				la.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
 				return;
 			}
 		}
@@ -206,8 +221,4 @@ var AppEngine = {
 	savePreset : function(preset){
 
 	},
-
-	toggleEditmode : function(){
-
-	}
 };
