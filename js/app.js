@@ -18,6 +18,9 @@ $.widget( "beamNG.container", {
 
 		this.components.optionbutton = $("<a href='' class='bNG-container-titlebutton'>O</a>").appendTo(this.components.titlebuttons);
 		this.components.closebutton = $("<a href='' class='bNG-container-titlebutton'>X</a>").appendTo(this.components.titlebuttons);
+		this._on(this.components.closebutton, {
+			click:"close",
+		});
 
 		this.components.container.draggable({ handle: ".bNG-container-titlebar", stack: ".bNG-container" });
 		this.components.container.resizable();
@@ -40,6 +43,10 @@ $.widget( "beamNG.container", {
 			this._setEditMode(value);
 		}else if(key == "title"){
 			this.components.title.html(value);
+		}else if(key == "width"){
+			this.components.container.width(value);
+		}else if(key == "height"){
+			this.components.container.height(value);
 		}
 		this._super(key, value);
 	},
@@ -48,13 +55,17 @@ $.widget( "beamNG.container", {
 	},
 
 	_destroy: function(){
-		for(var element in this.components){
-			element.remove();
-		}
+		$.each(this.components,function(key, value){
+			value.remove();
+		});
+	},
+
+	close: function(){
+		this.element.hide();
+		this._destroy();
 	}
 
 });
-
 
 $.widget( "beamNG.app", $.ui.dialog, {
 	options: {
@@ -137,19 +148,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 });
 
-
-//----Template-----------------------------------------------------
-function HudApp () {
-	this.info = {
-		title: "Testapp",
-		preferredSize: [300,"auto"],
-		streams: []
-	};
-}
-HudApp.prototype.initialize = function(){};
-HudApp.prototype.update = function(streams){};
-
-//-----------------------------------------------------------------
 $(document).ready(function() {
 	AppEngine.initialize();
 });
