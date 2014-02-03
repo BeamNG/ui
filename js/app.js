@@ -209,7 +209,7 @@ var AppEngine = {
 			var streamList = {};
 			for(var i=0; i<app.info.streams.length; i++){
 				stream = app.info.streams[i];
-					if(state.streams[stream] == 1 || stream == "electrics"){ // hack
+					if(state.streams[stream] == 1){
 						streamList[stream] = data[stream];
 					}
 				}
@@ -221,8 +221,6 @@ var AppEngine = {
 		this.appList.push(app);
 		//Adding streams
 		for(var i=0; i<app.info.streams.length; i++){
-			if(app.info.streams[i] == "electrics") // hack
-				continue;
 			streamAdd(app.info.streams[i]);
 		}
 	},
@@ -231,8 +229,6 @@ var AppEngine = {
 		this.appList.splice(this.appList.indexOf(app),1);
 		// removing streams
 		for(var i=0; i<app.info.streams.length; i++){
-			if(app.info.streams[i] == "electrics") // hack
-				continue;
 			streamRemove(app.info.streams[i]);
 		}
 	},

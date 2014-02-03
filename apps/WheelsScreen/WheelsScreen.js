@@ -2,7 +2,7 @@ function WheelsScreen(){
 	this.info = {
 		title: "Wheelsdebug",
 		preferredSize: [260,"auto"],
-		streams: ["vehicleInfo"]
+		streams: ["wheelInfo"]
 	};
 }
 
@@ -14,7 +14,7 @@ WheelsScreen.prototype.initialize = function(){
 };
 
 WheelsScreen.prototype.update = function(streams){
-	value = streams['vehicleInfo'][0];
+	value = streams['wheelInfo'];
 	/* value format:
 	0  wd.name
 	1  wd.radius

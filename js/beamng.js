@@ -216,8 +216,10 @@ $(document).ready(function() {
 		if(!debugObjectData) {
 			$('#objdebug').html();
 			$('#objdebug').css('visibility', 'hidden');
+			streamRemove('electrics');
 		} else {
 			$('#objdebug').css('visibility', 'visible');
+			streamAdd('electrics');
 		}
 		return true;
 	});

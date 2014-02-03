@@ -2,7 +2,7 @@ function Tacho(){
 	this.info = {
 		title: "fancy Tacho",
 		preferredSize: [400,380],
-		streams: ["vehicleInfo", "electrics"]
+		streams: ["engineInfo","wheelInfo", "electrics"]
 	};
 
 	this.hudMemoryCanvas = {};
@@ -40,8 +40,8 @@ Tacho.prototype.resize = function(){
 
 Tacho.prototype.update = function(streams){
 //	$(this.rootElement).html("rpm: "+streams["vehicleInfo"][1][4].toFixed() + "<br /> Speed: "+(streams["electrics"]["wheelspeed"]*3.6).toFixed());//streams["vehicleinfo"]);
-	wheelInfo = streams['vehicleInfo'][0];
-	engineInfo = streams['vehicleInfo'][1];
+	wheelInfo = streams['wheelInfo'];
+	engineInfo = streams['engineInfo'];
 
 		this.hudUpdateRPM();
 
