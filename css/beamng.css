@@ -3,11 +3,11 @@ html,body{
 	width:100%;
 	padding:0px;
 	margin:0px;
-	background-color:black;
-	/*
+/*	background-color:black; */
+	
 	background: transparent !important;
 	background-image: url('') !important;
-	*/
+	
 }
 
 * {
@@ -125,9 +125,9 @@ html,body{
 }
 
 .ui-page-theme-a {
-	/*
+	
 	background:transparent !important;
-	*/
+	
 }
 
 /* remove text thingy on the slider */
