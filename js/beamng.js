@@ -3,8 +3,6 @@ var objectData = {};
 
 var state = {'changes':[], 'streams':{}};
 
-var streamCount = {};
-
 var debugObjectData = false;
 
 var sparkPoints = {};
@@ -285,38 +283,27 @@ function serializeToLua(obj)
 
 function streamAdd(streamName)
 {
-	if(streamCount[streamName]===undefined)
-	{
-		streamCount[streamName] = 0;
-	}
-	console.log("Stream added: "+streamName+", Count: "+(streamCount[streamName]+1));
-	streamCount[streamName] += 1;
-	if(streamCount[streamName] == 1)
-	{
-		// stream was inactive, activate stream
-		console.log("Stream activated: "+streamName);
+	if (state.streams[streamName]===undefined){
 		state.streams[streamName] = 1;
-		state['changes'].push('streams');
-		sendObjectState();
+	}else{
+		state.streams[streamName] += 1;
 	}
+	state['changes'].push('streams');
+	sendObjectState();
+	console.log("Stream '"+streamName+"' added, Count: "+state.streams[streamName]);
+	console.log(JSON.stringify(state.streams));
 }
 
 function streamRemove(streamName)
 {
-	console.log("Stream removed: "+streamName+", Count: "+(streamCount[streamName]-1));
-	streamCount[streamName] -=1 ;
-	if(streamCount[streamName] == 0)
-	{
-		console.log("Stream disactivated: "+streamName);
-		// stream was active, disactivate stream
+	state.streams[streamName] -= 1;
+	if (state.streams[streamName] < 0) {
 		state.streams[streamName] = 0;
+	}else{
 		state['changes'].push('streams');
 		sendObjectState();
 	}
-	else if(streamCount[streamName] < 0)
-	{
-		streamCount[streamName] = 0;
-	}
+	console.log("Stream '"+streamName+"' removed, Count: "+state.streams[streamName]);
 }
 
 

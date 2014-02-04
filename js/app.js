@@ -209,7 +209,7 @@ var AppEngine = {
 			var streamList = {};
 			for(var i=0; i<app.info.streams.length; i++){
 				stream = app.info.streams[i];
-					if(state.streams[stream] == 1){
+					if(state.streams[stream] > 0){
 						streamList[stream] = data[stream];
 					}
 				}
