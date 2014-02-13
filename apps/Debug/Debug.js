@@ -16,7 +16,7 @@ Debug.prototype.initialize = function(){
 };
 
 Debug.prototype.update = function(streams){
-	if(streams["torqueCurve"]!= 0){
+	if(streams["torqueCurve"]!== undefined){
 		console.log(streams["torqueCurve"]);
 		this.torqueCurve = streams["torqueCurve"][0];
 		this.hpCurve = streams["torqueCurve"][1];
