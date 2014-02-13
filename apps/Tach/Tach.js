@@ -1,12 +1,13 @@
 function Tach(){
 	this.info = {
 		title: "Tacho",
-		preferredSize: [300,"auto"],
+		preferredSize: [90,70],
 		streams: ["engineInfo", "electrics"]
 	};
 }
 
 Tach.prototype.initialize = function(){
+	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
 };
 
 Tach.prototype.update = function(streams){
@@ -15,4 +16,4 @@ Tach.prototype.update = function(streams){
 
 Tach.prototype.resize = function(){
 	console.log("Tach resize");
-}
+};

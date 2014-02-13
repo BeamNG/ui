@@ -7,6 +7,7 @@ function Stats(){
 }
 
 Stats.prototype.initialize = function(){
+	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
 };
 
 Stats.prototype.update = function(streams){
