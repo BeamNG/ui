@@ -160,22 +160,29 @@ var AppEngine = {
 	installedApps : [],
 	loadedApps : [],
 	editMode : false,
+	preset : undefined,
+	runningRequests : 0,
 
 	initialize : function(){
 
 
 		installedApps = ["Tacho","WheelsScreen","Tach", "Debug","Stats"]; // Call a beamNG function later
 
-		$.ajaxPrefilter( "json script", function( options ) {
+		$.ajaxPrefilter( function( options ) {
 			options.crossDomain = true;
+			options.cache = false;
 		});
 
 		// Load all apps
 		for (var i = 0; i<installedApps.length;i++) {
-			console.warn("Appnr: "+i);
 			app = installedApps[i];
-			this._loadAppJs(app);
+			this._loadAppJs(app,false);
 		}
+
+		// load persistance
+		this._loadPersistance();
+
+		AppEngine.loadPreset("default");
 
 		//$('.ui-resizable-handle').addClass('.ui-resizable-disabled');
 		//$( "div.ui-dialog" ).resizable('disable');
@@ -190,12 +197,12 @@ var AppEngine = {
 		});
 	},
 
-	_loadAppJs : function(app){
+	_loadAppJs : function(app,load,position,size){
 			$.getScript( "apps/"+app+"/"+app+".js", function( data, textStatus, jqxhr) {
-				console.log( "loading app '"+app+"'" );
-				console.log( textStatus ); // Success
 				AppEngine.loadedApps.push(app);
-				AppEngine.loadApp(app);
+				if(load === true){
+					AppEngine.loadApp(app,position,size);
+				}
 			});
 	},
 
@@ -233,25 +240,80 @@ var AppEngine = {
 		}
 	},
 
-	loadApp : function(app){
+	loadApp : function(app, position, size){
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
+				console.log("Adding app "+app+" to Screen");
 				$('body').append('<div id="app'+app+'"></div>');
 				var la = $('#app'+app).app({ app: new window[app]() });
 				la.parents('.ui-dialog').draggable('option', 'snap', true);
 //				la.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
+
+				if(position !== undefined){
+					$('#app'+app).app("option","position",position);
+				}
+				if(size !== undefined){
+					console.log("size defined: "+size);
+					$('#app'+app).app("option","width",size[0]);
+					$('#app'+app).app("option","height",size[1]);
+				}
+
 				return;
 			}
 		}
 		// App wasn't loaded before, getting the js
-		this._loadAppJs(app);
+		this._loadAppJs(app,true,position,size);
 	},
 
 	loadPreset : function(preset){
+		if(this.persistance.presets[preset] !== undefined){
+			this.preset = preset;
+			// preset exists :)
+			console.log("loading preset '"+preset+"'");
+			$.each(this.persistance.presets[preset], function(index, app) {
+				AppEngine.loadApp(app.name, app.position, app.size);
+			});
+		}
+	},
+
+	savePreset : function(){
 
 	},
 
-	savePreset : function(preset){
-
+	_loadPersistance : function(){
+		if (localStorage.getItem("AppEngine") !== null) {
+			this.persistance = JSON.parse(localStorage.getItem("AppEngine"));
+			AppEngine.loadPreset("default");
+		} else{
+//			$.get('apps/default.json', undefined, function(data, textStatus, jqxhr) {
+//				AppEngine.presets = JSON.parse(data);
+//				AppEngine.loadPreset("default");
+//			}, "script");
+//			doesn't work (chrome bug), hardcoded for now:
+			this.persistance = JSON.parse('{"presets":{"default":[{"name":"Tacho","position":[900,800],"size":[300,300]},{"name":"WheelsScreen","position":[30,200]},{"name":"Stats","position":[300,50]}]}}');
+			this._savePersistance();
+		}
 	},
+
+	_savePersistance : function(){
+		localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
+	}
 };
+
+/*
+Next Steps:
+
+Overhaul Loading Process
+- split in states
+- make loading "syncronous"
+
+Persistance
+- Save app/position/size - chances
+
+App-persistance
+- Options for Apps
+
+"Appstore"
+- Gui to add apps
+
+*/
