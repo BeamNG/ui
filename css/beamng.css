@@ -87,6 +87,7 @@ html,body{
 	margin:0;
 	padding:0;
 	border:0;
+	z-index:5000;
 }
 
 .top-left{
@@ -96,6 +97,7 @@ html,body{
 	margin:0;
 	padding:0;
 	border:0;
+	z-index:5000;
 }
 
 .bottom-right{
@@ -105,6 +107,7 @@ html,body{
 	margin:0;
 	padding:0;
 	border:0;
+	z-index:5000;
 }
 
 
