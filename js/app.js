@@ -102,7 +102,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			resize:"resize",
 		});
 
-		$(this.element).parents('.ui-dialog').addClass("app");
+		$(this.element).parents('.ui-dialog').addClass("ui-app");
 		this.dialogParent = $(this.element).parents('.ui-dialog');
 	},
 	_destroy:function() {
@@ -123,10 +123,10 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 	_setEditMode: function( value ){
 		if(value){
-			this.element.addClass('dialog-edit-content');
+			this.element.addClass('ui-app-editmode');
 			this.dialogParent.children('.ui-dialog-titlebar').show();
 		}else{
-			this.element.removeClass('dialog-edit-content');
+			this.element.removeClass('ui-app-editmode');
 			this.dialogParent.children('.ui-dialog-titlebar').hide();
 		}
 	},
@@ -153,7 +153,7 @@ $(document).ready(function() {
 // Appengine ------------------------------------------------------
 
 var AppEngine = {
-	appList : [],
+	runningApps : [],
 	installedApps : [],
 	loadedApps : [],
 	editMode : false,
@@ -204,7 +204,7 @@ var AppEngine = {
 		}
 
 		// changing appstates
-		$.each(this.appList, function(index, app){
+		$.each(this.runningApps, function(index, app){
 			app.rootElement.app("option", "editMode", AppEngine.editMode);
 		});
 	},
@@ -223,8 +223,8 @@ var AppEngine = {
 	},
 
 	update : function(data){
-		for(var j = 0; j<this.appList.length; j++){
-			var app = this.appList[j];
+		for(var j = 0; j<this.runningApps.length; j++){
+			var app = this.runningApps[j];
 			var streamList = {};
 			for(var i=0; i<app.info.streams.length; i++){
 				stream = app.info.streams[i];
@@ -237,7 +237,7 @@ var AppEngine = {
 		},
 
 	registerApp : function(app){
-		this.appList.push(app);
+		this.runningApps.push(app);
 		//Adding streams
 		for(var i=0; i<app.info.streams.length; i++){
 			streamAdd(app.info.streams[i]);
@@ -245,7 +245,7 @@ var AppEngine = {
 	},
 
 	unregisterApp : function(app){
-		this.appList.splice(this.appList.indexOf(app),1);
+		this.runningApps.splice(this.runningApps.indexOf(app),1);
 		// removing streams
 		for(var i=0; i<app.info.streams.length; i++){
 			streamRemove(app.info.streams[i]);
@@ -293,21 +293,23 @@ var AppEngine = {
 	savePreset : function(){
 		// empty Preset
 		this.persistance.presets[this.preset] = [];
-
-		$.each(this.appList, function(index, app) {
+		console.log("Saving Preset "+this.preset);
+		$.each(this.runningApps, function(index, app) {
 			
 			appData = {};
 			appData.name = app.constructor.name;
 			appData.position = app.rootElement.app("option","position");
 			appData.size = [app.rootElement.app("option","width"),app.rootElement.app("option","height")];
 
-			console.log(JSON.stringify(appData));
+			console.log("   -  "+JSON.stringify(appData));
 
 
 			AppEngine.persistance.presets[AppEngine.preset].push(appData);
 		});
 
 		this._savePersistance();
+
+		console.log("done.");
 	},
 
 	_loadPersistance : function(){
