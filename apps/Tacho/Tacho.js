@@ -16,36 +16,42 @@ function Tacho(){
 }
 
 Tacho.prototype.initialize = function(){
-	$(this.rootElement).append('<canvas id="hudCanvas"></canvas>');
+	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 
-	$("#hudCanvas").css({
+	this.canvas.css({
 		width: '100%',
 		height: '100%'
 	});
 
-	c = $("#hudCanvas")[0];
+	c = this.canvas[0];
 	c.width = 300;
 	c.height = 300;
 
 	this.hudAddMemoryCanvas('background');
+	this.hudUpdateRPM();
+	this.resize();
 };
 
 Tacho.prototype.resize = function(){
-	//console.log($(this.rootElement).height());
-	//var c = $("#hudCanvas")[0];
-	//c.width = $(this.rootElement).width();
-	//c.height = $(this.rootElement).height();
-	//this.update();
-}
+	// canvas
+	c = this.canvas[0];
+	c.width = this.canvas.width();
+	c.height = this.canvas.height();
+
+	ctx = c.getContext('2d');
+	ctx.restore();
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	ctx.scale(this.canvas.width()/300,this.canvas.height()/300);
+	ctx.save();
+};
 
 Tacho.prototype.update = function(streams){
-//	$(this.rootElement).html("rpm: "+streams["vehicleInfo"][1][4].toFixed() + "<br /> Speed: "+(streams["electrics"]["wheelspeed"]*3.6).toFixed());//streams["vehicleinfo"]);
 	wheelInfo = streams['wheelInfo'];
 	engineInfo = streams['engineInfo'];
 
 		this.hudUpdateRPM();
 
-	ctx = $("#hudCanvas")[0].getContext('2d');
+	ctx = this.canvas[0].getContext('2d');
 
 	ctx.drawImage(this.hudMemoryCanvas['background'],0,0);
 
@@ -82,7 +88,7 @@ Tacho.prototype.update = function(streams){
 
 	// gear
 
-	if (engineInfo[5] == 0)
+	if (engineInfo[5] === 0)
 	{
 		gear = "N";
 	}else if(engineInfo[5] < 0)
@@ -157,7 +163,7 @@ Tacho.prototype.hudUpdateRPM = function()
 	{
 		this.hudRpmInfo.bigStep = 100000;
 		this.hudRpmInfo.smallStep = 20000;
-		this.hudRpmInfo.numberFactor = 0.0001;	
+		this.hudRpmInfo.numberFactor = 0.0001;
 	}
 		
 	this.hudDrawBackground();
@@ -226,9 +232,9 @@ Tacho.prototype.hudDrawBackground = function()
 	
 	ctx.translate(150,150);
 	ctx.rotate(rpmConverter.convertValue(0));
-	for(var i = 0 ; i<=engineInfo[1]; i+=this.hudRpmInfo.smallStep)
+	for(var i = 0 ; i <= engineInfo[1]; i += this.hudRpmInfo.smallStep)
 	{
-		if(i % this.hudRpmInfo.bigStep==0)
+		if(i % this.hudRpmInfo.bigStep === 0)
 		{
 			ctx.fillText((i*this.hudRpmInfo.numberFactor).toFixed(),0,-118);
 			ctx.beginPath();
@@ -246,11 +252,11 @@ Tacho.prototype.hudDrawBackground = function()
 			ctx.moveTo(0,-105);
 			ctx.lineTo(0,-100);
 			ctx.stroke();
-			ctx.closePath();			
+			ctx.closePath();
 		}
 		ctx.rotate(rpmConverter.convertLength(this.hudRpmInfo.smallStep));
 	}
-	ctx.restore();	
+	ctx.restore();
 };
 
 
