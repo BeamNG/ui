@@ -283,6 +283,12 @@ var AppEngine = {
 		if(this.persistance.presets[preset] !== undefined){
 			this.preset = preset;
 			// preset exists :)
+
+			// destroying old apps
+			$.each(this.runningApps, function(index, app) {
+				app.rootElement.app("close");
+			});
+
 			console.log("loading preset '"+preset+"'");
 			$.each(this.persistance.presets[preset], function(index, app) {
 				AppEngine.loadApp(app.name, app.position, app.size);
@@ -315,7 +321,6 @@ var AppEngine = {
 	_loadPersistance : function(){
 		if (localStorage.getItem("AppEngine") !== null) {
 			this.persistance = JSON.parse(localStorage.getItem("AppEngine"));
-			AppEngine.loadPreset("default");
 		} else{
 //			$.get('apps/default.json', undefined, function(data, textStatus, jqxhr) {
 //				AppEngine.presets = JSON.parse(data);
@@ -325,6 +330,7 @@ var AppEngine = {
 			this.persistance = JSON.parse('{"presets":{"default":[{"name":"Tacho","position":[900,800],"size":[300,300]},{"name":"WheelsScreen","position":[30,200]},{"name":"Stats","position":[300,50]}]}}');
 			this._savePersistance();
 		}
+		console.log(JSON.stringify(this.persistance));
 	},
 
 	_savePersistance : function(){
