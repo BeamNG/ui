@@ -98,9 +98,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Initialize App
 		this.app.initialize();
 
-		// Register App
-		AppEngine.registerApp(this.app);
-
 		this._on(this.element.parent(), {
 			resize:"resize",
 		});
@@ -164,7 +161,6 @@ var AppEngine = {
 	runningRequests : 0,
 
 	initialize : function(){
-
 		// adding blendingdiv for editingmode
 		$("<div id='appengine-blending'></div>").css({
 			width: '100%',
@@ -180,7 +176,6 @@ var AppEngine = {
 			options.crossDomain = true;
 			options.cache = false;
 		});
-
 		// Load all apps
 		for (var i = 0; i<installedApps.length;i++) {
 			app = installedApps[i];
@@ -191,10 +186,6 @@ var AppEngine = {
 		this._loadPersistance();
 
 		AppEngine.loadPreset("default");
-
-		//$('.ui-resizable-handle').addClass('.ui-resizable-disabled');
-		//$( "div.ui-dialog" ).resizable('disable');
-
 	},
 
 	toggleEditMode: function() {
@@ -205,6 +196,11 @@ var AppEngine = {
 			$('#appengine-blending').show();
 		} else{
 			$('#appengine-blending').hide();
+		}
+
+		if (!(this.editMode)){
+			// Saving preset
+			this.savePreset();
 		}
 
 		// changing appstates
@@ -259,20 +255,22 @@ var AppEngine = {
 	loadApp : function(app, position, size){
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
+				appInstance = new window[app]();
 				console.log("Adding app "+app+" to Screen");
-				$('body').append('<div id="app'+app+'"></div>');
-				var la = $('#app'+app).app({ app: new window[app]() });
-				la.parents('.ui-dialog').draggable('option', 'snap', true);
-//				la.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
-
+				appElement = $('<div class="app '+app+'"></div>').appendTo($('body'));
+				appElement.app({ app: appInstance });
+				appElement.parents('.ui-dialog').draggable('option', 'snap', true);
+//				appElement.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
 				if(position !== undefined){
-					$('#app'+app).app("option","position",position);
+					appElement.app("option","position",position);
 				}
 				if(size !== undefined){
 					console.log("size defined: "+size);
-					$('#app'+app).app("option","width",size[0]);
-					$('#app'+app).app("option","height",size[1]);
+					appElement.app("option","width",size[0]);
+					appElement.app("option","height",size[1]);
 				}
+
+				this.registerApp(appInstance);
 
 				return;
 			}
@@ -293,7 +291,23 @@ var AppEngine = {
 	},
 
 	savePreset : function(){
+		// empty Preset
+		this.persistance.presets[this.preset] = [];
 
+		$.each(this.appList, function(index, app) {
+			
+			appData = {};
+			appData.name = app.constructor.name;
+			appData.position = app.rootElement.app("option","position");
+			appData.size = [app.rootElement.app("option","width"),app.rootElement.app("option","height")];
+
+			console.log(JSON.stringify(appData));
+
+
+			AppEngine.persistance.presets[AppEngine.preset].push(appData);
+		});
+
+		this._savePersistance();
 	},
 
 	_loadPersistance : function(){
