@@ -165,6 +165,14 @@ var AppEngine = {
 
 	initialize : function(){
 
+		// adding blendingdiv for editingmode
+		$("<div id='appengine-blending'></div>").css({
+			width: '100%',
+			height: '100%',
+			'background-color': 'rgba(0,0,0,0.5)',
+			'z-index': '-250'
+		}).hide().appendTo('body');
+
 
 		installedApps = ["Tacho","WheelsScreen","Tach", "Debug","Stats"]; // Call a beamNG function later
 
@@ -192,6 +200,14 @@ var AppEngine = {
 	toggleEditMode: function() {
 		this.editMode = !this.editMode;
 
+		// backgroundoverlay
+		if (this.editMode) {
+			$('#appengine-blending').show();
+		} else{
+			$('#appengine-blending').hide();
+		}
+
+		// changing appstates
 		$.each(this.appList, function(index, app){
 			app.rootElement.app("option", "editMode", AppEngine.editMode);
 		});
@@ -302,6 +318,10 @@ var AppEngine = {
 
 /*
 Next Steps:
+
+App-positioning
+- reacting on resolutionchange
+- binding app to windowedge
 
 Overhaul Loading Process
 - split in states
