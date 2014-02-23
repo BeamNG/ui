@@ -1,8 +1,0 @@
-{
-	"presets" : {
-		"default" : [
-			{"appname": "Tacho", "position": [-100,-100], "size": [400,500]},
-			{"appname": "WheelsScreen", "position": [50,50]}
-		]
-	}
-}
