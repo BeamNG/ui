@@ -170,22 +170,18 @@ var AppEngine = {
 		}).hide().appendTo('body');
 
 
-		installedApps = ["Tacho","WheelsScreen","Tach", "Debug","Stats"]; // Call a beamNG function later
+		this.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug"]; // Call a beamNG function later
 
-		$.ajaxPrefilter( function( options ) {
-			options.crossDomain = true;
-			options.cache = false;
-		});
 		// Load all apps
-		for (var i = 0; i<installedApps.length;i++) {
-			app = installedApps[i];
+		for (var i = 0; i<this.installedApps.length;i++) {
+			app = this.installedApps[i];
 			this._loadAppJs(app,false);
 		}
 
 		// load persistance
 		this._loadPersistance();
 
-		AppEngine.loadPreset("default");
+//		AppStore.initialize();
 	},
 
 	toggleEditMode: function() {
@@ -219,7 +215,7 @@ var AppEngine = {
 	},
 
 	_setInstalledApps : function(appList){
-		installedApps = appList;
+		this.installedApps = appList;
 	},
 
 	update : function(data){
@@ -279,20 +275,33 @@ var AppEngine = {
 		this._loadAppJs(app,true,position,size);
 	},
 
+	addPreset : function(preset){
+		this.persistance.presets[preset] = {};
+	},
+
+	deletePreset : function(preset){
+		if(typeof this.persistance.presets[preset] !== undefined){
+			this.persistance.presets[preset] = undefined;
+		}
+	},
+
 	loadPreset : function(preset){
 		if(this.persistance.presets[preset] !== undefined){
+			console.log("Preset exists");
 			this.preset = preset;
 			// preset exists :)
 
 			// destroying old apps
+			console.log("destroying old apps");
 			$.each(this.runningApps, function(index, app) {
 				app.rootElement.app("close");
 			});
-
+			console.log("done");
 			console.log("loading preset '"+preset+"'");
 			$.each(this.persistance.presets[preset], function(index, app) {
 				AppEngine.loadApp(app.name, app.position, app.size);
 			});
+			console.log("done");
 		}
 	},
 
@@ -307,7 +316,7 @@ var AppEngine = {
 			appData.position = app.rootElement.app("option","position");
 			appData.size = [app.rootElement.app("option","width"),app.rootElement.app("option","height")];
 
-			console.log("   -  "+JSON.stringify(appData));
+//			console.log("   -  "+JSON.stringify(appData));
 
 
 			AppEngine.persistance.presets[AppEngine.preset].push(appData);
@@ -321,16 +330,18 @@ var AppEngine = {
 	_loadPersistance : function(){
 		if (localStorage.getItem("AppEngine") !== null) {
 			this.persistance = JSON.parse(localStorage.getItem("AppEngine"));
+			AppEngine.loadPreset("default");
 		} else{
-//			$.get('apps/default.json', undefined, function(data, textStatus, jqxhr) {
-//				AppEngine.presets = JSON.parse(data);
-//				AppEngine.loadPreset("default");
-//			}, "script");
-//			doesn't work (chrome bug), hardcoded for now:
-			this.persistance = JSON.parse('{"presets":{"default":[{"name":"Tacho","position":[900,800],"size":[300,300]},{"name":"WheelsScreen","position":[30,200]},{"name":"Stats","position":[300,50]}]}}');
-			this._savePersistance();
+			$.getJSON('apps/persistance.json', function(data) {
+				console.log( "worked");
+				AppEngine.persistance = data;
+				AppEngine._savePersistance();
+				AppEngine.loadPreset("default");
+			}).fail(function(data) {
+				console.log( "error" );
+				console.log( JSON.stringify(data) );
+			});
 		}
-		console.log(JSON.stringify(this.persistance));
 	},
 
 	_savePersistance : function(){
@@ -338,8 +349,24 @@ var AppEngine = {
 	}
 };
 
+var AppStore = {
+	initialize: function(){
+		this.mainDiv = $("<div id='AppStore'>Teeeeeeeeeeest</div>").css({
+			width: '80%',
+			height: '80%',
+			
+		});appendTo("body");
+	}
+};
+
 /*
 Next Steps:
+
+Writing additional Apps
+- torquecurve
+- engineinfo
+- convert electrics to app
+- g-meter
 
 App-positioning
 - reacting on resolutionchange
@@ -349,13 +376,10 @@ Overhaul Loading Process
 - split in states
 - make loading "syncronous"
 
-Persistance
-- Save app/position/size - chances
-
 App-persistance
 - Options for Apps
 
-"Appstore"
+"AppStore"
 - Gui to add apps
 
 */

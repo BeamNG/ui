@@ -2,7 +2,7 @@ function Tacho(){
 	this.info = {
 		title: "fancy Tacho",
 		preferredSize: [400,380],
-		streams: ["engineInfo","wheelInfo", "electrics"]
+		streams: ["engineInfo", "electrics"]
 	};
 
 	this.hudMemoryCanvas = {};
@@ -46,7 +46,6 @@ Tacho.prototype.resize = function(){
 };
 
 Tacho.prototype.update = function(streams){
-	wheelInfo = streams['wheelInfo'];
 	engineInfo = streams['engineInfo'];
 
 		this.hudUpdateRPM();

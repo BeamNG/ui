@@ -65,20 +65,38 @@ $(document).ready(function() {
 		$("#debugConsole, #consoleShow").toggle();
 	});
 
-	$("#debugConsole input").keyup(function(event) {
-		if(event.keyCode == 13){
+	$("#debugConsole input").first().keyup(function(event) {
+		if(event.keyCode == 13){ // Enter
+			console._inputCounter = 0;
 			input = $("#debugConsole input").val();
+			console._inputs.push(input);
 			$("#debugConsole input").val('');
 			console._addMessage("io",input);
+			var output;
 			try{
 				output = eval(input);
+
+				try{
+					console._addMessage("io",">"+JSON.stringify(output));
+				}catch(error){
+					console._addMessage("io",">"+output);
+				}
 			}catch(error){
 				console.error(error.name + ":" + error.message);
 			}
-			try{
-				console._addMessage("io",">"+JSON.stringify(eval(input)));
-			}catch(error){
-				console._addMessage("io",">"+eval(input));
+		}else if(event.keyCode == 38){ // arrow up
+			console._inputCounter += 1;
+			if (console._inputCounter > console._inputs.length){
+				console._inputCounter = console._inputs.length;
+			}
+			$("#debugConsole input").val(console._inputs[console._inputs.length-console._inputCounter]);
+		}else if(event.keyCode == 40){ // arrow down
+			console._inputCounter -= 1;
+			if(console._inputCounter <= 0){
+				console._inputCounter = 0;
+				$("#debugConsole input").val("");
+			}else{
+				$("#debugConsole input").val(console._inputs[console._inputs.length-console._inputCounter]);
 			}
 		}
 	});
@@ -86,6 +104,8 @@ $(document).ready(function() {
 
 
 console = {
+	_inputs : [],
+	_inputCounter : 0,
 	log : function(txt)
 	{
 		oldconsole.log(txt);

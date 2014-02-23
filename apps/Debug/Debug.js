@@ -26,9 +26,13 @@ Debug.prototype.update = function(streams){
 
 
 	rpm = streams["engineInfo"][4];
-//	$(this.rootElement).html("RPM: "+rpm+"<br>Torque: "+streams["torqueCurve"][Math.floor(rpm/9.5493)]);
+	$(this.rootElement).html("RPM: "+toInt(rpm)+"<br>Torque: "+toInt(this.torqueCurve[toInt(rpm)])+"<br>HP: "+toInt(this.hpCurve[toInt(rpm)]));
 };
 
 Debug.prototype.resize = function(){
 	console.log("Debug resize");
+};
+
+function toInt(val){
+	return val | 0;
 }
