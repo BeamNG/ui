@@ -170,7 +170,7 @@ var AppEngine = {
 		}).hide().appendTo('body');
 
 
-		this.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug"]; // Call a beamNG function later
+		this.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve"]; // Call a beamNG function later
 
 		// Load all apps
 		for (var i = 0; i<this.installedApps.length;i++) {
@@ -316,7 +316,7 @@ var AppEngine = {
 			appData.position = app.rootElement.app("option","position");
 			appData.size = [app.rootElement.app("option","width"),app.rootElement.app("option","height")];
 
-//			console.log("   -  "+JSON.stringify(appData));
+			console.log("   -  "+JSON.stringify(appData));
 
 
 			AppEngine.persistance.presets[AppEngine.preset].push(appData);

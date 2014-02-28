@@ -21,12 +21,12 @@ Debug.prototype.update = function(streams){
 		this.torqueCurve = streams["torqueCurve"][0];
 		this.hpCurve = streams["torqueCurve"][1];
 	}
-	ctx = this.canvas.getContext("2d");
 	
 
-
-	rpm = streams["engineInfo"][4];
-	$(this.rootElement).html("RPM: "+toInt(rpm)+"<br>Torque: "+toInt(this.torqueCurve[toInt(rpm)])+"<br>HP: "+toInt(this.hpCurve[toInt(rpm)]));
+	if(this.torqueCurve !== undefined){
+		rpm = streams["engineInfo"][4];
+		$(this.rootElement).html("RPM: "+toInt(rpm)+"<br>Torque: "+toInt(this.torqueCurve[toInt(rpm)])+"<br>HP: "+toInt(this.hpCurve[toInt(rpm)]));		
+	}
 };
 
 Debug.prototype.resize = function(){
