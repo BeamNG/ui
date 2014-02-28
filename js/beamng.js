@@ -10,9 +10,7 @@ var sparkPoints = {};
 function oUpdate(v)
 {
 	objectData = v;
-	//$('#speed').html('speed: ' + sprintf("%0.3f", objectData.electrics.airspeed * 3.6) + ' kph / ' + sprintf("%0.1f", objectData.electrics.airspeed * 2.23694) + ' mph<br/>rpm: ' + objectData.electrics.rpm.toFixed(0));
 
-	streamUpdate();
 	AppEngine.update(v);
 }
 
@@ -166,26 +164,8 @@ function engineScreenUpdate(v)
 
 	var s = '';
 
-	$('#engineInfo_data').html(s);
+//	$('#engineInfo_data').html(s);
 
-}
-
-function streamReceived(streamName, value)
-{
-//	console.log("got stream data: " + streamName + " = " + value);
-	if(streamName == 'vehicleInfo') {
-		wheelsScreenUpdate(value[0]);
-		engineScreenUpdate(value[1]);
-	}
-}
-
-function streamUpdate()
-{
-	for(var k in state.streams) {
-		if(k in objectData) {
-			streamReceived(k, objectData[k]);
-		}
-	}
 }
 
 
@@ -221,12 +201,6 @@ $(document).ready(function() {
 		}
 		return true;
 	});
-	
-	// info panel
-	collapsibleStreamEventHandler('wheelInfo', 'vehicleInfo');
-	collapsibleStreamEventHandler('leftMenu', 'vehicleInfo');
-	collapsibleStreamEventHandler('engineInfo', 'vehicleInfo');
-	//beamng.sendActiveObjectLua('gui.register()');
 
 	setTimeout(updateSparcLines, 10);
 });

@@ -23,7 +23,7 @@
 	
 	<script src="js/loadindicator.js"></script>
 	<script src="js/app.js"></script>
-	<script src="js/streamdebug.js"></script>
+	<script src="js/debug.js"></script>
 
 	
 </head>
@@ -131,21 +131,28 @@
 <div id="leftMenu" data-role="panel" data-position-fixed="true" data-animate="false" data-position="left" data-display="overlay" data-theme="a" data-swipe-close="false" data-dismissible="false">
 
 <div data-role="header" >
-	<h3>Menu</h3>
+	<h3>HTML-Debug</h3>
 	<a href="#menuPanel" data-rel="close" class="ui-btn-left" data-icon="delete" data-iconpos="notext" data-direction="reverse">Close</a> 
 </div>
 
-<div id="wheelInfo" data-role="collapsible" data-theme="a" data-mini="true" >
-	<h3>Wheel Overview</h3>
-	<canvas id='drawCanvas' class='wheelcanvas'></canvas>
+<div data-role="collapsible" data-theme="a" data-mini="true" >
+	<h3>Console</h3>
+	<div id="console"></div>
 </div>
 
 <div id="engineInfo" data-role="collapsible" data-theme="a" data-mini="true" >
-	<h3>Engine Overview</h3>
-	<div id="rpmGauge" class="engineGauge"></div>
-	<div id="engineInfo_data"></div>
+	<h3>Streams</h3>
+	<div id="streamDebug"></div>
 </div>
 
+<div data-role="collapsible" data-theme="a" data-mini="true" >
+	<h3>AppEngine</h3>
+	Change Preset:
+	<div id="presetdebug"></div>
+	<hr>
+	Spawn App:
+	<div id="appdebug"></div>
+</div>
 
 </div>
 

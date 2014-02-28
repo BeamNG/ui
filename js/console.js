@@ -1,24 +1,16 @@
 oldconsole = window.console
 
 $(document).ready(function() {
-	$("body").append("<div id='debugConsole'>Console<hr/><div id='consoleOutput'></div><div id='consoleInput'><input /></div><div id='consoleMinimize'>_</div></div><div id='consoleShow'>show Console</div>");
+	$("#console").append("<div id='debugConsole'><div id='consoleOutput'></div><div id='consoleInput'><input /></div></div>");
 
 	$("head").append('<style> \
-		#debugConsole, #consoleMinimize, #consoleShow { \
-			background: white; \
-		} \
 		#debugConsole { \
-			position: absolute; \
-			bottom: 20px; \
-			left: 2px; \
 			border: 1px solid black; \
 			font-family: monospace; \
-			padding: 2px; \
 		} \
 		#debugConsole #consoleOutput { \
 			overflow: auto; \
 			max-width: 600px; \
-			min-width: 400px; \
 			max-height: 400px; \
 		} \
 		#debugConsole input { \
@@ -26,22 +18,6 @@ $(document).ready(function() {
 			font-family: monospace; \
 			border-bottom: 1px solid black; \
 			width: 100%; \
-		} \
-		#consoleMinimize, #consoleShow { \
-			border: 1px solid black; \
-			display: inline; \
-			position: absolute; \
-			padding: 2px; \
-		} \
-		#consoleMinimize { \
-			top : 2px; \
-			right: 2px; \
-		} \
-		#consoleShow { \
-			bottom : 20px; \
-			left: 2px; \
-			display: none; \
-			font-family: monospace; \
 		} \
 		#consoleOutput .log { \
 			border-left: 5px solid grey; \
