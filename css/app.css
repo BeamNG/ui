@@ -3,7 +3,15 @@
 .ui-app .ui-dialog-content
 {
 	overflow: hidden;
+	padding: 3px;
 }
+
+.ui-app .opaque
+{
+	background-color: RGBA(255,255,255,0.9);
+	border-radius: 5px;
+}
+
 
 .ui-app .ui-dialog-titlebar
 {

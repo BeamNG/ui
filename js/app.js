@@ -170,7 +170,7 @@ var AppEngine = {
 		}).hide().appendTo('body');
 
 
-		this.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve"]; // Call a beamNG function later
+		this.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug"]; // Call a beamNG function later
 
 		// Load all apps
 		for (var i = 0; i<this.installedApps.length;i++) {

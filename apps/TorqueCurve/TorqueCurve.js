@@ -14,13 +14,12 @@ TorqueCurve.prototype.initialize = function(){
 	}).appendTo(this.rootElement);
 
 		this.plot = $.plot(this.plotarea, [
-			{label:"Torque",data:[[0,0],[0.5,1]]},
-			{label:"Power",data:[[0,0],[1,1]]}
+			{label:"Waiting for Data",data:[[0,0]]},
 			],{
 				legend: { position: "se" },
-				series: { shadowSize: 0 },
 				xaxis: { min: 0 },
 				yaxis: { min:0 },
+				yaxes: [ {}, {position: "right"} ],
 				crosshair: { mode: "x" }
 			});
 		this.plot.lockCrosshair({x:0});
@@ -44,9 +43,13 @@ TorqueCurve.prototype.update = function(streams){
 			powerData.push([i,this.powerCurve[i]]);
 		};
 
-		this.plot.setData([{label:"Torque",data:torqueData},{label:"Power",data:powerData}]);
+		this.plot.setData([
+			{label:"Torque",data:torqueData,color:"#38659D"},
+			{label:"Power",data:powerData,color:"#E08E1B",yaxis:2}]);
 		this.plot.setupGrid();
 		this.plot.draw();
+		$(".flot-y1-axis").css('text-shadow', '0 0 0.5px #38659D');
+		$(".flot-y2-axis").css('text-shadow', '0 0 0.5px #E08E1B');
 	}
 	
 
