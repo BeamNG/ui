@@ -56,10 +56,8 @@ function filledArc(ctx, x, y, r, w, v, c)
 	ctx.beginPath();
 	var rads = v * 2 * Math.PI;
 	var reverse = (v < 0);
-	ctx.arc(x,y,r  , 1.5 * Math.PI, 1.5 * Math.PI + rads, reverse);
-	ctx.arc(x,y,r-w, 1.5 * Math.PI + rads, 1.5 * Math.PI, !reverse);
-	ctx.fillStyle = c;
-	ctx.fill();
+	ctx.arc(x,y,r-(w/2)  , 1.5 * Math.PI, 1.5 * Math.PI + rads, reverse);
+	ctx.lineWidth = w;
 	ctx.strokeStyle = c;
 	ctx.stroke();
 	ctx.closePath();

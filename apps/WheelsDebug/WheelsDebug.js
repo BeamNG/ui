@@ -1,16 +1,15 @@
 function WheelsDebug(){
 	this.info = {
 		title: "Wheelsdebug",
-		preferredSize: [260,"auto"],
+		preferredSize: [230,"auto"],
 		streams: ["wheelInfo"]
 	};
 }
 
 WheelsDebug.prototype.initialize = function(){
-	$(this.rootElement).html("<canvas class='drawingcanvas'></canvas>");
-	this.canvas = $(this.rootElement).children('.drawingcanvas')[0];
+	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.canvas.width=220;
-	$(this.rootElement).css("background-color","white");
+	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
 };
 
 WheelsDebug.prototype.update = function(streams){
@@ -28,13 +27,11 @@ WheelsDebug.prototype.update = function(streams){
 	var ctx = c.getContext('2d');
 
 	// clear
-	ctx.save();
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
 	ctx.clearRect(0, 0, c.width, c.height);
-	ctx.restore();
 	ctx.textAlign = 'center';
-	var fontSize = 12;
-	ctx.font = 'bold ' + fontSize + 'pt monospace';
+	var fontSize = 11;
+	ctx.font = fontSize + 'pt "Lucida Console", Monaco, monospace';
 	var r = 50;
 	var rs = 5;
 	var b = 5;
@@ -43,7 +40,7 @@ WheelsDebug.prototype.update = function(streams){
 	for(var i in value) {
 		var w = value[i];
 		// then draw
-		ctx.fillText('wheel' + w[0], x, y);
+		ctx.fillText(w[0], x, y);
 		filledArc(ctx, x, y, r, 1, 1, '#444444');
 
 		var wheelSpeed = w[3] * w[1] * w[2];

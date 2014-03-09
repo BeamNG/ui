@@ -37,11 +37,14 @@ TorqueCurve.prototype.update = function(streams){
 		torqueData = [];
 		for (var i = 0; i < maxrpm; i+=step) {
 			torqueData.push([i,this.torqueCurve[i]]);
-		};
+		}
+		torqueData.push([maxrpm,this.torqueCurve[maxrpm]]);
+		
 		powerData = [];
 		for (var i = 0; i < maxrpm; i+=step) {
 			powerData.push([i,this.powerCurve[i]]);
-		};
+		}
+		powerData.push([maxrpm,this.powerCurve[maxrpm]]);
 
 		this.plot.setData([
 			{label:"Torque",data:torqueData,color:"#38659D"},
@@ -51,17 +54,11 @@ TorqueCurve.prototype.update = function(streams){
 		$(".flot-y1-axis").css('text-shadow', '0 0 0.5px #38659D');
 		$(".flot-y2-axis").css('text-shadow', '0 0 0.5px #E08E1B');
 	}
-	
 
 	if(this.torqueCurve !== undefined){
 		this.plot.setCrosshair({x:streams['engineInfo'][4]});
 	}
+
 };
 
-TorqueCurve.prototype.resize = function(){
-	console.log("TorqueCurve resize");
-};
-
-function toInt(val){
-	return val | 0;
-}
+TorqueCurve.prototype.resize = function(){};

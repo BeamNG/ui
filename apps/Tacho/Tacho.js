@@ -5,9 +5,9 @@ function Tacho(){
 		streams: ["engineInfo", "electrics"]
 	};
 
-	this.hudMemoryCanvas = {};
-	this.hudFont = ' "Lucida Console", Monaco, monospace ';
-	this.hudRpmInfo = {
+	this.memoryCanvas = {};
+	this.font = ' "Lucida Console", Monaco, monospace ';
+	this.rpmInfo = {
 		rpm: 0,
 		bigStep: 500,
 		smallStep: 250,
@@ -27,8 +27,8 @@ Tacho.prototype.initialize = function(){
 	c.width = 300;
 	c.height = 300;
 
-	this.hudAddMemoryCanvas('background');
-	this.hudUpdateRPM();
+	this.addMemoryCanvas('background');
+	this.updateRPM();
 	this.resize();
 };
 
@@ -48,11 +48,11 @@ Tacho.prototype.resize = function(){
 Tacho.prototype.update = function(streams){
 	engineInfo = streams['engineInfo'];
 
-		this.hudUpdateRPM();
+		this.updateRPM();
 
 	ctx = this.canvas[0].getContext('2d');
 
-	ctx.drawImage(this.hudMemoryCanvas['background'],0,0);
+	ctx.drawImage(this.memoryCanvas['background'],0,0);
 
 	ctx.save();
 	
@@ -79,9 +79,9 @@ Tacho.prototype.update = function(streams){
 	ctx.fillStyle = 'rgb(200,200,200)';
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.font = '70px'+this.hudFont;
+	ctx.font = '70px'+this.font;
 	ctx.fillText((speed).toFixed(),150,150);
-	ctx.font = '20px'+this.hudFont;
+	ctx.font = '20px'+this.font;
 	ctx.fillText('km/h',150,185);
 
 
@@ -99,12 +99,12 @@ Tacho.prototype.update = function(streams){
 	}
 
 	ctx.fillStyle = 'rgb(200,200,200)';
-	ctx.font = '35px'+this.hudFont;
+	ctx.font = '35px'+this.font;
 	ctx.fillText(gear,150,220);
 
 	if (engineInfo[5]<0 && engineInfo[7]>1) // more than one reversegear and in reverse
 	{
-		ctx.font = '20px'+hudFont;
+		ctx.font = '20px'+this.font;
 		ctx.textAlign = 'left';
 		ctx.fillText((engineInfo[5]*-1).toString(),162,224);
 	}
@@ -126,53 +126,53 @@ Tacho.prototype.update = function(streams){
 	ctx.restore();
 };
 
-Tacho.prototype.hudAddMemoryCanvas = function(name)
+Tacho.prototype.addMemoryCanvas = function(name)
 {
 	c = document.createElement('canvas');
 	c.width = 300;
 	c.height = 300;
 
-	this.hudMemoryCanvas[name] = c;
+	this.memoryCanvas[name] = c;
 };
 
-Tacho.prototype.hudUpdateRPM = function()
+Tacho.prototype.updateRPM = function()
 {
-	if(this.hudRpmInfo.rpm == engineInfo[1]) return;
+	if(this.rpmInfo.rpm == engineInfo[1]) return;
 	
-	this.hudRpmInfo.rpm = engineInfo[1];
+	this.rpmInfo.rpm = engineInfo[1];
 	rpmConverter = new Converter(0,engineInfo[1],-(Math.PI/4)*3,(Math.PI/4)*3);
 
-	if(this.hudRpmInfo.rpm <= 3000)
+	if(this.rpmInfo.rpm <= 3000)
 	{
-		this.hudRpmInfo.bigStep = 500;
-		this.hudRpmInfo.smallStep = 100;
-		this.hudRpmInfo.numberFactor = 0.01;
+		this.rpmInfo.bigStep = 500;
+		this.rpmInfo.smallStep = 100;
+		this.rpmInfo.numberFactor = 0.01;
 			
-	}else if(this.hudRpmInfo.rpm <= 5000)
+	}else if(this.rpmInfo.rpm <= 5000)
 	{
-		this.hudRpmInfo.bigStep = 500;
-		this.hudRpmInfo.smallStep = 250;
-		this.hudRpmInfo.numberFactor = 0.01;
-	}else if(this.hudRpmInfo.rpm <= 20000)
+		this.rpmInfo.bigStep = 500;
+		this.rpmInfo.smallStep = 250;
+		this.rpmInfo.numberFactor = 0.01;
+	}else if(this.rpmInfo.rpm <= 20000)
 	{
-		this.hudRpmInfo.bigStep = 1000;
-		this.hudRpmInfo.smallStep = 250;
-		this.hudRpmInfo.numberFactor = 0.001;
+		this.rpmInfo.bigStep = 1000;
+		this.rpmInfo.smallStep = 250;
+		this.rpmInfo.numberFactor = 0.001;
 	}else
 	{
-		this.hudRpmInfo.bigStep = 100000;
-		this.hudRpmInfo.smallStep = 20000;
-		this.hudRpmInfo.numberFactor = 0.0001;
+		this.rpmInfo.bigStep = 100000;
+		this.rpmInfo.smallStep = 20000;
+		this.rpmInfo.numberFactor = 0.0001;
 	}
 		
-	this.hudDrawBackground();
+	this.drawBackground();
 
 };
 
-Tacho.prototype.hudDrawBackground = function()
+Tacho.prototype.drawBackground = function()
 {
 	// Draw background
-	ctx = this.hudMemoryCanvas['background'].getContext('2d');
+	ctx = this.memoryCanvas['background'].getContext('2d');
 	// background
 	ctx.save();
 
@@ -202,9 +202,9 @@ Tacho.prototype.hudDrawBackground = function()
 	// Unit
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.font = '15px bold'+this.hudFont;
+	ctx.font = '15px bold'+this.font;
 	ctx.fillText('1/min',150,263);
-	ctx.fillText('x'+(1/this.hudRpmInfo.numberFactor).toFixed(),150,277);
+	ctx.fillText('x'+(1/this.rpmInfo.numberFactor).toFixed(),150,277);
 	ctx.restore();
 	
 	// redline
@@ -214,7 +214,7 @@ Tacho.prototype.hudDrawBackground = function()
 	ctx.lineWidth = 5;
 
 	ctx.translate(150,150);
-	ctx.rotate(rpmConverter.convertValue(this.hudRpmInfo.rpm));
+	ctx.rotate(rpmConverter.convertValue(this.rpmInfo.rpm));
 	ctx.beginPath();
 	ctx.moveTo(0,-140);
 	ctx.lineTo(0,-100);
@@ -226,16 +226,16 @@ Tacho.prototype.hudDrawBackground = function()
 	ctx.save();
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.font = '25px'+this.hudFont;
+	ctx.font = '25px'+this.font;
 	ctx.lineWidth = 3;
 	
 	ctx.translate(150,150);
 	ctx.rotate(rpmConverter.convertValue(0));
-	for(var i = 0 ; i <= engineInfo[1]; i += this.hudRpmInfo.smallStep)
+	for(var i = 0 ; i <= engineInfo[1]; i += this.rpmInfo.smallStep)
 	{
-		if(i % this.hudRpmInfo.bigStep === 0)
+		if(i % this.rpmInfo.bigStep === 0)
 		{
-			ctx.fillText((i*this.hudRpmInfo.numberFactor).toFixed(),0,-118);
+			ctx.fillText((i*this.rpmInfo.numberFactor).toFixed(),0,-118);
 			ctx.beginPath();
 			ctx.moveTo(0,-140);
 			ctx.lineTo(0,-132);
@@ -253,28 +253,7 @@ Tacho.prototype.hudDrawBackground = function()
 			ctx.stroke();
 			ctx.closePath();
 		}
-		ctx.rotate(rpmConverter.convertLength(this.hudRpmInfo.smallStep));
+		ctx.rotate(rpmConverter.convertLength(this.rpmInfo.smallStep));
 	}
 	ctx.restore();
-};
-
-
-function Converter(inMin, inMax, outMin, outMax)
-{
-	this.inMin = inMin;
-	this.inMax = inMax;
-	this.inLength = inMax - inMin;
-	this.outMin = outMin;
-	this.outMax = outMax;
-	this.outLength = outMax- outMin;
-}
-Converter.prototype.convertValue = function(value)
-{
-	if(value<this.inMin) valueIn = this.inMin;
-	if(value>this.inMax) valueIn = this.inMax;
-	return (value/this.inLength)*this.outLength + this.outMin;
-};
-Converter.prototype.convertLength = function(length)
-{
-	return (length/this.inLength)*this.outLength;
 };
