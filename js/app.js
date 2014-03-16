@@ -92,8 +92,15 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		//  Initialize Widget
 		this._super("_init");
 
-		// Setting rootElement
-		this.app.rootElement = $(this.element);
+		// adding properties
+		this.app.rootElement = $("<div></div>").css({
+			width: '100%',
+			height: '100%'
+		}).appendTo($(this.element));
+
+		this.app._widget = $(this.element);
+
+		this.app.path = "apps/"+this.app.constructor.name+"/";
 
 		// Initialize App
 		this.app.initialize();
@@ -116,18 +123,21 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 	_setOption: function( key, value ) {
 		if(key == "editMode"){
-			this._setEditMode(value);
+			this._optionEditMode(value);
+		}else{
+			this._super(key, value);
 		}
-		this._super(key, value);
 	},
 
-	_setEditMode: function( value ){
+	_optionEditMode: function( value ){
 		if(value){
 			this.element.addClass('ui-app-editmode');
 			this.dialogParent.children('.ui-dialog-titlebar').show();
+//			this.dialogParent.children('.ui-resizable-handle').show();
 		}else{
 			this.element.removeClass('ui-app-editmode');
 			this.dialogParent.children('.ui-dialog-titlebar').hide();
+//			this.dialogParent.children('.ui-resizable-handle').hide();
 		}
 	},
 
@@ -201,7 +211,7 @@ var AppEngine = {
 
 		// changing appstates
 		$.each(this.runningApps, function(index, app){
-			app.rootElement.app("option", "editMode", AppEngine.editMode);
+			app._widget.app("option", "editMode", AppEngine.editMode);
 		});
 	},
 
@@ -294,7 +304,7 @@ var AppEngine = {
 			// destroying old apps
 			console.log("destroying old apps");
 			$.each(this.runningApps, function(index, app) {
-				app.rootElement.app("close");
+				app._widget.app("close");
 			});
 			console.log("done");
 			console.log("loading preset '"+preset+"'");
@@ -313,8 +323,8 @@ var AppEngine = {
 			
 			appData = {};
 			appData.name = app.constructor.name;
-			appData.position = app.rootElement.app("option","position");
-			appData.size = [app.rootElement.app("option","width"),app.rootElement.app("option","height")];
+			appData.position = app._widget.app("option","position");
+			appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
 
 			console.log("   -  "+JSON.stringify(appData));
 
@@ -358,28 +368,3 @@ var AppStore = {
 		});appendTo("body");
 	}
 };
-
-/*
-Next Steps:
-
-Writing additional Apps
-- torquecurve
-- engineinfo
-- convert electrics to app
-- g-meter
-
-App-positioning
-- reacting on resolutionchange
-- binding app to windowedge
-
-Overhaul Loading Process
-- split in states
-- make loading "syncronous"
-
-App-persistance
-- Options for Apps
-
-"AppStore"
-- Gui to add apps
-
-*/

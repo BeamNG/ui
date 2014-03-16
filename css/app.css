@@ -3,7 +3,7 @@
 .ui-app .ui-dialog-content
 {
 	overflow: hidden;
-	padding: 3px;
+	padding: 0px;
 }
 
 .ui-app .opaque
@@ -16,73 +16,31 @@
 .ui-app .ui-dialog-titlebar
 {
 	display:none;
-	height:20px;
+/*	height:20px;*/
 	padding:2px;
-	overflow:hidden;
+/*	overflow:hidden;*/
 	position:absolute;
+/*	width: 100%;*/
 	left:0;
 	right:0;
-	top:0;
+/*	top:0;*/
 	z-index:10;
-	margin:0;
+/*	margin:0;*/
 	border-radius: 0;
 }
 
 .ui-app-editmode
 {
 	background-color:#ddd !important;
-	border:1px solid black !important;
 }
 
 .ui-dialog .ui-resizable-handle {
 	display:none;
-	/* background-color:red !important; */
+/*	background-color:rgba(255,0,0,0.3) !important;*/
 }
 
 .ui-widget-content {
 	border:0;
-}
-/* CSS for beamNG.container-widget */
-.bNG-container {
-	position: absolute;
-	top: 50px;
-	left: 50px;
-}
-
-.bNG-container .bNG-container-titlebar {
-	display: none;
-}
-
-.bNG-container-title {
-	overflow: hidden;
-}
-
-.bNG-container-edit {
-	background: white;
-	border: 1px solid black;
-}
-
-.bNG-container-edit .bNG-container-content {
-	background: red;
-}
-
-.bNG-container-titlebar {
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.bNG-container-edit .bNG-container-titlebar, .bNG-container-titlebuttons {
-	display: block;
-	background: black;
-	color: white;
-	padding: 4px;
-	font-size: 12px;
-	height: 20px;
-}
-
-.bNG-container-titlebuttons {
-	position: absolute;
-	top: 0;
-	right: 0;
+	margin:0;
+	padding:0;
 }
