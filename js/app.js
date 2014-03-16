@@ -1,72 +1,3 @@
-$.widget( "beamNG.container", {
-	options: {
-		editMode: true,
-		title: ""
-	},
-	components : {},
-	_create: function() {
-		this.element.addClass("bNG-container-content");
-
-		this.components.container = $("<div class='bNG-container'><div></div></div>").appendTo($("body")).append(this.element);
-
-		this.components.titlebar = $("<div class='bNG-container-titlebar'></div>").prependTo(this.components.container.children().first());
-
-
-		this.components.title  = $("<div class='bNG-container-title'>"+this.options.title+"</div>").prependTo(this.components.titlebar);
-
-		this.components.titlebuttons  = $("<div class='bNG-container-titlebuttons'></div>").appendTo(this.components.titlebar);
-
-		this.components.optionbutton = $("<a href='' class='bNG-container-titlebutton'>O</a>").appendTo(this.components.titlebuttons);
-		this.components.closebutton = $("<a href='' class='bNG-container-titlebutton'>X</a>").appendTo(this.components.titlebuttons);
-		this._on(this.components.closebutton, {
-			click:"close",
-		});
-
-		this.components.container.draggable({ handle: ".bNG-container-titlebar", stack: ".bNG-container" });
-		this.components.container.resizable();
-		this._on(this.components.container, {
-			resize:"_resize",
-		});
-
-		this._setEditMode(this.options.editMode);
-		this._resize();
-	},
-	_setEditMode: function(mode) {
-		if(mode){
-			this.components.container.addClass('bNG-container-edit');
-		}else{
-			this.components.container.removeClass('bNG-container-edit');
-		}
-	},
-	_setOption: function(key, value) {
-		if(key == "editMode"){
-			this._setEditMode(value);
-		}else if(key == "title"){
-			this.components.title.html(value);
-		}else if(key == "width"){
-			this.components.container.width(value);
-		}else if(key == "height"){
-			this.components.container.height(value);
-		}
-		this._super(key, value);
-	},
-	_resize: function(){
-		this.components.titlebar.outerWidth(this.element.outerWidth());
-	},
-
-	_destroy: function(){
-		$.each(this.components,function(key, value){
-			value.remove();
-		});
-	},
-
-	close: function(){
-		this.element.hide();
-		this._destroy();
-	}
-
-});
-
 $.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
@@ -269,6 +200,8 @@ var AppEngine = {
 //				appElement.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
 				if(position !== undefined){
 					appElement.app("option","position",position);
+				}else{
+					appElement.app("option","position",[$(window).width()/3,$(window).height()/3]);
 				}
 				if(size !== undefined){
 					console.log("size defined: "+size);
