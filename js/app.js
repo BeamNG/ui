@@ -119,6 +119,9 @@ var AppEngine = {
 			this._loadAppJs(app,false);
 		}
 
+		// Install resizehandler
+		$(window).resize(function(event) { AppEngine.resize() });
+
 		// load persistance
 		this._loadPersistance();
 
@@ -289,6 +292,25 @@ var AppEngine = {
 
 	_savePersistance : function(){
 		localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
+	},
+
+	resize : function(){
+		windowsize = [$(window).width(),$(window).height()];
+		$.each(this.runningApps, function(index, app) {
+			position = app._widget.app("option","position");
+			size = [app._widget.app("option","width"),app._widget.app("option","height")];
+			change = 0;
+			for (var i = 0; i < 2; i++) {
+				if(position[i]+size[i] > windowsize[i]){
+					change++;
+					position[i] = windowsize[i] - size[i];
+				}
+			}
+			if(change>0){
+				app._widget.app("option","position",position);
+			}
+
+		});
 	}
 };
 
