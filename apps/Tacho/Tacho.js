@@ -1,7 +1,7 @@
 function Tacho(){
 	this.info = {
 		title: "fancy Tacho",
-		preferredSize: [400,380],
+		preferredSize: [300,300],
 		streams: ["engineInfo", "electrics"]
 	};
 
