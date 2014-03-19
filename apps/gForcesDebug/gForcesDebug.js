@@ -53,8 +53,8 @@ gForcesDebug.prototype.update = function(streams){
 	ctx.stroke();
 
 	ctx.beginPath();
-	ctx.moveTo(0,gForces.gyMin*50);
-	ctx.lineTo(0,gForces.gyMax*50);
+	ctx.moveTo(0,gForces.gyMin*-50);
+	ctx.lineTo(0,gForces.gyMax*-50);
 	ctx.stroke();
 
 
@@ -72,7 +72,7 @@ gForcesDebug.prototype.update = function(streams){
 	ctx.fillStyle = "green";
 
 	ctx.beginPath();
-	ctx.arc(gForces.gx2*50,gForces.gy2*50,5,0,2*Math.PI,false);
+	ctx.arc(gForces.gx2*50,gForces.gy2*-50,5,0,2*Math.PI,false);
 	ctx.fill();
 	
 //	this.textElement.html("("+gForces.gxMin.toFixed(2)+"x"+gForces.gyMin.toFixed(2)+")->("+gForces.gxMax.toFixed(2)+"x"+gForces.gyMax.toFixed(2)+")");
