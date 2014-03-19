@@ -247,6 +247,7 @@ var AppEngine = {
 			$.each(this.persistance.presets[preset], function(index, app) {
 				AppEngine.loadApp(app.name, app.position, app.size);
 			});
+			this.resize();
 			console.log("done");
 		}
 	},
