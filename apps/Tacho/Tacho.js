@@ -33,16 +33,16 @@ Tacho.prototype.initialize = function(){
 };
 
 Tacho.prototype.resize = function(){
-	// canvas
+	size = Math.min(this.rootElement.height(),this.rootElement.width());
+	this.canvas.height(size);
+	this.canvas.width(size);
+
 	c = this.canvas[0];
-	c.width = this.canvas.width();
-	c.height = this.canvas.height();
+	c.width = size;
+	c.height = size;
 
 	ctx = c.getContext('2d');
-	ctx.restore();
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
-	ctx.scale(this.canvas.width()/300,this.canvas.height()/300);
-	ctx.save();
+	ctx.setTransform(size/300, 0, 0, size/300, 0, 0);
 };
 
 Tacho.prototype.update = function(streams){
@@ -75,7 +75,7 @@ Tacho.prototype.update = function(streams){
 	if (isNaN(speed)) speed = streams["electrics"].airspeed;
 	speed *= 3.6;
 	
-	ctx.save();
+
 	ctx.fillStyle = 'rgb(200,200,200)';
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
@@ -123,7 +123,6 @@ Tacho.prototype.update = function(streams){
     ctx.fill();
 	ctx.closePath();
 	
-	ctx.restore();
 };
 
 Tacho.prototype.addMemoryCanvas = function(name)

@@ -28,7 +28,7 @@ gForcesDebug.prototype.update = function(streams){
 
 	c = this.canvas[0];
 	ctx = c.getContext('2d');
-	ctx.font = "16px sans-serif";
+	ctx.font = '16px "Lucida Console", Monaco, monospace';
 	ctx.textAlign = "right";
 	ctx.textBaseline = "middle";
 
@@ -74,18 +74,19 @@ gForcesDebug.prototype.update = function(streams){
 	ctx.beginPath();
 	ctx.arc(gForces.gx2*50,gForces.gy2*-50,5,0,2*Math.PI,false);
 	ctx.fill();
-	
-//	this.textElement.html("("+gForces.gxMin.toFixed(2)+"x"+gForces.gyMin.toFixed(2)+")->("+gForces.gxMax.toFixed(2)+"x"+gForces.gyMax.toFixed(2)+")");
+
+//	this.textElement.html(htmlstr);
 };
 
 gForcesDebug.prototype.resize = function(){
-	this.canvas.height(this.canvas.width());
+	size = Math.min(this.rootElement.height(),this.rootElement.width());
+	this.canvas.height(size);
+	this.canvas.width(size);
 
 	c = this.canvas[0];
-	c.width = this.canvas.width();
-	c.height = this.canvas.height();
+	c.width = size;
+	c.height = size;
 
-	c = this.canvas[0];
 	ctx = c.getContext('2d');
 	ctx.setTransform(c.width/200, 0, 0, c.height/200, c.width/2,c.height/2);
 };
