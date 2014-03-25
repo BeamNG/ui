@@ -1,11 +1,22 @@
 {
-	"name" : "g-Forces",
-	"background" : "transparent",
-	"resize" : "aspectratio",
-	"size" : {
-		"initial" : [150,150],
-		"minimal" : [100,100],
-		"maximal" : [500,500]
+	"info": {
+		"name" : "g-Forces",
+		"author": "beamng.ui Team",
+		"version": "0.1",
+		"description": "Simple visualisation of the g-forces affecting the vehicle."
 	},
-	"streams" : ["sensors"]
+
+	"appearance": {
+		"background" : "transparent",
+		"resize" : "aspectratio",
+		"size" : {
+			"initial" : [150,150],
+			"minimal" : [100,100],
+			"maximal" : [500,500]
+		}
+	},
+	
+	"data": {
+		"streams" : ["sensors"]
+	}
 }
