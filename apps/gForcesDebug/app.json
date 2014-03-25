@@ -1,0 +1,11 @@
+{
+	"name" : "g-Forces",
+	"background" : "transparent",
+	"resize" : "aspectratio",
+	"size" : {
+		"initial" : [150,150],
+		"minimal" : [100,100],
+		"maximal" : [500,500]
+	},
+	"streams" : ["sensors"]
+}

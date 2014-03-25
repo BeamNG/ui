@@ -12,10 +12,6 @@ gForcesDebug.prototype.initialize = function(){
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.textElement = $('<div></div>').appendTo(this.rootElement);
 
-	this.canvas.css({
-		width: '100%'
-	});
-
 	this.resize();
 };
 

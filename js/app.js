@@ -1,4 +1,4 @@
-$.widget( "beamNG.app", $.ui.dialog, {
+P$.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
 		editMode: false
@@ -150,7 +150,7 @@ var AppEngine = {
 	},
 
 	_loadAppJs : function(app,load,position,size){
-			$.getScript( "apps/"+app+"/"+app+".js", function( data, textStatus, jqxhr) {
+			$.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
 				AppEngine.loadedApps.push(app);
 				if(load === true){
 					AppEngine.loadApp(app,position,size);
