@@ -1,4 +1,4 @@
-P$.widget( "beamNG.app", $.ui.dialog, {
+$.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
 		editMode: false
