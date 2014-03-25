@@ -87,7 +87,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 });
 
 $(document).ready(function() {
-	AppEngine.initialize();
+	AppLoader.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug"]; // Call a beamNG function later
+	AppLoader.initialize();
 });
 
 
@@ -95,7 +96,6 @@ $(document).ready(function() {
 
 var AppEngine = {
 	runningApps : [],
-	installedApps : [],
 	loadedApps : [],
 	editMode : false,
 	preset : undefined,
@@ -109,15 +109,6 @@ var AppEngine = {
 			'background-color': 'rgba(0,0,0,0.5)',
 			'z-index': '-250'
 		}).hide().appendTo('body');
-
-
-		this.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug"]; // Call a beamNG function later
-
-		// Load all apps
-		for (var i = 0; i<this.installedApps.length;i++) {
-			app = this.installedApps[i];
-			this._loadAppJs(app,false);
-		}
 
 		// Install resizehandler
 		$(window).resize(function(event) { AppEngine.resize() });
@@ -147,19 +138,6 @@ var AppEngine = {
 		$.each(this.runningApps, function(index, app){
 			app._widget.app("option", "editMode", AppEngine.editMode);
 		});
-	},
-
-	_loadAppJs : function(app,load,position,size){
-			$.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
-				AppEngine.loadedApps.push(app);
-				if(load === true){
-					AppEngine.loadApp(app,position,size);
-				}
-			});
-	},
-
-	_setInstalledApps : function(appList){
-		this.installedApps = appList;
 	},
 
 	update : function(data){
@@ -218,7 +196,7 @@ var AppEngine = {
 			}
 		}
 		// App wasn't loaded before, getting the js
-		this._loadAppJs(app,true,position,size);
+		AppLoader._loadAppJs(app,true,position,size);
 	},
 
 	addPreset : function(preset){
@@ -322,5 +300,35 @@ var AppStore = {
 			height: '80%',
 			
 		});appendTo("body");
+	}
+};
+
+var AppLoader = {
+	installedApps : [],
+	
+	initialize: function(){
+		this.loadApps();
+		AppEngine.initialize();
+	},
+
+	loadApps : function(app){
+		// Load all apps
+		for (var i = 0; i<this.installedApps.length;i++) {
+			app = this.installedApps[i];
+			this._loadAppJs(app,false);
+		}
+	},
+
+	_loadAppJs : function(app,load,position,size){
+			$.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
+				AppEngine.loadedApps.push(app);
+				if(load === true){
+					AppEngine.loadApp(app,position,size);
+				}
+			});
+	},
+
+	_loadAppJson : function(app){
+
 	}
 };

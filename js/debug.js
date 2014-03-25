@@ -17,7 +17,7 @@ function __updateStreamDebug(){
 }
 
 function __insertAppSpawn(){
-	$.each(AppEngine.installedApps, function(index, app) {
+	$.each(AppLoader.installedApps, function(index, app) {
 		 $('<input type="button" value="'+app+'" onclick="AppEngine.loadApp(\''+app+'\');" />').appendTo($('#appdebug'));
 	});
 }
