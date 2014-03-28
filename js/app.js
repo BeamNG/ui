@@ -111,7 +111,7 @@ var AppEngine = {
 		}).hide().appendTo('body');
 
 		// Install resizehandler
-		$(window).resize(function(event) { AppEngine.resize() });
+		$(window).resize(function(event) { AppEngine.resize(); });
 
 		// load persistance
 		this._loadPersistance();
@@ -195,8 +195,7 @@ var AppEngine = {
 				return;
 			}
 		}
-		// App wasn't loaded before, getting the js
-		AppLoader._loadAppJs(app,true,position,size);
+		console.log("App "+app+" can't be loaded.");
 	},
 
 	addPreset : function(preset){
@@ -305,30 +304,76 @@ var AppStore = {
 
 var AppLoader = {
 	installedApps : [],
+	loadstates : {},
+	loadInitialized : false,
+	LOADSTATE : {
+		DONE : 1,
+		ERROR: -1,
+		LOADING : 0
+	},
 	
 	initialize: function(){
 		this.loadApps();
-		AppEngine.initialize();
+		this.loadInitialized = true;
+		this._checkProgress();
 	},
 
 	loadApps : function(app){
 		// Load all apps
 		for (var i = 0; i<this.installedApps.length;i++) {
 			app = this.installedApps[i];
-			this._loadAppJs(app,false);
+			this._loadAppJs(app);
 		}
 	},
 
-	_loadAppJs : function(app,load,position,size){
-			$.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
-				AppEngine.loadedApps.push(app);
-				if(load === true){
-					AppEngine.loadApp(app,position,size);
-				}
-			});
+	_loadAppJs : function(app){
+		this._setLoadState(app,'js',this.LOADSTATE.LOADING);
+		
+		$.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
+			AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.DONE);
+			AppEngine.loadedApps.push(app);
+		}).fail(function(){
+			AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.ERROR);
+			if(arguments[0].readyState === 0){
+				//script failed to load
+				console.log("App "+app+" failed to load. Check your filenames.");
+			}else{
+				//script loaded but failed to parse
+				console.log("App "+app+" failed to parse: "+arguments[2].toString());
+			}
+		});
 	},
 
 	_loadAppJson : function(app){
+		this._setLoadState(app,'json',this.LOADSTATE.LOADING);
+	},
 
+	_setLoadState : function(app,type,state){
+		if(this.loadstates[app] === undefined){
+			this.loadstates[app] = {};
+		}
+		this.loadstates[app][type] = state;
+
+		if(state == this.LOADSTATE.DONE || state == this.LOADSTATE.ERROR){
+			this._checkProgress();
+		}
+	},
+
+	_checkProgress : function(){
+		//console.log(JSON.stringify(this.loadstates));
+		loading = done = error = 0;
+		$.each(this.loadstates, function(index, app) {
+			$.each(app, function(index, state) {
+				if(state == AppLoader.LOADSTATE.DONE){done++;}else
+				if(state == AppLoader.LOADSTATE.LOADING){loading++;}else
+				if(state == AppLoader.LOADSTATE.ERROR){error++;}
+			});
+		});
+		console.log("Progress ["+new Date().toLocaleTimeString()+"]: Status [LOADING/ERROR/DONE]: "+loading+"/"+error+"/"+done);
+		allLoaded = (loading===0);
+
+		if(this.loadInitialized && allLoaded){
+			AppEngine.initialize();
+		}
 	}
 };
