@@ -97,6 +97,7 @@ $(document).ready(function() {
 var AppEngine = {
 	runningApps : [],
 	loadedApps : [],
+	appSettings : {},
 	editMode : false,
 	preset : undefined,
 	runningRequests : 0,
@@ -195,7 +196,7 @@ var AppEngine = {
 				return;
 			}
 		}
-		console.log("App "+app+" can't be loaded.");
+		console.error("App "+app+" can't be displayed. A Error occurred while loading.");
 	},
 
 	addPreset : function(preset){
@@ -313,6 +314,7 @@ var AppLoader = {
 	},
 	
 	initialize: function(){
+		console.log("Starting to load apps.");
 		this.loadApps();
 		this.loadInitialized = true;
 		this._checkProgress();
@@ -323,6 +325,7 @@ var AppLoader = {
 		for (var i = 0; i<this.installedApps.length;i++) {
 			app = this.installedApps[i];
 			this._loadAppJs(app);
+			this._loadAppJson(app);
 		}
 	},
 
@@ -331,21 +334,30 @@ var AppLoader = {
 		
 		$.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
 			AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.DONE);
-			AppEngine.loadedApps.push(app);
 		}).fail(function(){
 			AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.ERROR);
 			if(arguments[0].readyState === 0){
 				//script failed to load
-				console.log("App "+app+" failed to load. Check your filenames.");
+				console.error("app.js of '"+app+"' failed to load. Check your filenames.");
 			}else{
 				//script loaded but failed to parse
-				console.log("App "+app+" failed to parse: "+arguments[2].toString());
+				console.error("app.js of '"+app+"' failed to parse: "+arguments[2].toString());
 			}
 		});
 	},
 
 	_loadAppJson : function(app){
 		this._setLoadState(app,'json',this.LOADSTATE.LOADING);
+
+		$.get("apps/"+app+"/app.json", function(data) {
+			console.log(data);
+			AppEngine.appSettings[app] = data;
+			AppLoader._setLoadState(app,'json',AppLoader.LOADSTATE.DONE);
+
+		}).fail(function(){
+			AppLoader._setLoadState(app,'json',AppLoader.LOADSTATE.ERROR);
+			console.error("app.json of '"+app+"' failed to load. Check your filenames.");
+		});
 	},
 
 	_setLoadState : function(app,type,state){
@@ -361,18 +373,22 @@ var AppLoader = {
 
 	_checkProgress : function(){
 		//console.log(JSON.stringify(this.loadstates));
-		loading = done = error = 0;
-		$.each(this.loadstates, function(index, app) {
-			$.each(app, function(index, state) {
-				if(state == AppLoader.LOADSTATE.DONE){done++;}else
-				if(state == AppLoader.LOADSTATE.LOADING){loading++;}else
-				if(state == AppLoader.LOADSTATE.ERROR){error++;}
+		allLoaded = true;
+		$.each(this.loadstates, function(appindex, app) {
+			$.each(app, function(typeindex, state) {
+				if(state == AppLoader.LOADSTATE.LOADING){ allLoaded=false; }
 			});
 		});
-		console.log("Progress ["+new Date().toLocaleTimeString()+"]: Status [LOADING/ERROR/DONE]: "+loading+"/"+error+"/"+done);
-		allLoaded = (loading===0);
+		//console.log("Progress ["+new Date().toLocaleTimeString()+"]: Status [LOADING/ERROR/DONE]: "+loading+"/"+error+"/"+done+" "+allLoaded);
 
 		if(this.loadInitialized && allLoaded){
+			console.log("Loading done");
+			$.each(this.loadstates, function(appindex, app) {
+				if(app['js'] == AppLoader.LOADSTATE.DONE && app['json'] == AppLoader.LOADSTATE.DONE ){ // && app['data'] != AppLoader.LOADSTATE.LOADING
+					AppEngine.loadedApps.push(appindex);
+				}
+			});
+			console.log("loadedApps: "+JSON.stringify(AppEngine.loadedApps));
 			AppEngine.initialize();
 		}
 	}
