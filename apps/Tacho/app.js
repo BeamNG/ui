@@ -1,10 +1,6 @@
-function Tacho(){
-	this.info = {
-		title: "fancy Tacho",
-		preferredSize: [300,300],
-		streams: ["engineInfo", "electrics"]
-	};
+function Tacho(){}
 
+Tacho.prototype.initialize = function(){
 	this.memoryCanvas = {};
 	this.font = ' "Lucida Console", Monaco, monospace ';
 	this.rpmInfo = {
@@ -13,9 +9,7 @@ function Tacho(){
 		smallStep: 250,
 		numberFactor: 0.01
 	};
-}
 
-Tacho.prototype.initialize = function(){
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 
 	this.canvas.css({

@@ -1,14 +1,6 @@
-function NodeBeamDebug(){
-	this.info = {
-		title: "Node/Beam info",
-		preferredSize: [300,"auto"],
-		streams: ["stats"]
-	};
-}
+function NodeBeamDebug(){}
 
-NodeBeamDebug.prototype.initialize = function(){
-	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
-};
+NodeBeamDebug.prototype.initialize = function(){};
 
 NodeBeamDebug.prototype.update = function(streams){
 	str =  streams["stats"].beam_count + " beams <br>";

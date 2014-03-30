@@ -1,14 +1,6 @@
-function EngineDebug(){
-	this.info = {
-		title: "EngineInfo",
-		preferredSize: [300,"auto"],
-		streams: ["engineInfo"]
-	};
-}
+function EngineDebug(){}
 
-EngineDebug.prototype.initialize = function(){
-	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
-};
+EngineDebug.prototype.initialize = function(){};
 
 EngineDebug.prototype.update = function(streams){
 	str =  "rpm: " + streams["engineInfo"][4].toFixed();

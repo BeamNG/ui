@@ -6,18 +6,26 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 	_init:function(){
 
-
 		this.app = this.options.app;
-		this.appInfo = this.app.info;
+		this.appName = this.app.name = this.app.constructor.name;
+		this.appInfo = AppEngine.appSettings[this.appName];
+
+		// APPCONFIGURATION
 
 		// Setting title
-		this._setOption("title",this.appInfo.title);
+		this._setOption("title",this.appInfo.info.name);
 		
 		// Setting size
 		if(this.appInfo.preferredSize){
-			this._setOption("width",this.appInfo.preferredSize[0]);
-			this._setOption("height",this.appInfo.preferredSize[1]);
+			this._setOption("width",this.appInfo.appearance.size.initial[0]);
+			this._setOption("height",this.appInfo.appearance.size.initial[1]);
 		}
+
+		// Background
+		if(this.appInfo.appearance.background == "opaque" ){
+			this.element.addClass('opaque');
+		}
+
 
 
 		//  Initialize Widget
@@ -26,12 +34,15 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// adding properties
 		this.app.rootElement = $("<div></div>").css({
 			width: '100%',
-			height: '100%'
+			height: '100%',
+			'min-width': '100px',
+			'min-height': '100px'
 		}).appendTo($(this.element));
+
 
 		this.app._widget = $(this.element);
 
-		this.app.path = "apps/"+this.app.constructor.name+"/";
+		this.app.path = "apps/"+this.appName+"/";
 
 		// Initialize App
 		this.app.initialize();
@@ -42,6 +53,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		$(this.element).parents('.ui-dialog').addClass("ui-app");
 		this.dialogParent = $(this.element).parents('.ui-dialog');
+		this._setOption('editMode',AppEngine.editMode);
 	},
 	_destroy:function() {
 		this._super("_destroy");
@@ -87,7 +99,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 });
 
 $(document).ready(function() {
-	AppLoader.installedApps = ["Tacho","WheelsDebug","Tach", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug"]; // Call a beamNG function later
+	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug"]; // Call a beamNG function later
 	AppLoader.initialize();
 });
 
@@ -145,8 +157,9 @@ var AppEngine = {
 		for(var j = 0; j<this.runningApps.length; j++){
 			var app = this.runningApps[j];
 			var streamList = {};
-			for(var i=0; i<app.info.streams.length; i++){
-				stream = app.info.streams[i];
+			var streams = this.appSettings[app.name].data.streams;
+			for(var i=0; i<streams.length; i++){
+				stream = streams[i];
 					if(state.streams[stream] > 0){
 						streamList[stream] = data[stream];
 					}
@@ -158,16 +171,18 @@ var AppEngine = {
 	registerApp : function(app){
 		this.runningApps.push(app);
 		//Adding streams
-		for(var i=0; i<app.info.streams.length; i++){
-			streamAdd(app.info.streams[i]);
+		streams = this.appSettings[app.name].data.streams;
+		for(var i=0; i<streams.length; i++){
+			streamAdd(streams[i]);
 		}
 	},
 
 	unregisterApp : function(app){
 		this.runningApps.splice(this.runningApps.indexOf(app),1);
 		// removing streams
-		for(var i=0; i<app.info.streams.length; i++){
-			streamRemove(app.info.streams[i]);
+		streams = this.appSettings[app.name].data.streams;
+		for(var i=0; i<streams.length; i++){
+			streamRemove(streams[i]);
 		}
 	},
 
@@ -349,7 +364,7 @@ var AppLoader = {
 	_loadAppJson : function(app){
 		this._setLoadState(app,'json',this.LOADSTATE.LOADING);
 
-		$.get("apps/"+app+"/app.json", function(data) {
+		$.getJSON("apps/"+app+"/app.json", function(data) {
 			console.log(data);
 			AppEngine.appSettings[app] = data;
 			AppLoader._setLoadState(app,'json',AppLoader.LOADSTATE.DONE);

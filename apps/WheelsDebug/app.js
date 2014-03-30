@@ -1,15 +1,8 @@
-function WheelsDebug(){
-	this.info = {
-		title: "Wheelsdebug",
-		preferredSize: [230,"auto"],
-		streams: ["wheelInfo"]
-	};
-}
+function WheelsDebug(){}
 
 WheelsDebug.prototype.initialize = function(){
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.canvas.width=220;
-	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
 };
 
 WheelsDebug.prototype.update = function(streams){

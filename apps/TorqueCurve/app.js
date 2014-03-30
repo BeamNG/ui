@@ -1,28 +1,16 @@
-function TorqueCurve(){
-	this.info = {
-		title: "TorqueCurve",
-		preferredSize: [500,200],
-		streams: ["torqueCurve", "engineInfo"]
-	};
-}
+function TorqueCurve(){}
 
 TorqueCurve.prototype.initialize = function(){
-	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
-	this.plotarea = $("<div></div>").css({
-		height: '100%',
-		width: '100%'
-	}).appendTo(this.rootElement);
-
-		this.plot = $.plot(this.plotarea, [
-			{label:"Waiting for Data",data:[[0,0]]},
-			],{
-				legend: { position: "se" },
-				xaxis: { min: 0 },
-				yaxis: { min:0 },
-				yaxes: [ {}, {position: "right"} ],
-				crosshair: { mode: "x" }
-			});
-		this.plot.lockCrosshair({x:0});
+	this.plot = $.plot(this.rootElement, [
+		{label:"Waiting for Data",data:[[0,0]]},
+		],{
+			legend: { position: "se" },
+			xaxis: { min: 0 },
+			yaxis: { min:0 },
+			yaxes: [ {}, {position: "right"} ],
+			crosshair: { mode: "x" }
+		});
+	this.plot.lockCrosshair({x:0});
 };
 
 TorqueCurve.prototype.update = function(streams){

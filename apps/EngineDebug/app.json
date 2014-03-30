@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "EngineInfo",
+		"author": "beamng.ui Team",
+		"version": "0.1",
+		"description": "Shows some engine statistics"
+	},
+
+	"appearance": {
+		"background" : "opaque",
+		"size" : {
+			"initial" : [300,"auto"]
+		}
+	},
+	
+	"data": {
+		"streams" : ["engineInfo"]
+	}
+}

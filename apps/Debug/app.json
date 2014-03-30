@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "Debug (Torquecurve)",
+		"author": "beamng.ui Team",
+		"version": "0.1",
+		"description": "App to debug the torquecurve stream"
+	},
+
+	"appearance": {
+		"background" : "opaque",
+		"size" : {
+			"initial" : [500,200]
+		}
+	},
+	
+	"data": {
+		"streams" : ["torqueCurve", "engineInfo"]
+	}
+}

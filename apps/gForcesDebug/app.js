@@ -1,14 +1,6 @@
-function gForcesDebug(){
-	this.info = {
-		title: "gMeter",
-		preferredSize: [200,200],
-		streams: ["sensors"]
-	};
-}
+function gForcesDebug(){}
 
 gForcesDebug.prototype.initialize = function(){
-//	$(this.rootElement).css('background-color', 'RGBA(255,255,255,0.9)');
-
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.textElement = $('<div></div>').appendTo(this.rootElement);
 
