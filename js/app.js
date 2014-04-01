@@ -10,15 +10,18 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.appName = this.app.name = this.app.constructor.name;
 		this.appInfo = AppEngine.appSettings[this.appName];
 
+		//  Initialize Widget
+		this._super("_init");
+		
 		// APPCONFIGURATION
 
 		// Setting title
 		this._setOption("title",this.appInfo.info.name);
 		
 		// Setting size
-		if(this.appInfo.preferredSize){
-			this._setOption("width",this.appInfo.appearance.size.initial[0]);
-			this._setOption("height",this.appInfo.appearance.size.initial[1]);
+		if(this.appInfo.appearance.size.initial !== undefined){
+			this._setOption("width", this.appInfo.appearance.size.initial[0]);
+			this._setOption("height", this.appInfo.appearance.size.initial[1]);
 		}
 
 		// Background
@@ -28,8 +31,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 
 
-		//  Initialize Widget
-		this._super("_init");
+
 
 		// adding properties
 		this.app.rootElement = $("<div></div>").css({
