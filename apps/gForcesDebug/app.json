@@ -8,10 +8,10 @@
 
 	"appearance": {
 		"background" : "transparent",
-		"resize" : "aspectratio",
+		"resize" : "aspectRatio",
 		"size" : {
-			"initial" : [150,150],
-			"minimal" : [100,100],
+			"initial" : [300,300],
+			"minimal" : [200,200],
 			"maximal" : [500,500]
 		}
 	},
