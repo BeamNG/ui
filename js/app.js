@@ -12,6 +12,12 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Configuration
 		this.options.title = this.appInfo.info.name;
 
+		// Resize
+		if(this.appInfo.appearance.resize === false){
+			this.options.resizable = false;
+		}
+
+		// Sizes
 		if(this.appInfo.appearance.size.initial !== undefined){
 			this.options.width = this.appInfo.appearance.size.initial[0];
 			this.options.height =  this.appInfo.appearance.size.initial[1];
