@@ -4,34 +4,28 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		editMode: false
 	},
 
-	_init:function(){
-
+	_create : function(){
 		this.app = this.options.app;
 		this.appName = this.app.name = this.app.constructor.name;
 		this.appInfo = AppEngine.appSettings[this.appName];
 
-		//  Initialize Widget
-		this._super("_init");
-		
-		// APPCONFIGURATION
+		// Configuration
+		this.options.title = this.appInfo.info.name;
 
-		// Setting title
-		this._setOption("title",this.appInfo.info.name);
-		
-		// Setting size
 		if(this.appInfo.appearance.size.initial !== undefined){
-			this._setOption("width", this.appInfo.appearance.size.initial[0]);
-			this._setOption("height", this.appInfo.appearance.size.initial[1]);
+			this.options.width = this.appInfo.appearance.size.initial[0];
+			this.options.height =  this.appInfo.appearance.size.initial[1];
 		}
 
-		// Background
-		if(this.appInfo.appearance.background == "opaque" ){
-			this.element.addClass('opaque');
+		if(this.appInfo.appearance.size.minimal !== undefined){
+			this.options.minWidth = this.appInfo.appearance.size.minimal[0];
+			this.options.minHeight = this.appInfo.appearance.size.minimal[1];
 		}
 
-
-
-
+		if(this.appInfo.appearance.size.maximal !== undefined){
+			this.options.maxWidth = this.appInfo.appearance.size.maximal[0];
+			this.options.maxHeight = this.appInfo.appearance.size.maximal[1];
+		}
 
 		// adding properties
 		this.app.rootElement = $("<div></div>").css({
@@ -41,10 +35,28 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			'min-height': '100px'
 		}).appendTo($(this.element));
 
-
+		// Background
+		if(this.appInfo.appearance.background == "opaque" ){
+			this.element.addClass('opaque');
+		}
+		
 		this.app._widget = $(this.element);
 
 		this.app.path = "apps/"+this.appName+"/";
+
+
+
+		$(this.element).parents('.ui-dialog').addClass("ui-app");
+		this.dialogParent = $(this.element).parents('.ui-dialog');
+		this._setOption('editMode',AppEngine.editMode);
+
+		this._super("_create");
+	},
+
+	_init:function(){
+
+		//  Initialize Widget
+		this._super("_init");
 
 		// Initialize App
 		this.app.initialize();
@@ -52,10 +64,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this._on(this.element.parent(), {
 			resize:"resize",
 		});
-
-		$(this.element).parents('.ui-dialog').addClass("ui-app");
-		this.dialogParent = $(this.element).parents('.ui-dialog');
-		this._setOption('editMode',AppEngine.editMode);
 	},
 	_destroy:function() {
 		this._super("_destroy");
@@ -161,7 +169,7 @@ var AppEngine = {
 			var streamList = {};
 			var streams = this.appSettings[app.name].data.streams;
 			for(var i=0; i<streams.length; i++){
-				stream = streams[i];
+				var stream = streams[i];
 					if(state.streams[stream] > 0){
 						streamList[stream] = data[stream];
 					}
@@ -173,7 +181,7 @@ var AppEngine = {
 	registerApp : function(app){
 		this.runningApps.push(app);
 		//Adding streams
-		streams = this.appSettings[app.name].data.streams;
+		var streams = this.appSettings[app.name].data.streams;
 		for(var i=0; i<streams.length; i++){
 			streamAdd(streams[i]);
 		}
@@ -182,7 +190,7 @@ var AppEngine = {
 	unregisterApp : function(app){
 		this.runningApps.splice(this.runningApps.indexOf(app),1);
 		// removing streams
-		streams = this.appSettings[app.name].data.streams;
+		var streams = this.appSettings[app.name].data.streams;
 		for(var i=0; i<streams.length; i++){
 			streamRemove(streams[i]);
 		}
@@ -191,9 +199,9 @@ var AppEngine = {
 	loadApp : function(app, position, size){
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
-				appInstance = new window[app]();
+				var appInstance = new window[app]();
 				console.log("Adding app "+app+" to Screen");
-				appElement = $('<div class="app '+app+'"></div>').appendTo($('body'));
+				var appElement = $('<div class="app '+app+'"></div>').appendTo($('body'));
 				appElement.app({ app: appInstance });
 				appElement.parents('.ui-dialog').draggable('option', 'snap', true);
 //				appElement.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
@@ -253,7 +261,7 @@ var AppEngine = {
 		console.log("Saving Preset "+this.preset);
 		$.each(this.runningApps, function(index, app) {
 			
-			appData = {};
+			var appData = {};
 			appData.name = app.constructor.name;
 			appData.position = app._widget.app("option","position");
 			appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
@@ -291,11 +299,11 @@ var AppEngine = {
 	},
 
 	resize : function(){
-		windowsize = [$(window).width(),$(window).height()];
+		var windowsize = [$(window).width(),$(window).height()];
 		$.each(this.runningApps, function(index, app) {
-			position = app._widget.app("option","position");
-			size = [app._widget.app("option","width"),app._widget.app("option","height")];
-			change = 0;
+			var position = app._widget.app("option","position");
+			var size = [app._widget.app("option","width"),app._widget.app("option","height")];
+			var change = 0;
 			for (var i = 0; i < 2; i++) {
 				if(position[i]+size[i] > windowsize[i]){
 					change++;
@@ -340,7 +348,7 @@ var AppLoader = {
 	loadApps : function(app){
 		// Load all apps
 		for (var i = 0; i<this.installedApps.length;i++) {
-			app = this.installedApps[i];
+			var app = this.installedApps[i];
 			this._loadAppJs(app);
 			this._loadAppJson(app);
 		}
@@ -418,16 +426,16 @@ var HookManager  = {
 	},
 	unregisterHook : function(object){
 		if(arguments[1]!==undefined){
-			hookname = arguments[1];
+			var hookname = arguments[1];
 			for(i = 0; i<this.hooks.length; i++){
-				hook = this.hooks[i];
+				var hook = this.hooks[i];
 				if(hook[0] == object && hook[2] == hookname){
 					this.hooks.splice(i,1);
 				}
 			}
 		}else{
 			for(i = 0; i<this.hooks.length; i++){
-				hook = this.hooks[i];
+				var hook = this.hooks[i];
 				if(hook[0] == object){
 					this.hooks.splice(i,1);
 				}
@@ -437,10 +445,10 @@ var HookManager  = {
 	triggerHook : function(hookname, data){
 		console.log(hookname+" triggered");
 		for(i = 0; i<this.hooks.length; i++){
-			hook = this.hooks[i];
+			var hook = this.hooks[i];
 			if(hook[2] == hookname){
-				object = hook[0];
-				methodname = hook[1];
+				var object = hook[0];
+				var methodname = hook[1];
 				object[methodname](data);
 			}
 		}
