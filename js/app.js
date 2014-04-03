@@ -410,3 +410,44 @@ var AppLoader = {
 		}
 	}
 };
+
+var HookManager  = {
+	hooks : [],
+	registerHook : function(object, methodname, hookname){
+		this.hooks.push([object, methodname, hookname]);
+	},
+	unregisterHook : function(object){
+		if(arguments[1]!==undefined){
+			hookname = arguments[1];
+			for(i = 0; i<this.hooks.length; i++){
+				hook = this.hooks[i];
+				if(hook[0] == object && hook[2] == hookname){
+					this.hooks.splice(i,1);
+				}
+			}
+		}else{
+			for(i = 0; i<this.hooks.length; i++){
+				hook = this.hooks[i];
+				if(hook[0] == object){
+					this.hooks.splice(i,1);
+				}
+			}
+		}
+	},
+	triggerHook : function(hookname, data){
+		console.log(hookname+" triggered");
+		for(i = 0; i<this.hooks.length; i++){
+			hook = this.hooks[i];
+			if(hook[2] == hookname){
+				object = hook[0];
+				methodname = hook[1];
+				object[methodname](data);
+			}
+		}
+	},
+	triggerHooks : function(hooks){
+		for(i = 0; i<hooks.length; i++){
+			this.triggerHook(hooks[i]);
+		}
+	}
+};
