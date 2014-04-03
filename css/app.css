@@ -1,5 +1,11 @@
 /* custom jquery ui dialog style */
 
+.ui-app
+{
+	font-family: Arial;
+	text-shadow: none;
+}
+
 .ui-app .ui-dialog-content
 {
 	overflow: hidden;
@@ -9,30 +15,29 @@
 .ui-app .opaque
 {
 	background-color: RGBA(255,255,255,0.9);
-	border-radius: 5px;
+	border-radius: 8px;
+	padding: 5px;
 }
 
 
 .ui-app .ui-dialog-titlebar
 {
 	display:none;
-/*	height:20px;*/
 	padding:2px;
 	padding-left: 10px;
-/*	overflow:hidden;*/
 	position:absolute;
-/*	width: 100%;*/
 	left:0;
 	right:0;
-/*	top:0;*/
 	z-index:10;
-/*	margin:0;*/
-	border-radius: 5px;
+	border-radius: 8px;
+	font-weight: bold;
+	font-size: 12pt;
 }
 
 .ui-app-editmode
 {
 	background-color:#ddd !important;
+	border-radius: 8px;
 }
 
 .ui-dialog .ui-resizable-handle {
