@@ -206,6 +206,10 @@ var AppEngine = {
 	loadApp : function(app, position, size){
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
+				if(typeof window[app] !== 'function'){
+					console.error("App '"+app+"' can't be spawned. Appclass not found.");
+					return;
+				}
 				appInstance = new window[app]();
 				console.log("Adding app "+app+" to Screen");
 				appElement = $('<div class="app '+app+'"></div>').appendTo($('body'));
