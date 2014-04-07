@@ -55,8 +55,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.app.rootElement = $("<div></div>").css({
 			width: '100%',
 			height: '100%',
-			'min-width': '100px',
-			'min-height': '100px'
+			'min-width': '10px',
+			'min-height': '10px'
 		}).appendTo($(this.element));
 
 		// Initialize App
@@ -272,6 +272,11 @@ var AppEngine = {
 			appData.name = app.constructor.name;
 			appData.position = app._widget.app("option","position");
 			appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
+
+			// Don't save size if its unchanged or resizing is disallowed
+			if (appData.size == AppEngine.appSettings[appData.name].appearance.size.initial || AppEngine.appSettings[appData.name].appearance.resize === false){
+				appData.size = undefined;
+			}
 
 			console.log("   -  "+JSON.stringify(appData));
 
