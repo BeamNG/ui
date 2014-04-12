@@ -17,16 +17,19 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			this.options.resizable = false;
 		}
 
+		// inner size modifier
+		var sizeOffset = 10 * ( this.appInfo.appearance.opaque === true);
+
 		// Sizes
 		if(this.appInfo.appearance.size.initial !== undefined){
-			this.options.width = this.appInfo.appearance.size.initial[0];
-			this.options.height =  this.appInfo.appearance.size.initial[1];
+			this.options.width = this.appInfo.appearance.size.initial[0] + sizeOffset;
+			this.options.height =  this.appInfo.appearance.size.initial[1] + sizeOffset;
 		}
 
 		// minimal size
 		if(this.appInfo.appearance.size.minimal !== undefined){
-			this.options.minWidth = this.appInfo.appearance.size.minimal[0];
-			this.options.minHeight = this.appInfo.appearance.size.minimal[1];
+			this.options.minWidth = this.appInfo.appearance.size.minimal[0] + sizeOffset;
+			this.options.minHeight = this.appInfo.appearance.size.minimal[1] + sizeOffset;
 		}
 		// minsize must be <= size
 		this.options.minWidth = Math.min(this.options.minWidth, this.options.width);
@@ -38,8 +41,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		// maximal size
 		if(this.appInfo.appearance.size.maximal !== undefined){
-			this.options.maxWidth = this.appInfo.appearance.size.maximal[0];
-			this.options.maxHeight = this.appInfo.appearance.size.maximal[1];
+			this.options.maxWidth = this.appInfo.appearance.size.maximal[0] + sizeOffset;
+			this.options.maxHeight = this.appInfo.appearance.size.maximal[1] + sizeOffset;
 		}
 		// maximal size must be >= size
 		if(this.options.maxWidth){
