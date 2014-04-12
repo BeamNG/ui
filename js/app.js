@@ -20,10 +20,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Sizes
 		if(this.appInfo.appearance.size.initial !== undefined){
 			this.options.width = this.appInfo.appearance.size.initial[0];
-			this.options.height =  this.appInfo.appearance.size.initial[1]; // Worst hack in History
-			if(this.options.height != "auto"){
-				this.options.height += 50;
-			}
+			this.options.height =  this.appInfo.appearance.size.initial[1];
 		}
 
 		// minimal size
@@ -35,7 +32,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.options.minWidth = Math.min(this.options.minWidth, this.options.width);
 		if(this.options.height != "auto"){
 			console.log("setting minsize");
-			this.options.minHeight = Math.min(this.options.minHeight, this.options.height - 50); // Worst hack in History No. 2
+			this.options.minHeight = Math.min(this.options.minHeight, this.options.height);
 			console.log(this.options.minHeight);
 		}
 
@@ -248,6 +245,9 @@ var AppEngine = {
 					console.log("size defined: "+size);
 					appElement.app("option","width",size[0]);
 					appElement.app("option","height",size[1]);
+				}else{
+					//heighthack :|
+					appElement.app("option","height",this.appSettings[app].appearance.size.initial[1]);
 				}
 
 				this.registerApp(appInstance);
