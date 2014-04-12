@@ -20,7 +20,10 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Sizes
 		if(this.appInfo.appearance.size.initial !== undefined){
 			this.options.width = this.appInfo.appearance.size.initial[0];
-			this.options.height =  this.appInfo.appearance.size.initial[1] + 50; // Worst hack in History
+			this.options.height =  this.appInfo.appearance.size.initial[1]; // Worst hack in History
+			if(this.options.height != "auto"){
+				this.options.height += 50;
+			}
 		}
 
 		// minimal size
