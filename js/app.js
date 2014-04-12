@@ -20,18 +20,36 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Sizes
 		if(this.appInfo.appearance.size.initial !== undefined){
 			this.options.width = this.appInfo.appearance.size.initial[0];
-			this.options.height =  this.appInfo.appearance.size.initial[1];
+			this.options.height =  this.appInfo.appearance.size.initial[1] + 50; // Worst hack in History
 		}
 
+		// minimal size
 		if(this.appInfo.appearance.size.minimal !== undefined){
 			this.options.minWidth = this.appInfo.appearance.size.minimal[0];
 			this.options.minHeight = this.appInfo.appearance.size.minimal[1];
 		}
+		// minsize must be <= size
+		this.options.minWidth = Math.min(this.options.minWidth, this.options.width);
+		if(this.options.height != "auto"){
+			console.log("setting minsize");
+			this.options.minHeight = Math.min(this.options.minHeight, this.options.height - 50); // Worst hack in History No. 2
+			console.log(this.options.minHeight);
+		}
 
+		// maximal size
 		if(this.appInfo.appearance.size.maximal !== undefined){
 			this.options.maxWidth = this.appInfo.appearance.size.maximal[0];
 			this.options.maxHeight = this.appInfo.appearance.size.maximal[1];
 		}
+		// maximal size must be >= size
+		if(this.options.maxWidth){
+			this.options.maxWidth = Math.max(this.options.maxWidth, this.options.width);
+		}
+		if(this.options.maxHeight){
+			this.options.maxHeight = Math.max(this.options.maxHeight, this.options.height);
+		}
+
+		// add helpervariables
 
 		this.app._widget = $(this.element);
 
@@ -44,6 +62,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		//  Initialize Widget
 		this._super("_init");
+
 
 		// Background
 		if(this.appInfo.appearance.background == "opaque" ){
@@ -60,6 +79,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		}).appendTo($(this.element));
 
 		// Initialize App
+		
 		this.app.initialize();
 
 		this._on(this.element.parent(), {
