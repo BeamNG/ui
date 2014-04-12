@@ -1,6 +1,7 @@
 $.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
+		persistance: undefined,
 		editMode: false
 	},
 
@@ -8,6 +9,17 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.app = this.options.app;
 		this.appName = this.app.name = this.app.constructor.name;
 		this.appInfo = AppEngine.appSettings[this.appName];
+
+		// Persistance
+		if(this.options.persistance === undefined){
+			this.options.persistance = {
+				options : {},
+				custom : {}
+			};
+		}
+
+		this.app.options = this.options.persistance.options;
+		this.app.persistance = this.options.persistance.custom;
 
 		// Configuration
 		this.options.title = this.appInfo.info.name;
@@ -80,6 +92,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			'min-width': '10px',
 			'min-height': '10px'
 		}).appendTo($(this.element));
+
+		// adding savemethod
+		this.app.save = function(){ AppEngine.savePreset(); };
 
 		// Initialize App
 		
@@ -226,7 +241,7 @@ var AppEngine = {
 		}
 	},
 
-	loadApp : function(app, position, size){
+	loadApp : function(app, position, size, persistance){
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
 				if(typeof window[app] !== 'function'){
@@ -236,7 +251,7 @@ var AppEngine = {
 				appInstance = new window[app]();
 				console.log("Adding app "+app+" to Screen");
 				appElement = $('<div class="app '+app+'"></div>').appendTo($('body'));
-				appElement.app({ app: appInstance });
+				appElement.app({ app: appInstance, "persistance" : persistance });
 				appElement.parents('.ui-dialog').draggable('option', 'snap', true);
 //				appElement.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
 				if(position !== undefined){
@@ -285,7 +300,7 @@ var AppEngine = {
 			console.log("done");
 			console.log("loading preset '"+preset+"'");
 			$.each(this.persistance.presets[preset], function(index, app) {
-				AppEngine.loadApp(app.name, app.position, app.size);
+				AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
 			});
 			this.resize();
 			console.log("done");
@@ -302,6 +317,7 @@ var AppEngine = {
 			appData.name = app.constructor.name;
 			appData.position = app._widget.app("option","position");
 			appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
+			appData.persistance = { options : app.options, custom : app.persistance};
 
 			// Don't save size if its unchanged or resizing is disallowed
 			if (appData.size == AppEngine.appSettings[appData.name].appearance.size.initial || AppEngine.appSettings[appData.name].appearance.resize === false){

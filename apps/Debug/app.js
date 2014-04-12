@@ -1,12 +1,15 @@
 function Debug(){}
 
 Debug.prototype.initialize = function(){
-	this.canvas = $("<canvas></canvas>").appendTo(this.rootElement).css({
-		width: '500',
-		height: '200'
-	})[0];
-	this.canvas.width = 500;
-	this.canvas.height = 200;
+	this.display = $("<span>"+this.persistance["rand"]+"</span>").appendTo(this.rootElement);
+	self = this;
+	$("<a href='#'>setrandomvalue</a>").click(function(){self.randomValue();}).appendTo(this.rootElement);
+};
+
+Debug.prototype.randomValue = function(){
+		this.persistance["rand"] = Math.floor((Math.random()*10)+1);
+		this.display.html(this.persistance["rand"]);
+		this.save();
 };
 
 Debug.prototype.update = function(streams){
