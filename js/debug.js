@@ -1,8 +1,12 @@
 $(document).ready(function() {
+	setTimeout(function(){__debugStartup()},1500);
+});
+
+function __debugStartup(){
 	__updateStreamDebug();
 	__insertAppSpawn();
-	__insertPresetChange();
-});
+	__insertPresetChange();	
+}
 
 function __updateStreamDebug(){
 	debugstr = "";
