@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "SimpleNBDebug",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "nb stats"
+	},
+
+	"appearance": {
+		"background" : "transparent",
+		"size" : {
+			"initial" : [200,"auto"]
+		}
+	},
+	
+	"data": {
+		"streams" : ["stats"]
+	}
+}

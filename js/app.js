@@ -154,7 +154,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 });
 
 $(document).ready(function() {
-	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleDash","SimplePedals","SimpleSpeedo","SimpleSteering","SimpleTacho"]; // Call a beamNG function later
+	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug"]; // Call a beamNG function later
 	AppLoader.initialize();
 });
 
