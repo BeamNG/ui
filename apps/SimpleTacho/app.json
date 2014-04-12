@@ -1,0 +1,20 @@
+{
+	"info": {
+		"name" : "SimpleTacho",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "Basic tacho."
+	},
+
+     "appearance": {
+      "background" : "transparent",
+      "resize" : false,
+      "size" : {
+       "initial" : [200,65]
+      }
+     },
+	
+	"data": {
+		"streams" : ["engineInfo"]
+	}
+}

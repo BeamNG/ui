@@ -1,0 +1,20 @@
+{
+	"info": {
+		"name" : "SimplePedals",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "App that shows throttle, brake, clutch, ebrake"
+	},
+
+     "appearance": {
+      "background" : "transparent",
+      "resize" : false,
+      "size" : {
+       "initial" : [100,75]
+      }
+     },
+	
+	"data": {
+		"streams" : ["electrics"]
+	}
+}

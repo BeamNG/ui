@@ -1,0 +1,20 @@
+{
+	"info": {
+		"name" : "SimpleSpeedo",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "Displays wheel speed."
+	},
+
+     "appearance": {
+      "background" : "transparent",
+      "resize" : false,
+      "size" : {
+       "initial" : [200,65]
+      }
+     },
+	
+	"data": {
+		"streams" : ["electrics"]
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"info": {
+		"name" : "SimpleDash",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "App with basic dash indicators."
+	},
+
+     "appearance": {
+      "background" : "transparent",
+      "resize" : false,
+      "size" : {
+       "initial" : [200,30]
+      }
+     },
+	
+	"data": {
+		"streams" : ["electrics"]
+	}
+}
