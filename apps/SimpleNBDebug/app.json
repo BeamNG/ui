@@ -9,7 +9,7 @@
 	"appearance": {
 		"background" : "transparent",
 		"size" : {
-			"initial" : [200,"auto"]
+			"initial" : [250,"auto"]
 		}
 	},
 	

@@ -17,12 +17,12 @@ SimpleSpeedo.prototype.initialize = function(){
     this.rootElement.click(function(){self.toggleUnit();});
     
     //If no unit was previously selected, default to MPH
-    if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "KM/H")) this.persistance["Unit"] = "MPH";
+    if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "km/h")) this.persistance["Unit"] = "km/h";
 };
 
 SimpleSpeedo.prototype.toggleUnit = function(){
-    //Toggle between MPH and KM/H, save the option to persistance system
-    this.persistance["Unit"] = this.persistance["Unit"] === 'MPH' ? 'KM/H' : 'MPH';
+    //Toggle between MPH and km/h, save the option to persistance system
+    this.persistance["Unit"] = this.persistance["Unit"] === 'MPH' ? 'km/h' : 'MPH';
     this.save();
 };
 
