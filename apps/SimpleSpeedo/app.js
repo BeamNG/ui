@@ -28,14 +28,22 @@ SimpleSpeedo.prototype.toggleUnit = function(){
 SimpleSpeedo.prototype.update = function(streams){
         
     //Get the values to work with, do rounding and stuff as needed
-    SpeedMs = streams["electrics"].wheelspeed;
-    if (isNaN(SpeedMs)) SpeedMs = streams["electrics"].airspeed;
+    speedMs = streams["electrics"].wheelspeed;
+    if (isNaN(speedMs)) speedMs = streams["electrics"].airspeed;
     
     if(this.persistance["Unit"] == "MPH"){
-        speedUnits = Math.round(2.236*SpeedMs);
+        speedUnits = Math.round(2.236*speedMs);
     } else {
-        speedUnits = Math.round(3.6*SpeedMs);
+        speedUnits = Math.round(3.6*speedMs);
     }
+    
+    //for resetting over 160units
+    if (speedUnits > 160) {
+        speedStart = 160;
+    } else {
+        speedStart = 0;
+    }
+    
     
     
     //start canvas stuff
@@ -50,8 +58,13 @@ SimpleSpeedo.prototype.update = function(streams){
     ctx.fillRect(0,0,200,65);
         
     //Make the bar
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
-    ctx.fillRect(20,10,Math.min(speedUnits, 160),25);
+    if (speedStart == 0){
+        ctx.fillStyle = "RGBA(0,0,128,0.5)";
+    } else {
+        ctx.fillStyle = "RGBA(128,0,0,0.5)";
+    }
+    
+    ctx.fillRect(20,10,Math.min(speedUnits-speedStart, 160),25);
     
     //text
     ctx.font='20px "Lucida Console", Monaco, monospace';
@@ -63,107 +76,31 @@ SimpleSpeedo.prototype.update = function(streams){
     //add border
     ctx.strokeRect(20,10,160,25);    
     
-    //label some stuff
+    //Add labels
+    //-Units
     ctx.font='10px "Lucida Console", Monaco, monospace';
-    ctx.fillText("0",20,48);
-    ctx.fillText("160",180,48);
-
     ctx.fillText(this.persistance["Unit"],100,58);
     
+    //-Numbers
     ctx.font='7px "Lucida Console", Monaco, monospace';
-    ctx.fillText("20",40,48);
-    ctx.fillText("40",60,48);
-    ctx.fillText("60",80,48);
-    ctx.fillText("80",100,48);
-    ctx.fillText("100",120,48);
-    ctx.fillText("120",140,48);
-    ctx.fillText("140",160,48);
+    var interval = 20;
+    for (var x=0; x<=160; x+=interval) {
+        ctx.fillText(speedStart+x,x+20,48);
+    }
     
-    //some graduations
-    //20mph intervals
-    ctx.beginPath();
-    ctx.moveTo(20, 35);
-    ctx.lineTo(20, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(40, 35);
-    ctx.lineTo(40, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(60, 35);
-    ctx.lineTo(60, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(80, 35);
-    ctx.lineTo(80, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(100, 35);
-    ctx.lineTo(100, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(120, 35);
-    ctx.lineTo(120, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(140, 35);
-    ctx.lineTo(140, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(160, 35);
-    ctx.lineTo(160, 40);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(180, 35);
-    ctx.lineTo(180, 40);
-    ctx.stroke();
-    
-    //10mph
-    ctx.beginPath();
-    ctx.moveTo(30, 35);
-    ctx.lineTo(30, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(50, 35);
-    ctx.lineTo(50, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(70, 35);
-    ctx.lineTo(70, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(90, 35);
-    ctx.lineTo(90, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(110, 35);
-    ctx.lineTo(110, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(130, 35);
-    ctx.lineTo(130, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(150, 35);
-    ctx.lineTo(150, 38);
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.moveTo(170, 35);
-    ctx.lineTo(170, 38);
-    ctx.stroke();
+    //Add Graduations
+    //20px/20unit intervals
+    for (var x=20; x<=180; x+=interval) {
+        ctx.beginPath();
+        ctx.moveTo(x, 35);
+        ctx.lineTo(x, 40);
+        ctx.stroke();   
+    }
+    //and 10px/10unit intervals
+    for (var x=30; x<=180; x+=interval) {
+        ctx.beginPath();
+        ctx.moveTo(x, 35);
+        ctx.lineTo(x, 38);
+        ctx.stroke();   
+    }
 };
