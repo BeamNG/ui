@@ -16,12 +16,14 @@ SimpleSpeedo.prototype.initialize = function(){
     self = this;
     this.rootElement.click(function(){self.toggleUnit();});
     
-    if (isNaN(this.persistance["Unit"])) this.persistance["Unit"] = "MPH";
+    //If no unit was previously selected, default to MPH
+    if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "KM/H")) this.persistance["Unit"] = "MPH";
 };
 
 SimpleSpeedo.prototype.toggleUnit = function(){
-        this.persistance["Unit"] = this.persistance["Unit"] === 'MPH' ? 'KM/H' : 'MPH';
-        this.save();
+    //Toggle between MPH and KM/H, save the option to persistance system
+    this.persistance["Unit"] = this.persistance["Unit"] === 'MPH' ? 'KM/H' : 'MPH';
+    this.save();
 };
 
 
@@ -29,22 +31,21 @@ SimpleSpeedo.prototype.update = function(streams){
         
     //Get the values to work with, do rounding and stuff as needed
     speedMs = streams["electrics"].wheelspeed;
-    if (isNaN(speedMs)) speedMs = streams["electrics"].airspeed;
+    if (isNaN(speedMs)) speedMs = streams["electrics"].airspeed;    //If no wheelspeedo present use airspeed
     
+    //Modify with selected units
     if(this.persistance["Unit"] == "MPH"){
         speedUnits = Math.round(2.236*speedMs);
     } else {
         speedUnits = Math.round(3.6*speedMs);
     }
     
-    //for resetting over 160units
+    //for resetting scale >160
     if (speedUnits > 160) {
         speedStart = 160;
     } else {
         speedStart = 0;
     }
-    
-    
     
     //start canvas stuff
     c = this.canvas[0];
@@ -61,7 +62,7 @@ SimpleSpeedo.prototype.update = function(streams){
     if (speedStart == 0){
         ctx.fillStyle = "RGBA(0,0,128,0.5)";
     } else {
-        ctx.fillStyle = "RGBA(128,0,0,0.5)";
+        ctx.fillStyle = "RGBA(128,0,128,0.5)";
     }
     
     ctx.fillRect(20,10,Math.min(speedUnits-speedStart, 160),25);
