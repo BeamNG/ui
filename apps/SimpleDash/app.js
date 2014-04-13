@@ -23,7 +23,7 @@ SimpleDash.prototype.update = function (streams) {
     
     absOn = Math.round(streams["electrics"].abs);
     
-    fullBeamOn = Math.round(streams["electrics"].highbeam);
+    lightsState = Math.round(streams["electrics"].lights);
     
     
     //start canvas stuff
@@ -78,8 +78,10 @@ SimpleDash.prototype.update = function (streams) {
     }
     
     //highbeams
-    if (fullBeamOn > 0.5) {
-        lights.style.fill="#000080";
+    if (lightsState == 1) {
+        lights.style.fill="#0f0";
+    } else if (lightsState == 2) {
+        lights.style.fill="#00f";
     } else {
         lights.style.fill="#000";
     }
