@@ -43,8 +43,17 @@ SimpleAGears.prototype.update = function (streams) {
     ctx.fillText(gearNames[4],145,20);
     ctx.fillText(gearNames[5],175,20);
     
-    //overcolour selected gear
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
-    ctx.fillText(gearNames[aGear],(aGear*30)+25,20);
+   
+    //remove stuff over current gear
+    ctx.clearRect((aGear*30)+15,0,20,30);
+    //readd bg
+    ctx.fillStyle = "RGBA(255,255,255,0.75)";
+    ctx.fillRect((aGear*30)+15,0,20,30);
     
+    //add box around gear
+    ctx.strokeRect((aGear*30)+15,4,20,20);
+    
+    //add current gear back in selected colour
+    ctx.fillStyle = "RGBA(0,0,128,0.5)";
+    ctx.fillText(gearNames[aGear],(aGear*30)+25,20);    
 };
