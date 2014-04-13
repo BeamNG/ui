@@ -3,7 +3,7 @@
 		"name" : "SimpleNBDebug",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "nb stats"
+		"description": "App with stats on Nodes/Beams."
 	},
 
 	"appearance": {

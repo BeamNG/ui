@@ -3,7 +3,7 @@
 		"name" : "SimpleAGears",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "App with basic dash indicators."
+		"description": "App that indicates current automatic gear."
 	},
 
      "appearance": {

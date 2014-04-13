@@ -3,7 +3,7 @@
 		"name" : "SimpleSpeedo",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Displays wheel speed."
+		"description": "Displays speed from wheels if avaliable, falls back to airspeed."
 	},
 
      "appearance": {
