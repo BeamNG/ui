@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "SimpleRPMDebug",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "wip"
+	},
+
+     "appearance": {
+      "background" : "transparent",
+      "size" : {
+       "initial" : [100,100]
+      }
+     },
+	
+	"data": {
+		"streams" : ["engineInfo"]
+	}
+}
