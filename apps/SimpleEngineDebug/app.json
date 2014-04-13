@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "SimpleEngineDebug",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "WIP"
+	},
+
+	"appearance": {
+		"background" : "transparent",
+		"size" : {
+			"initial" : [250,"auto"]
+		}
+	},
+	
+	"data": {
+		"streams" : ["engineInfo","electrics"]
+	}
+}
