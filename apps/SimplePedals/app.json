@@ -3,7 +3,7 @@
 		"name" : "SimplePedals",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "App that shows throttle, brake, clutch, ebrake"
+		"description": "App that shows throttle, brake, clutch, parkingbrake axis positions."
 	},
 
      "appearance": {

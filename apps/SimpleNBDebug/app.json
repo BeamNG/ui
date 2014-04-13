@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "SimpleNBDebug",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "App with stats on Nodes/Beams."
+	},
+
+	"appearance": {
+		"background" : "transparent",
+		"size" : {
+			"initial" : [200,"auto"]
+		}
+	},
+	
+	"data": {
+		"streams" : ["stats"]
+	}
+}

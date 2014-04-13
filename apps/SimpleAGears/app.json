@@ -1,0 +1,20 @@
+{
+	"info": {
+		"name" : "SimpleAGears",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "App that indicates current automatic gear."
+	},
+
+     "appearance": {
+      "background" : "transparent",
+      "resize" : false,
+      "size" : {
+       "initial" : [200,30]
+      }
+     },
+	
+	"data": {
+		"streams" : ["electrics"]
+	}
+}
