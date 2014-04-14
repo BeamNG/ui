@@ -2,7 +2,7 @@ function SimpleNBDebug(){}
 
 SimpleNBDebug.prototype.initialize = function(){
     
-    this.text = $('<div style="background:RGBA(255,255,255,0.75);padding:5px;"></div>').appendTo(this.rootElement);
+    this.text = $('<div style="padding:5px;"></div>').appendTo(this.rootElement);
 };
 
 SimpleNBDebug.prototype.update = function(streams){

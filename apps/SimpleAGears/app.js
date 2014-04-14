@@ -26,10 +26,6 @@ SimpleAGears.prototype.update = function (streams) {
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,200,30);
     
-    //background rectangle
-    ctx.fillStyle = "RGBA(255,255,255,0.75)";
-    ctx.fillRect(0,0,200,30);
-    
     //Setup Text
     ctx.font='20px "Lucida Console", Monaco, monospace';
     ctx.textAlign="center";
@@ -48,7 +44,7 @@ SimpleAGears.prototype.update = function (streams) {
     ctx.clearRect((aGear*30)+15,0,20,30);
     //readd bg
     ctx.fillStyle = "RGBA(255,255,255,0.75)";
-    ctx.fillRect((aGear*30)+15,0,20,30);
+    ctx.fillRect((aGear*30)+15,4,20,20);
     
     //add box around gear
     ctx.strokeRect((aGear*30)+15,4,20,20);

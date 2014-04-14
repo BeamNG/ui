@@ -82,7 +82,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Background
 		if(this.appInfo.appearance.background == "opaque" ){
 			this.element.addClass('opaque');
-		}
+		} else if (this.appInfo.appearance.background == "opaque-simple") {
+            this.element.addClass('opaque-simple');
+        }
 
 
 		// adding properties

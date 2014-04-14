@@ -7,7 +7,7 @@
 	},
 
      "appearance": {
-      "background" : "transparent",
+      "background" : "opaque-simple",
       "resize" : false,
       "size" : {
        "initial" : [200,30]

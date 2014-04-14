@@ -27,10 +27,6 @@ SimpleTacho.prototype.update = function(streams){
         
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,200,65);
-    
-    //background rectangle
-    ctx.fillStyle = "RGBA(255,255,255,0.75)";
-    ctx.fillRect(0,0,200,65);
         
     //work out what colour do do bar in TODO: Cleaner way of doing this?
     var rgba='RGBA';
