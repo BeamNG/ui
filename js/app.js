@@ -80,11 +80,12 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 
 		// Background
-		if(this.appInfo.appearance.background == "opaque" ){
-			this.element.addClass('opaque');
-		} else if (this.appInfo.appearance.background == "opaque-simple") {
-            this.element.addClass('opaque-simple');
-        }
+		var backgroundClasses = ["opaque","opaque-simple","transparent"];
+		if(backgroundClasses.indexOf(this.appInfo.appearance.background)!= -1){
+			this.element.addClass(this.appInfo.appearance.background);
+		}else{
+			console.error("Error parsing app.json attribute appearance.backround: invalid value");
+		}
 
 
 		// adding properties

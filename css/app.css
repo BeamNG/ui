@@ -13,14 +13,6 @@
 	padding: 0px;
 }
 
-.ui-app .opaque
-{
-	background-color: RGBA(255,255,255,0.9);
-	border-radius: 8px;
-	padding: 5px;
-}
-
-
 .ui-app .ui-dialog-titlebar
 {
 	display:none;
@@ -52,9 +44,20 @@
 	padding:0;
 }
 
-.ui-app .opaque-simple
+
+/* backgroundstyles */
+.ui-app .opaque-simple, .ui-app .opaque
 {
 	background-color: RGBA(255,255,255,0.9);
-	/*border-radius: 8px;
-	padding: 5px;*/
+}
+
+.ui-app .opaque
+{
+	border-radius: 8px;
+	padding: 5px;
+}
+
+.ui-app .transparent
+{
+	background: transparent;
 }
