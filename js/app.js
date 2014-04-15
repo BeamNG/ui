@@ -82,7 +82,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// Background
 		if(this.appInfo.appearance.background == "opaque" ){
 			this.element.addClass('opaque');
-		}
+		} else if (this.appInfo.appearance.background == "opaque-simple") {
+            this.element.addClass('opaque-simple');
+        }
 
 
 		// adding properties
@@ -154,7 +156,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 });
 
 $(document).ready(function() {
-	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug"]; // Call a beamNG function later
+	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug","SimpleEngineDebug","SimpleRPMDebug"]; // Call a beamNG function later
 	AppLoader.initialize();
 });
 

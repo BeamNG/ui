@@ -29,10 +29,6 @@ SimpleSteering.prototype.update = function(streams){
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,100,75);
     
-    //background rectangle
-    ctx.fillStyle = "RGBA(255,255,255,0.75)";
-    ctx.fillRect(0,0,100,75);
-    
     //Horz display
     ctx.strokeRect(10,60,80,5);
     ctx.fillStyle = "RGBA(0,0,128,0.5)";

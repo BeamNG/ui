@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "SimpleNBDebug",
+		"name" : "SimpleEngineDebug",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "App with stats on Nodes/Beams."
+		"description": "WIP"
 	},
 
 	"appearance": {
@@ -14,6 +14,6 @@
 	},
 	
 	"data": {
-		"streams" : ["stats"]
+		"streams" : ["engineInfo","electrics"]
 	}
 }
