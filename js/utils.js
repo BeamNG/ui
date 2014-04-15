@@ -19,5 +19,11 @@ Converter.prototype.convertLength = function(length)
 };
 
 function toInt(val){
-	return val | 0;
+	if(typeof val == "string"){
+		return toInt(parseInt(val));
+	}else if(typeof val == "number"){
+		return val | 0;
+	}else{
+		return NaN;
+	}
 }
