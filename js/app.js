@@ -134,11 +134,11 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		if(value){
 			this.element.addClass('ui-app-editmode');
 			this.dialogParent.children('.ui-dialog-titlebar').show();
-//			this.dialogParent.children('.ui-resizable-handle').show();
+			this.dialogParent.children('.ui-resizable-handle').show();
 		}else{
 			this.element.removeClass('ui-app-editmode');
 			this.dialogParent.children('.ui-dialog-titlebar').hide();
-//			this.dialogParent.children('.ui-resizable-handle').hide();
+			this.dialogParent.children('.ui-resizable-handle').hide();
 		}
 	},
 
