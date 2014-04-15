@@ -35,9 +35,9 @@ SimpleSpeedo.prototype.update = function(streams){
     
     //Modify with selected units
     if(this.persistance["Unit"] == "MPH"){
-        speedUnits = Math.round(2.236*speedMs);
+        speedUnits = toInt(2.236*speedMs);
     } else {
-        speedUnits = Math.round(3.6*speedMs);
+        speedUnits = toInt(3.6*speedMs);
     }
     
     //for resetting scale >160

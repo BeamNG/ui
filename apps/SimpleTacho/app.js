@@ -17,7 +17,7 @@ SimpleTacho.prototype.initialize = function(){
 SimpleTacho.prototype.update = function(streams){
         
     //Get the values to work with, do rounding and stuff as needed
-    rpm = Math.round(streams["engineInfo"][4]);
+    rpm = toInt(streams["engineInfo"][4]);
     rpmMax = streams["engineInfo"][1];
     rpmIdle = streams["engineInfo"][0];
     
