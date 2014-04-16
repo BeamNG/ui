@@ -156,6 +156,39 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 });
 
+$.widget("beamNG.appButton", {
+	_create : function(){
+		var appName = this.options.app;
+		this.appSettings = AppEngine.appSettings[appName];
+
+		
+		// creating the widget
+		this.element.addClass('appButton');
+
+		this.front = $("<div class='appButtonImage'></div>").appendTo(this.element);
+		this.title = $("<div class='appButtonTitle'>"+this.appSettings.info.name+" <span class='appButtonSmall'>v"+this.appSettings.info.version+"</span></div>").appendTo(this.element);
+		this.detail = $("<div class='appButtonInfo'></div>").appendTo(this.element);
+
+		$("<div class='appButtonSmall'>by "+this.appSettings.info.author+"</div>").appendTo(this.detail);
+		$("<div>"+this.appSettings.info.description+"</div>").appendTo(this.detail);
+
+		// interactivity
+		var self = this;
+		this.element.hover(function() {
+			self.front.slideUp();
+		}, function() {
+			self.front.slideDown();
+		});
+
+		this.element.click(function(event) {
+			console.log();
+			AppEngine.loadApp(appName);
+			AppStore.close();
+		});
+
+	}
+});
+
 $(document).ready(function() {
 	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug","SimpleEngineDebug","SimpleRPMDebug"]; // Call a beamNG function later
 	AppLoader.initialize();
@@ -187,21 +220,19 @@ var AppEngine = {
 		// load persistance
 		this._loadPersistance();
 
-//		AppStore.initialize();
+		AppStore.initialize();
 	},
 
 	toggleEditMode: function() {
 		this.editMode = !this.editMode;
 
-		// backgroundoverlay
 		if (this.editMode) {
 			$('#appengine-blending').show();
 		} else{
 			$('#appengine-blending').hide();
-		}
-
-		if (!(this.editMode)){
-			// Saving preset
+			
+			AppStore.close();
+			
 			this.savePreset();
 		}
 
@@ -381,11 +412,48 @@ var AppEngine = {
 
 var AppStore = {
 	initialize: function(){
-		this.mainDiv = $("<div id='AppStore'>Teeeeeeeeeeest</div>").css({
-			width: '80%',
-			height: '80%',
-			
-		});appendTo("body");
+		this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
+		this.mainDiv.dialog({
+			title: "Add App",
+			width: $(window).width()-70,
+			height: $(window).height()-70,
+			beforeClose : function(event, ui){
+				AppStore.close();
+				return false;
+			},
+			draggable: false,
+			resizable: false,
+			closeOnEscape: true
+		});
+		this.close();
+
+		$.each(AppEngine.loadedApps, function(index, val) {
+			$("<a></a>").appendTo(AppStore.mainDiv).appButton({app: val});
+		});
+
+		$(window).resize(function(event) {
+			AppStore.resize();
+		});
+
+		// button
+		$("<a id='appstorebutton'>+</a>").appendTo($("#appengine-blending")).css({
+			position: 'absolute',
+			right: 50,
+			top: 10
+		}).button().click(function(event) {
+			AppStore.open();
+		});
+	},
+	open: function(){
+		this.mainDiv.parent().show();
+		this.resize();
+	},
+	close: function(){
+		this.mainDiv.parent().hide();
+	},
+	resize: function(){
+		this.mainDiv.dialog("option","width",$(window).width()-70);
+		this.mainDiv.dialog("option","height",$(window).height()-70);
 	}
 };
 
