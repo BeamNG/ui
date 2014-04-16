@@ -26,14 +26,14 @@ SimpleRPMDebug.prototype.update = function(streams){
     
     //background circle
     ctx.arc(this.canvas.width/2,this.canvas.height/2,this.canvas.height*0.5,0,2*Math.PI);
-    ctx.fillStyle = "RGBA(255,255,255,0.75)";
+    ctx.fillStyle = "RGBA(255,255,255,0.9)";
     ctx.fill();
     
     //currentRPM
     ctx.beginPath();
     ctx.arc(this.canvas.width/2,this.canvas.height/2,this.canvas.height*0.4,0.5*Math.PI,0.5*Math.PI+curRPM/maxRPM*2*Math.PI);
     ctx.lineWidth = Math.min(this.rootElement.height(),this.rootElement.width())/10;
-	ctx.strokeStyle = "RGBA(255,255,255,0.75)";
+	ctx.strokeStyle = "RGBA(128,128,128,0.75)";
 	ctx.stroke();
     
     //idle RPM
