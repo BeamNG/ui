@@ -3,8 +3,7 @@
 		"name" : "Debug",
 		"author": "beamng.ui Team",
 		"version": "0.1",
-		"description": "This poor app is used to test all new features.",
-		"image": true
+		"description": "This poor app is used to test all new features."
 	},
 
 	"appearance": {
