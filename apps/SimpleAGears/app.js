@@ -15,10 +15,7 @@ SimpleAGears.prototype.update = function (streams) {
 	aGear = Math.round(streams["electrics"].gear_A*5);
     
     gearNames = ["P","R","N","D","2","1"];
-    
-    //aGear = gearNames[aGear];
                 
-    
     //start canvas stuff
     c = this.canvas[0];
 	ctx = c.getContext('2d');
