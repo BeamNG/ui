@@ -1,9 +1,10 @@
 {
 	"info": {
-		"name" : "Debug (Torquecurve)",
+		"name" : "Debug",
 		"author": "beamng.ui Team",
 		"version": "0.1",
-		"description": "App to debug the torquecurve stream"
+		"description": "This poor app is used to test all new features.",
+		"image": true
 	},
 
 	"appearance": {

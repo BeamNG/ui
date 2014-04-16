@@ -172,12 +172,17 @@ $.widget("beamNG.appButton", {
 		$("<div class='appButtonSmall'>by "+this.appSettings.info.author+"</div>").appendTo(this.detail);
 		$("<div>"+this.appSettings.info.description+"</div>").appendTo(this.detail);
 
+		//custom image?
+		if(this.appSettings.info.image === true){
+			this.front.css('background-image', 'url(/html/apps/'+appName+'/app.png)');
+		}
+
 		// interactivity
 		var self = this;
 		this.element.hover(function() {
-			self.front.slideUp();
+			self.front.stop(true, false).animate({height: 0}, 300);
 		}, function() {
-			self.front.slideDown();
+			self.front.stop(true, false).animate({height: 120}, 300);
 		});
 
 		this.element.click(function(event) {
@@ -447,6 +452,7 @@ var AppStore = {
 	open: function(){
 		this.mainDiv.parent().show();
 		this.resize();
+		this.mainDiv.dialog( "moveToTop" );
 	},
 	close: function(){
 		this.mainDiv.parent().hide();
