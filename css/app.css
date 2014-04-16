@@ -120,6 +120,7 @@
 .appButtonImage
 {
 	box-shadow: inset 0 0 40px #ddd;
+	background-repeat: no-repeat;
 }
 
 .appButtonTitle
