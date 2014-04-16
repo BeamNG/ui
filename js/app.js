@@ -397,7 +397,6 @@ var AppEngine = {
 var AppStore = {
 	initialize: function(){
 		this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
-		this.content = $("<div class='storecontent'></div>").appendTo(this.mainDiv);
 		this.dialogWindow = this.mainDiv.dialog({
 			title: "Add App",
 			modal: true,
@@ -407,7 +406,7 @@ var AppStore = {
 		});
 
 		$.each(AppEngine.loadedApps, function(index, val) {
-			$("<a></a>").appendTo(AppStore.content).appButton({app: val});
+			$("<a></a>").appendTo(AppStore.mainDiv).appButton({app: val});
 		});
 	}
 };

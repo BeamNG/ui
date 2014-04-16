@@ -1,5 +1,30 @@
 /* custom jquery ui dialog style */
 
+.ui-dialog .ui-dialog-titlebar
+{
+	padding:2px;
+	padding-left: 10px;
+	font-weight: bold;
+	font-size: 12pt;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	left:0;
+	right:0;
+}
+
+.ui-dialog .ui-dialog-content
+{
+	border: 1px solid #E78F08;
+	border-top-width: 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	left:0;
+	right:0;	
+}
+
+
 .ui-app
 {
 	font-family: Arial;
@@ -10,24 +35,17 @@
 .ui-app .ui-dialog-content
 {
 	overflow: hidden;
-	padding: 0px;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
 }
 
-.ui-dialog .ui-dialog-titlebar
-{
-	padding:2px;
-	padding-left: 10px;
-	position:absolute;
-	left:0;
-	right:0;
-	z-index:10;
-	border-radius: 8px;
-	font-weight: bold;
-	font-size: 12pt;
-}
 .ui-app .ui-dialog-titlebar
 {
 	display:none;
+	position:absolute;
+	z-index:10;
+	border-radius: 8px;
 }
 
 .ui-app-editmode
@@ -54,7 +72,7 @@
 	background-color: RGBA(255,255,255,0.9);
 }
 
-.ui-app .opaque, #AppStore
+.ui-app .opaque
 {
 	border-radius: 8px;
 	padding: 5px;
@@ -73,8 +91,7 @@
 
 .storecontent
 {
-	padding: 10px;
-	padding-top: 35px;
+	padding: 0px;
 }
 
 .appButton
