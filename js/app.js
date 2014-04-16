@@ -158,15 +158,33 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 $.widget("beamNG.appButton", {
 	_create : function(){
-		this.appName = this.options.app;
-		this.appSettings = AppEngine.appSettings[this.appName];
+		var appName = this.options.app;
+		this.appSettings = AppEngine.appSettings[appName];
 
 		
 		// creating the widget
 		this.element.addClass('appButton');
 
+		this.front = $("<div class='appButtonImage'></div>").appendTo(this.element);
+		this.title = $("<div class='appButtonTitle'>"+this.appSettings.info.name+" <span class='appButtonSmall'>v"+this.appSettings.info.version+"</span></div>").appendTo(this.element);
+		this.detail = $("<div class='appButtonInfo'></div>").appendTo(this.element);
 
-		this.element.text(this.appSettings.info.name);
+		$("<div class='appButtonSmall'>by "+this.appSettings.info.author+"</div>").appendTo(this.detail);
+		$("<div>"+this.appSettings.info.description+"</div>").appendTo(this.detail);
+
+		// interactivity
+		var self = this;
+		this.element.hover(function() {
+			self.front.slideUp();
+		}, function() {
+			self.front.slideDown();
+		});
+
+		this.element.click(function(event) {
+			console.log();
+			AppEngine.loadApp(appName);
+			AppStore.close();
+		});
 
 	}
 });
@@ -402,7 +420,10 @@ var AppStore = {
 			beforeClose : function(event, ui){
 				AppStore.close();
 				return false;
-			}
+			},
+			draggable: false,
+			resizable: false,
+			closeOnEscape: true
 		});
 		this.close();
 

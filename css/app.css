@@ -86,28 +86,59 @@
 /* Styling of Appstore */
 #AppStore
 {
-	background: #eee;
-}
-
-.storecontent
-{
-	padding: 0px;
+	background: #fff;
 }
 
 .appButton
 {
-	width: 250px;
-	height: 150px;
 	background: white;
 	overflow: hidden;
-	border: 1px solid #eee;
+	border: 3px solid #ddd;
 	border-radius: 5px;
 	display: inline-block;
 	margin: 5px;
-	padding: 5px;
+	padding: 0;
 }
 
-.appButton:hover
+.appButtonInfo, .appButtonInfo, .appButtonTitle
 {
-	background: black;
+	overflow: hidden;
+	font-size: 12pt;
+}
+
+.appButtonPanel, .appButton
+{
+	width: 250px;
+	height: 150px;
+}
+
+.appButtonImage, .appButtonInfo
+{
+	height: 120px;
+}
+
+.appButtonImage
+{
+	box-shadow: inset 0 0 40px #ddd;
+}
+
+.appButtonTitle
+{
+	height: 30px;
+	padding-top: 5px;
+	padding-left: 10px;
+	background: #ddd;
+}
+
+.appButtonInfo
+{
+	font-size: 10pt;
+	padding: 3px;
+	padding-left: 7px;
+}
+
+.appButtonSmall
+{
+	font-size: 10pt;
+	color: gray;
 }
