@@ -208,15 +208,13 @@ var AppEngine = {
 	toggleEditMode: function() {
 		this.editMode = !this.editMode;
 
-		// backgroundoverlay
 		if (this.editMode) {
 			$('#appengine-blending').show();
 		} else{
 			$('#appengine-blending').hide();
-		}
-
-		if (!(this.editMode)){
-			// Saving preset
+			
+			AppStore.close();
+			
 			this.savePreset();
 		}
 
@@ -397,17 +395,44 @@ var AppEngine = {
 var AppStore = {
 	initialize: function(){
 		this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
-		this.dialogWindow = this.mainDiv.dialog({
+		this.mainDiv.dialog({
 			title: "Add App",
-			modal: true,
-			width: toInt($(window).width()-70),
-			height: toInt($(window).height()-70),
-			autoOpen: false
+			width: $(window).width()-70,
+			height: $(window).height()-70,
+			beforeClose : function(event, ui){
+				AppStore.close();
+				return false;
+			}
 		});
+		this.close();
 
 		$.each(AppEngine.loadedApps, function(index, val) {
 			$("<a></a>").appendTo(AppStore.mainDiv).appButton({app: val});
 		});
+
+		$(window).resize(function(event) {
+			AppStore.resize();
+		});
+
+		// button
+		$("<a id='appstorebutton'>+</a>").appendTo($("#appengine-blending")).css({
+			position: 'absolute',
+			right: 50,
+			top: 10
+		}).button().click(function(event) {
+			AppStore.open();
+		});
+	},
+	open: function(){
+		this.mainDiv.parent().show();
+		this.resize();
+	},
+	close: function(){
+		this.mainDiv.parent().hide();
+	},
+	resize: function(){
+		this.mainDiv.dialog("option","width",$(window).width()-70);
+		this.mainDiv.dialog("option","height",$(window).height()-70);
 	}
 };
 
