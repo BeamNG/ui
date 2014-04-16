@@ -13,9 +13,8 @@
 	padding: 0px;
 }
 
-.ui-app .ui-dialog-titlebar
+.ui-dialog .ui-dialog-titlebar
 {
-	display:none;
 	padding:2px;
 	padding-left: 10px;
 	position:absolute;
@@ -25,6 +24,10 @@
 	border-radius: 8px;
 	font-weight: bold;
 	font-size: 12pt;
+}
+.ui-app .ui-dialog-titlebar
+{
+	display:none;
 }
 
 .ui-app-editmode
@@ -51,7 +54,7 @@
 	background-color: RGBA(255,255,255,0.9);
 }
 
-.ui-app .opaque
+.ui-app .opaque, #AppStore
 {
 	border-radius: 8px;
 	padding: 5px;
@@ -60,4 +63,34 @@
 .ui-app .transparent
 {
 	background: transparent;
+}
+
+/* Styling of Appstore */
+#AppStore
+{
+	background: #eee;
+}
+
+.storecontent
+{
+	padding: 10px;
+	padding-top: 35px;
+}
+
+.appButton
+{
+	width: 250px;
+	height: 150px;
+	background: white;
+	overflow: hidden;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;
+}
+
+.appButton:hover
+{
+	background: black;
 }

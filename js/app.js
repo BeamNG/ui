@@ -156,6 +156,21 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 });
 
+$.widget("beamNG.appButton", {
+	_create : function(){
+		this.appName = this.options.app;
+		this.appSettings = AppEngine.appSettings[this.appName];
+
+		
+		// creating the widget
+		this.element.addClass('appButton');
+
+
+		this.element.text(this.appSettings.info.name);
+
+	}
+});
+
 $(document).ready(function() {
 	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug","SimpleEngineDebug","SimpleRPMDebug"]; // Call a beamNG function later
 	AppLoader.initialize();
@@ -187,7 +202,7 @@ var AppEngine = {
 		// load persistance
 		this._loadPersistance();
 
-//		AppStore.initialize();
+		AppStore.initialize();
 	},
 
 	toggleEditMode: function() {
@@ -381,11 +396,19 @@ var AppEngine = {
 
 var AppStore = {
 	initialize: function(){
-		this.mainDiv = $("<div id='AppStore'>Teeeeeeeeeeest</div>").css({
-			width: '80%',
-			height: '80%',
-			
-		});appendTo("body");
+		this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
+		this.content = $("<div class='storecontent'></div>").appendTo(this.mainDiv);
+		this.dialogWindow = this.mainDiv.dialog({
+			title: "Add App",
+			modal: true,
+			width: toInt($(window).width()-70),
+			height: toInt($(window).height()-70),
+			autoOpen: false
+		});
+
+		$.each(AppEngine.loadedApps, function(index, val) {
+			$("<a></a>").appendTo(AppStore.content).appButton({app: val});
+		});
 	}
 };
 
