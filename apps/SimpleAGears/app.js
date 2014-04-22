@@ -36,7 +36,6 @@ SimpleAGears.prototype.update = function (streams) {
     ctx.fillText(gearNames[4],145,20);
     ctx.fillText(gearNames[5],175,20);
     
-   
     //remove stuff over current gear
     ctx.clearRect((aGear*30)+15,0,20,30);
     //readd bg
