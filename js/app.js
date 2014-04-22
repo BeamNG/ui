@@ -172,7 +172,7 @@ $.widget("beamNG.appButton", {
 		$("<div class='appButtonSmall'>by "+this.appSettings.info.author+"</div>").appendTo(this.detail);
 		$("<div>"+this.appSettings.info.description+"</div>").appendTo(this.detail);
 
-		this.front.css('background-image', 'url(/html/apps/'+appName+'/app.png), url(/html/images/appDefault.png)');
+		this.front.css('background-image', 'url(apps/'+appName+'/app.png), url(images/appDefault.png)');
 
 		// interactivity
 		var self = this;
