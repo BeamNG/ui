@@ -3,7 +3,7 @@
 		"name" : "SimpleRPMDebug",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "wip"
+		"description": "App which shows current RPM in relation to specified values for idle, shiftdown, shiftup and maximum engine RPM."
 	},
 
      "appearance": {

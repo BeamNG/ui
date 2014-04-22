@@ -3,9 +3,8 @@
 		"name" : "SimpleSpeedo",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Displays speed from wheels if avaliable, falls back to airspeed."
+		"description": "Displays speed from wheels if avaliable, falls back to airspeed. Click to change units."
 	},
-
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,

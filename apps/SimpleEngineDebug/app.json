@@ -3,7 +3,7 @@
 		"name" : "SimpleEngineDebug",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "WIP"
+		"description": "App with basic engine and vehicle information."
 	},
 
 	"appearance": {
