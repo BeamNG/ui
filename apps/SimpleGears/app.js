@@ -12,7 +12,7 @@ SimpleGears.prototype.initialize = function () {
     this.rootElement.click(function(){self.toggleView();});
     
     //If no unit was previously selected, default to MPH
-    if ((this.persistance["View"] != "Manual") && (this.persistance["Unit"] != "Automatic")) this.persistance["View"] = "Manual";
+    if ((this.persistance["View"] != "Manual") && (this.persistance["Unit"] != "Automatic")) this.persistance["View"] = "Automatic";
 };
 
 SimpleGears.prototype.toggleView = function(){
