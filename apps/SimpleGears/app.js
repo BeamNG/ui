@@ -54,6 +54,7 @@ SimpleGears.prototype.update = function (streams) {
         gearNumStr = "";
         }
         
+        //add to html
         this.gearsField.html(gearDirStr);
         this.gearnoField.html(gearNumStr);
         

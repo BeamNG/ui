@@ -12,7 +12,7 @@ SimpleDigSpeedo.prototype.initialize = function () {
     this.loaded = false;
     
     var self = this;
-    this.rootElement.click(function(){self.toggleUnits();});
+    this.unitField.click(function(){self.toggleUnits();});
     
     //If no unit was previously selected, default to km/h
     if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "km/h")) this.persistance["Unit"] = "km/h";
