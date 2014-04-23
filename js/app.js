@@ -192,7 +192,7 @@ $.widget("beamNG.appButton", {
 });
 
 $(document).ready(function() {
-	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug","SimpleEngineDebug","SimpleRPMDebug"]; // Call a beamNG function later
+	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug","SimpleEngineDebug","SimpleRPMDebug","SimpleGears","SimpleDigSpeedo","SimpleDigTacho"]; // Call a beamNG function later
 	AppLoader.initialize();
 });
 

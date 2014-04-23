@@ -1,0 +1,20 @@
+{
+	"info": {
+		"name" : "Simple Digital Tachometer",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "Simple digital tachometer."
+	},
+
+     "appearance": {
+      "background" : "opaque-simple",
+      "resize" : false,
+      "size" : {
+       "initial" : [100,75]
+      }
+     },
+	
+	"data": {
+		"streams" : ["engineInfo"]
+	}
+}
