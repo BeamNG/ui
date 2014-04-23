@@ -13,10 +13,10 @@ SimpleSpeedo.prototype.initialize = function(){
 
     this.loaded = false;
     
-    self = this;
+    var self = this;
     this.rootElement.click(function(){self.toggleUnit();});
     
-    //If no unit was previously selected, default to MPH
+    //If no unit was previously selected, default to km/h
     if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "km/h")) this.persistance["Unit"] = "km/h";
 };
 
