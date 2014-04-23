@@ -1,15 +1,13 @@
 function SimpleDigSpeedo() {}
 
-function padk(num) {
-    var s = "000000" + num;
+function pad1k(num) {
+    var s = "----" + num;
     return s.substr(s.length-4);
 }
 
 SimpleDigSpeedo.prototype.initialize = function () {
-    this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
-    
-    this.canvas.width = 100;
-    this.canvas.height = 75;
+    this.speedField = $('<div></div>').appendTo(this.rootElement).addClass('speedField');
+    this.unitField = $('<div></div>').appendTo(this.rootElement).addClass('unitField');
 
     this.loaded = false;
     
@@ -36,25 +34,8 @@ SimpleDigSpeedo.prototype.update = function (streams) {
     } else {
         speedUnits = toInt(3.6*speedMs);
     }
-
-    //start canvas stuff
-    c = this.canvas[0];
-	ctx = c.getContext('2d') ;
     
-    //clear before drawing stuff on canvas
-    ctx.clearRect(0,0,100,75);
+    this.speedField.html(pad1k(speedUnits));
     
-    //Setup Text
-    ctx.font='35px "Lucida Console", Monaco, monospace';
-    ctx.textAlign="center";
-
-    //display RPM
-    ctx.fillStyle = "RGBA(0,0,0,0.5)";
-    ctx.fillText(pad1k(speedUnits),50,45);
-    
-    //Label
-    ctx.font='10px "Lucida Console", Monaco, monospace';
-    ctx.fillStyle = "RGBA(0,0,0,1)";
-    ctx.fillText(this.persistance["Unit"],50,65);
-    
+    this.unitField.html(this.persistance["Unit"]);
 };

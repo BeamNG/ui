@@ -1,0 +1,30 @@
+.app .SimpleGears
+{
+    text-align:center;
+    font-family: "Dejavu Sans Mono", Monaco, monospace;
+    color: RGBA(0,0,0,0.5);
+}
+
+.app .SimpleGears .gearsField
+{
+    font-size:35px;
+    height:38px;
+}
+
+.app .SimpleGears .gearnoField
+{
+    font-size:14px;
+    height:15px;
+}
+
+.app .SimpleGears .unitField
+{
+    font-size:10px;
+    color: black;
+    height:12px;
+}
+
+.app .SimpleGears .unitField:hover
+{
+    background: RGBA(128,128,128,0.5);
+}
