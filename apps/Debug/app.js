@@ -1,7 +1,7 @@
 function Debug(){}
 
 Debug.prototype.initialize = function(){
-	this.display = $("<span>"+this.persistance["rand"]+"</span>").appendTo(this.rootElement);
+	this.display = $("<span>"+this.persistance["rand"]+"</span>").appendTo(this.rootElement).addClass('someOtherClass');
 	var self = this;
 	$("<a href='#'>setrandomvalue</a>").click(function(){self.randomValue();}).appendTo(this.rootElement);
 };
