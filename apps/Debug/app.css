@@ -1,0 +1,9 @@
+.app .Debug
+{
+	background: green;
+}
+.app .Debug .someOtherClass
+{
+	background: blue;
+	color: white;
+}

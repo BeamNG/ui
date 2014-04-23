@@ -2,7 +2,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
 		persistance: undefined,
-		editMode: false
+		editMode: false,
+		refPointOffset : [0, 0],
+		referencePoint : [0, 0] // [0,0] = upper left, [1,1] = lower right
 	},
 
 	_create : function(){
@@ -89,12 +91,15 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 
 		// adding properties
+		this.element.addClass("app");
+
 		this.app.rootElement = $("<div></div>").css({
 			width: '100%',
 			height: '100%',
 			'min-width': '10px',
 			'min-height': '10px'
 		}).appendTo($(this.element));
+		this.app.rootElement.addClass(this.appName);
 
 		// adding savemethod
 		this.app.save = function(){ AppEngine.savePreset(); };
@@ -103,13 +108,19 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		
 		this.app.initialize();
 
+		// installing handlers
 		this._on(this.element.parent(), {
 			resize:"resize",
+			drag:"drag"
 		});
-		this.resize();
+		this._on($(window),{
+			resize:"windowResize"
+		});
 
 		$(this.element).parents('.ui-dialog').addClass("ui-app");
 		this.dialogParent = $(this.element).parents('.ui-dialog');
+		this.dialogParent.draggable('option', 'snap', true);
+//		this.dialogParent.draggable('option', 'grid', [ 10, 10 ]);
 
 		this._setOption('editMode',AppEngine.editMode);
 	},
@@ -152,6 +163,18 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		if (typeof this.app.resize === 'function') {
 			this.app.resize();
 		}
+	},
+	drag: function() {
+
+	},
+	windowResize: function(){
+
+	},
+	_setRefPointOffset: function(position){
+
+	},
+	_setPosition: function(refPointOffset){
+
 	}
 
 });
@@ -286,10 +309,8 @@ var AppEngine = {
 				}
 				appInstance = new window[app]();
 				console.log("Adding app "+app+" to Screen");
-				appElement = $('<div class="app '+app+'"></div>').appendTo($('body'));
+				appElement = $('<div></div>').appendTo($('body'));
 				appElement.app({ app: appInstance, "persistance" : persistance });
-				appElement.parents('.ui-dialog').draggable('option', 'snap', true);
-//				appElement.parents('.ui-dialog').draggable('option', 'grid', [ 10, 10 ]);
 				if(position !== undefined){
 					appElement.app("option","position",position);
 				}else{
@@ -483,6 +504,13 @@ var AppLoader = {
 			app = this.installedApps[i];
 			this._loadAppJs(app);
 			this._loadAppJson(app);
+
+			// load css
+			var cssNode = document.createElement("link");
+			cssNode.setAttribute("rel", "stylesheet");
+			cssNode.setAttribute("type", "text/css");
+			cssNode.setAttribute("href", "apps/"+app+"/app.css");
+			$(cssNode).appendTo("head");
 		}
 	},
 
