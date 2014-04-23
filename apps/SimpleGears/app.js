@@ -7,6 +7,18 @@ SimpleGears.prototype.initialize = function () {
     this.canvas.height = 75;
 
     this.loaded = false;
+    
+    self2 = this;
+    this.rootElement.click(function(){self2.toggleView();});
+    
+    //If no unit was previously selected, default to MPH
+    if ((this.persistance["View"] != "Manual") && (this.persistance["Unit"] != "Automatic")) this.persistance["View"] = "Manual";
+};
+
+SimpleGears.prototype.toggleView = function(){
+    //Toggle between MPH and km/h, save the option to persistance system
+    this.persistance["View"] = this.persistance["View"] === 'Manual' ? 'Automatic' : 'Manual';
+    this.save();
 };
 
 SimpleGears.prototype.update = function (streams) {
@@ -24,33 +36,51 @@ SimpleGears.prototype.update = function (streams) {
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,100,75);
     
-    sign = mGear?mGear<0?-1:1:0
+    if (this.persistance["View"] === "Manual"){
+        sign = mGear?mGear<0?-1:1:0
 
-    if (sign == -1) {
+        if (sign == -1) {
         gearDirStr = "R"
-    } else if (sign == 1) {
+        } else if (sign == 1) {
         gearDirStr = "F"
-    } else {
+        } else {
         gearDirStr = "N"
-    }
+        }
 
-    if (mGear > 0) {
+        if (mGear > 0) {
         gearNumStr = Math.abs(mGear) + "/" + maxFGears;
-    } else if (mGear < 0 && maxRGears > 1) {
+        } else if (mGear < 0 && maxRGears > 1) {
         gearNumStr = Math.abs(mGear) + "/" + maxRGears;
-    } else {
+        } else {
         gearNumStr = "";
+        }
+
+        //Setup Text
+        ctx.font='35px "Lucida Console", Monaco, monospace';
+        ctx.textAlign="center";
+
+        //Direction
+        ctx.fillStyle = "RGBA(0,0,0,0.5)";
+        ctx.fillText(gearDirStr,50,35);
+
+        //Gear number
+        ctx.font='18px "Lucida Console", Monaco, monospace';
+        ctx.fillText(gearNumStr,50,53);
+    } else {
+        
+        gearNames = ["P","R","N","D","2","1"];
+        
+        //Setup Text
+        ctx.font='50px "Lucida Console", Monaco, monospace';
+        ctx.textAlign="center";
+
+        //Direction
+        ctx.fillStyle = "RGBA(0,0,0,0.5)";
+        ctx.fillText(gearNames[aGear],50,45);
     }
-
-    //Setup Text
-    ctx.font='35px "Lucida Console", Monaco, monospace';
-    ctx.textAlign="center";
-
-    //Direction
-    ctx.fillStyle = "RGBA(0,0,0,0.5)";
-    ctx.fillText(gearDirStr,50,35);
     
-    //Gear number
-    ctx.font='25px "Lucida Console", Monaco, monospace';
-    ctx.fillText(gearNumStr,50,60);
+    ctx.font='10px "Lucida Console", Monaco, monospace';
+    ctx.fillStyle = "RGBA(0,0,0,1)";
+    ctx.fillText(this.persistance["View"],50,65);
+    
 };
