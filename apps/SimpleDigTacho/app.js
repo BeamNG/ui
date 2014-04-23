@@ -28,7 +28,7 @@ SimpleDigTacho.prototype.update = function (streams) {
     ctx.clearRect(0,0,100,75);
 
     //Setup Text
-    ctx.font='35px "Lucida Console", Monaco, monospace';
+    ctx.font='35px "Dejavu Sans Mono", Monaco, monospace';
     ctx.textAlign="center";
 
     //display RPM
@@ -36,7 +36,7 @@ SimpleDigTacho.prototype.update = function (streams) {
     ctx.fillText(pad1k(rpm),50,45);
     
     //Label
-    ctx.font='10px "Lucida Console", Monaco, monospace';
+    ctx.font='10px "Dejavu Sans Mono", Monaco, monospace';
     ctx.fillStyle = "RGBA(0,0,0,1)";
     ctx.fillText("RPM",50,65);
 };

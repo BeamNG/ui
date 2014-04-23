@@ -56,7 +56,7 @@ SimpleGears.prototype.update = function (streams) {
         }
 
         //Setup Text
-        ctx.font='35px "Lucida Console", Monaco, monospace';
+        ctx.font='35px "Dejavu Sans Mono", Monaco, monospace';
         ctx.textAlign="center";
 
         //Direction
@@ -64,14 +64,14 @@ SimpleGears.prototype.update = function (streams) {
         ctx.fillText(gearDirStr,50,35);
 
         //Gear number
-        ctx.font='18px "Lucida Console", Monaco, monospace';
+        ctx.font='18px "Dejavu Sans Mono", Monaco, monospace';
         ctx.fillText(gearNumStr,50,53);
     } else {
         
         gearNames = ["P","R","N","D","2","1"];
         
         //Setup Text
-        ctx.font='50px "Lucida Console", Monaco, monospace';
+        ctx.font='35px "Dejavu Sans Mono", Monaco, monospace';
         
 
         //Direction
@@ -80,7 +80,7 @@ SimpleGears.prototype.update = function (streams) {
     }
     
     ctx.textAlign="center";
-    ctx.font='10px "Lucida Console", Monaco, monospace';
+    ctx.font='10px "Dejavu Sans Mono", Monaco, monospace';
     ctx.fillStyle = "RGBA(0,0,0,1)";
     ctx.fillText("Gear (" + this.persistance["View"] + ")",50,65);
     
