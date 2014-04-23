@@ -12,18 +12,18 @@ SimpleGears.prototype.initialize = function () {
     this.rootElement.click(function(){self2.toggleView();});
     
     //If no unit was previously selected, default to MPH
-    if ((this.persistance["View"] != "Manual") && (this.persistance["Unit"] != "Automatic")) this.persistance["View"] = "Manual";
+    if ((this.persistance["View"] != "Manual") && (this.persistance["Unit"] != "Auto")) this.persistance["View"] = "Manual";
 };
 
 SimpleGears.prototype.toggleView = function(){
     //Toggle between MPH and km/h, save the option to persistance system
-    this.persistance["View"] = this.persistance["View"] === 'Manual' ? 'Automatic' : 'Manual';
+    this.persistance["View"] = this.persistance["View"] === 'Manual' ? 'Auto' : 'Manual';
     this.save();
 };
 
 SimpleGears.prototype.update = function (streams) {
         
-    //Get the values to work with, do rounding and stuff as needed
+    //Get the values to work with, do rounding and stuff as needed TODO: Get if car is manual or Auto automatically when this is exposed to the ui system
 	aGear = Math.round(streams["electrics"].gear_A*5);
     mGear = streams["engineInfo"][5];
     maxFGears = streams["engineInfo"][6];
@@ -72,15 +72,17 @@ SimpleGears.prototype.update = function (streams) {
         
         //Setup Text
         ctx.font='50px "Lucida Console", Monaco, monospace';
-        ctx.textAlign="center";
+        
 
         //Direction
         ctx.fillStyle = "RGBA(0,0,0,0.5)";
         ctx.fillText(gearNames[aGear],50,45);
     }
     
+    //display current mode
+    ctx.textAlign="center";
     ctx.font='10px "Lucida Console", Monaco, monospace';
     ctx.fillStyle = "RGBA(0,0,0,1)";
-    ctx.fillText(this.persistance["View"],50,65);
+    ctx.fillText("Gears (" + this.persistance["View"]+")",50,65);
     
 };

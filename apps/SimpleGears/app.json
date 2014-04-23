@@ -3,7 +3,7 @@
 		"name" : "SimpleGears",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "WIP"
+		"description": "Displayes current manual or automatic gear. Click to swap between automatic and manual display."
 	},
 
      "appearance": {
