@@ -36,6 +36,5 @@ SimpleDigSpeedo.prototype.update = function (streams) {
     }
     
     this.speedField.html(pad1k(speedUnits));
-    
     this.unitField.html("Speed (" + this.persistance["Unit"] + ")");
 };

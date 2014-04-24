@@ -34,15 +34,15 @@ SimpleGears.prototype.update = function (streams) {
     if (this.persistance["View"] === "Manual"){
         
         //get the sign of the current manual gear
-        sign = mGear?mGear<0?-1:1:0
+        sign = mGear?mGear<0?-1:1:0;
         
         //get the direction
         if (sign == -1) {
-            gearDirStr = "R"
+            gearDirStr = "R";
         } else if (sign == 1) {
-            gearDirStr = "F"
+            gearDirStr = "F";
         } else {
-            gearDirStr = "N"
+            gearDirStr = "N";
         }
         
         //get the gear number
@@ -66,5 +66,5 @@ SimpleGears.prototype.update = function (streams) {
         this.gearnoField.html("");
     }
     
-    this.unitField.html("Gears (" + this.persistance["View"] + ")")
+    this.unitField.html("Gears (" + this.persistance["View"] + ")");
 };

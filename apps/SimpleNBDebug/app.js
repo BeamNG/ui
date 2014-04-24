@@ -35,6 +35,5 @@ SimpleNBDebug.prototype.update = function(streams){
         str += '</tr> </tr>';
     }
     
-	
     this.table.html(str);
 };
