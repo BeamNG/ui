@@ -1,13 +1,12 @@
 function SimpleNBDebug(){}
 
 SimpleNBDebug.prototype.initialize = function(){
-    
-    this.text = $('<div style="padding:5px;"></div>').appendTo(this.rootElement);
+    this.table = $('<table></table>').appendTo(this.rootElement).addClass('table');
 };
 
 SimpleNBDebug.prototype.update = function(streams){
     
-    str = '<table width=100%> <tr> <td style="text-align:center;"> <b>Beams</b> </td> <td style="text-align:center;"> <b>Nodes</b> </td> </tr>';
+    str = '<tr> <td style="text-align:center;"> <b>Beams</b> </td> <td style="text-align:center;"> <b>Nodes</b> </td> </tr>';
     
     str += '<tr> <td style="text-align:center;">' + streams["stats"].beam_count + '</td> <td style="text-align:center;">' + streams["stats"].node_count + '</td> </tr>';
     
@@ -19,7 +18,7 @@ SimpleNBDebug.prototype.update = function(streams){
 	str += '</tr> </tr>';
     
     
-    str += '</table>';
+//    str += '</table>';
 	
-    this.text.html(str);
+    this.table.html(str);
 };

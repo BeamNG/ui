@@ -6,15 +6,17 @@ function pad100(num) {
 }
 
 SimpleSpeedo.prototype.initialize = function(){
-	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
+	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
+    
+    this.unitField = $('<div></div>').appendTo(this.rootElement).addClass('unitField');
         
 	this.canvas.width = 200;
-	this.canvas.height = 65;
+	this.canvas.height = 53;
 
     this.loaded = false;
     
     var self = this;
-    this.rootElement.click(function(){self.toggleUnit();});
+    this.unitField.click(function(){self.toggleUnit();});
     
     //If no unit was previously selected, default to km/h
     if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "km/h")) this.persistance["Unit"] = "km/h";
@@ -52,7 +54,7 @@ SimpleSpeedo.prototype.update = function(streams){
 	ctx = c.getContext('2d');
         
     //clear before drawing stuff on canvas
-    ctx.clearRect(0,0,200,65);
+    ctx.clearRect(0,0,200,53);
         
     //Make the bar
     if (speedStart == 0){
@@ -75,8 +77,7 @@ SimpleSpeedo.prototype.update = function(streams){
     
     //Add labels
     //-Units
-    ctx.font='10px Arial';
-    ctx.fillText(this.persistance["Unit"],100,58);
+    this.unitField.html(this.persistance["Unit"]);
     
     //-Numbers
     ctx.font='7px Arial';

@@ -6,10 +6,12 @@ function pad1k(num) {
 }
 
 SimpleTacho.prototype.initialize = function(){
-	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
+	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
+    
+    this.unitField = $('<div></div>').appendTo(this.rootElement).addClass('unitField');
         
 	this.canvas.width = 200;
-	this.canvas.height = 65;
+	this.canvas.height = 53;
 
     this.loaded = false;
 };
@@ -59,6 +61,8 @@ SimpleTacho.prototype.update = function(streams){
     ctx.font='10px Arial';
     ctx.fillText("0000",20,48);
     ctx.fillText(rpmMax,180,48);
-    ctx.fillText("RPM",100,58);
+    
+    //-Units
+    this.unitField.html("RPM");
     
 };

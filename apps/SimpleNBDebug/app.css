@@ -1,12 +1,12 @@
 .app .SimpleNBDebug
 {
 }
-.app .SimpleNBDebug .text
+.app .SimpleNBDebug .table
 {
-    color: white;
+    padding: 5px;
 }
 
-.app .SimpleNBDebug .text:hover
+.app .SimpleNBDebug .table:hover
 {
     background: RGBA(128,128,128,0.5);
 }
