@@ -77,7 +77,7 @@ SimpleSpeedo.prototype.update = function(streams){
     
     //Add labels
     //-Units
-    this.unitField.html(this.persistance["Unit"]);
+    this.unitField.html("Speed (" + this.persistance["Unit"] + ")");
     
     //-Numbers
     ctx.font='7px Arial';

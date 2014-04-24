@@ -18,5 +18,5 @@ SimpleDigTacho.prototype.update = function (streams) {
 	rpm = toInt(streams["engineInfo"][4]);
     
     this.rpmField.html(pad1k(rpm));
-    this.unitField.html("RPM");
+    this.unitField.html("Engine RPM");
 };

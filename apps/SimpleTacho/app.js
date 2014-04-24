@@ -63,6 +63,6 @@ SimpleTacho.prototype.update = function(streams){
     ctx.fillText(rpmMax,180,48);
     
     //-Units
-    this.unitField.html("RPM");
+    this.unitField.html("Engine RPM");
     
 };
