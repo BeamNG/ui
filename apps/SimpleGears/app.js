@@ -55,8 +55,8 @@ SimpleGears.prototype.update = function (streams) {
         }
         
         //add to html
-        this.gearsField.html(gearDirStr);
-        this.gearnoField.html(gearNumStr);
+        this.gearnoField.html(gearDirStr);
+        this.gearsField.html(gearNumStr);
         
     } else {
         //we are in auto, display Auto gear name
