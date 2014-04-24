@@ -38,25 +38,27 @@ SimpleGears.prototype.update = function (streams) {
         
         //get the direction
         if (sign == -1) {
-        gearDirStr = "R"
+            gearDirStr = "R"
         } else if (sign == 1) {
-        gearDirStr = "F"
+            gearDirStr = "F"
         } else {
-        gearDirStr = "N"
+            gearDirStr = "N"
         }
         
         //get the gear number
         if (mGear > 0) {
-        gearNumStr = Math.abs(mGear) + "/" + maxFGears;
+            gearNumStr = Math.abs(mGear) + "/" + maxFGears;
+            this.gearsField.html(gearNumStr);
+            this.gearnoField.html(gearDirStr);
         } else if (mGear < 0 && maxRGears > 1) {
-        gearNumStr = Math.abs(mGear) + "/" + maxRGears;
+            gearNumStr = Math.abs(mGear) + "/" + maxRGears;
+            this.gearsField.html(gearNumStr);
+            this.gearnoField.html(gearDirStr);
         } else {
-        gearNumStr = "";
+            gearNumStr = "";
+            this.gearsField.html(gearDirStr);
+            this.gearnoField.html(gearNumStr);
         }
-        
-        //add to html
-        this.gearnoField.html(gearDirStr);
-        this.gearsField.html(gearNumStr);
         
     } else {
         //we are in auto, display Auto gear name
