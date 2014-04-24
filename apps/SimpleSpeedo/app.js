@@ -64,7 +64,7 @@ SimpleSpeedo.prototype.update = function(streams){
     ctx.fillRect(20,10,Math.min(speedUnits-speedStart, 160),25);
     
     //text
-    ctx.font='20px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='20px Arial';
     ctx.textAlign="center";
     
     ctx.fillStyle = "black";
@@ -75,11 +75,11 @@ SimpleSpeedo.prototype.update = function(streams){
     
     //Add labels
     //-Units
-    ctx.font='10px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='10px Arial';
     ctx.fillText(this.persistance["Unit"],100,58);
     
     //-Numbers
-    ctx.font='7px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='7px Arial';
     var interval = 20;
     for (var x=0; x<=160; x+=interval) {
         ctx.fillText(speedStart+x,x+20,48);

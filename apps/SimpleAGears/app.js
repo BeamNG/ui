@@ -24,7 +24,7 @@ SimpleAGears.prototype.update = function (streams) {
     ctx.clearRect(0,0,200,30);
     
     //Setup Text
-    ctx.font='18px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='18px Arial';
     ctx.textAlign="center";
     
     //deselected gears

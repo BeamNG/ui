@@ -1,7 +1,7 @@
 function SimpleDigSpeedo() {}
 
 function pad1k(num) {
-    var s = "----" + num;
+    var s = "0000" + num;
     return s.substr(s.length-4);
 }
 

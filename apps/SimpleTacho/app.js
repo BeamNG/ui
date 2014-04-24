@@ -45,7 +45,7 @@ SimpleTacho.prototype.update = function(streams){
     ctx.fillRect(20,10,rpm/(rpmMax/160),25);
     
     //setup text
-    ctx.font='20px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='20px Arial';
     ctx.textAlign="center";
     
     //Add RPM value to bar
@@ -56,7 +56,7 @@ SimpleTacho.prototype.update = function(streams){
     ctx.strokeRect(20,10,160,25);    
     
     //Add min/max values, label
-    ctx.font='10px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='10px Arial';
     ctx.fillText("0000",20,48);
     ctx.fillText(rpmMax,180,48);
     ctx.fillText("RPM",100,58);

@@ -42,7 +42,7 @@ SimplePedals.prototype.update = function(streams){
     ctx.fillRect(71,55,15,-parkingVal/2);
     
     //addtext
-    ctx.font='8px "Dejavu Sans Mono", Monaco, monospace';
+    ctx.font='8px Arial';
     ctx.textAlign="center";
     
     ctx.fillStyle = "black";
