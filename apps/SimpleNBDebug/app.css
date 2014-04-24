@@ -1,0 +1,12 @@
+.app .SimpleNBDebug
+{
+}
+.app .SimpleNBDebug .text
+{
+    color: white;
+}
+
+.app .SimpleNBDebug .text:hover
+{
+    background: RGBA(128,128,128,0.5);
+}

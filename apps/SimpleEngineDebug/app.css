@@ -1,0 +1,11 @@
+.app .SimpleEngineDebug
+{
+}
+.app .SimpleEngineDebug .text
+{
+}
+
+.app .SimpleEngineDebug .text:hover
+{
+    background: RGBA(128,128,128,0.5);
+}
