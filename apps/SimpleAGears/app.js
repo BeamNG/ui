@@ -46,6 +46,6 @@ SimpleAGears.prototype.update = function (streams) {
     ctx.strokeRect((aGear*30)+15,4,20,20);
     
     //add current gear back in selected colour
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
+    ctx.fillStyle = "RGBA(0,0,255,0.5)";
     ctx.fillText(gearNames[aGear],(aGear*30)+25,20);    
 };

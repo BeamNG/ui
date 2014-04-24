@@ -34,11 +34,11 @@ SimpleTacho.prototype.update = function(streams){
     var rgba='RGBA';
     
     if(rpm < rpmIdle*1.25) {        //we are at idle, blue
-        rgba+='(0,0,128,0.5)';
+        rgba+='(0,0,255,0.5)';
     } else if(rpm > rpmMax*0.9) {   //we are near redline, red
-        rgba+='(128,0,0,0.5)';
+        rgba+='(255,0,0,0.5)';
     } else {                        //normal rpm, green
-        rgba+='(0,128,0,0.5)';
+        rgba+='(0,255,0,0.5)';
     }
         
     ctx.fillStyle = rgba;

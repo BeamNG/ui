@@ -31,7 +31,7 @@ SimpleSteering.prototype.update = function(streams){
     
     //Horz display
     ctx.strokeRect(10,60,80,5);
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
+    ctx.fillStyle = "RGBA(0,0,255,0.5)";
     ctx.fillRect(50,60,steeringRaw,5);
         
     //some lines or somert

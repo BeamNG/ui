@@ -26,19 +26,19 @@ SimplePedals.prototype.update = function(streams){
     ctx.clearRect(0,0,100,75);
     
     //clutch
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
+    ctx.fillStyle = "RGBA(0,0,255,0.5)";
     ctx.fillRect(14,55,15,-clutchVal/2);
     
     //brake
-    ctx.fillStyle = "RGBA(128,0,0,0.5)";
+    ctx.fillStyle = "RGBA(255,0,0,0.5)";
     ctx.fillRect(33,55,15,-brakeVal/2);
     
     //throttle
-    ctx.fillStyle = "RGBA(0,128,0,0.5)";
+    ctx.fillStyle = "RGBA(0,255,0,0.5)";
     ctx.fillRect(52,55,15,-throttleVal/2);
     
     //pbrake
-    ctx.fillStyle = "RGBA(128,128,0,0.5)";
+    ctx.fillStyle = "RGBA(255,255,0,0.5)";
     ctx.fillRect(71,55,15,-parkingVal/2);
     
     //addtext

@@ -3,6 +3,7 @@
 }
 .app .SimpleEngineDebug .text
 {
+    font-family: sans-serif;
 }
 
 .app .SimpleEngineDebug .text:hover

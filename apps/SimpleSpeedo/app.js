@@ -58,9 +58,9 @@ SimpleSpeedo.prototype.update = function(streams){
         
     //Make the bar
     if (speedStart == 0){
-        ctx.fillStyle = "RGBA(0,0,128,0.5)";
+        ctx.fillStyle = "RGBA(0,0,255,0.5)";
     } else {
-        ctx.fillStyle = "RGBA(128,0,128,0.5)";
+        ctx.fillStyle = "RGBA(255,0,255,0.5)";
     }
     
     ctx.fillRect(20,10,Math.min(speedUnits-speedStart, 160),25);

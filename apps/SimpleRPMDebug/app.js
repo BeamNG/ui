@@ -49,7 +49,7 @@ SimpleRPMDebug.prototype.update = function(streams){
     ctx.moveTo(this.canvas.width/2,this.canvas.height/2);
     ctx.arc(this.canvas.width/2,this.canvas.height/2,this.canvas.height*0.4,0.5*Math.PI+idleRPM/maxRPM*2*Math.PI,0.5*Math.PI+shiftDnRPM/maxRPM*2*Math.PI);
     ctx.lineTo(this.canvas.width/2,this.canvas.height/2);
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
+    ctx.fillStyle = "RGBA(0,0,255,0.5)";
     ctx.fill();
     
     //shift up RPM
@@ -57,7 +57,7 @@ SimpleRPMDebug.prototype.update = function(streams){
     ctx.moveTo(this.canvas.width/2,this.canvas.height/2);
     ctx.arc(this.canvas.width/2,this.canvas.height/2,this.canvas.height*0.4,0.5*Math.PI+shiftDnRPM/maxRPM*2*Math.PI,0.5*Math.PI+shiftUpRPM/maxRPM*2*Math.PI);
     ctx.lineTo(this.canvas.width/2,this.canvas.height/2);
-    ctx.fillStyle = "RGBA(128,0,128,0.5)";
+    ctx.fillStyle = "RGBA(255,0,255,0.5)";
     ctx.fill();
     
     //max RPM
@@ -65,7 +65,7 @@ SimpleRPMDebug.prototype.update = function(streams){
     ctx.moveTo(this.canvas.width/2,this.canvas.height/2);
     ctx.arc(this.canvas.width/2,this.canvas.height/2,this.canvas.height*0.4,0.5*Math.PI+shiftUpRPM/maxRPM*2*Math.PI,0.5*Math.PI+maxRPM/maxRPM*2*Math.PI);
     ctx.lineTo(this.canvas.width/2,this.canvas.height/2);
-    ctx.fillStyle = "RGBA(128,0,0,0.5)";
+    ctx.fillStyle = "RGBA(255,0,0,0.5)";
     ctx.fill();
 };
 
