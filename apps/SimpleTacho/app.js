@@ -64,5 +64,4 @@ SimpleTacho.prototype.update = function(streams){
     
     //-Units
     this.unitField.html("Engine RPM");
-    
 };

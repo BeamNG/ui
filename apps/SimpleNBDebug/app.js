@@ -5,7 +5,6 @@ SimpleNBDebug.prototype.initialize = function(){
     
     var self = this;
     this.table.click(function(){self.toggleUnits();});
-    this.table.click(function(){self.toggleUnits();});
     
     //If no unit was previously selected, default to Metric
     if ((this.persistance["Unit"] != "Imperial") && (this.persistance["Unit"] != "Metric")) this.persistance["Unit"] = "Metric";
