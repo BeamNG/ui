@@ -16,7 +16,7 @@ SimplePedals.prototype.update = function(streams){
 	//Get the values to work with, do rounding and stuff as needed
 	throttleVal = toInt(streams["electrics"].throttle * 100);
 	brakeVal = toInt(streams["electrics"].brake * 100);
-	clutchVal = toInt(streams["electrics"].clutch * 100 + 0.49);
+	clutchVal = Math.round(streams["electrics"].clutch * 100 + 0.49);
 	parkingVal = toInt(streams["electrics"].parkingbrake * 100);
 	
 	//start canvas stuff
