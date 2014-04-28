@@ -137,6 +137,12 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	_setOption: function( key, value ) {
 		if(key == "editMode"){
 			this._optionEditMode(value);
+		}else if(key == "position"){
+			this._super(key, value);
+			this._calculateRefPointOffset();
+		}else if(key == "referencePoint"){
+			this._super(key, value);
+			this._calculatePosition();
 		}else{
 			this._super(key, value);
 		}
