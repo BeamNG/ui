@@ -200,10 +200,18 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		RPIndicator.move(this.options.referencePoint);
 	},
 	_calculateRefPointOffset: function(){
-
+		var windowsize = [$(window).width(),$(window).height()];
+		for (var i = 0; i < 2; i++) {
+			this.options.refPointOffset[i] = this.options.position[i] - ( this.options.referencePoint[i] * windowsize[i] );
+		}
 	},
 	_calculatePosition: function(){
-
+		var windowsize = [$(window).width(),$(window).height()];
+		var position = [0,0];
+		for (var i = 0; i < 2; i++) {
+			position[i] = ( this.options.referencePoint[i] * windowsize[i] ) + this.options.refPointOffset[i];
+		}
+		this._setOption("position",position);
 	}
 
 });
