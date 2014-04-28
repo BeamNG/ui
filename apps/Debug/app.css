@@ -1,6 +1,8 @@
 .app .Debug
 {
-	background: green;
+	background: #444;
+	color: #ccc;
+	font-weight: bold;
 }
 .app .Debug .someOtherClass
 {
