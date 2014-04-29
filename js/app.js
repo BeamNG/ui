@@ -105,13 +105,14 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.app.save = function(){ AppEngine.savePreset(); };
 
 		// Initialize App
-		
 		this.app.initialize();
 
 		// installing handlers
 		this._on(this.element.parent(), {
 			resize:"resize",
-			drag:"drag"
+			dragstart:"dragStart",
+			drag:"drag",
+			dragstop:"dragStop"
 		});
 		this._on($(window),{
 			resize:"windowResize"
@@ -136,6 +137,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	_setOption: function( key, value ) {
 		if(key == "editMode"){
 			this._optionEditMode(value);
+		}else if(key == "referencePoint"){
+			this._super(key, value);
+			this._calculatePosition();
 		}else{
 			this._super(key, value);
 		}
@@ -164,17 +168,54 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			this.app.resize();
 		}
 	},
-	drag: function() {
+	dragStart: function(){
+		RPIndicator.show(this.options.referencePoint);
+	},
+	drag: function(event,ui) {
+		var position = [ui.position.left,ui.position.top];
+		var size = [this.options.width, this.options.height];
+		var windowsize = [$(window).width(),$(window).height()];
+		var change = false;
+		// changing refpoint
+		for (var i = 0; i < 2; i++) {
+			if(position[i] === 0 && this.options.referencePoint[i] == 1){
+				this.options.referencePoint[i] = 0;
+				change = true;
+			}else if(position[i]+size[i]>=windowsize[i] && this.options.referencePoint[i] === 0){
+				this.options.referencePoint[i] = 1;
+				change = true;
+			}
+		}
+		if(change){
+			// now do some magic
+			console.log("change");
+			RPIndicator.move(this.options.referencePoint);
+		}
+	},
+	dragStop: function(event,ui){
+		this.options.position = [ui.position.left,ui.position.top]; // Updating position manually since the hook happens before changing the optionvalues
+		this._calculateRefPointOffset();
 
+		RPIndicator.hide();
 	},
 	windowResize: function(){
-
+		this._calculatePosition();
+		RPIndicator.move(this.options.referencePoint);
 	},
-	_setRefPointOffset: function(position){
-
+	_calculateRefPointOffset: function(){
+		var windowsize = [$(window).width(),$(window).height()];
+		for (var i = 0; i < 2; i++) {
+			this.options.refPointOffset[i] = this.options.position[i] - ( this.options.referencePoint[i] * windowsize[i] );
+		}
 	},
-	_setPosition: function(refPointOffset){
-
+	_calculatePosition: function(){
+		console.log("Repointoffset: "+this.options.refPointOffset);
+		var windowsize = [$(window).width(),$(window).height()];
+		var position = [0,0];
+		for (var i = 0; i < 2; i++) {
+			position[i] = ( this.options.referencePoint[i] * windowsize[i] ) + this.options.refPointOffset[i];
+		}
+		this._setOption("position",position);
 	}
 
 });
@@ -312,9 +353,13 @@ var AppEngine = {
 				appElement = $('<div></div>').appendTo($('body'));
 				appElement.app({ app: appInstance, "persistance" : persistance });
 				if(position !== undefined){
-					appElement.app("option","position",position);
+					console.log("position:");
+					console.log(position[0]);
+					console.log(position[1]);
+					appElement.app("option","referencePoint",position[0]);
+					appElement.app("option","refPointOffset",position[1]);
 				}else{
-					appElement.app("option","position",[$(window).width()/3,$(window).height()/3]);
+					appElement.app("option","refPointOffset",[$(window).width()/3,$(window).height()/3]);
 				}
 				if(size !== undefined){
 					console.log("size defined: "+size);
@@ -372,7 +417,7 @@ var AppEngine = {
 			
 			appData = {};
 			appData.name = app.constructor.name;
-			appData.position = app._widget.app("option","position");
+			appData.position = [app._widget.app("option","referencePoint"), app._widget.app("option","refPointOffset")];
 			appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
 			appData.persistance = { options : app.options, custom : app.persistance};
 
@@ -617,5 +662,29 @@ var HookManager  = {
 		for(i = 0; i<hooks.length; i++){
 			this.triggerHook(hooks[i]);
 		}
+	}
+};
+
+var RPIndicator = {
+	size: 20,
+	element: undefined,
+	initialize: function(){
+		this.element = $("<div class='RPIndicator'></div>").hide().appendTo($("body"));
+	},
+	show: function(position){
+		if(this.element === undefined){ this.initialize(); }
+		this.move(position);
+		this.element.show();
+	},
+	move: function(position){
+		if(this.element === undefined){ this.initialize(); }
+		this.element.css({
+			left: (position[0]*($(window).width()))-(this.size/2),
+			top: (position[1]*($(window).height()))-(this.size/2)
+		});
+	},
+	hide: function(){
+		if(this.element === undefined){ this.initialize(); }
+		this.element.hide();
 	}
 };

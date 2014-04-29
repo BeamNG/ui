@@ -1,29 +1,19 @@
 function Debug(){}
 
 Debug.prototype.initialize = function(){
-	this.display = $("<span>"+this.persistance["rand"]+"</span>").appendTo(this.rootElement).addClass('someOtherClass');
-	var self = this;
-	$("<a href='#'>setrandomvalue</a>").click(function(){self.randomValue();}).appendTo(this.rootElement);
-};
-
-Debug.prototype.randomValue = function(){
-		this.persistance["rand"] = Math.floor((Math.random()*10)+1);
-		this.display.html(this.persistance["rand"]);
-		this.save();
+	$("<br><br>").appendTo(this.rootElement);
+	this.display = $("<span></span>").appendTo(this.rootElement);
 };
 
 Debug.prototype.update = function(streams){
-	if(streams["torqueCurve"]!== undefined){
-		console.log(streams["torqueCurve"]);
-		this.torqueCurve = streams["torqueCurve"][0];
-		this.hpCurve = streams["torqueCurve"][1];
-	}
-	
+	var position = this._widget.app("option","position");
+	var refPointOffset = this._widget.app("option","refPointOffset");
+	var referencePoint = this._widget.app("option","referencePoint");
 
-	if(this.torqueCurve !== undefined){
-		rpm = streams["engineInfo"][4];
-//		$(this.rootElement).html("RPM: "+toInt(rpm)+"<br>Torque: "+toInt(this.torqueCurve[toInt(rpm)])+"<br>HP: "+toInt(this.hpCurve[toInt(rpm)]));
-	}
+	var debugstr = "Position: ["+position[0]+","+position[1] + "]<br>";
+	debugstr += "referencePoint: ["+referencePoint[0]+","+referencePoint[1] + "]<br>";
+	debugstr += "refPointOffset: ["+refPointOffset[0]+","+refPointOffset[1] + "]";
+	this.display.html(debugstr);
 };
 
 Debug.prototype.resize = function(){
