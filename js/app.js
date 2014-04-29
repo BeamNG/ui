@@ -137,9 +137,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	_setOption: function( key, value ) {
 		if(key == "editMode"){
 			this._optionEditMode(value);
-		}else if(key == "position"){
-			this._super(key, value);
-			this._calculateRefPointOffset();
 		}else if(key == "referencePoint"){
 			this._super(key, value);
 			this._calculatePosition();
@@ -212,6 +209,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		}
 	},
 	_calculatePosition: function(){
+		console.log("Repointoffset: "+this.options.refPointOffset);
 		var windowsize = [$(window).width(),$(window).height()];
 		var position = [0,0];
 		for (var i = 0; i < 2; i++) {
@@ -355,7 +353,11 @@ var AppEngine = {
 				appElement = $('<div></div>').appendTo($('body'));
 				appElement.app({ app: appInstance, "persistance" : persistance });
 				if(position !== undefined){
-					appElement.app("option","position",position);
+					console.log("position:");
+					console.log(position[0]);
+					console.log(position[1]);
+					appElement.app("option","referencePoint",position[0]);
+					appElement.app("option","refPointOffset",position[1]);
 				}else{
 					appElement.app("option","position",[$(window).width()/3,$(window).height()/3]);
 				}
@@ -415,7 +417,7 @@ var AppEngine = {
 			
 			appData = {};
 			appData.name = app.constructor.name;
-			appData.position = app._widget.app("option","position");
+			appData.position = [app._widget.app("option","referencePoint"), app._widget.app("option","refPointOffset")];
 			appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
 			appData.persistance = { options : app.options, custom : app.persistance};
 
