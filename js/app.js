@@ -359,7 +359,7 @@ var AppEngine = {
 					appElement.app("option","referencePoint",position[0]);
 					appElement.app("option","refPointOffset",position[1]);
 				}else{
-					appElement.app("option","position",[$(window).width()/3,$(window).height()/3]);
+					appElement.app("option","refPointOffset",[$(window).width()/3,$(window).height()/3]);
 				}
 				if(size !== undefined){
 					console.log("size defined: "+size);
