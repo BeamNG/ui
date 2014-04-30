@@ -1,71 +1,65 @@
 function SimplePedals(){}
 
 SimplePedals.prototype.initialize = function(){
-	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
-        
-	this.canvas.width = 100;
-	this.canvas.height = 75;
+	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass("canvas");
 
-    this.loaded = false;
+	this.unitField = $('<div></div>').appendTo(this.rootElement).addClass('unitField');
+		
+	this.canvas.width = 100;
+	this.canvas.height = 53;
+
+	this.loaded = false;
 };
 
 SimplePedals.prototype.update = function(streams){
-     
-    
-    //Get the values to work with, do rounding and stuff as needed
+	 
+	//Get the values to work with, do rounding and stuff as needed
 	throttleVal = toInt(streams["electrics"].throttle * 100);
 	brakeVal = toInt(streams["electrics"].brake * 100);
-	clutchVal = toInt(streams["electrics"].clutch * 100 + 0.49);
-    parkingVal = toInt(streams["electrics"].parkingbrake * 100);
-    
-    //start canvas stuff
-    c = this.canvas[0];
+	clutchVal = Math.round(streams["electrics"].clutch * 100 + 0.49);
+	parkingVal = toInt(streams["electrics"].parkingbrake * 100);
+	
+	//start canvas stuff
+	c = this.canvas[0];
 	ctx = c.getContext('2d');
-        
-    //clear before drawing stuff on canvas
-    ctx.clearRect(0,0,100,75);
-    
-    //clutch
-    ctx.fillStyle = "RGBA(0,0,128,0.5)";
-    ctx.fillRect(14,55,15,-clutchVal/2);
-    
-    //brake
-    ctx.fillStyle = "RGBA(128,0,0,0.5)";
-    ctx.fillRect(33,55,15,-brakeVal/2);
-    
-    //throttle
-    ctx.fillStyle = "RGBA(0,128,0,0.5)";
-    ctx.fillRect(52,55,15,-throttleVal/2);
-    
-    //pbrake
-    ctx.fillStyle = "RGBA(128,128,0,0.5)";
-    ctx.fillRect(71,55,15,-parkingVal/2);
-    
-    //addtext
-    ctx.font='8px "Lucida Console", Monaco, monospace';
-    ctx.textAlign="center";
-    
-    ctx.fillStyle = "black";
-    ctx.fillText(clutchVal,21.5,65);
-    ctx.fillText(brakeVal,40.5,65);
-    ctx.fillText(throttleVal,59.5,65);
-    ctx.fillText(parkingVal,78.5,65);
-    
-    //add borders
-    ctx.strokeStyle = "black";
-    ctx.strokeRect(52,30+25,15,-50);
-    ctx.strokeRect(33,30+25,15,-50);
-    ctx.strokeRect(14,30+25,15,-50);
-    ctx.strokeRect(71,30+25,15,-50);
+		
+	//clear before drawing stuff on canvas
+	ctx.clearRect(0,0,100,53);
+	
+	//clutch
+	ctx.fillStyle = "RGBA(0,0,255,0.5)";
+	ctx.fillRect(14,45,15,-clutchVal*0.4);
+	
+	//brake
+	ctx.fillStyle = "RGBA(255,0,0,0.5)";
+	ctx.fillRect(33,45,15,-brakeVal*0.4);
+	
+	//throttle
+	ctx.fillStyle = "RGBA(0,255,0,0.5)";
+	ctx.fillRect(52,45,15,-throttleVal*0.4);
+	
+	//pbrake
+	ctx.fillStyle = "RGBA(255,255,0,0.5)";
+	ctx.fillRect(71,45,15,-parkingVal*0.4);
+	
+
+	//addtext
+	ctx.font='7px Arial';
+	ctx.textAlign="center";
+	
+	ctx.fillStyle = "black";
+	ctx.fillText(clutchVal,		21.5,52);
+	ctx.fillText(brakeVal,		40.5,52);
+	ctx.fillText(throttleVal,	59.5,52);
+	ctx.fillText(parkingVal,	78.5,52);
+	
+	//add borders
+	ctx.strokeStyle = "black";
+	ctx.strokeRect(52,45,15,-40);
+	ctx.strokeRect(33,45,15,-40);
+	ctx.strokeRect(14,45,15,-40);
+	ctx.strokeRect(71,45,15,-40);
+
+	//Add label
+	this.unitField.html("Pedals & Axis");
 };
-
-
-
-
-
-
-
-
-
-
-

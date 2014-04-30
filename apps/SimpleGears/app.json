@@ -3,14 +3,14 @@
 		"name" : "SimpleGears",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Displays current manual or automatic gear. Click to swap between automatic and manual display."
+		"description": "Displays current manual or automatic gear. Click the label to swap Auto/Manual gearbox display."
 	},
 
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [100,75]
+       "initial" : [100,65]
       }
      },
 	

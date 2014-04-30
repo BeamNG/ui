@@ -6,10 +6,12 @@ function pad1k(num) {
 }
 
 SimpleTacho.prototype.initialize = function(){
-	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
+	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
+    
+    this.unitField = $('<div></div>').appendTo(this.rootElement).addClass('unitField');
         
 	this.canvas.width = 200;
-	this.canvas.height = 65;
+	this.canvas.height = 53;
 
     this.loaded = false;
 };
@@ -32,11 +34,11 @@ SimpleTacho.prototype.update = function(streams){
     var rgba='RGBA';
     
     if(rpm < rpmIdle*1.25) {        //we are at idle, blue
-        rgba+='(0,0,128,0.5)';
+        rgba+='(0,0,255,0.5)';
     } else if(rpm > rpmMax*0.9) {   //we are near redline, red
-        rgba+='(128,0,0,0.5)';
+        rgba+='(255,0,0,0.5)';
     } else {                        //normal rpm, green
-        rgba+='(0,128,0,0.5)';
+        rgba+='(0,255,0,0.5)';
     }
         
     ctx.fillStyle = rgba;
@@ -45,7 +47,7 @@ SimpleTacho.prototype.update = function(streams){
     ctx.fillRect(20,10,rpm/(rpmMax/160),25);
     
     //setup text
-    ctx.font='20px "Lucida Console", Monaco, monospace';
+    ctx.font='20px Arial';
     ctx.textAlign="center";
     
     //Add RPM value to bar
@@ -56,9 +58,10 @@ SimpleTacho.prototype.update = function(streams){
     ctx.strokeRect(20,10,160,25);    
     
     //Add min/max values, label
-    ctx.font='10px "Lucida Console", Monaco, monospace';
+    ctx.font='10px Arial';
     ctx.fillText("0000",20,48);
     ctx.fillText(rpmMax,180,48);
-    ctx.fillText("RPM",100,58);
     
+    //-Units
+    this.unitField.html("Engine RPM");
 };

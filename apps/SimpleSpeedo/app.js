@@ -6,15 +6,17 @@ function pad100(num) {
 }
 
 SimpleSpeedo.prototype.initialize = function(){
-	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
+	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
+    
+    this.unitField = $('<div></div>').appendTo(this.rootElement).addClass('unitField');
         
 	this.canvas.width = 200;
-	this.canvas.height = 65;
+	this.canvas.height = 53;
 
     this.loaded = false;
     
     var self = this;
-    this.rootElement.click(function(){self.toggleUnit();});
+    this.unitField.click(function(){self.toggleUnit();});
     
     //If no unit was previously selected, default to km/h
     if ((this.persistance["Unit"] != "MPH") && (this.persistance["Unit"] != "km/h")) this.persistance["Unit"] = "km/h";
@@ -52,19 +54,19 @@ SimpleSpeedo.prototype.update = function(streams){
 	ctx = c.getContext('2d');
         
     //clear before drawing stuff on canvas
-    ctx.clearRect(0,0,200,65);
+    ctx.clearRect(0,0,200,53);
         
     //Make the bar
     if (speedStart == 0){
-        ctx.fillStyle = "RGBA(0,0,128,0.5)";
+        ctx.fillStyle = "RGBA(0,0,255,0.5)";
     } else {
-        ctx.fillStyle = "RGBA(128,0,128,0.5)";
+        ctx.fillStyle = "RGBA(255,0,255,0.5)";
     }
     
     ctx.fillRect(20,10,Math.min(speedUnits-speedStart, 160),25);
     
     //text
-    ctx.font='20px "Lucida Console", Monaco, monospace';
+    ctx.font='20px Arial';
     ctx.textAlign="center";
     
     ctx.fillStyle = "black";
@@ -75,11 +77,10 @@ SimpleSpeedo.prototype.update = function(streams){
     
     //Add labels
     //-Units
-    ctx.font='10px "Lucida Console", Monaco, monospace';
-    ctx.fillText(this.persistance["Unit"],100,58);
+    this.unitField.html("Speed (" + this.persistance["Unit"] + ")");
     
     //-Numbers
-    ctx.font='7px "Lucida Console", Monaco, monospace';
+    ctx.font='7px Arial';
     var interval = 20;
     for (var x=0; x<=160; x+=interval) {
         ctx.fillText(speedStart+x,x+20,48);

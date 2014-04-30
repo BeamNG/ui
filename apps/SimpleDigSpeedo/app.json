@@ -3,14 +3,14 @@
 		"name" : "Simple Digital Speedo",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Simple digital speedometer."
+		"description": "Simple digital speedometer. Click the units to swap between metric and imperial units."
 	},
 
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [100,75]
+       "initial" : [100,65]
       }
      },
 	
