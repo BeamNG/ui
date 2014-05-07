@@ -678,24 +678,32 @@ var DebugManager = {
 		$(document).keyup(function(event) {
 			console.log("KEY: "+JSON.stringify(event.which));
 			if(event.which == 75){
-				DebugManager.presetPosition--;
-				if(DebugManager.presetPosition == -2){
-					DebugManager.presetPosition = DebugManager.presets.size - 1;
-				}
+				DebugManager.previousDebug();
 			}else if(event.which == 76){
-				DebugManager.presetPosition++;
-				if(DebugManager.presetPosition == DebugManager.presets.size){
-					DebugManager.presetPosition = -1;
-				}
-			}else{
-				return;
+				DebugManager.nextDebug();
 			}
-			if(DebugManager.presetPosition == -1){
-				AppEngine.loadPreset("default");
-				return;
-			}
-			AppEngine.loadPreset(DebugManager.presets[DebugManager.presetPosition]);
 		});
+	},
+	nextDebug: function(){
+		this.presetPosition++;
+		if(this.presetPosition == this.presets.length){
+			this.presetPosition = -1;
+		}
+		this.updatePreset();
+	},
+	previousDebug: function(){
+		this.presetPosition--;
+		if(this.presetPosition == -2){
+			this.presetPosition = this.presets.length - 1;
+		}
+		this.updatePreset();
+	},
+	updatePreset: function(){
+		if(this.presetPosition == -1){
+			AppEngine.loadPreset("default");
+			return;
+		}
+		AppEngine.loadPreset(this.presets[this.presetPosition]);
 	}
 };
 
@@ -724,8 +732,21 @@ var RPIndicator = {
 	}
 };
 
-var KeySimulator = {
+$(document).ready(function() {
+	DebugKeySimulator.initialize();
+});
+var DebugKeySimulator = {
 	initialize: function(){
-		
+		this.panel = $("<div></div>").appendTo($("body")).css({
+			bottom: '0',
+			left: '200px',
+			position: 'absolute'
+		});
+		$("<a>&lt;</a>").appendTo(this.panel).button().click(function(event) {
+			DebugManager.previousDebug();
+		});
+		$("<a>&gt;</a>").appendTo(this.panel).button().click(function(event) {
+			DebugManager.nextDebug();
+		});
 	}
-}
+};
