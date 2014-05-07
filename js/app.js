@@ -402,7 +402,7 @@ var AppEngine = {
 					app._widget.app("option","active",false);
 				});
 				//hide old preset
-				this.presetPanel[this.preset].hide();
+				this.presetPanel[this.preset].fadeOut(250);
 			}
 
 			this.preset = preset;
@@ -424,7 +424,7 @@ var AppEngine = {
 				this.resize();
 				console.log("done");
 			}else{
-				this.presetPanel[this.preset].show();
+				this.presetPanel[this.preset].fadeIn(250);
 
 				$.each(this.runningApps[this.preset], function(index, app) {
 					app._widget.app("option","active",true);
