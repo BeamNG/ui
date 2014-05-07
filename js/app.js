@@ -242,11 +242,10 @@ $.widget("beamNG.appButton", {
 		this.front.css('background-image', 'url(apps/'+appName+'/app.png), url(images/appDefault.png)');
 
 		// interactivity
-		var self = this;
-		this.element.hover(function() {
-			self.front.stop(true, false).animate({height: 0}, 300);
+		this.element.hover(function(obj) {
+			$(this).children('.appButtonImage').first().stop(true, false).animate({height: 0}, 300);
 		}, function() {
-			self.front.stop(true, false).animate({height: 120}, 300);
+			$(this).children('.appButtonImage').first().stop(true, false).animate({height: 120}, 300);
 		});
 
 		this.element.click(function(event) {
