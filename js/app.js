@@ -2,6 +2,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	options: {
 		app: null,
 		persistance: undefined,
+		active: true,
 		editMode: false,
 		refPointOffset : [0, 0],
 		referencePoint : [0, 0] // [0,0] = upper left, [1,1] = lower right
@@ -139,7 +140,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			this._optionEditMode(value);
 		}else if(key == "referencePoint"){
 			this._super(key, value);
-			this._calculatePosition();
+			this.calculatePosition();
 		}else{
 			this._super(key, value);
 		}
@@ -199,8 +200,10 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		RPIndicator.hide();
 	},
 	windowResize: function(){
-		this._calculatePosition();
-		RPIndicator.move(this.options.referencePoint);
+		if(this.options.active){
+			this.calculatePosition();
+			RPIndicator.move(this.options.referencePoint);
+		}
 	},
 	_calculateRefPointOffset: function(){
 		var windowsize = [$(window).width(),$(window).height()];
@@ -208,7 +211,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			this.options.refPointOffset[i] = this.options.position[i] - ( this.options.referencePoint[i] * windowsize[i] );
 		}
 	},
-	_calculatePosition: function(){
+	calculatePosition: function(){
 		console.log("Repointoffset: "+this.options.refPointOffset);
 		var windowsize = [$(window).width(),$(window).height()];
 		var position = [0,0];
@@ -264,12 +267,13 @@ $(document).ready(function() {
 // Appengine ------------------------------------------------------
 
 var AppEngine = {
-	runningApps : [],
+	runningApps : {},
 	loadedApps : [],
 	appSettings : {},
 	editMode : false,
 	preset : undefined,
 	runningRequests : 0,
+	presetPanel : {},
 
 	initialize : function(){
 		// adding blendingdiv for editingmode
@@ -304,14 +308,14 @@ var AppEngine = {
 		}
 
 		// changing appstates
-		$.each(this.runningApps, function(index, app){
+		$.each(this.runningApps[AppEngine.preset], function(index, app){
 			app._widget.app("option", "editMode", AppEngine.editMode);
 		});
 	},
 
 	update : function(data){
-		for(var j = 0; j<this.runningApps.length; j++){
-			var app = this.runningApps[j];
+		for(var j = 0; j<this.runningApps[this.preset].length; j++){
+			var app = this.runningApps[this.preset][j];
 			var streamList = {};
 			var streams = this.appSettings[app.name].data.streams;
 			for(var i=0; i<streams.length; i++){
@@ -325,7 +329,7 @@ var AppEngine = {
 		},
 
 	registerApp : function(app){
-		this.runningApps.push(app);
+		this.runningApps[this.preset].push(app);
 		//Adding streams
 		streams = this.appSettings[app.name].data.streams;
 		for(var i=0; i<streams.length; i++){
@@ -334,7 +338,7 @@ var AppEngine = {
 	},
 
 	unregisterApp : function(app){
-		this.runningApps.splice(this.runningApps.indexOf(app),1);
+		this.runningApps[this.preset].splice(this.runningApps[this.preset].indexOf(app),1);
 		// removing streams
 		streams = this.appSettings[app.name].data.streams;
 		for(var i=0; i<streams.length; i++){
@@ -352,7 +356,7 @@ var AppEngine = {
 				appInstance = new window[app]();
 				console.log("Adding app "+app+" to Screen");
 				appElement = $('<div></div>').appendTo($('body'));
-				appElement.app({ app: appInstance, "persistance" : persistance });
+				appElement.app({ app: appInstance, "persistance" : persistance, appendTo : this.presetPanel[this.preset] });
 				if(position !== undefined){
 					console.log("position:");
 					console.log(position[0]);
@@ -392,21 +396,42 @@ var AppEngine = {
 	loadPreset : function(preset){
 		if(this.persistance.presets[preset] !== undefined){
 			console.log("Preset exists");
-			this.preset = preset;
-			// preset exists :)
 
-			// destroying old apps
-			console.log("destroying old apps");
-			$.each(this.runningApps, function(index, app) {
-				app._widget.app("close");
-			});
-			console.log("done");
-			console.log("loading preset '"+preset+"'");
-			$.each(this.persistance.presets[preset].apps, function(index, app) {
-				AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
-			});
-			this.resize();
-			console.log("done");
+			if(this.presetPanel[this.preset] !== undefined){
+				//desactivate old apps
+				$.each(this.runningApps[this.preset], function(index, app) {
+					app._widget.app("option","active",false);
+				});
+				//hide old preset
+				this.presetPanel[this.preset].hide();
+			}
+
+			this.preset = preset;
+			
+
+			if(this.runningApps[preset] === undefined){ // Preset wasn't loaded before
+				this.runningApps[preset] = [];
+				// creating presetpanel
+				this.presetPanel[preset] = $("<div></div>").appendTo($("body")).css({
+					width: "100%",
+					height: "100%"
+				});
+				$("<span>"+preset+"</span>").appendTo(this.presetPanel[preset]);
+
+				console.log("loading preset '"+preset+"'");
+				$.each(this.persistance.presets[preset].apps, function(index, app) {
+					AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
+				});
+				this.resize();
+				console.log("done");
+			}else{
+				this.presetPanel[this.preset].show();
+
+				$.each(this.runningApps[this.preset], function(index, app) {
+					app._widget.app("option","active",true);
+					app._widget.app("calculatePosition");
+				});
+			}
 		}
 	},
 
@@ -414,7 +439,7 @@ var AppEngine = {
 		// empty Preset
 		this.persistance.presets[this.preset].apps = [];
 		console.log("Saving Preset "+this.preset);
-		$.each(this.runningApps, function(index, app) {
+		$.each(this.runningApps[this.preset], function(index, app) {
 			
 			appData = {};
 			appData.name = app.constructor.name;
@@ -460,7 +485,7 @@ var AppEngine = {
 
 	resize : function(){
 		windowsize = [$(window).width(),$(window).height()];
-		$.each(this.runningApps, function(index, app) {
+		$.each(this.runningApps[this.preset], function(index, app) {
 			position = app._widget.app("option","position");
 			size = [app._widget.app("option","width"),app._widget.app("option","height")];
 			change = 0;
