@@ -287,6 +287,7 @@ var AppEngine = {
 		this._loadPersistance();
 
 		AppStore.initialize();
+		DebugManager.initialize();
 	},
 
 	toggleEditMode: function() {
@@ -401,7 +402,7 @@ var AppEngine = {
 			});
 			console.log("done");
 			console.log("loading preset '"+preset+"'");
-			$.each(this.persistance.presets[preset], function(index, app) {
+			$.each(this.persistance.presets[preset].apps, function(index, app) {
 				AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
 			});
 			this.resize();
@@ -411,7 +412,7 @@ var AppEngine = {
 
 	savePreset : function(){
 		// empty Preset
-		this.persistance.presets[this.preset] = [];
+		this.persistance.presets[this.preset].apps = [];
 		console.log("Saving Preset "+this.preset);
 		$.each(this.runningApps, function(index, app) {
 			
@@ -428,8 +429,7 @@ var AppEngine = {
 
 			console.log("   -  "+JSON.stringify(appData));
 
-
-			AppEngine.persistance.presets[AppEngine.preset].push(appData);
+			AppEngine.persistance.presets[AppEngine.preset].apps.push(appData);
 		});
 
 		this._savePersistance();
@@ -665,6 +665,41 @@ var HookManager  = {
 	}
 };
 
+var DebugManager = {
+	presets: [],
+	presetPosition: -1,
+	initialize: function(){
+		$.each(AppEngine.persistance.presets, function(index, preset) {
+			if(preset.debug){
+				DebugManager.presets.push(index);
+			}
+		});
+		console.log("Debugpresets: "+JSON.stringify(this.presets));
+		$(document).keyup(function(event) {
+			console.log("KEY: "+JSON.stringify(event.which));
+			if(event.which == 75){
+				DebugManager.presetPosition--;
+				if(DebugManager.presetPosition == -2){
+					DebugManager.presetPosition = DebugManager.presets.size - 1;
+				}
+			}else if(event.which == 76){
+				DebugManager.presetPosition++;
+				if(DebugManager.presetPosition == DebugManager.presets.size){
+					DebugManager.presetPosition = -1;
+				}
+			}else{
+				return;
+			}
+			if(DebugManager.presetPosition == -1){
+				AppEngine.loadPreset("default");
+				return;
+			}
+			AppEngine.loadPreset(DebugManager.presets[DebugManager.presetPosition]);
+		});
+	}
+};
+
+
 var RPIndicator = {
 	size: 20,
 	element: undefined,
@@ -688,3 +723,9 @@ var RPIndicator = {
 		this.element.hide();
 	}
 };
+
+var KeySimulator = {
+	initialize: function(){
+		
+	}
+}

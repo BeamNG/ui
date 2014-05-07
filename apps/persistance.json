@@ -1,12 +1,33 @@
 {
 	"presets":
 	{
-		"default":[
-			{"name":"Tacho","position":[[1,1],[-218,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}}
-		],
-		"race":[
-		],
-		"debug":[
-		]
+		"default":{
+			"apps":[
+				{"name":"Tacho","position":[[1,1],[-218,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}}
+			]
+		},
+		"race":{
+			"apps":[
+				{"name":"Tacho","position":[[0,1],[20,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}}
+			]
+		},
+		"debug":{
+			"debug": true,
+			"apps":[
+				{"name":"gForcesDebug","position":[[0,0],[20,20]],"persistance":{"options":{},"custom":{}}}
+			]
+		},
+		"debug2":{
+			"debug": true,
+			"apps":[
+				{"name":"WheelsDebug","position":[[0,0],[20,20]],"persistance":{"options":{},"custom":{}}}
+			]
+		},
+		"debug3":{
+			"debug": true,
+			"apps":[
+				{"name":"NodeBeamDebug","position":[[0,0],[20,20]],"persistance":{"options":{},"custom":{}}}
+			]
+		}
 	}
 }
