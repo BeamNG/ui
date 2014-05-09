@@ -49,9 +49,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		// minsize must be <= size
 		this.options.minWidth = Math.min(this.options.minWidth, this.options.width);
 		if(this.options.height != "auto"){
-			console.log("setting minsize");
+			this.log("setting minsize");
 			this.options.minHeight = Math.min(this.options.minHeight, this.options.height);
-			console.log(this.options.minHeight);
+			this.log(this.options.minHeight);
 		}
 
 		// maximal size
@@ -87,7 +87,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		if(backgroundClasses.indexOf(this.appInfo.appearance.background)!= -1){
 			this.element.addClass(this.appInfo.appearance.background);
 		}else{
-			console.error("Error parsing app.json attribute appearance.backround: invalid value");
+			this.log("Error parsing app.json attribute appearance.backround: invalid value");
 		}
 
 
@@ -104,6 +104,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		// adding savemethod
 		this.app.save = function(){ AppEngine.savePreset(); };
+		// adding logmethod
+		var appname = this.appName;
+		this.app.log = function(message){ Logger.log("App", message, appname); };
 
 		// Initialize App
 		this.app.initialize();
@@ -174,7 +177,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	},
 	drag: function(event,ui) {
 		var position = [ui.position.left,ui.position.top];
-		var size = [this.options.width, this.options.height];
+		var size = [this.element.width(), this.element.height()];
 		var windowsize = [$(window).width(),$(window).height()];
 		var change = false;
 		// changing refpoint
@@ -189,7 +192,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		}
 		if(change){
 			// now do some magic
-			console.log("change");
+			this.log("change");
 			RPIndicator.move(this.options.referencePoint);
 		}
 	},
@@ -212,13 +215,16 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		}
 	},
 	calculatePosition: function(){
-		console.log("Repointoffset: "+this.options.refPointOffset);
+		this.log("Repointoffset: "+this.options.refPointOffset);
 		var windowsize = [$(window).width(),$(window).height()];
 		var position = [0,0];
 		for (var i = 0; i < 2; i++) {
 			position[i] = ( this.options.referencePoint[i] * windowsize[i] ) + this.options.refPointOffset[i];
 		}
 		this._setOption("position",position);
+	},
+	log: function(message){
+		Logger.log("AppContainer",message,this.appName);
 	}
 
 });
@@ -249,7 +255,6 @@ $.widget("beamNG.appButton", {
 		});
 
 		this.element.click(function(event) {
-			console.log();
 			AppEngine.loadApp(appName);
 			AppStore.close();
 		});
@@ -273,6 +278,7 @@ var AppEngine = {
 	preset : undefined,
 	runningRequests : 0,
 	presetPanel : {},
+	initialized : false,
 
 	initialize : function(){
 		// adding blendingdiv for editingmode
@@ -291,6 +297,8 @@ var AppEngine = {
 
 		AppStore.initialize();
 		DebugManager.initialize();
+
+		this.initialized = true;
 	},
 
 	toggleEditMode: function() {
@@ -313,17 +321,19 @@ var AppEngine = {
 	},
 
 	update : function(data){
-		for(var j = 0; j<this.runningApps[this.preset].length; j++){
-			var app = this.runningApps[this.preset][j];
-			var streamList = {};
-			var streams = this.appSettings[app.name].data.streams;
-			for(var i=0; i<streams.length; i++){
-				stream = streams[i];
-					if(state.streams[stream] > 0){
-						streamList[stream] = data[stream];
+		if(this.initialized){
+			for(var j = 0; j<this.runningApps[this.preset].length; j++){
+				var app = this.runningApps[this.preset][j];
+				var streamList = {};
+				var streams = this.appSettings[app.name].data.streams;
+				for(var i=0; i<streams.length; i++){
+					stream = streams[i];
+						if(state.streams[stream] > 0){
+							streamList[stream] = data[stream];
+						}
 					}
+					app.update(streamList);
 				}
-				app.update(streamList);
 			}
 		},
 
@@ -349,24 +359,24 @@ var AppEngine = {
 		for(var i = 0 ; i < this.loadedApps.length; i++){
 			if(this.loadedApps[i] == app){
 				if(typeof window[app] !== 'function'){
-					console.error("App '"+app+"' can't be spawned. Appclass not found.");
+					this.log("App '"+app+"' can't be spawned. Appclass not found.");
 					return;
 				}
 				appInstance = new window[app]();
-				console.log("Adding app "+app+" to Screen");
+				this.log("Adding app "+app+" to Screen");
 				appElement = $('<div></div>').appendTo($('body'));
 				appElement.app({ app: appInstance, "persistance" : persistance, appendTo : this.presetPanel[this.preset] });
 				if(position !== undefined){
-					console.log("position:");
-					console.log(position[0]);
-					console.log(position[1]);
+					this.log("position:");
+					this.log(position[0]);
+					this.log(position[1]);
 					appElement.app("option","referencePoint",position[0]);
 					appElement.app("option","refPointOffset",position[1]);
 				}else{
 					appElement.app("option","refPointOffset",[$(window).width()/3,$(window).height()/3]);
 				}
 				if(size !== undefined){
-					console.log("size defined: "+size);
+					this.log("size defined: "+size);
 					appElement.app("option","width",size[0]);
 					appElement.app("option","height",size[1]);
 				}else{
@@ -379,7 +389,7 @@ var AppEngine = {
 				return;
 			}
 		}
-		console.error("App "+app+" can't be displayed. A Error occurred while loading.");
+		this.log("App "+app+" can't be displayed. A Error occurred while loading.");
 	},
 
 	addPreset : function(preset){
@@ -394,7 +404,7 @@ var AppEngine = {
 
 	loadPreset : function(preset){
 		if(this.persistance.presets[preset] !== undefined){
-			console.log("Preset exists");
+			this.log("Preset exists");
 
 			if(this.presetPanel[this.preset] !== undefined){
 				//desactivate old apps
@@ -417,12 +427,12 @@ var AppEngine = {
 				});
 				$("<span>"+preset+"</span>").appendTo(this.presetPanel[preset]);
 
-				console.log("loading preset '"+preset+"'");
+				this.log("loading preset '"+preset+"'");
 				$.each(this.persistance.presets[preset].apps, function(index, app) {
 					AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
 				});
 				this.resize();
-				console.log("done");
+				this.log("done");
 			}else{
 				this.presetPanel[this.preset].fadeIn(250);
 
@@ -437,7 +447,7 @@ var AppEngine = {
 	savePreset : function(){
 		// empty Preset
 		this.persistance.presets[this.preset].apps = [];
-		console.log("Saving Preset "+this.preset);
+		this.log("Saving Preset "+this.preset);
 		$.each(this.runningApps[this.preset], function(index, app) {
 			
 			appData = {};
@@ -451,14 +461,14 @@ var AppEngine = {
 				appData.size = undefined;
 			}
 
-			console.log("   -  "+JSON.stringify(appData));
+			AppEngine.log("   -  "+JSON.stringify(appData));
 
 			AppEngine.persistance.presets[AppEngine.preset].apps.push(appData);
 		});
 
 		this._savePersistance();
 
-		console.log("done.");
+		this.log("done.");
 	},
 
 	_loadPersistance : function(){
@@ -467,13 +477,13 @@ var AppEngine = {
 			AppEngine.loadPreset("default");
 		} else{
 			$.getJSON('apps/persistance.json', function(data) {
-				console.log( "worked");
+				this.log( "worked");
 				AppEngine.persistance = data;
 				AppEngine._savePersistance();
 				AppEngine.loadPreset("default");
 			}).fail(function(data) {
-				console.log( "error" );
-				console.log( JSON.stringify(data) );
+				this.log( "error" );
+				this.log( JSON.stringify(data) );
 			});
 		}
 	},
@@ -499,6 +509,9 @@ var AppEngine = {
 			}
 
 		});
+	},
+	log: function(message){
+		Logger.log("AppEngine",message);
 	}
 };
 
@@ -561,7 +574,7 @@ var AppLoader = {
 	},
 	
 	initialize: function(){
-		console.log("Starting to load apps.");
+		this.log("Starting to load apps.");
 		this.loadApps();
 		this.loadInitialized = true;
 		this._checkProgress();
@@ -592,10 +605,10 @@ var AppLoader = {
 			AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.ERROR);
 			if(arguments[0].readyState === 0){
 				//script failed to load
-				console.error("app.js of '"+app+"' failed to load. Check your filenames.");
+				this.log("app.js of '"+app+"' failed to load. Check your filenames.");
 			}else{
 				//script loaded but failed to parse
-				console.error("app.js of '"+app+"' failed to parse: "+arguments[2].toString());
+				this.log("app.js of '"+app+"' failed to parse: "+arguments[2].toString());
 			}
 		});
 	},
@@ -604,13 +617,13 @@ var AppLoader = {
 		this._setLoadState(app,'json',this.LOADSTATE.LOADING);
 
 		$.getJSON("apps/"+app+"/app.json", function(data) {
-			console.log(data);
+			AppLoader.log(data);
 			AppEngine.appSettings[app] = data;
 			AppLoader._setLoadState(app,'json',AppLoader.LOADSTATE.DONE);
 
 		}).fail(function(){
 			AppLoader._setLoadState(app,'json',AppLoader.LOADSTATE.ERROR);
-			console.error("app.json of '"+app+"' failed to load. Check your filenames.");
+			AppLoader.log("app.json of '"+app+"' failed to load. Check your filenames.");
 		});
 	},
 
@@ -626,25 +639,28 @@ var AppLoader = {
 	},
 
 	_checkProgress : function(){
-		//console.log(JSON.stringify(this.loadstates));
+		//this.log(JSON.stringify(this.loadstates));
 		allLoaded = true;
 		$.each(this.loadstates, function(appindex, app) {
 			$.each(app, function(typeindex, state) {
 				if(state == AppLoader.LOADSTATE.LOADING){ allLoaded=false; }
 			});
 		});
-		//console.log("Progress ["+new Date().toLocaleTimeString()+"]: Status [LOADING/ERROR/DONE]: "+loading+"/"+error+"/"+done+" "+allLoaded);
+		//this.log("Progress ["+new Date().toLocaleTimeString()+"]: Status [LOADING/ERROR/DONE]: "+loading+"/"+error+"/"+done+" "+allLoaded);
 
 		if(this.loadInitialized && allLoaded){
-			console.log("Loading done");
+			this.log("Loading done");
 			$.each(this.loadstates, function(appindex, app) {
 				if(app['js'] == AppLoader.LOADSTATE.DONE && app['json'] == AppLoader.LOADSTATE.DONE ){ // && app['data'] != AppLoader.LOADSTATE.LOADING
 					AppEngine.loadedApps.push(appindex);
 				}
 			});
-			console.log("loadedApps: "+JSON.stringify(AppEngine.loadedApps));
+			this.log("loadedApps: "+JSON.stringify(AppEngine.loadedApps));
 			AppEngine.initialize();
 		}
+	},
+	log: function(message){
+		Logger.log("AppLoader",message);
 	}
 };
 
@@ -672,7 +688,7 @@ var HookManager  = {
 		}
 	},
 	triggerHook : function(hookname, data){
-		console.log(hookname+" triggered");
+		this.log(hookname+" triggered");
 		for(i = 0; i<this.hooks.length; i++){
 			hook = this.hooks[i];
 			if(hook[2] == hookname){
@@ -686,6 +702,9 @@ var HookManager  = {
 		for(i = 0; i<hooks.length; i++){
 			this.triggerHook(hooks[i]);
 		}
+	},
+	log: function(message){
+		Logger.log("HookManager",message);
 	}
 };
 
@@ -698,9 +717,9 @@ var DebugManager = {
 				DebugManager.presets.push(index);
 			}
 		});
-		console.log("Debugpresets: "+JSON.stringify(this.presets));
+		this.log("Debugpresets: "+JSON.stringify(this.presets));
 		$(document).keyup(function(event) {
-			console.log("KEY: "+JSON.stringify(event.which));
+			DebugManager.log("KEY: "+JSON.stringify(event.which));
 			if(event.which == 75){
 				DebugManager.previousDebug();
 			}else if(event.which == 76){
@@ -728,6 +747,9 @@ var DebugManager = {
 			return;
 		}
 		AppEngine.loadPreset(this.presets[this.presetPosition]);
+	},
+	log: function(message){
+		Logger.log("DebugManager",message);
 	}
 };
 
@@ -772,5 +794,16 @@ var DebugKeySimulator = {
 		$("<a>&gt;</a>").appendTo(this.panel).button().click(function(event) {
 			DebugManager.nextDebug();
 		});
+	}
+};
+
+var Logger = {
+	log: function(system, message, instance){
+		var logMessage = "["+system+"]";
+		if(instance){
+			logMessage += "["+instance+"]";
+		}
+		logMessage += ": "+message;
+		console.log(logMessage);
 	}
 };

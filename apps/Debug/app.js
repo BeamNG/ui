@@ -17,5 +17,5 @@ Debug.prototype.update = function(streams){
 };
 
 Debug.prototype.resize = function(){
-	console.log("Debug resize");
+	this.log("Debug resize");
 };
