@@ -18,7 +18,7 @@ function updateSparcLines()
 {
 	if(debugObjectData) {
 		var objDataDump = "<h3>Object data</h3><table border='0'>";
-		for(attr in objectData) {
+		for(var attr in objectData) {
 			objDataDump += "<tr><td colspan='4'>" + attr + "</td></tr>";
 			var keys = Object.keys(objectData[attr]);
 			keys.sort();
@@ -38,8 +38,8 @@ function updateSparcLines()
 
 		$('#objdebug').html(objDataDump);
 
-		for(attr in objectData) {
-			for(attr2 in objectData[attr]) {
+		for(var attr in objectData) {
+			for(var attr2 in objectData[attr]) {
 				if(typeof objectData[attr][attr2] == 'number') {
 					$('#sl_'+attr2).sparkline(sparkPoints[attr2], { width: sparkPoints[attr2].length*2, tooltipSuffix: '', disableHiddenCheck:true });
 				}
@@ -62,110 +62,6 @@ function filledArc(ctx, x, y, r, w, v, c)
 	ctx.stroke();
 	ctx.closePath();
 }
-
-function wheelsScreenUpdate(value)
-{
-	/* value format:
-	0  wd.name
-	1  wd.radius
-	2  wd.wheelDir
-	3  w.angularVelocity
-	4  w.lastTorque
-	5  drivetrain.wheelInfo[wd.wheelID].lastSlip
-	6  wd.lastTorqueMode
-	*/
-	var c = $('#drawCanvas')[0];
-	var ctx = c.getContext('2d');
-
-	// clear
-	ctx.save();
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
-	ctx.clearRect(0, 0, c.width, c.height);
-	ctx.restore();
-	ctx.textAlign = 'center';
-	var fontSize = 12;
-	ctx.font = 'bold ' + fontSize + 'pt monospace';
-	var r = 50;
-	var rs = 5;
-	var b = 5;
-	var x = r + b;
-	var y = r + b;
-	for(var i in value) {
-		var w = value[i];
-		// then draw
-		ctx.fillText('wheel' + w[0], x, y);
-		filledArc(ctx, x, y, r, 1, 1, '#444444');
-
-		var wheelSpeed = w[3] * w[1] * w[2];
-		ctx.fillText(Math.floor(wheelSpeed * 3.6) + ' kph'    , x, y + fontSize + 3);
-		ctx.fillText(Math.floor(wheelSpeed * 2.23694) + ' mph', x, y + 2 * (fontSize + 3));
-		filledArc(ctx, x, y, r - 1, rs, wheelSpeed/33, 'rgb(0,128,128)');
-
-		filledArc(ctx, x, y, r - 1 - rs, rs, w[5]/10 , 'rgb(128,128,0)');
-		
-		var torque = (w[4] * w[2]) / 10000;
-		var col = 'rgb(128,0,128)';
-		if(w[6] == 1) {
-			col = 'rgb(128,128,0)';
-		} else if(w[6] == 2) {
-			col = 'rgb(128,0,0)';
-		}
-		filledArc(ctx, x, y, r - 1 - rs * 2, rs, torque, col);
-
-
-		x += 2 * r +  5;
-
-		if(x + r >= c.width) {
-			x = r + b;
-			y += 2 * r + 5;
-		}
-	}
-	y -= r;
-	if(c.height < y)
-		c.height = y;
-}
-
-var rpmGauge;
-
-function engineScreenUpdate(v)
-{
-	/*
-	0   v.data.engine.idleRPM
-	1, v.data.engine.maxRPM
-	2, v.data.engine.shiftUpRPM
-	3, v.data.engine.shiftDownRPM
-	4, drivetrain.rpm
-	5, drivetrain.gear
-	6, v.data.engine.fwdGearCount
-	7, v.data.engine.revGearCount
-	8, drivetrain.torque
-	9, drivetrain.torqueTransmission
-	10, obj:getVelocity():length()  -- airspeed
-	11, drivetrain.fuel
-	12, drivetrain.fuelCapacity
-	13, sensors
-	14, Settings.gravity	
-	*/
-
-	if(rpmGauge === undefined) {
-		rpmGauge = new JustGage({
-			id: "rpmGauge",
-			value: Math.floor(v[4]),
-			min: 0,
-			max: v[1],
-			title: "RPM",
-			label: "",
-			});
-	}
-
-	rpmGauge.refresh(Math.floor(v[4]));
-
-	var s = '';
-
-//	$('#engineInfo_data').html(s);
-
-}
-
 
 $(document).ready(function() {
 	widgetEventHandler(updateSingleValue, 'debug_globalonoff', 'bdebug', 'enabled');
@@ -241,7 +137,7 @@ function serializeToLua(obj)
 			if(typeof obj == "object")
 			{
 				var tmp = [];
-				for(attr in obj)
+				for(var attr in obj)
 				{
 					if(typeof obj[attr] != "function")
 						tmp.push('' + attr + '=' + serializeToLua(obj[attr]));
@@ -292,7 +188,7 @@ function collapsibleStreamEventHandler(name, streamName)
 			expand: function( event, ui ) {
 				streamAdd(streamName);
 			}
-		});	
+		});
 	} else if(dataRole == 'panel') {
 		$("#" + name).panel({
 			open: function( event, ui ) {
