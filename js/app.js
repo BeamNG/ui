@@ -327,7 +327,7 @@ var AppEngine = {
 				var streamList = {};
 				var streams = this.appSettings[app.name].data.streams;
 				for(var i=0; i<streams.length; i++){
-					stream = streams[i];
+					var stream = streams[i];
 						if(state.streams[stream] > 0){
 							streamList[stream] = data[stream];
 						}
@@ -340,7 +340,7 @@ var AppEngine = {
 	registerApp : function(app){
 		this.runningApps[this.preset].push(app);
 		//Adding streams
-		streams = this.appSettings[app.name].data.streams;
+		var streams = this.appSettings[app.name].data.streams;
 		for(var i=0; i<streams.length; i++){
 			streamAdd(streams[i]);
 		}
@@ -349,7 +349,7 @@ var AppEngine = {
 	unregisterApp : function(app){
 		this.runningApps[this.preset].splice(this.runningApps[this.preset].indexOf(app),1);
 		// removing streams
-		streams = this.appSettings[app.name].data.streams;
+		var streams = this.appSettings[app.name].data.streams;
 		for(var i=0; i<streams.length; i++){
 			streamRemove(streams[i]);
 		}
@@ -362,9 +362,9 @@ var AppEngine = {
 					this.log("App '"+app+"' can't be spawned. Appclass not found.");
 					return;
 				}
-				appInstance = new window[app]();
+				var appInstance = new window[app]();
 				this.log("Adding app "+app+" to Screen");
-				appElement = $('<div></div>').appendTo($('body'));
+				var appElement = $('<div></div>').appendTo($('body'));
 				appElement.app({ app: appInstance, "persistance" : persistance, appendTo : this.presetPanel[this.preset] });
 				if(position !== undefined){
 					this.log("position:");
@@ -651,7 +651,7 @@ var AppLoader = {
 		if(this.loadInitialized && allLoaded){
 			this.log("Loading done");
 			$.each(this.loadstates, function(appindex, app) {
-				if(app['js'] == AppLoader.LOADSTATE.DONE && app['json'] == AppLoader.LOADSTATE.DONE ){ // && app['data'] != AppLoader.LOADSTATE.LOADING
+				if(app.js == AppLoader.LOADSTATE.DONE && app.json == AppLoader.LOADSTATE.DONE ){ // && app['data'] != AppLoader.LOADSTATE.LOADING
 					AppEngine.loadedApps.push(appindex);
 				}
 			});
