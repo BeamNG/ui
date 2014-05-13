@@ -370,9 +370,8 @@ var AppEngine = {
 					this.log("position:");
 					this.log(position[0]);
 					this.log(position[1]);
-					appElement.app("option","referencePoint",position[0]);
 					appElement.app("option","refPointOffset",position[1]);
-					appElement.app("calculatePosition");
+					appElement.app("option","referencePoint",position[0]);
 				}else{
 					appElement.app("option","refPointOffset",[$(window).width()/3,$(window).height()/3]);
 				}
