@@ -372,6 +372,7 @@ var AppEngine = {
 					this.log(position[1]);
 					appElement.app("option","referencePoint",position[0]);
 					appElement.app("option","refPointOffset",position[1]);
+					appElement.app("calculatePosition");
 				}else{
 					appElement.app("option","refPointOffset",[$(window).width()/3,$(window).height()/3]);
 				}
@@ -430,6 +431,7 @@ var AppEngine = {
 				this.log("loading preset '"+preset+"'");
 				$.each(this.persistance.presets[preset].apps, function(index, app) {
 					AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
+
 				});
 				this.resize();
 				this.log("done");
