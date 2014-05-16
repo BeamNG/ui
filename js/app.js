@@ -113,13 +113,10 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		// installing handlers
 		this._on(this.element.parent(), {
-			resize:"resize",
+			resize:"resize", 
 			dragstart:"dragStart",
 			drag:"drag",
 			dragstop:"dragStop"
-		});
-		this._on($(window),{
-			resize:"windowResize"
 		});
 
 		$(this.element).parents('.ui-dialog').addClass("ui-app");
@@ -167,7 +164,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this._super();
 	},
 
-	resize: function() {
+	resize: function(event) {
+		event.stopPropagation();
 		if (typeof this.app.resize === 'function') {
 			this.app.resize();
 		}
@@ -209,13 +207,14 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		}
 	},
 	_calculateRefPointOffset: function(){
+		this.log("calculateRefPointOffset()");
 		var windowsize = [$(window).width(),$(window).height()];
 		for (var i = 0; i < 2; i++) {
 			this.options.refPointOffset[i] = this.options.position[i] - ( this.options.referencePoint[i] * windowsize[i] );
 		}
 	},
 	calculatePosition: function(){
-		this.log("Repointoffset: "+this.options.refPointOffset);
+		this.log("calculatePosition() offset: "+this.options.refPointOffset);
 		var windowsize = [$(window).width(),$(window).height()];
 		var position = [0,0];
 		for (var i = 0; i < 2; i++) {
@@ -290,7 +289,7 @@ var AppEngine = {
 		}).hide().appendTo('body');
 
 		// Install resizehandler
-		$(window).resize(function(event) { AppEngine.resize(); });
+		$(window).resize(function(event) { AppEngine.resize(event); });
 
 		// load persistance
 		this._loadPersistance();
@@ -432,11 +431,9 @@ var AppEngine = {
 					AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
 
 				});
-				this.resize();
 				this.log("done");
 			}else{
 				this.presetPanel[this.preset].fadeIn(250);
-
 				$.each(this.runningApps[this.preset], function(index, app) {
 					app._widget.app("option","active",true);
 					app._widget.app("calculatePosition");
@@ -478,13 +475,13 @@ var AppEngine = {
 			AppEngine.loadPreset("default");
 		} else{
 			$.getJSON('apps/persistance.json', function(data) {
-				this.log( "worked");
+				AppEngine.log( "worked");
 				AppEngine.persistance = data;
 				AppEngine._savePersistance();
 				AppEngine.loadPreset("default");
 			}).fail(function(data) {
-				this.log( "error" );
-				this.log( JSON.stringify(data) );
+				AppEngine.log( "error" );
+				AppEngine.log( JSON.stringify(data) );
 			});
 		}
 	},
@@ -493,9 +490,10 @@ var AppEngine = {
 		localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
 	},
 
-	resize : function(){
+	resize : function(event){
 		windowsize = [$(window).width(),$(window).height()];
 		$.each(this.runningApps[this.preset], function(index, app) {
+			app._widget.app("calculatePosition");
 			position = app._widget.app("option","position");
 			size = [app._widget.app("option","width"),app._widget.app("option","height")];
 			change = 0;
@@ -508,7 +506,6 @@ var AppEngine = {
 			if(change>0){
 				app._widget.app("option","position",position);
 			}
-
 		});
 	},
 	log: function(message){

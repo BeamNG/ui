@@ -27,3 +27,8 @@ function toInt(val){
 		return NaN;
 	}
 }
+
+function stacktrace() {
+    var err = new Error();
+    return err.stack;
+}
