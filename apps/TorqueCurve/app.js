@@ -14,10 +14,10 @@ TorqueCurve.prototype.initialize = function(){
 };
 
 TorqueCurve.prototype.update = function(streams){
-	if(streams["torqueCurve"]!== undefined){
+	if(streams.torqueCurve!== undefined){
 		this.log("tc streamupdate");
-		this.torqueCurve = streams["torqueCurve"][0];
-		this.powerCurve = streams["torqueCurve"][1];
+		this.torqueCurve = streams.torqueCurve[0];
+		this.powerCurve = streams.torqueCurve[1];
 
 		//build data for plot
 		maxrpm = streams['engineInfo'][1];

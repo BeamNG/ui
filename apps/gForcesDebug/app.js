@@ -10,7 +10,7 @@ gForcesDebug.prototype.initialize = function(){
 gForcesDebug.prototype.update = function(streams){
 	//convert to G
 	gForces = {};
-	$.each(streams["sensors"], function(index, val) {
+	$.each(streams.sensors, function(index, val) {
 		gForces[index] = val / 9.81;
 	});
 

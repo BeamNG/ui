@@ -40,13 +40,13 @@ Tacho.prototype.resize = function(){
 };
 
 Tacho.prototype.update = function(streams){
-	engineInfo = streams['engineInfo'];
+	engineInfo = streams.engineInfo;
 
 		this.updateRPM();
 
 	ctx = this.canvas[0].getContext('2d');
 
-	ctx.drawImage(this.memoryCanvas['background'],0,0);
+	ctx.drawImage(this.memoryCanvas.background,0,0);
 
 	ctx.save();
 	
@@ -56,7 +56,7 @@ Tacho.prototype.update = function(streams){
 	ctx.lineWidth = 5;
 
 	ctx.translate(150,150);
-	ctx.rotate(rpmConverter.convertValue(streams["electrics"].rpm));
+	ctx.rotate(rpmConverter.convertValue(streams.electrics.rpm));
 	ctx.beginPath();
 	ctx.moveTo(0,-140);
 	ctx.lineTo(0,-100);
@@ -65,8 +65,8 @@ Tacho.prototype.update = function(streams){
 	ctx.restore();
 
 	// speed
-	speed = streams["electrics"].wheelspeed;
-	if (isNaN(speed)) speed = streams["electrics"].airspeed;
+	speed = streams.electrics.wheelspeed;
+	if (isNaN(speed)) speed = streams.electrics.airspeed;
 	speed *= 3.6;
 	
 
@@ -165,7 +165,7 @@ Tacho.prototype.updateRPM = function()
 Tacho.prototype.drawBackground = function()
 {
 	// Draw background
-	ctx = this.memoryCanvas['background'].getContext('2d');
+	ctx = this.memoryCanvas.background.getContext('2d');
 	// background
 	ctx.save();
 
