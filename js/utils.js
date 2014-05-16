@@ -29,6 +29,7 @@ function toInt(val){
 }
 
 function stacktrace() {
-    var err = new Error();
-    return err.stack;
+    var stack = new Error().stack.split('\n');
+	stack.splice(0,2);
+    return "STACKTRACE\n" + stack.join('\n');
 }
