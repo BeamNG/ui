@@ -53,8 +53,8 @@ WeightDistribution.prototype.update = function(streams){
 		ctx.fillText(w[0], x, y);
 		filledArc(ctx, x, y, r, 1, 1, '#444444');
 
-		ctx.fillText(Math.floor(downForce / 9.81) + ' kg'    , x, y + fontSize + 3);
-		ctx.fillText(Math.floor(downForce ) + ' N', x, y + 2 * (fontSize + 3));
+		ctx.fillText(Math.round(downForce / 9.81) + ' kg'    , x, y + fontSize + 3);
+		ctx.fillText(Math.round(downForce ) + ' N', x, y + 2 * (fontSize + 3));
 
 
 		x += 2 * r +  5;
