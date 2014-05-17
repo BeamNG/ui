@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "Weight distribution",
+		"author": "beamng.ui Team",
+		"version": "0.1",
+		"description": "Shows the forces working on every wheel"
+	},
+
+	"appearance": {
+		"background" : "opaque",
+		"size" : {
+			"initial" : [220,"auto"]
+		}
+	},
+	
+	"data": {
+		"streams" : ["wheelInfo"]
+	}
+}
