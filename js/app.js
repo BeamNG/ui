@@ -126,14 +126,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		this._setOption('editMode',AppEngine.editMode);
 	},
-	_destroy:function() {
-		this._super("_destroy");
-
-		// unregister App
-		AppEngine.unregisterApp(this.app);
-
-		this.element.remove();
-	},
 
 	_setOption: function( key, value ) {
 		if(key == "editMode"){
@@ -162,6 +154,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		AppEngine.unregisterApp(this.app);
 
 		this._super();
+		this.element.remove();
 	},
 
 	resize: function(event) {
