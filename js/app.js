@@ -121,7 +121,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 		$(this.element).parents('.ui-dialog').addClass("ui-app");
 		this.dialogParent = $(this.element).parents('.ui-dialog');
-		this.dialogParent.draggable('option', 'snap', true);
+		this.dialogParent.draggable('option', 'snap', '.preset-'+AppEngine.preset+' .ui-app');
 //		this.dialogParent.draggable('option', 'grid', [ 10, 10 ]);
 
 		this._setOption('editMode',AppEngine.editMode);
@@ -421,7 +421,7 @@ var AppEngine = {
 			if(this.runningApps[preset] === undefined){ // Preset wasn't loaded before
 				this.runningApps[preset] = [];
 				// creating presetpanel
-				this.presetPanel[preset] = $("<div></div>").appendTo($("body")).css({
+				this.presetPanel[preset] = $("<div class='preset-"+preset+"'></div>").appendTo($("body")).css({
 					width: "100%",
 					height: "100%"
 				});
