@@ -177,20 +177,19 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		var position = [ui.position.left,ui.position.top];
 		var size = [this.element.width(), this.element.height()];
 		var windowsize = [$(window).width(),$(window).height()];
+		var border = 30;
 		var change = false;
 		// changing refpoint
 		for (var i = 0; i < 2; i++) {
-			if(position[i] === 0 && this.options.referencePoint[i] == 1){
+			if(position[i] < border && this.options.referencePoint[i] !== 0){
 				this.options.referencePoint[i] = 0;
 				change = true;
-			}else if(position[i]+size[i]>=windowsize[i] && this.options.referencePoint[i] === 0){
+			}else if(position[i]+size[i]>=windowsize[i]-border && this.options.referencePoint[i] != 1){
 				this.options.referencePoint[i] = 1;
 				change = true;
 			}
 		}
 		if(change){
-			// now do some magic
-			this.log("change");
 			RPIndicator.move(this.options.referencePoint);
 		}
 	},
