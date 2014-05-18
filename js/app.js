@@ -174,6 +174,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		RPIndicator.show(this.options.referencePoint);
 	},
 	drag: function(event,ui) {
+		event.stopPropagation();
 		var position = [ui.position.left,ui.position.top];
 		var size = [this.element.width(), this.element.height()];
 		var windowsize = [$(window).width(),$(window).height()];
@@ -372,6 +373,7 @@ var AppEngine = {
 					appElement.app("option","referencePoint",position[0]);
 				}else{
 					appElement.app("option","refPointOffset",[$(window).width()/3,$(window).height()/3]);
+					appElement.app("option","referencePoint",[0,0]);
 				}
 				if(size !== undefined){
 					this.log("size defined: "+size);
