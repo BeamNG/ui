@@ -171,7 +171,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		var position = [ui.position.left,ui.position.top];
 		var size = [this.element.width(), this.element.height()];
 		var windowsize = [$(window).width(),$(window).height()];
-		var border = 30;
+		var border = 50;
 		var change = false;
 		// changing refpoint
 		for (var i = 0; i < 2; i++) {
@@ -528,7 +528,7 @@ var AppStore = {
 		});
 
 		// button
-		$("<a id='appstorebutton'>+</a>").appendTo($("#appengine-blending")).css({
+		$("<a class='appstorebutton'>+</a>").appendTo($(".appengine-blending")).css({
 			position: 'absolute',
 			right: 50,
 			top: 10
