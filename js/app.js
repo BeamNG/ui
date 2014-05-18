@@ -274,12 +274,7 @@ var AppEngine = {
 
 	initialize : function(){
 		// adding blendingdiv for editingmode
-		$("<div id='appengine-blending'></div>").css({
-			width: '100%',
-			height: '100%',
-			'background-color': 'rgba(0,0,0,0.5)',
-			'z-index': '-250'
-		}).hide().appendTo('body');
+		$("<div class='appengine-blending'></div>").hide().appendTo('body');
 
 		// Install resizehandler
 		$(window).resize(function(event) { AppEngine.resize(event); });
@@ -297,9 +292,9 @@ var AppEngine = {
 		this.editMode = !this.editMode;
 
 		if (this.editMode) {
-			$('#appengine-blending').show();
+			$('.appengine-blending').show();
 		} else{
-			$('#appengine-blending').hide();
+			$('.appengine-blending').hide();
 			
 			AppStore.close();
 			
