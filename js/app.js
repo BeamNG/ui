@@ -109,7 +109,13 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		this.app.log = function(message){ Logger.log("App", message, appname); };
 
 		// Initialize App
-		this.app.initialize();
+		try{
+			this.app.initialize();
+		}catch(e){
+			this.log("An Error occured while trying to call "+this.app.name+".initialize() : "+e.message+". Killing App.");
+			var self = this;
+			setTimeout(function(){self.close();},0);
+		}
 
 		// installing handlers
 		this._on(this.element.parent(), {
@@ -153,6 +159,14 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	close:function() {
 		AppEngine.unregisterApp(this.app);
 
+		if (typeof this.app.destroy === 'function') {
+			try{
+				this.app.destroy();
+			}catch(e){
+				this.log("An Error occured while trying to call "+this.app.name+".destroy() : "+e.message);
+			}
+		}
+
 		this._super();
 		this.element.remove();
 	},
@@ -160,7 +174,11 @@ $.widget( "beamNG.app", $.ui.dialog, {
 	resize: function(event) {
 		event.stopPropagation();
 		if (typeof this.app.resize === 'function') {
-			this.app.resize();
+			try{
+				this.app.resize();
+			}catch(e){
+				this.log("An Error occured while trying to call "+this.app.name+".resize() : "+e.message);
+			}
 		}
 	},
 	dragStart: function(){
@@ -319,7 +337,11 @@ var AppEngine = {
 							streamList[stream] = data[stream];
 						}
 					}
-					app.update(streamList);
+					try{
+						app.update(streamList);
+					}catch(e){
+						this.log("An Error occured while trying to call "+app.name+".update() : "+e.message);
+					}
 				}
 			}
 		},
