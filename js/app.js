@@ -489,7 +489,7 @@ var AppEngine = {
 				AppEngine.log( "worked");
 				AppEngine.persistance = data;
 				AppEngine._savePersistance();
-				AppEngine.loadPreset("default");
+				location.reload();
 			}).fail(function(data) {
 				AppEngine.log( "error" );
 				AppEngine.log( JSON.stringify(data) );
