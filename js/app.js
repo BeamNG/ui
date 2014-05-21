@@ -297,6 +297,8 @@ var AppEngine = {
 		// Install resizehandler
 		$(window).resize(function(event) { AppEngine.resize(event); });
 
+		beamng.sendGameEngine('vlua("streams.reset()");');
+
 		// load persistance
 		this._loadPersistance();
 
