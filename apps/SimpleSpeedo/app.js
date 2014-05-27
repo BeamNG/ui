@@ -1,10 +1,5 @@
 function SimpleSpeedo(){}
 
-function pad100(num) {
-    var s = "000000" + num;
-    return s.substr(s.length-3);
-}
-
 SimpleSpeedo.prototype.initialize = function(){
 	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
 
@@ -70,7 +65,7 @@ SimpleSpeedo.prototype.update = function(streams){
     ctx.textAlign="center";
 
     ctx.fillStyle = "black";
-    ctx.fillText(pad100(speedUnits),100,30);
+    ctx.fillText(rSet(speedUnits, 3, "0"),100,30);
 
     //add border
     ctx.strokeRect(20,10,160,25);

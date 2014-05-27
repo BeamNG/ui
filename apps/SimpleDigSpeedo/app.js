@@ -1,10 +1,5 @@
 function SimpleDigSpeedo() {}
 
-function pad1k(num) {
-    var s = "0000" + num;
-    return s.substr(s.length-4);
-}
-
 SimpleDigSpeedo.prototype.initialize = function () {
     this.speedDiv = $('<div></div>').appendTo(this.rootElement).addClass('speedDiv');
     this.labelDiv = $('<div></div>').appendTo(this.rootElement).addClass('labelDiv');
@@ -35,6 +30,6 @@ SimpleDigSpeedo.prototype.update = function (streams) {
         speedUnits = toInt(3.6*speedMs);
     }
 
-    this.speedDiv.html(pad1k(speedUnits));
+    this.speedDiv.html(rSet(speedUnits, 4, "0"));
     this.labelDiv.html("Speed (" + this.persistance["Unit"] + ")");
 };

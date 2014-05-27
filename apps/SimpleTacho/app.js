@@ -1,17 +1,12 @@
 function SimpleTacho(){}
 
-function pad1k(num) {
-    var s = "0000" + num;
-    return s.substr(s.length-4);
-}
-
 SimpleTacho.prototype.initialize = function(){
-	this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
+    this.canvas = $('<canvas height="53px"></canvas>').appendTo(this.rootElement).addClass('canvas');
 
     this.labelDiv = $('<div></div>').appendTo(this.rootElement).addClass('labelDiv');
 
-	this.canvas.width = 200;
-	this.canvas.height = 53;
+    this.canvas.width = 200;
+    this.canvas.height = 53;
 
     this.loaded = false;
 };
@@ -25,7 +20,7 @@ SimpleTacho.prototype.update = function(streams){
 
     //start canvas stuff
     c = this.canvas[0];
-	ctx = c.getContext('2d');
+    ctx = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,200,65);
@@ -52,7 +47,7 @@ SimpleTacho.prototype.update = function(streams){
 
     //Add RPM value to bar
     ctx.fillStyle = "black";
-    ctx.fillText(pad1k(rpm),100,30);
+    ctx.fillText(rSet(rpm, 4, "0"),100,30);
 
     //add border
     ctx.strokeRect(20,10,160,25);
@@ -62,6 +57,6 @@ SimpleTacho.prototype.update = function(streams){
     ctx.fillText("0000",20,48);
     ctx.fillText(rpmMax,180,48);
 
-    //-Units
+    //Units
     this.labelDiv.html("Engine RPM");
 };
