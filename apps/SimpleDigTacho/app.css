@@ -3,13 +3,13 @@
     text-align:center;
     color: RGBA(0,0,0,0.5);
 }
-.app .SimpleDigTacho .rpmField
+.app .SimpleDigTacho .rpmDiv
 {
     font-size:35px;
     height:53px;
 }
 
-.app .SimpleDigTacho .unitField
+.app .SimpleDigTacho .labelDiv
 {
     font-size:10px;
     color: black;

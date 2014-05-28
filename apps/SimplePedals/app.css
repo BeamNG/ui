@@ -10,11 +10,11 @@
 {
 }
 
-.app .SimplePedals .unitField
+.app .SimplePedals .labelDiv
 {
 	font-size:10px;
 	color: black;
 	height:12px;
-	
+
 	line-height: 14px; /* Dont even ask it just works :| */
 }

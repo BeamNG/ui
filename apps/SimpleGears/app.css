@@ -4,26 +4,26 @@
     color: RGBA(0,0,0,0.5);
 }
 
-.app .SimpleGears .gearsField
+.app .SimpleGears .bigGearDiv
 {
     font-size:35px;
     height:38px;
 }
 
-.app .SimpleGears .gearnoField
+.app .SimpleGears .ltlGearDiv
 {
     font-size:14px;
     height:15px;
 }
 
-.app .SimpleGears .unitField
+.app .SimpleGears .labelDiv
 {
     font-size:10px;
     color: black;
     height:12px;
 }
 
-.app .SimpleGears .unitField:hover
+.app .SimpleGears .labelDiv:hover
 {
     background: RGBA(128,128,128,0.5);
 }

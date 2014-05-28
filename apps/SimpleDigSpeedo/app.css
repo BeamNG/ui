@@ -3,20 +3,20 @@
     text-align:center;
     color: RGBA(0,0,0,0.5);
 }
-.app .SimpleDigSpeedo .speedField
+.app .SimpleDigSpeedo .speedDiv
 {
     font-size:35px;
     height:53px;
 }
 
-.app .SimpleDigSpeedo .unitField
+.app .SimpleDigSpeedo .labelDiv
 {
     font-size:10px;
     color: black;
     height:12px;
 }
 
-.app .SimpleDigSpeedo .unitField:hover
+.app .SimpleDigSpeedo .labelDiv:hover
 {
     background: RGBA(128,128,128,0.5);
 }
