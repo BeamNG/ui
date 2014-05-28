@@ -10,10 +10,10 @@
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [100,65]
+       "initial" : [100,66]
       }
      },
-	
+
 	"data": {
 		"streams" : ["electrics"]
 	}
