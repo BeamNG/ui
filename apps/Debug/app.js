@@ -2,18 +2,15 @@ function Debug(){}
 
 Debug.prototype.initialize = function(){
 	$("<br><br>").appendTo(this.rootElement);
-	this.display = $("<span></span>").appendTo(this.rootElement);
+	this.display1 = $("<span></span>").appendTo(this.rootElement);
+	$("<br>").appendTo(this.rootElement);
+	this.display2 = $("<span></span>").appendTo(this.rootElement);
 };
 
 Debug.prototype.update = function(streams){
-	var position = this._widget.app("option","position");
-	var refPointOffset = this._widget.app("option","refPointOffset");
-	var referencePoint = this._widget.app("option","referencePoint");
-
-	var debugstr = "Position: ["+position[0]+","+position[1] + "]<br>";
-	debugstr += "referencePoint: ["+referencePoint[0]+","+referencePoint[1] + "]<br>";
-	debugstr += "refPointOffset: ["+refPointOffset[0]+","+refPointOffset[1] + "]";
-	this.display.html(debugstr);
+	var self = this;
+	callGameEngineFuncCallback("1+1", function(res){self.display1.html("Calculating 1+1 with Torquescript: "+res);});
+	callLuaFuncCallback("1+1", function(res){self.display2.html("Calculating 1+1 with Lua: "+res);});
 };
 
 Debug.prototype.resize = function(){
