@@ -7,6 +7,9 @@ var debugObjectData = false;
 
 var sparkPoints = {};
 
+var functionCallbacks = {};
+var functionCallbackCounter = 0;
+
 function oUpdate(v)
 {
 	objectData = v;
@@ -211,6 +214,33 @@ function callGameEngineFunc(func)
 	beamng.sendGameEngine(func + "();");
 }
 
+/*
+* WARNING: only works with primitive datatypes as returnvalues. Never try to call a function which return a list/object/...
+*/
+function callGameEngineFuncCallback(func, callback)
+{
+	functionCallbackCounter++;
+	functionCallbacks[functionCallbackCounter] = callback;
+	var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+', \'" @ strreplace('+func+',"\'","\\\\\'") @ "\')");';
+	console.log(commandString);
+	beamng.sendGameEngine(commandString);
+}
+
+
+function callLuaFuncCallback(func, callback)
+{
+	functionCallbackCounter++;
+	functionCallbacks[functionCallbackCounter] = callback;
+	var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+", ' .. encodeJson("+func+") ..')')";
+	beamng.sendActiveObjectLua(commandString);
+}
+
+function _fCallback(number, result)
+{
+	functionCallbacks[number](result);
+	functionCallbacks[number] = undefined;
+}
+
 function updateSingleValue(module, key, value)
 {
 	if(state[module] === undefined) {
@@ -280,6 +310,8 @@ function widgetEventHandler()
 	}
 	alert("control not bound: " + widgetName);
 }
+
+
 
 // ----ONLY FOR BROWSERTESTING---------------------------------------------------------------------------------------------------------
 function test()
