@@ -12,7 +12,7 @@ SimpleAGears.prototype.initialize = function () {
 SimpleAGears.prototype.update = function (streams) {
 
     //Get the values to work with, do rounding and stuff as needed
-    aGear = Math.round(streams["electrics"].gear_A*5);
+    aGear = Math.round(streams.electrics.gear_A*5);
 
     gearNames = ["P","R","N","D","2","1"];
 
