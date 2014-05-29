@@ -10,11 +10,11 @@
 {
 }
 
-.app .SimpleSteering .unitField
+.app .SimpleSteering .labelDiv
 {
 	font-size:10px;
 	color: black;
 	height:12px;
-	
+
 	line-height: 14px; /* Dont even ask it just works :| */
 }

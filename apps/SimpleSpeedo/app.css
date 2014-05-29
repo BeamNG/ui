@@ -6,19 +6,19 @@
     color: RGBA(0,0,0,0.5);
 }
 .app .SimpleSpeedo .canvas
-{  
+{
 }
 
-.app .SimpleSpeedo .unitField
+.app .SimpleSpeedo .labelDiv
 {
     font-size:10px;
     color: black;
     height:12px;
-    
+
     line-height: 14px; /* Dont even ask it just works :| */
 }
 
-.app .SimpleSpeedo .unitField:hover
+.app .SimpleSpeedo .labelDiv:hover
 {
     background: RGBA(128,128,128,0.5);
 }
