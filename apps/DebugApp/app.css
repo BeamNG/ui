@@ -1,10 +1,10 @@
-.app .Debug
+.app .DebugApp
 {
 	background: #444;
 	color: #ccc;
 	font-weight: bold;
 }
-.app .Debug .someOtherClass
+.app .DebugApp .someOtherClass
 {
 	background: blue;
 	color: white;
