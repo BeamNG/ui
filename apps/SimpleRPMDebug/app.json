@@ -1,6 +1,6 @@
 {
 	"info": {
-		"name" : "SimpleRPMDebug",
+		"name" : "RPM Debug",
 		"author": "Metalmuncher",
 		"version": "0.1",
 		"description": "App which shows current RPM in relation to specified values for idle, shiftdown, shiftup and maximum engine RPM."
@@ -12,7 +12,7 @@
        "initial" : [150,150]
       }
      },
-	
+
 	"data": {
 		"streams" : ["engineInfo"]
 	}

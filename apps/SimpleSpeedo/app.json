@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "SimpleSpeedo",
+		"name" : "Speedometer",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Displays speed from wheels if avaliable, falls back to airspeed. Click unit label to change units."
+		"description": "Displays speed from wheels if avaliable, falls back to airspeed. Click the unit label to swap between metric and imperial."
 	},
      "appearance": {
       "background" : "opaque-simple",

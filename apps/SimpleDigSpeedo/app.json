@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "Simple Digital Speedo",
+		"name" : "Digital Speedometer",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Simple digital speedometer. Click the units to swap between metric and imperial units."
+		"description": "Displays current speed in km/h or MPH. Click the unit label to swap between metric and imperial."
 	},
 
      "appearance": {

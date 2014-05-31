@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "SimpleGears",
+		"name" : "Gears",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Displays current manual or automatic gear. Click the label to swap Auto/Manual gearbox display."
+		"description": "Displays current manual or automatic gear. Click the label to swap Automatic and Manual gearbox display."
 	},
 
      "appearance": {

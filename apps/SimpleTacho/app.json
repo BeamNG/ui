@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "SimpleTacho",
+		"name" : "Tachometer",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Basic tacho."
+		"description": "Displays current engine RPM."
 	},
 
      "appearance": {

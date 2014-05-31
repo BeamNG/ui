@@ -1,9 +1,9 @@
 {
     "info": {
-        "name" : "SimpleAGears",
+        "name" : "Automatic Gears",
         "author": "Metalmuncher",
         "version": "0.1",
-        "description": "App that indicates current automatic gear."
+        "description": "Indicates the current automatic gear."
     },
 
      "appearance": {

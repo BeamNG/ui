@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "Simple Digital Tachometer",
+		"name" : "Digital Tachometer",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Simple digital tachometer."
+		"description": "Displays current engine RPM."
 	},
 
      "appearance": {
