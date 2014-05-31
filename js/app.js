@@ -273,8 +273,10 @@ $.widget("beamNG.appButton", {
 });
 
 $(document).ready(function() {
-	AppLoader.installedApps = ["Tacho","WheelsDebug", "Debug","NodeBeamDebug","EngineDebug","TorqueCurve","gForcesDebug","SimpleTacho","SimpleSpeedo","SimpleSteering","SimplePedals","SimpleDash","SimpleAGears","SimpleNBDebug","SimpleEngineDebug","SimpleRPMDebug","SimpleGears","SimpleDigSpeedo","SimpleDigTacho","WeightDistribution"]; // Call a beamNG function later
-	AppLoader.initialize();
+	callGameEngineFuncCallback("getAppList()", function(res){
+		AppLoader.installedApps = res;
+		AppLoader.initialize();
+	});
 });
 
 
