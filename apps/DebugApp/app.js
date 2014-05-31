@@ -1,6 +1,6 @@
-function Debug(){}
+function DebugApp(){}
 
-Debug.prototype.initialize = function(){
+DebugApp.prototype.initialize = function(){
 	$("<br><br>").appendTo(this.rootElement);
 	this.display1 = $("<span></span>").appendTo(this.rootElement);
 	$("<br><br>").appendTo(this.rootElement);
@@ -14,10 +14,10 @@ Debug.prototype.initialize = function(){
 	callGameEngineFuncCallback("getVehicleList()", function(res){self.display3.html("VehicleList: "+JSON.stringify(res));});
 };
 
-Debug.prototype.update = function(streams){
+DebugApp.prototype.update = function(streams){
 	//callLuaFuncCallback("1+1", function(res){self.display2.html("Calculating 1+1 with Lua: "+res);});
 };
 
-Debug.prototype.resize = function(){
+DebugApp.prototype.resize = function(){
 	this.log("Debug resize");
 };
