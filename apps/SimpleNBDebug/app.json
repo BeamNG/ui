@@ -1,9 +1,9 @@
 {
 	"info": {
-		"name" : "SimpleNBDebug",
+		"name" : "Node and Beam Debug",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "App with stats on Nodes/Beams."
+		"description": "Displays node and beam statistics."
 	},
 
 	"appearance": {
@@ -12,7 +12,7 @@
 			"initial" : [250,"auto"]
 		}
 	},
-	
+
 	"data": {
 		"streams" : ["stats"]
 	}

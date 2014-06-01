@@ -1,20 +1,16 @@
 .app .SimplePedals
 {
-	line-height: 0px;
-	border: none;
-	text-align:center;
-	color: RGBA(0,0,0,0.5);
-}
-
-.app .SimplePedals .canvas
-{
+    line-height: 0;
+    border: none;
+    text-align:center;
+    color: RGBA(0,0,0,0.5);
 }
 
 .app .SimplePedals .labelDiv
 {
-	font-size:10px;
-	color: black;
-	height:12px;
+    font-size:10px;
+    color: black;
+    height:13px;
 
-	line-height: 14px; /* Dont even ask it just works :| */
+    line-height: 14px; /* Dont even ask it just works :| */
 }

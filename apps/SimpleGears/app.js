@@ -12,26 +12,26 @@ SimpleGears.prototype.initialize = function () {
     this.labelDiv.click(function(){self.toggleView();});
 
     //If no unit was previously selected, default to Auto
-    if ((this.persistance["View"] != "Manual") && (this.persistance["Unit"] != "Auto")) this.persistance["View"] = "Auto";
+    if ((this.persistance.View != "Manual") && (this.persistance.View != "Auto")) this.persistance.View = "Auto";
 };
 
 SimpleGears.prototype.toggleView = function(){
     //Toggle between MPH and km/h, save the option to persistance system
-    this.persistance["View"] = this.persistance["View"] === 'Manual' ? 'Auto' : 'Manual';
+    this.persistance.View = this.persistance.View === 'Manual' ? 'Auto' : 'Manual';
     this.save();
 };
 
 SimpleGears.prototype.update = function (streams) {
 
     //Get the values to work with, do rounding and stuff as needed TODO: Get if car is manual or Auto Autoally when this is exposed to the ui system
-	aGear = Math.round(streams["electrics"].gear_A*5);
-    mGear = streams["engineInfo"][5];
-    maxFGears = streams["engineInfo"][6];
-    maxRGears = streams["engineInfo"][7];
+	aGear = Math.round(streams.electrics.gear_A*5);
+    mGear = streams.engineInfo[5];
+    maxFGears = streams.engineInfo[6];
+    maxRGears = streams.engineInfo[7];
 
     gearNames = ["P","R","N","D","2","1"];
 
-    if (this.persistance["View"] === "Manual"){
+    if (this.persistance.View === "Manual"){
 
         //get the sign of the current manual gear
         sign = mGear?mGear<0?-1:1:0;
@@ -66,5 +66,5 @@ SimpleGears.prototype.update = function (streams) {
         this.ltlGearDiv.html("");
     }
 
-    this.labelDiv.html("Gears (" + this.persistance["View"] + ")");
+    this.labelDiv.html("Gears (" + this.persistance.View + ")");
 };

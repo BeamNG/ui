@@ -1,19 +1,19 @@
 {
 	"info": {
-		"name" : "SimpleTacho",
+		"name" : "Tachometer",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Basic tacho."
+		"description": "Displays current engine RPM."
 	},
 
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [200,65]
+       "initial" : [200,66]
       }
      },
-	
+
 	"data": {
 		"streams" : ["engineInfo"]
 	}

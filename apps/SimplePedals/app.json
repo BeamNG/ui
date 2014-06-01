@@ -1,19 +1,19 @@
 {
 	"info": {
-		"name" : "SimplePedals",
+		"name" : "Pedals and Axis",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "App that shows throttle, brake, clutch, parkingbrake axis positions."
+		"description": "Shows current clutch, brake, throttle and parkingbrake axis positions."
 	},
 
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [100,65]
+       "initial" : [100,66]
       }
      },
-	
+
 	"data": {
 		"streams" : ["electrics"]
 	}
