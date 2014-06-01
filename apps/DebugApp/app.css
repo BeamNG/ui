@@ -1,8 +1,6 @@
 .app .DebugApp
 {
-	background: #444;
-	color: #ccc;
-	font-weight: bold;
+	overflow: auto;
 }
 .app .DebugApp .someOtherClass
 {
