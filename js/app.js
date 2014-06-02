@@ -112,7 +112,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		try{
 			this.app.initialize();
 		}catch(e){
-			this.log("An Error occured while trying to call "+this.app.name+".initialize() : "+e.toString()+". Killing App.");
+			this.log("An Error occured while trying to call "+this.app.name+".initialize() : "+e.stack+". Killing App.");
 			var self = this;
 			setTimeout(function(){self.close();},0);
 		}
@@ -163,7 +163,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			try{
 				this.app.destroy();
 			}catch(e){
-				this.log("An Error occured while trying to call "+this.app.name+".destroy() : "+e.toString());
+				this.log("An Error occured while trying to call "+this.app.name+".destroy() : "+e.stack);
 			}
 		}
 
@@ -177,7 +177,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 			try{
 				this.app.resize();
 			}catch(e){
-				this.log("An Error occured while trying to call "+this.app.name+".resize() : "+e.toString());
+				this.log("An Error occured while trying to call "+this.app.name+".resize() : "+e.stack);
 			}
 		}
 	},
@@ -344,7 +344,7 @@ var AppEngine = {
 					try{
 						app.update(streamList);
 					}catch(e){
-						this.log("An Error occured while trying to call "+app.name+".update() : "+e.toString());
+						this.log("An Error occured while trying to call "+app.name+".update() : "+e.stack);
 					}
 				}
 			}
