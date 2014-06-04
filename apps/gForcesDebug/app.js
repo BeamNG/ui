@@ -54,7 +54,7 @@ gForcesDebug.prototype.update = function(streams){
 
 	ctx.fillStyle = "red";
 	ctx.beginPath();
-	ctx.arc(gForces.gx*50,gForces.gy*50,5,0,2*Math.PI,false);
+	ctx.arc(gForces.gx*50,gForces.gy*-50,5,0,2*Math.PI,false);
 	ctx.fill();
 
 	ctx.fillStyle = "green";
