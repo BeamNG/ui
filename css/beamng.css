@@ -143,3 +143,15 @@ html,body{
 .ui-mobile .ui-dialog .ui-slider-track {
 	margin : 0;
 }
+
+kbd {
+	border:1px solid gray;
+	color: black;
+	padding:1px 5px;
+	margin:0 5px;
+	font-size:0.8em;
+	text-transform:uppercase;
+	box-shadow:1px 0 1px 0 #fff, 0 2px 0 2px lightGray, 0 2px 0 3px #333;
+	border-radius:3px;
+	background:-webkit-linear-gradient(left, #ffffff 0%, #e2e2e2 50%);
+}
