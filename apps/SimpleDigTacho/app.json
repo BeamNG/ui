@@ -1,19 +1,19 @@
 {
 	"info": {
-		"name" : "Simple Digital Tachometer",
+		"name" : "Digital Tachometer",
 		"author": "Metalmuncher",
 		"version": "0.1",
-		"description": "Simple digital tachometer."
+		"description": "Displays current engine RPM."
 	},
 
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [100,65]
+       "initial" : [100,66]
       }
      },
-	
+
 	"data": {
 		"streams" : ["engineInfo"]
 	}

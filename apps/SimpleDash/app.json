@@ -1,20 +1,20 @@
 {
-	"info": {
-		"name" : "SimpleDash",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "App with basic dashboard indicators."
-	},
+    "info": {
+        "name" : "Dashboard Indicators",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Displays typical dashboard indicators, including fuel, parking brake, indicators, ABS and headlights status."
+    },
 
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
       "size" : {
-       "initial" : [200,30]
+       "initial" : [200,33]
       }
      },
-	
-	"data": {
-		"streams" : ["electrics"]
-	}
+
+    "data": {
+        "streams" : ["electrics"]
+    }
 }

@@ -33,3 +33,18 @@ function stacktrace() {
 	stack.splice(0,2);
     return "STACKTRACE\n" + stack.join('\n');
 }
+
+function rSet(toModify, newLength, padChar) {
+    var s = "";
+    if(!padChar) {
+        var padChar = "0";
+    }
+    if(!newLength) {
+        var newLength = 4;
+    }
+    for (var i=0; i<newLength; i++) {
+        s += padChar;
+    }
+    s += toModify;
+    return s.substr(s.length-newLength);
+};
