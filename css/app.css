@@ -1,3 +1,5 @@
+html, body {position: relative}
+
 /* custom jquery ui dialog style */
 
 .ui-dialog .ui-dialog-titlebar
