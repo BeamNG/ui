@@ -103,7 +103,7 @@ function streamRemove(streamName)
 }
 
 
-// listens on the collapsible events
+// listens on the collapsible events / unused at the moment
 function collapsibleStreamEventHandler(name, streamName)
 {
 	if(streamName === undefined) streamName = name;
@@ -134,13 +134,26 @@ function updateGameEngineValue(key, value)
 	beamng.sendGameEngine(key + "=" + value + ";");
 }
 
+function updateSingleValue(module, key, value)
+{
+	if(state[module] === undefined) {
+		state[module] = {};
+	}
+
+	state[module][key] = value;
+
+	state.changes.push(module);
+
+	sendObjectState();
+}
+
 function callGameEngineFunc(func)
 {
 	beamng.sendGameEngine(func + "();");
 }
 
 /*
-* WARNING: only works with primitive datatypes as returnvalues. Never try to call a function which return a list/object/...
+* WARNING: only works with primitive datatypes as returnvalues OR with functions that return json. Never try to call a function which return a list/object/...
 */
 function callGameEngineFuncCallback(func, callback)
 {
@@ -163,82 +176,4 @@ function _fCallback(number, result)
 {
 	functionCallbacks[number](JSON.parse(result));
 	functionCallbacks[number] = undefined;
-}
-
-function updateSingleValue(module, key, value)
-{
-	if(state[module] === undefined) {
-		state[module] = {};
-	}
-
-	state[module][key] = value;
-
-	state.changes.push(module);
-
-	sendObjectState();
-}
-
-// this function registers the controls and forwards changes to lua
-function widgetEventHandler()
-{
-	// default args normally: func, widgetName, varname, ...
-	var func = arguments[0];
-	var widgetName = arguments[1];
-	var funcArgs = Array.prototype.slice.call(arguments, 2);
-	var c = $('#'+widgetName);
-	var tagName = c.prop("tagName");
-	if(tagName == 'INPUT') {
-		var ctrlType = c.attr('data-type') || c.attr('type');
-		if(ctrlType == 'checkbox') {
-			c.change(function(e) {
-				var funcArgsNow = funcArgs.slice(0);
-				funcArgsNow.push($(this).is(':checked'));
-				return func.apply(this, funcArgsNow);
-			});
-			return true;
-		} else if(ctrlType == 'range') {
-			c.change(function(e) {
-				var funcArgsNow = funcArgs.slice(0);
-				funcArgsNow.push($(this).val());
-				return func.apply(this, funcArgsNow);
-			});
-			return true;
-		} else if(ctrlType == 'button') {
-			c.click(function(e) {
-				return func.apply(this, funcArgs);
-			});
-			return true;
-		}
-	} else if(tagName == 'SELECT') {
-		c.change(function(e) {
-			var funcArgsNow = funcArgs.slice(0);
-			funcArgsNow.push($(this).val());
-			return func.apply(this, funcArgsNow);
-		});
-		return true;
-	} else if(tagName == 'FIELDSET') {
-		c = $('input[name='+widgetName+']');
-		var ctrlType = c.attr('data-type') || c.attr('type');
-		if(ctrlType == 'radio') {
-			c.change(function(e) {
-				var ctrl = $( 'input[name='+widgetName+']:checked' );
-				var v = ctrl.val();
-				if(ctrl.attr('value-is-numeric') !== undefined);
-					v = +v;
-				var funcArgsNow = funcArgs.slice(0);
-				funcArgsNow.push(v);
-				return func.apply(this, funcArgsNow);
-			});
-			return true;
-		}
-	}
-	alert("control not bound: " + widgetName);
-}
-
-
-
-// ----ONLY FOR BROWSERTESTING---------------------------------------------------------------------------------------------------------
-function test()
-{
- oUpdate({"electrics":{"lowfuel":0,"american_taillight_L":0,"watertemp":0.4,"brake_input":0,"oiltemp":0.3,"parking":0,"driveshaft":98.314238955321,"signal_L":0,"signal_R":0,"reverse":0,"blinkPulse":0,"parkingbrake_input":0,"steering":-0,"clutch_input":0,"parkingbrake":0,"throttle_input":0,"lowhighbeam":0,"abs":0,"lowpressure":0,"rpm":537.72845438927,"checkengine":0,"gear_M":6.7532711376141e-035,"clutch":0,"gear_A":0.4,"american_taillight_R":0,"airspeed":1.2411048868436,"steering_input":7.61292,"altitude":0.35428247874325,"rpmspin":205.77032002941,"brake":0,"fuel":0.99887505956034,"lights":0,"axle":98.314238955321,"turnsignal":0,"throttle":0}, "vehicleInfo":[[["front",4,1,3,345,4,1],["back",4,1,3,345,4,1]],[500,7000,4000,1000,2456,3,5,1,43563,345,49,3,2,{},-9.81]]});
 }

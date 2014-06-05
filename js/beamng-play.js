@@ -82,3 +82,60 @@ $(document).ready(function() {
 
 	setTimeout(updateSparcLines, 10);
 });
+
+// this function registers the controls and forwards changes to lua
+function widgetEventHandler()
+{
+	// default args normally: func, widgetName, varname, ...
+	var func = arguments[0];
+	var widgetName = arguments[1];
+	var funcArgs = Array.prototype.slice.call(arguments, 2);
+	var c = $('#'+widgetName);
+	var tagName = c.prop("tagName");
+	if(tagName == 'INPUT') {
+		var ctrlType = c.attr('data-type') || c.attr('type');
+		if(ctrlType == 'checkbox') {
+			c.change(function(e) {
+				var funcArgsNow = funcArgs.slice(0);
+				funcArgsNow.push($(this).is(':checked'));
+				return func.apply(this, funcArgsNow);
+			});
+			return true;
+		} else if(ctrlType == 'range') {
+			c.change(function(e) {
+				var funcArgsNow = funcArgs.slice(0);
+				funcArgsNow.push($(this).val());
+				return func.apply(this, funcArgsNow);
+			});
+			return true;
+		} else if(ctrlType == 'button') {
+			c.click(function(e) {
+				return func.apply(this, funcArgs);
+			});
+			return true;
+		}
+	} else if(tagName == 'SELECT') {
+		c.change(function(e) {
+			var funcArgsNow = funcArgs.slice(0);
+			funcArgsNow.push($(this).val());
+			return func.apply(this, funcArgsNow);
+		});
+		return true;
+	} else if(tagName == 'FIELDSET') {
+		c = $('input[name='+widgetName+']');
+		var ctrlType = c.attr('data-type') || c.attr('type');
+		if(ctrlType == 'radio') {
+			c.change(function(e) {
+				var ctrl = $( 'input[name='+widgetName+']:checked' );
+				var v = ctrl.val();
+				if(ctrl.attr('value-is-numeric') !== undefined);
+					v = +v;
+				var funcArgsNow = funcArgs.slice(0);
+				funcArgsNow.push(v);
+				return func.apply(this, funcArgsNow);
+			});
+			return true;
+		}
+	}
+	alert("control not bound: " + widgetName);
+}
