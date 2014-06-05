@@ -22,7 +22,7 @@ function oUpdate(v)
 function sendObjectState()
 {
 	cmd = "guiUpdate(" + serializeToLua(state) + ")";
-	//alert(cmd);
+	//console.log(cmd);
 	if(typeof beamng === 'object') {
 		beamng.sendActiveObjectLua(cmd);
 	} else {
@@ -32,6 +32,16 @@ function sendObjectState()
 
 	state.changes = [];
 	return true;
+}
+
+function sendCompleteObjectState()
+{
+	// if we want to send the full state, put everything into the changelist :)
+	$.each(state, function(k, v) {
+		if(k != 'changes')
+			state.changes.push(k);
+	});
+	return sendObjectState();
 }
 
 function serializeToLua(obj)
