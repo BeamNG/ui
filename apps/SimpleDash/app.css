@@ -1,0 +1,35 @@
+.app .SimpleDash
+{
+}
+
+.app .SimpleDash .canvas
+{
+    position:       absolute;
+    pointer-events: none; /* allows us to click through the canvas element */
+}
+
+.app .SimpleDash .clickable, .nonclickable
+{
+    width:          33px;
+    height:         33px;
+}
+
+.app .SimpleDash .clickable-left, .nonclickable-left
+{
+    float:          left;
+}
+
+.app .SimpleDash .clickable-right, .nonclickable-right
+{
+    float:          right;
+}
+
+.app .SimpleDash .clickable:hover
+{
+    background:     RGBA(128,128,128,0.5);
+}
+
+.app .SimpleDash .clickable:active
+{
+    background:     RGBA(128,128,128,0.9);
+}
