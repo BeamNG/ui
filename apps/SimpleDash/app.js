@@ -43,7 +43,7 @@ SimpleDash.prototype.inputhandlerthing = function(switchvar){
             beamng.sendActiveObjectLua("electrics.toggle_lights()");
             break;
         case "!":
-            // beamng.sendGameEngine("parkingbrake_toggle");
+            beamng.sendActiveObjectLua("input.toggleEvent(\"axisy2\", " + 1 + ", 0)");
             break;
     }
 };
