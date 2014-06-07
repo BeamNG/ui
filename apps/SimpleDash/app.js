@@ -3,9 +3,6 @@ function SimpleDash() {}
 SimpleDash.prototype.initialize = function () {
     this.canvas = $('<canvas></canvas>').appendTo(this.rootElement).addClass('canvas');
 
-    this.canvas.width = 33;
-    this.canvas.height = 33;
-
     this.fuelDiv = $('<div></div>').appendTo(this.rootElement).addClass('nonclickable').addClass('nonclickable-left');
     this.hBrake = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
     this.leftBlink = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
