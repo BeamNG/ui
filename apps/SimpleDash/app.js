@@ -6,20 +6,20 @@ SimpleDash.prototype.initialize = function () {
     this.canvas.width = 33;
     this.canvas.height = 33;
 
-    this.fuelDiv = $('<div></div>').appendTo(this.rootElement).addClass('fuelDiv');
-    this.hBrake = $('<div></div>').appendTo(this.rootElement).addClass('hBrake');
-    this.leftBlink = $('<div></div>').appendTo(this.rootElement).addClass('leftBlink');
+    this.fuelDiv = $('<div></div>').appendTo(this.rootElement).addClass('nonclickable').addClass('nonclickable-left');
+    this.hBrake = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
+    this.leftBlink = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
 
-    //do this backwards because float
-    this.lightsDiv = $('<div></div>').appendTo(this.rootElement).addClass('lightsDiv');
-    this.absDiv = $('<div></div>').appendTo(this.rootElement).addClass('absDiv');
-    this.rightBlink = $('<div></div>').appendTo(this.rootElement).addClass('rightBlink');
+    //do this backwards because float right
+    this.lightsDiv = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-right');
+    this.absDiv = $('<div></div>').appendTo(this.rootElement).addClass('nonclickable').addClass('nonclickable-right');
+    this.rightBlink = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-right');
 
     var self = this;
-    this.hBrake.click(function(){self.testFunction("!");});
-    this.leftBlink.click(function(){self.testFunction("<");});
-    this.rightBlink.click(function(){self.testFunction(">");});
-    this.lightsDiv.click(function(){self.testFunction("li");});
+    this.hBrake.click(function(){self.inputhandlerthing("!");});
+    this.leftBlink.click(function(){self.inputhandlerthing("<");});
+    this.rightBlink.click(function(){self.inputhandlerthing(">");});
+    this.lightsDiv.click(function(){self.inputhandlerthing("li");});
 
     this.fuelDiv.html('<svg><path d="m 11.599682,3.99991 c -0.81258,0 -1.4668,0.65976 -1.4668,1.4793 v 21.302 H 9.5003424 c -0.209,0 -0.375,0.168 -0.375,0.379 v 1.4608 c 0,0.21121 0.16643,0.37908 0.37586,0.37908 H 23.288202 c 0.20943,0 0.37586,-0.16787 0.37586,-0.37908 v -1.4608 c 0,-0.21121 -0.16643,-0.37905 -0.37586,-0.37905 h -0.63254 v -11.918 c 0.18658,0.0074 0.45592,0.02843 0.75171,0.12944 0.22354,0.07632 0.39653,0.18786 0.5042,0.31435 0.10767,0.12649 0.18296,0.26899 0.17418,0.6102 -0.05394,2.0943 0.06417,6.703 0.06417,6.703 v 0.04615 c 0,0 0.05889,0.82642 0.55003,1.6457 0.49114,0.81929 1.5523,1.6715 3.126,1.5902 1.1613,-0.05994 2.2656,-0.49455 2.9977,-1.3591 0.73205,-0.86452 1.004,-2.1342 0.6417,-3.5503 -0.31598,-1.2349 -0.64292,-2.4561 -0.88922,-3.4301 -0.12315,-0.48698 -0.23285,-0.90867 -0.30252,-1.2389 -0.06967,-0.33024 -0.09145,-0.59958 -0.09167,-0.60095 -0.14062,-0.85825 -0.24212,-1.2011 -0.48984,-3.6469 -0.05622,-0.32513 0.62325,-0.31752 0.88941,-0.5302 0.268,-0.2115 0.371,-0.6078 0.244,-0.9252 -0.521,-1.3256 -1.21,-2.8088 -1.962,-3.689 -1.489,-1.7425 -2.095,-2.3451 -2.723,-2.6442 -0.157,-0.0748 -0.343,-0.1546 -0.614,-0.1202 -0.27,0.0345 -0.571,0.2662 -0.678,0.4715 -0.21375,0.41067 -0.09167,0.63794 -0.09167,0.63794 l 0.13372,0.26298 0.17797,0.23628 c 0.33761,0.25099 1.2085,1.5036 1.8334,2.7737 0.62499,1.27 1.103,2.714 1.1367,3.0603 0.25898,2.6607 0.35607,3.1983 0.4342,3.7549 0.04203,0.29946 0.17568,0.92503 0.25334,1.2932 0.07766,0.36814 0.18601,0.80662 0.31168,1.3036 0.25135,0.99399 0.57659,2.2083 0.88922,3.4301 0.26626,1.0406 0.07886,1.6668 -0.30252,2.1172 -0.38138,0.45038 -1.0418,0.75234 -1.8701,0.79512 -1.0465,0.05402 -1.4169,-0.34819 -1.6959,-0.81361 -0.279,-0.46541 -0.33002,-0.96154 -0.33002,-0.96154 -0.0018,-0.07669 -0.10541,-4.6163 -0.055,-6.5736 0.0174,-0.67577 -0.20523,-1.2761 -0.5592,-1.6919 -0.35397,-0.41586 -0.79583,-0.64757 -1.2009,-0.78587 -0.50094,-0.17104 -0.96187,-0.2064 -1.2559,-0.21265 V 5.4801 c 0,-0.81952 -0.65417,-1.4793 -1.4668,-1.4793 z m 1.0084,1.8861 7.5721,0 c 0.37959,0 0.67837,0.31058 0.67837,0.69342 v 5.4179 c 0,0.38283 -0.29878,0.69342 -0.67837,0.69342 h -7.5721 c -0.37959,0 -0.67837,-0.31058 -0.67837,-0.69342 v -5.4179 c 0,-0.38283 0.29878,-0.69342 0.67837,-0.69342 z" id="fuel" style="text-indent:0;text-align:start;text-transform:none;direction:ltr;block-progression:tb;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:0.5;enable-background:accumulate" /> <rect width="5" height="25" x="1.8751144" y="4" id="fuelbar" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:0.5;stroke-dasharray:none" /></svg>');
 
@@ -34,7 +34,7 @@ SimpleDash.prototype.initialize = function () {
     this.lightsDiv.html('<svg><path d="m 1.4999998,7.1896556 0,2.0689658 11.2823302,0 c 0.16971,-0.7605906 0.41179,-1.4416821 0.7112,-2.0689658 l -11.9935302,0 z m 0,4.1379304 0,2.068965 10.8297402,0 c 0.028,-0.710575 0.0616,-1.411741 0.12931,-2.068965 l -10.9590502,0 z m 0,4.137931 0,2.068965 10.7650902,0 c -0.003,-0.348002 0,-0.679101 0,-1.034482 0,-0.355381 -0.003,-0.686481 0,-1.034483 l -10.7650902,0 z m 0,4.137931 0,2.068965 10.9590502,0 c -0.0678,-0.657224 -0.10127,-1.358389 -0.12931,-2.068965 l -10.8297402,0 z m 0,4.137931 0,2.068965 11.9935302,0 c -0.29941,-0.627283 -0.54149,-1.308375 -0.7112,-2.068965 l -11.2823302,0 z M 20.12069,5.1206901 c -3.13618,0 -5.16973,1.4881044 -6.07759,3.6530173 C 13.13525,10.93862 13.1056,13.626243 13.1056,16.5 c 0,2.873758 0.0297,5.56138 0.9375,7.726293 0.90786,2.164913 2.94141,3.653017 6.07759,3.653017 C 26.39306,27.87931 31.5,22.772368 31.5,16.5 31.5,10.227633 26.39306,5.1206901 20.12069,5.1206901 z m 0,2.0689655 c 5.15422,0 9.31034,4.1561314 9.31034,9.3103444 0,5.154214 -4.15612,9.310344 -9.31034,9.310344 -2.5771,0 -3.50803,-0.813063 -4.17026,-2.392241 -0.66222,-1.579178 -0.77586,-4.07857 -0.77586,-6.918103 0,-2.839533 0.11364,-5.338925 0.77586,-6.9181031 0.66223,-1.5791783 1.59316,-2.3922413 4.17026,-2.3922413 z" id="lights" style="fill-opacity:0.5"/></svg>');
 };
 
-SimpleDash.prototype.testFunction = function(switchvar){
+SimpleDash.prototype.inputhandlerthing = function(switchvar){
     switch(switchvar){
         case "<":
             beamng.sendActiveObjectLua("electrics.toggle_left_signal()");
@@ -46,7 +46,7 @@ SimpleDash.prototype.testFunction = function(switchvar){
             beamng.sendActiveObjectLua("electrics.toggle_lights()");
             break;
         case "!":
-            beamng.sendGameEngine("parkingbrake_toggle");
+            // beamng.sendGameEngine("parkingbrake_toggle");
             break;
     }
 };

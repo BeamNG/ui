@@ -8,84 +8,28 @@
     z-index: -1;
 }
 
-.app .SimpleDash .fuelDiv
+.app .SimpleDash .clickable, .nonclickable
 {
     width: 33px;
     height: 33px;
+}
+
+.app .SimpleDash .clickable-left, .nonclickable-left
+{
     float: left;
 }
 
-.app .SimpleDash .hBrake
+.app .SimpleDash .clickable-right, .nonclickable-right
 {
-    width: 33px;
-    height: 33px;
-    float: left;
-}
-
-.app .SimpleDash .hBrake:hover
-{
-    background: RGBA(128,128,128,0.5);
-}
-
-.app .SimpleDash .hBrake:active
-{
-    background: RGBA(128,128,128,0.9);
-}
-
-.app .SimpleDash .leftBlink
-{
-    width: 33px;
-    height: 33px;
-    float: left;
-}
-
-.app .SimpleDash .leftBlink:hover
-{
-    background: RGBA(128,128,128,0.5);
-}
-
-.app .SimpleDash .leftBlink:active
-{
-    background: RGBA(128,128,128,0.9);
-}
-
-.app .SimpleDash .rightBlink
-{
-    width: 33px;
-    height: 33px;
     float: right;
 }
 
-.app .SimpleDash .rightBlink:hover
+.app .SimpleDash .clickable:hover
 {
     background: RGBA(128,128,128,0.5);
 }
 
-.app .SimpleDash .rightBlink:active
-{
-    background: RGBA(128,128,128,0.9);
-}
-
-.app .SimpleDash .absDiv
-{
-    width: 33px;
-    height: 33px;
-    float: right;
-}
-
-.app .SimpleDash .lightsDiv
-{
-    width: 33px;
-    height: 33px;
-    float: right;
-}
-
-.app .SimpleDash .lightsDiv:hover
-{
-    background: RGBA(128,128,128,0.5);
-}
-
-.app .SimpleDash .lightsDiv:active
+.app .SimpleDash .clickable:active
 {
     background: RGBA(128,128,128,0.9);
 }
