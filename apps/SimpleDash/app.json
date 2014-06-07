@@ -3,7 +3,7 @@
         "name" : "Dashboard Indicators",
         "author": "Metalmuncher",
         "version": "0.1",
-        "description": "Displays typical dashboard indicators, including fuel, parking brake, indicators, ABS and headlights status."
+        "description": "Displays typical dashboard indicators, including fuel, parking brake, indicators, ABS and headlights status. Clicking the parking brake/indicators/headlights indicators will toggle them."
     },
 
      "appearance": {
