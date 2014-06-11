@@ -47,4 +47,21 @@ function rSet(toModify, newLength, padChar) {
     }
     s += toModify;
     return s.substr(s.length-newLength);
-};
+}
+
+function randomNumbers(size){
+	var perm = [];
+	var i, j, ex;
+	for (i = 0; i < size; i++) {
+		perm[i] = i;
+	}
+
+	for (i = size-1; i >= 0; i--) {
+		j = (Math.random()*i) | 0;
+		ex = perm[j];
+		perm[j] = perm[i];
+		perm[i] = ex;
+	}
+
+	return perm;
+}
