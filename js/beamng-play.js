@@ -52,6 +52,9 @@ $(document).ready(function() {
 	widgetEventHandler(updateSingleValue, 'skeleton_debug_options', 'bdebug', 'skeleton_mode');
 	widgetEventHandler(updateSingleValue, 'nodeinfo_debug_options', 'bdebug', 'node_info_mode');
 	widgetEventHandler(updateSingleValue, 'debug_collision_tri', 'bdebug', 'coltrimode');
+	widgetEventHandler(updateSingleValue, 'debug_static_collision', 'bdebug', 'static_collision');
+	widgetEventHandler(updateSingleValue, 'debug_terrain', 'bdebug', 'terrain_debug');
+
 	widgetEventHandler(updateSingleValue, 'debug_mesh_visibility', 'bdebug', 'mesh_visibility');
 	widgetEventHandler(updateSingleValue, 'option_simspeed', 'bullettime', 'wantedSimulationSpeed');
 
