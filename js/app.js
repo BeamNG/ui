@@ -335,20 +335,28 @@ var AppEngine = {
 				var app = this.runningApps[this.preset][j];
 				var streamList = {};
 				var streams = this.appSettings[app.name].data.streams;
+				var streamsReady = true;
 				for(var i=0; i<streams.length; i++){
 					var stream = streams[i];
-						if(state.streams[stream] > 0){
-							streamList[stream] = data[stream];
-						}
+					if(state.streams[stream] > 0 && data[stream] !== undefined){
+						streamList[stream] = data[stream];
+					}else{
+						streamsReady = false;
 					}
+				}
+
+				if(streamsReady){
 					try{
 						app.update(streamList);
 					}catch(e){
 						this.log("An Error occured while trying to call "+app.name+".update() : "+e.stack);
-					}
+					}				
+				}else{
+					this.log("A least one stream of "+app.name+" isn't not ready or non existing, no update.");
 				}
 			}
-		},
+		}
+	},
 
 	registerApp : function(app){
 		this.runningApps[this.preset].push(app);
