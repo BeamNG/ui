@@ -1,8 +1,27 @@
 function WheelsDebug(){}
 
 WheelsDebug.prototype.initialize = function(){
+	if(this.persistance.Unit === undefined){
+		this.persistance.Unit = "metric";
+		this.save();
+	}
+
+	this.data = {
+		"factor":{
+			"metric": 3.6,
+			"imperial": 2.2369
+		},
+		"unitname":{
+			"metric": "km/h",
+			"imperial": "mph"
+		}
+	};
+
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.canvas.width=220;
+
+	var self = this;
+	this.canvas.click(function(event) {self.toggleUnit();});
 };
 
 WheelsDebug.prototype.update = function(streams){
@@ -37,8 +56,7 @@ WheelsDebug.prototype.update = function(streams){
 		filledArc(ctx, x, y, r, 1, 1, '#444444');
 
 		var wheelSpeed = w[3] * w[1] * w[2];
-		ctx.fillText(Math.floor(wheelSpeed * 3.6) + ' kph'    , x, y + fontSize + 3);
-		ctx.fillText(Math.floor(wheelSpeed * 2.23694) + ' mph', x, y + 2 * (fontSize + 3));
+		ctx.fillText(Math.floor(wheelSpeed * this.data.factor[this.persistance.Unit]) + ' '+this.data.unitname[this.persistance.Unit]    , x, y + fontSize + 3);
 		filledArc(ctx, x, y, r - 1, rs, wheelSpeed/33, 'rgb(0,128,128)');
 
 		filledArc(ctx, x, y, r - 1 - rs, rs, w[5]/10 , 'rgb(128,128,0)');
@@ -66,4 +84,10 @@ WheelsDebug.prototype.update = function(streams){
 		c.height = y;
 	}
 
+};
+
+WheelsDebug.prototype.toggleUnit = function(){
+    //Toggle between MPH and km/h, save the option to persistance system
+    this.persistance.Unit = this.persistance.Unit === 'imperial' ? 'metric' : 'imperial';
+    this.save();
 };

@@ -3,6 +3,20 @@ function WeightDistribution(){}
 WeightDistribution.prototype.initialize = function(){
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.canvas.width=220;
+
+		this.data = {
+		"factor":{
+			"metric": 1,
+			"imperial": 2.2
+		},
+		"unitname":{
+			"metric": "kg",
+			"imperial": "lbs"
+		}
+	};
+
+	var self = this;
+	this.canvas.click(function(event) {self.toggleUnit();});
 };
 
 WeightDistribution.prototype.update = function(streams){
@@ -53,7 +67,7 @@ WeightDistribution.prototype.update = function(streams){
 		ctx.fillText(w[0], x, y);
 		filledArc(ctx, x, y, r, 1, 1, '#444444');
 
-		ctx.fillText(Math.round(downForce / 9.81) + ' kg'    , x, y + fontSize + 3);
+		ctx.fillText(Math.round((downForce / 9.81) *this.data.factor[this.persistance.Unit]) + ' ' + this.data.unitname[this.persistance.Unit]    , x, y + fontSize + 3);
 		ctx.fillText(Math.round(downForce ) + ' N', x, y + 2 * (fontSize + 3));
 
 
@@ -70,4 +84,10 @@ WeightDistribution.prototype.update = function(streams){
 		c.height = y;
 	}
 
+};
+
+WeightDistribution.prototype.toggleUnit = function(){
+    //Toggle between MPH and km/h, save the option to persistance system
+    this.persistance.Unit = this.persistance.Unit === 'imperial' ? 'metric' : 'imperial';
+    this.save();
 };
