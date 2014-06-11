@@ -59,6 +59,7 @@ var vid_h_orig;
 var videoAmount = 10;
 var videoPlaying;
 var videoElement;
+var fadeTime = 2;
 
 function resizeToCover() {
     // set the video viewport to the window size
@@ -84,13 +85,13 @@ function resizeToCover() {
 $(document).ready(function() {
     videoElement = document.getElementById('bgvid');
     $('#bgvid').attr("src","images/mainmenu_"+newVideo()+".webm");
-    $('#blending').fadeOut('1500');
+    $('#blending').fadeOut(fadeTime*1000);
     videoElement.play();
 
     $('#bgvid').bind('ended', function(event) {
         $('#bgvid').attr("src","images/mainmenu_"+newVideo()+".webm");
         videoElement.play();
-        $('#blending').fadeOut('1500');
+        $('#blending').fadeOut(fadeTime*1000);
     });
 
     vid_w_orig = parseInt($('video').attr('width'));
@@ -102,10 +103,12 @@ $(document).ready(function() {
 });
 
 function checkTime(){
-    if(videoElement.duration - videoElement.currentTime < 1.6){
-        $('#blending').fadeIn('1500');
+    if(videoElement.duration - videoElement.currentTime < fadeTime+0.1){
+        $('#blending').fadeIn(fadeTime*1000);
+        setTimeout(checkTime,4000);
+    }else{
+        setTimeout(checkTime, videoElement.duration - videoElement.currentTime - (fadeTime+ 0.05) * 1000);
     }
-    setTimeout(checkTime, Math.max(((videoElement.duration - videoElement.currentTime) * 500),100));
 }
 
 function newVideo(){
