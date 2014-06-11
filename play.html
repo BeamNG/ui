@@ -4,14 +4,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.3.custom.css">
-	<link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css">
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
 	<link rel="stylesheet" href="css/beamng.css">
 	<link rel="stylesheet" href="css/app.css">
 
 
 	<script src="js/sprintf.min.js"></script>
 	<script src="js/jquery.js"></script>
-	<script src="js/jquery.mobile-1.4.0.min.js"></script>
+	<script src="js/jquery.mobile-1.4.2.min.js"></script>
 	<script src="js/jquery-ui-1.10.3.custom.js"></script>
 
 	<script src="js/console.js"></script>
@@ -118,10 +118,9 @@
 	<input type="checkbox" id="debug_render_wireframe" data-mini="true">
 	<label for="debug_render_wireframe">Wireframe Mode</label>
 	<input type="button" id="debug_render_depthviz" value="Toggle Depth Visualization" data-mini="true">
-	<input type="button" id="debug_render_normalviz" value="Toggle Normal Visualization" data-mini="true">
-	<input type="button" id="debug_render_lightcolorviz" value="Toggle Light Color Visualization" data-mini="true">
-	<input type="button" id="debug_render_lightspecviz" value="Toggle Light Specular Visualization" data-mini="true">
-</form>	
+	<input type="button" id="debug_render_normalviz" value="Toggle Normal Visz." data-mini="true">
+	<input type="button" id="debug_render_lightcolorviz" value="Toggle Light Color Visz." data-mini="true">
+	<input type="button" id="debug_render_lightspecviz" value="Toggle Specular Visz." data-mini="true">
 </div>
 
 
@@ -129,7 +128,38 @@
 	<h3>Environment</h3>
 		<label for="option_simspeed">Simulation Speed</label>
 		<input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="0" max="100" value="100">
+		
+		<label for="option_gravity">Gravity</label>
+		<input type="range" name="option_gravity" id="option_gravity" data-highlight="true" data-mini="true" min="-100" max="100" value="-9.81">
 </div>
+
+<div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
+	<h3>Effects</h3>
+		<input type="checkbox" id="option_dof_enabled" data-mini="true">
+		<label for="option_dof_enabled">DoF Enabled</label>
+
+		<input type="checkbox" id="option_dof_autofocus" data-mini="true">
+		<label for="option_dof_autofocus">DoF Autofocus</label>
+
+		<label for="option_fov">Field of View (FoV)</label>
+		<input type="range" name="option_fov" id="option_fov" data-highlight="true" data-mini="true" min="0" max="120" value="80">
+
+		<label for="option_dof_focal">DoF Focal Distance (m)</label>
+		<input type="range" name="option_dof_focal" id="option_dof_focal" data-highlight="true" data-mini="true" min="0" max="500" value="5">
+
+		<input type="checkbox" id="option_ssao_enabled" data-mini="true">
+		<label for="option_ssao_enabled">SSAO Enabled</label>
+
+		<input type="checkbox" id="option_lightrays_enabled" data-mini="true">
+		<label for="option_lightrays_enabled">Lightrays Enabled</label>
+
+		<input type="checkbox" id="option_hdr_enabled" data-mini="true">
+		<label for="option_hdr_enabled">HDR Enabled</label>
+
+		<input type="button" id="option_open_postfxmanager" value="Open PostFX Manager" data-mini="true">
+		<input type="button" id="option_open_options" value="Open Options" data-mini="true">
+</div>
+
 </div>
 
 <!-------------------------------- LEFT MENU -------------------------------->

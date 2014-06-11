@@ -292,7 +292,7 @@ var AppEngine = {
 	presetPanel : {},
 	initialized : false,
 
-	initialize : function(){
+	initialize : function() {
 		// adding blendingdiv for editingmode
 		$("<div class='appengine-blending'></div>").hide().appendTo('body');
 

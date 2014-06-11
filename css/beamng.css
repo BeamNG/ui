@@ -134,16 +134,6 @@ html,body{
 	
 }
 
-/* remove text thingy on the slider */
-.ui-mobile .ui-page .ui-slider-input,
-.ui-mobile .ui-dialog .ui-slider-input {
-	display : none;
-}
-.ui-mobile .ui-page .ui-slider-track,
-.ui-mobile .ui-dialog .ui-slider-track {
-	margin : 0;
-}
-
 kbd {
 	border:1px solid gray;
 	color: black;

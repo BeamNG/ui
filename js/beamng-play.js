@@ -55,6 +55,8 @@ $(document).ready(function() {
 	widgetEventHandler(updateSingleValue, 'debug_mesh_visibility', 'bdebug', 'mesh_visibility');
 	widgetEventHandler(updateSingleValue, 'option_simspeed', 'bullettime', 'wantedSimulationSpeed');
 
+	widgetEventHandler(callLuaFunction, 'option_gravity', 'updateGravity');
+
 	widgetEventHandler(updateGameEngineValue, 'debug_render_bb', '$Scene::renderBoundingBoxes');
 	widgetEventHandler(updateGameEngineValue, 'debug_render_shadows', '$Shadows::disable');
 	widgetEventHandler(updateGameEngineValue, 'debug_render_wireframe', '$gfx::wireframe');
@@ -64,6 +66,18 @@ $(document).ready(function() {
 	widgetEventHandler(callGameEngineFunc, 'debug_render_lightcolorviz', 'toggleLightColorViz');
 	widgetEventHandler(callGameEngineFunc, 'debug_render_lightspecviz', 'toggleLightSpecularViz');
 
+	widgetEventHandler(callGameEngineFuncArg, 'option_fov', 'setFov');
+	widgetEventHandler(callGameEngineFuncArg, 'option_dof_focal', 'DOFPostEffect.setFocalDist');
+	widgetEventHandler(callGameEngineFuncArg, 'option_dof_autofocus', 'DOFPostEffect.setAutoFocus');
+
+
+	widgetEventHandler(callGameEngineFuncSprintfArg, 'option_dof_enabled', 'PostFXManager.settingsEffectSetEnabled("DOF", %s);');
+	widgetEventHandler(callGameEngineFuncSprintfArg, 'option_ssao_enabled', 'PostFXManager.settingsEffectSetEnabled("SSAO", %s);');
+	widgetEventHandler(callGameEngineFuncSprintfArg, 'option_lightrays_enabled', 'PostFXManager.settingsEffectSetEnabled("LightRays", %s);');
+	widgetEventHandler(callGameEngineFuncSprintfArg, 'option_hdr_enabled', 'PostFXManager.settingsEffectSetEnabled("HDR", %s);');
+
+	widgetEventHandler(executeGameEngineCode, 'option_open_postfxmanager', 'Canvas.pushDialog(PostFXManager);');
+	widgetEventHandler(executeGameEngineCode, 'option_open_options', 'Canvas.pushDialog(OptionsDlg);');
 
 	// special
 	$('#debug_object_data').change(function(e) {

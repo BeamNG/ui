@@ -108,8 +108,12 @@ console = {
 			txt = "undefined";
 		if(txt === null)
 			txt = "null";
-		$("#consoleOutput").append("<div class='"+cssClass+"'>"+escapeHtml(txt.toString())+"</div>");
-		$('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
+		var e = $("#consoleOutput");
+		if(e) {
+			e.append("<div class='"+cssClass+"'>"+escapeHtml(txt.toString())+"</div>");
+			if(e[0])
+				e.scrollTop(e[0].scrollHeight);
+		}
 	}
 }
 

@@ -8,7 +8,7 @@ function __debugStartup(){
 	__insertPresetChange();	
 }
 
-function __updateStreamDebug(){
+function __updateStreamDebug() {
 	debugstr = "";
 
 	$.each(state.streams, function(index, val) {
@@ -20,13 +20,14 @@ function __updateStreamDebug(){
 	setTimeout(function(){__updateStreamDebug();},200);
 }
 
-function __insertAppSpawn(){
+function __insertAppSpawn() {
 	$.each(AppLoader.installedApps, function(index, app) {
 		 $('<input type="button" value="'+app+'" onclick="AppEngine.loadApp(\''+app+'\');" />').appendTo($('#appdebug'));
 	});
 }
 
-function __insertPresetChange(){
+function __insertPresetChange() {
+	if(typeof(AppEngine.persistance) == 'undefined') return;
 	$.each(AppEngine.persistance.presets, function(key, value) {
 		 $('<input type="button" value="'+key+'" onclick="AppEngine.loadPreset(\''+key+'\');" />').appendTo($('#presetdebug'));
 	});

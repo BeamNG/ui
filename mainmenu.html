@@ -1,18 +1,129 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="stylesheet" href="css/minimal.css"></head>
+<head>
+    <link rel="stylesheet" href="css/minimal.css">
+    <script src="js/jquery.js"></script>
+</head>
 <body>
 <div style="position:fixed; right:0; top: 0; bottom:0; padding:0px; text-align:right; display: -webkit-box; -webkit-box-orient: vertical; -webkit-box-pack: center; -webkit-box-align: end;">
 <div style="width: 300px">
-<a class="rbutton" href="#" onclick="window.location.href='file:///html/browser.html';" >Browser</a><br/>
+<a class="rbutton" href="browser.html" >Browser</a><br/>
 <a class="rbutton" href="#" onclick="" >Repository</a><br/>
 <a class="rbutton" href="#" onclick="beamng.sendGameEngine('MainMenuGui.onBtnPlay();')" >Play</a><br/>
 <a class="rbutton" href="#" onclick="beamng.sendGameEngine('Canvas.pushDialog(optionsDlg); Canvas.pushDialog(PostFXManager);')" >Options</a><br/>
+<a class="rbutton" href="options.html" >HTML Options</a><br/>
 <a class="rbutton" href="#" onclick="window.location.href='file:///html/credits.html'; beamng.sendGameEngine('MainMenuGui.creditsToggle();')" >The team</a><br/>
-<a class="rbutton" href="#" onclick="window.location.href='file:///html/chat.html';">Chat</a><br/>
+<a class="rbutton" href="chat.html">Chat</a><br/>
 <a class="rbutton" href="#" onclick="beamng.sendGameEngine('quit();')" >Exit</a><br/>
 </div>
 </div>
+
+<div id="video-viewport">
+    <video preload width="1920" height="1080" id="bgvid">
+    </video>
+</div>
+
+<div id='blending'></div>
+
+
+<style type="text/css">
+body {
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+#video-viewport {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    z-index: -2; /* for accessing the video by click */
+}
+#blending{
+    position: absolute;
+    background: black;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+</style>
+
+<script type="text/javascript">
+var min_w = 300; // minimum video width allowed
+var vid_w_orig;  // original video dimensions
+var vid_h_orig;
+var videoAmount = 10;
+var videoPlaying;
+var videoElement;
+
+function resizeToCover() {
+    // set the video viewport to the window size
+    $('#video-viewport').width($(window).width());
+    $('#video-viewport').height($(window).height());
+
+    // use largest scale factor of horizontal/vertical
+    var scale_h = $(window).width() / vid_w_orig;
+    var scale_v = $(window).height() / vid_h_orig;
+    var scale = scale_h > scale_v ? scale_h : scale_v;
+
+    // don't allow scaled width < minimum video width
+    if (scale * vid_w_orig < min_w) {scale = min_w / vid_w_orig;}
+
+    // now scale the video
+    $('video').width(scale * vid_w_orig);
+    $('video').height(scale * vid_h_orig);
+    // and center it by scrolling the video viewport
+    $('#video-viewport').scrollLeft(($('video').width() - $(window).width()) / 2);
+    $('#video-viewport').scrollTop(($('video').height() - $(window).height()) / 2);
+}
+
+$(document).ready(function() {
+    videoElement = document.getElementById('bgvid');
+    $('#bgvid').attr("src","images/mainmenu_"+newVideo()+".webm");
+    $('#blending').fadeOut('1500');
+    videoElement.play();
+
+    $('#bgvid').bind('ended', function(event) {
+        $('#bgvid').attr("src","images/mainmenu_"+newVideo()+".webm");
+        videoElement.play();
+        $('#blending').fadeOut('1500');
+    });
+
+    vid_w_orig = parseInt($('video').attr('width'));
+    vid_h_orig = parseInt($('video').attr('height'));
+    $(window).resize(function () { resizeToCover(); });
+    $(window).trigger('resize');
+
+    checkTime();
+});
+
+function checkTime(){
+    if(videoElement.duration - videoElement.currentTime < 1.6){
+        $('#blending').fadeIn('1500');
+    }
+    setTimeout(checkTime, Math.max(((videoElement.duration - videoElement.currentTime) * 500),100));
+}
+
+function newVideo(){
+    var newVideoId = videoPlaying;
+    if (videoAmount > 1){
+        while(newVideoId == videoPlaying){
+            newVideoId = (Math.random()*(videoAmount-1)+1).toFixed(0);
+        }
+        return newVideoId;
+    }else{
+        return 1;
+    }
+}
+
+
+
+</script>
+
 
 <button onclick="javascript:location.reload();" style="width:60px;height:20px;position:absolute;right:0px;bottom:0px;margin:0;padding:0;">ReloadUI</button>
 </body>

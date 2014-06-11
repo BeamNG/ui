@@ -17,6 +17,25 @@ function oUpdate(v)
 	AppEngine.update(v);
 }
 
+// beamng stub for the browser
+if(typeof(beamng) === 'undefined') {
+	function beamngEmulation() {
+		this.sendGameEngine = function(s) {
+				console.log("beamng.sendGameEngine('" + s + "')");
+		};
+		this.sendActiveObjectLua = function(s) {
+				console.log("beamng.sendActiveObjectLua('" + s + "')");
+		};
+		this.sendSystemLua = function(s) {
+				console.log("beamng.sendSystemLua('" + s + "')");
+		};		
+	}
+
+	beamng = new beamngEmulation();
+
+	console.log("### BeamNG Emulation loaded ###");
+}
+
 /***********************************************************************************************/
 
 function sendObjectState()
@@ -152,6 +171,25 @@ function callGameEngineFunc(func)
 	beamng.sendGameEngine(func + "();");
 }
 
+function callGameEngineFuncArg(func, value)
+{
+	//console.log("callGameEngineFuncArg: " + func + "(" + value + ")");
+	beamng.sendGameEngine(func + "(" + value + ");");
+}
+
+function callGameEngineFuncSprintfArg(func, value)
+{
+	var cmd = sprintf(func, value);
+	//console.log("callGameEngineFuncSprintfArg: " + cmd);
+	beamng.sendGameEngine(cmd);
+}
+
+function executeGameEngineCode(cmd)
+{
+	//console.log("executeGameEngineCode: " + cmd);
+	beamng.sendGameEngine(cmd);
+}
+
 /*
 * WARNING: only works with primitive datatypes as returnvalues OR with functions that return json. Never try to call a function which return a list/object/...
 */
@@ -177,3 +215,11 @@ function _fCallback(number, result)
 	functionCallbacks[number](JSON.parse(result));
 	functionCallbacks[number] = undefined;
 }
+
+function callLuaFunction(func, v)
+{
+	var cmd = func + '(' + v + ')'
+	//console.log('callLuaFunction: ' + cmd);
+	beamng.sendActiveObjectLua(cmd);
+}
+
