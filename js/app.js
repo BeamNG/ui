@@ -338,7 +338,7 @@ var AppEngine = {
 				var streamsReady = true;
 				for(var i=0; i<streams.length; i++){
 					var stream = streams[i];
-					if(state.streams[stream] > 0 && data[stream] !== undefined){
+					if(state.streams[stream] > 0 && (data[stream] !== undefined || stream == "torqueCurve")){
 						streamList[stream] = data[stream];
 					}else{
 						streamsReady = false;
