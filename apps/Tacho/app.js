@@ -1,6 +1,22 @@
 function Tacho(){}
 
 Tacho.prototype.initialize = function(){
+	if(this.persistance.Unit === undefined){
+		this.persistance.Unit = "metric";
+		this.save();
+	}
+
+	this.data = {
+		"factor":{
+			"metric": 3.6,
+			"imperial": 2.2369
+		},
+		"unitname":{
+			"metric": "km/h",
+			"imperial": "mph"
+		}
+	};
+
 	this.memoryCanvas = {};
 	this.font = ' "Lucida Console", Monaco, monospace ';
 	this.rpmInfo = {
@@ -20,6 +36,9 @@ Tacho.prototype.initialize = function(){
 	c = this.canvas[0];
 	c.width = 300;
 	c.height = 300;
+
+	var self = this;
+	this.canvas.click(function(event) {self.toggleUnit();});
 
 	this.addMemoryCanvas('background');
 	this.updateRPM();
@@ -67,7 +86,7 @@ Tacho.prototype.update = function(streams){
 	// speed
 	speed = streams.electrics.wheelspeed;
 	if (isNaN(speed)) speed = streams.electrics.airspeed;
-	speed *= 3.6;
+	speed *= this.data.factor[this.persistance.Unit];
 	
 
 	ctx.fillStyle = 'rgb(200,200,200)';
@@ -76,7 +95,7 @@ Tacho.prototype.update = function(streams){
 	ctx.font = '70px'+this.font;
 	ctx.fillText((speed).toFixed(),150,150);
 	ctx.font = '20px'+this.font;
-	ctx.fillText('km/h',150,185);
+	ctx.fillText(this.data.unitname[this.persistance.Unit],150,185);
 
 
 	// gear
@@ -249,4 +268,10 @@ Tacho.prototype.drawBackground = function()
 		ctx.rotate(rpmConverter.convertLength(this.rpmInfo.smallStep));
 	}
 	ctx.restore();
+};
+
+Tacho.prototype.toggleUnit = function(){
+    //Toggle between MPH and km/h, save the option to persistance system
+    this.persistance.Unit = this.persistance.Unit === 'imperial' ? 'metric' : 'imperial';
+    this.save();
 };
