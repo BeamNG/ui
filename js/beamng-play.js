@@ -49,10 +49,13 @@ function filledArc(ctx, x, y, r, w, v, c)
 
 $(document).ready(function() {
 	widgetEventHandler(updateSingleValue, 'debug_globalonoff', 'bdebug', 'enabled');
+	widgetEventHandler(updateSingleValue, 'debug_globalonoff2', 'bdebug', 'enabled');
 	widgetEventHandler(updateSingleValue, 'skeleton_debug_options', 'bdebug', 'skeleton_mode');
 	widgetEventHandler(updateSingleValue, 'nodeinfo_debug_options', 'bdebug', 'node_info_mode');
 	widgetEventHandler(updateSingleValue, 'debug_collision_tri', 'bdebug', 'coltrimode');
-	widgetEventHandler(updateSingleValue, 'debug_static_collision', 'bdebug', 'static_collision');
+
+	widgetEventHandler(updateStaticCollisionDebug, 'debug_static_collision');
+
 	widgetEventHandler(updateSingleValue, 'debug_terrain', 'bdebug', 'terrain_debug');
 
 	widgetEventHandler(updateSingleValue, 'debug_mesh_visibility', 'bdebug', 'mesh_visibility');
@@ -155,4 +158,31 @@ function widgetEventHandler()
 		}
 	}
 	alert("control not bound: " + widgetName);
+}
+
+function updateStaticCollisionDebug(v)
+{
+	console.log('setStaticCollisionDebug('+v+')');
+	updateSingleValue('bdebug', 'static_collision', v);
+	callGameEngineFunc('beamNGcommitCollisionDebug');
+}
+
+var knownGroundmodels = {};
+
+function updateGroundModelDebug(data)
+{
+	if(! $('#groundModelDebugInfo').length) {
+		$("#mainpage").append('<div id="groundModelDebugInfo" style="margin:20px;"></div>');
+	}
+	var e = $('#groundModelDebugInfo');
+	knownGroundmodels[data.id] = data;
+
+	var h = '';
+	$.each(knownGroundmodels, function(k, v) {
+		h += '<span style="background-color:rgba(' + v.color.r + ',' + v.color.g + ',' + v.color.b + ','  + (v.color.a/255.0) + ');width:16px;height:16px;display:block;"></span>';
+		h += v.id + " : " + v.name;
+		h += '<br/>';
+	});
+	console.log(data);
+	e.html(h);
 }

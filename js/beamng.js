@@ -218,8 +218,7 @@ function _fCallback(number, result)
 
 function callLuaFunction(func, v)
 {
-	var cmd = func + '(' + v + ')'
+	var cmd = func + '(' + v + ')';
 	//console.log('callLuaFunction: ' + cmd);
 	beamng.sendActiveObjectLua(cmd);
 }
-

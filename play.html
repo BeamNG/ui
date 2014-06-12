@@ -37,7 +37,7 @@
 
 <div data-role="page" id="main" class="ui-content-transparent">
 	<!-- default panel  -->
-	<div data-role="content">
+	<div data-role="content" id="mainpage">
 		<div id='objdebug'></div>
 		<div id='speed'></div>
 		<a id="btn3" href="javascript:location.reload();" data-inline="false" data-role="button" data-mini="true" data-corners="false" style="width:60px;position:absolute;left:0px;bottom:0px;margin:0;padding:0;">ReloadUI</a>
@@ -61,7 +61,7 @@
 </div>
 
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
-	<h3>Debug</h3>
+	<h3>Vehicle Debug</h3>
 <form name="debug_form">
 
 <input type="checkbox" name="debug_globalonoff" id="debug_globalonoff" data-mini="true" />
@@ -94,12 +94,6 @@
 <input type="checkbox" name="debug_collision_tri" id="debug_collision_tri" class="custom" data-mini="true">
 <label for="debug_collision_tri">Collision Triangle Debug</label>
 
-<input type="checkbox" name="debug_static_collision" id="debug_static_collision" class="custom" data-mini="true">
-<label for="debug_static_collision">Static Collision</label>
-
-<input type="checkbox" name="debug_terrain" id="debug_terrain" class="custom" data-mini="true">
-<label for="debug_terrain">Terrain Debug</label>
-
 <input type="checkbox" name="debug_object_data" id="debug_object_data" class="custom" data-mini="true">
 <label for="debug_object_data">Debug Object Data</label>
 
@@ -107,6 +101,21 @@
 <input type="range" name="debug_mesh_visibility" id="debug_mesh_visibility" data-highlight="true" min="0" max="100" value="100">
 </form>
 
+</div>
+
+<div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
+	<h3>Terrain Debug</h3>
+
+<form>
+	<input type="checkbox" name="debug_globalonoff2" id="debug_globalonoff2" data-mini="true" />
+	<label for="debug_globalonoff2">Enabled</label>
+
+	<input type="checkbox" name="debug_static_collision" id="debug_static_collision" class="custom" data-mini="true">
+	<label for="debug_static_collision">Static Collision</label>
+
+	<input type="checkbox" name="debug_terrain" id="debug_terrain" class="custom" data-mini="true">
+	<label for="debug_terrain">Groundmodel Debug</label>
+</form>
 </div>
 
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
@@ -122,6 +131,7 @@
 	<input type="button" id="debug_render_normalviz" value="Toggle Normal Visz." data-mini="true">
 	<input type="button" id="debug_render_lightcolorviz" value="Toggle Light Color Visz." data-mini="true">
 	<input type="button" id="debug_render_lightspecviz" value="Toggle Specular Visz." data-mini="true">
+</form>
 </div>
 
 
