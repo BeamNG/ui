@@ -324,8 +324,10 @@ var AppEngine = {
 		}
 
 		// changing appstates
-		$.each(this.runningApps[AppEngine.preset], function(index, app){
-			app._widget.app("option", "editMode", AppEngine.editMode);
+		$.each(this.runningApps, function(i, preset){
+			$.each(preset, function(index, app){
+				app._widget.app("option", "editMode", AppEngine.editMode);
+			});
 		});
 	},
 
