@@ -801,9 +801,9 @@ var RPIndicator = {
 	}
 };
 
-$(document).ready(function() {
-	DebugKeySimulator.initialize();
-});
+//$(document).ready(function() {
+//	DebugKeySimulator.initialize();
+//});
 var DebugKeySimulator = {
 	initialize: function(){
 		this.panel = $("<div></div>").appendTo($("body")).css({

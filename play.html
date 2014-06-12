@@ -14,17 +14,13 @@
 	<script src="js/jquery.mobile-1.4.2.min.js"></script>
 	<script src="js/jquery-ui-1.10.3.custom.js"></script>
 
-	<script src="js/console.js"></script>
-
 	<script src="js/raphael.2.1.0.min.js"></script>
 	<script src="js/justgage.1.0.1.min.js"></script>
 
 	<script src="js/jquery.sparkline.min.js"></script>
 	
-	<script src="js/loadindicator.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/utils.js"></script>
-	<script src="js/debug.js"></script>
 
 	<script src="js/jquery.flot.js"></script>
 	<script src="js/jquery.flot.resize.js"></script>
@@ -43,9 +39,6 @@
 		<a id="btn3" href="javascript:location.reload();" data-inline="false" data-role="button" data-mini="true" data-corners="false" style="width:60px;position:absolute;left:0px;bottom:0px;margin:0;padding:0;">ReloadUI</a>
 		<div class="top-right">
 			<a href="#rightMenu" data-role="button" data-icon="bars" data-iconpos="notext"></a>
-		</div>
-		<div class="top-left">
-			<a href="#leftMenu" data-role="button" data-icon="bars" data-iconpos="notext"></a>
 		</div>
 		<div class="bottom-right">
 			<a onclick="AppEngine.toggleEditMode();return false;" href="#" data-role="button" data-icon="grid" data-iconpos="notext"></a>
@@ -198,36 +191,6 @@ function changeBullettime(v) {
 </div>
 
 </div>
-
-<!-------------------------------- LEFT MENU -------------------------------->
-<div id="leftMenu" data-role="panel" data-position-fixed="true" data-animate="false" data-position="left" data-display="overlay" data-theme="a" data-swipe-close="false" data-dismissible="false">
-
-<div data-role="header" >
-	<h3>HTML-Debug</h3>
-	<a href="#menuPanel" data-rel="close" class="ui-btn-left" data-icon="delete" data-iconpos="notext" data-direction="reverse">Close</a> 
-</div>
-
-<div data-role="collapsible" data-theme="a" data-mini="true" >
-	<h3>Console</h3>
-	<div id="console"></div>
-</div>
-
-<div id="engineInfo" data-role="collapsible" data-theme="a" data-mini="true" >
-	<h3>Streams</h3>
-	<div id="streamDebug"></div>
-</div>
-
-<div data-role="collapsible" data-theme="a" data-mini="true" >
-	<h3>AppEngine</h3>
-	Change Preset:
-	<div id="presetdebug"></div>
-	<hr>
-	Spawn App:
-	<div id="appdebug"></div>
-</div>
-
-</div>
-
 
 
 </div><!-- /page -->
