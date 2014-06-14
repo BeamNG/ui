@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
 	<link rel="stylesheet" href="css/beamng.css">
 	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/jquery-fixes.css">
 
 
 	<script src="js/sprintf.min.js"></script>
@@ -48,9 +49,21 @@
 <!-------------------------------- RIGHT MENU -------------------------------->
 <div id="rightMenu" data-role="panel" data-position-fixed="true" data-animate="false" data-position="right" data-display="overlay" data-theme="a" data-swipe-close="false" data-dismissible="false">
 
-<div data-role="header" >
+<div data-role="header" class="menu-header">
 	<h3>Menu</h3>
 	<a href="#menuPanel" data-rel="close" class="ui-btn-right" data-icon="delete" data-iconpos="notext" data-direction="reverse">Close</a> 
+</div>
+
+<div class="menu-content">
+
+<div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
+	<h3>Physics</h3>
+<form>
+	<input type="button" value="Reset all" data-mini="true" onclick="callSystemLuaFunction('objectBroadcast(\'obj:requestReset(RESET_PHYSICS)\')');">
+	<input type="button" value="Reload all" data-mini="true" onclick="callGameEngineFunc('beamNGReloadAllVehicles');">
+	<label for="physics_enabled">Physics enabled:</label>
+    <input type="checkbox" data-role="flipswitch" name="physics_enabled" id="physics_enabled" checked="">
+</form>
 </div>
 
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
@@ -188,6 +201,8 @@ function changeBullettime(v) {
 
 		<input type="button" id="option_open_postfxmanager" value="Open PostFX Manager" data-mini="true">
 		<input type="button" id="option_open_options" value="Open Options" data-mini="true">
+</div>
+
 </div>
 
 </div>

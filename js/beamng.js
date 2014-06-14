@@ -222,3 +222,10 @@ function callLuaFunction(func, v)
 	//console.log('callLuaFunction: ' + cmd);
 	beamng.sendActiveObjectLua(cmd);
 }
+
+function callSystemLuaFunction(func, v)
+{
+	var cmd = func + '(' + v + ')';
+	//console.log('callLuaFunction: ' + cmd);
+	beamng.sendSystemLua(cmd);
+}

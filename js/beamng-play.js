@@ -61,7 +61,9 @@ $(document).ready(function() {
 	widgetEventHandler(updateSingleValue, 'debug_mesh_visibility', 'bdebug', 'mesh_visibility');
 	widgetEventHandler(updateSingleValue, 'option_simspeed', 'bullettime', 'wantedSimulationSpeed');
 
-	widgetEventHandler(callLuaFunction, 'option_gravity', 'updateGravity');
+
+	widgetEventHandler(callGameEngineFuncArg, 'physics_enabled', 'beamNGsetPhysicsEnabled');
+	widgetEventHandler(callSystemLuaFunction, 'option_gravity', 'setGravity');
 
 	widgetEventHandler(updateGameEngineValue, 'debug_render_bb', '$Scene::renderBoundingBoxes');
 	widgetEventHandler(updateGameEngineValue, 'debug_render_shadows', '$Shadows::disable');
@@ -169,6 +171,7 @@ function updateStaticCollisionDebug(v)
 
 var knownGroundmodels = {};
 
+// called by the gameengine
 function updateGroundModelDebug(data)
 {
 	if(! $('#groundModelDebugInfo').length) {
@@ -186,3 +189,26 @@ function updateGroundModelDebug(data)
 	console.log(data);
 	e.html(h);
 }
+
+// called by the gameengine
+function updatePhysicsState(enabled)
+{
+	if(!enabled) {
+		$('#main').addClass('physics-disabled');
+	} else {
+		$('#main').removeClass('physics-disabled');
+	}
+
+	// TODO: FIX
+	/*
+	var flipSwitch = $('#physics_enabled');
+	flipSwitch.val(enabled ? 'on' : 'off');
+	try{ flipSwitch.slider("refresh"); } catch(err) {};
+	*/
+}
+
+function panelScrollfix(){
+	$('#rightMenu .menu-content').height($(window).height()-$('#rightMenu .menu-header').height()-2);
+}
+$(document).ready(panelScrollfix);
+$(window).resize(panelScrollfix);

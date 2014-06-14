@@ -741,11 +741,11 @@ var DebugManager = {
 			}
 		});
 		this.log("Debugpresets: "+JSON.stringify(this.presets));
-		$(document).keyup(function(event) {
+		$(document).keypress(function(event) {
 			DebugManager.log("KEY: "+JSON.stringify(event.which));
-			if(event.which == 75){
+			if(event.which == 107){
 				DebugManager.previousDebug();
-			}else if(event.which == 76){
+			}else if(event.which == 108){
 				DebugManager.nextDebug();
 			}
 		});
