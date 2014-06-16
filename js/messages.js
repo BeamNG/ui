@@ -19,7 +19,7 @@ var MessageManager = {
 			slot.animate({opacity: 1}, 300);
 		}
 
-		slot.html("<b>"+category+"</b> "+message);
+		slot.html(message);
 		slot.animate({opacity: 1}, time * 1000);
 		slot.animate({opacity: 0}, 300, function(){
 			slot.remove();
