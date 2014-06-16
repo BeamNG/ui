@@ -1,5 +1,6 @@
 .app .SimpleDash
 {
+
 }
 
 .app .SimpleDash .canvas
@@ -12,16 +13,7 @@
 {
     width:          33px;
     height:         33px;
-}
-
-.app .SimpleDash .clickable-left, .nonclickable-left
-{
-    float:          left;
-}
-
-.app .SimpleDash .clickable-right, .nonclickable-right
-{
-    float:          right;
+    display: inline-block;
 }
 
 .app .SimpleDash .clickable:hover
