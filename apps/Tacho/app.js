@@ -20,7 +20,7 @@ Tacho.prototype.initialize = function(){
 	this.memoryCanvas = {};
 	this.font = ' "Lucida Console", Monaco, monospace ';
 	this.rpmInfo = {
-		rpm: 0,
+		rpm: -10,
 		bigStep: 500,
 		smallStep: 250,
 		numberFactor: 0.01
@@ -33,7 +33,7 @@ Tacho.prototype.initialize = function(){
 		height: '100%'
 	});
 
-	c = this.canvas[0];
+	var c = this.canvas[0];
 	c.width = 300;
 	c.height = 300;
 
@@ -41,7 +41,6 @@ Tacho.prototype.initialize = function(){
 	this.canvas.click(function(event) {self.toggleUnit();});
 
 	this.addMemoryCanvas('background');
-	this.updateRPM();
 	this.resize();
 };
 
@@ -50,20 +49,20 @@ Tacho.prototype.resize = function(){
 	this.canvas.height(size);
 	this.canvas.width(size);
 
-	c = this.canvas[0];
+	var c = this.canvas[0];
 	c.width = size;
 	c.height = size;
 
-	ctx = c.getContext('2d');
+	var ctx = c.getContext('2d');
 	ctx.setTransform(size/300, 0, 0, size/300, 0, 0);
 };
 
 Tacho.prototype.update = function(streams){
-	engineInfo = streams.engineInfo;
+	this.engineInfo = streams.engineInfo;
 
-		this.updateRPM();
+	this.updateRPM();
 
-	ctx = this.canvas[0].getContext('2d');
+	var ctx = this.canvas[0].getContext('2d');
 
 	ctx.drawImage(this.memoryCanvas.background,0,0);
 
@@ -84,7 +83,7 @@ Tacho.prototype.update = function(streams){
 	ctx.restore();
 
 	// speed
-	speed = streams.electrics.wheelspeed;
+	var speed = streams.electrics.wheelspeed;
 	if (isNaN(speed)) speed = streams.electrics.airspeed;
 	speed *= this.data.factor[this.persistance.Unit];
 	
@@ -99,27 +98,27 @@ Tacho.prototype.update = function(streams){
 
 
 	// gear
-
-	if (engineInfo[5] === 0)
+	var gear;
+	if (this.engineInfo[5] === 0)
 	{
 		gear = "N";
-	}else if(engineInfo[5] < 0)
+	}else if(this.engineInfo[5] < 0)
 	{
 		gear = "R";
 	}else
 	{
-		gear = engineInfo[5].toString();
+		gear = this.engineInfo[5].toString();
 	}
 
 	ctx.fillStyle = 'rgb(200,200,200)';
 	ctx.font = '35px'+this.font;
 	ctx.fillText(gear,150,220);
 
-	if (engineInfo[5]<0 && engineInfo[7]>1) // more than one reversegear and in reverse
+	if (this.engineInfo[5]<0 && this.engineInfo[7]>1) // more than one reversegear and in reverse
 	{
 		ctx.font = '20px'+this.font;
 		ctx.textAlign = 'left';
-		ctx.fillText((engineInfo[5]*-1).toString(),162,224);
+		ctx.fillText((this.engineInfo[5]*-1).toString(),162,224);
 	}
 
 	//reflection yo
@@ -149,10 +148,10 @@ Tacho.prototype.addMemoryCanvas = function(name)
 
 Tacho.prototype.updateRPM = function()
 {
-	if(this.rpmInfo.rpm == engineInfo[1]) return;
+	if(this.rpmInfo.rpm == this.engineInfo[1]) return;
 	
-	this.rpmInfo.rpm = engineInfo[1];
-	rpmConverter = new Converter(0,engineInfo[1],-(Math.PI/4)*3,(Math.PI/4)*3);
+	this.rpmInfo.rpm = this.engineInfo[1];
+	rpmConverter = new Converter(0,this.engineInfo[1],-(Math.PI/4)*3,(Math.PI/4)*3);
 
 	if(this.rpmInfo.rpm <= 3000)
 	{
@@ -243,7 +242,7 @@ Tacho.prototype.drawBackground = function()
 	
 	ctx.translate(150,150);
 	ctx.rotate(rpmConverter.convertValue(0));
-	for(var i = 0 ; i <= engineInfo[1]; i += this.rpmInfo.smallStep)
+	for(var i = 0 ; i <= this.engineInfo[1]; i += this.rpmInfo.smallStep)
 	{
 		if(i % this.rpmInfo.bigStep === 0)
 		{
