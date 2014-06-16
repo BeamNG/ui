@@ -16,7 +16,7 @@ var VehicleChooser = (function() {
 			vehicles = res;
 
 			vChooseBox = $('<div><label>Choose Vehicle</label></div>').appendTo(mainDiv);
-			vehicleChoose = $('<select></select>').appendTo(vChooseBox);
+			vehicleChoose = $('<select style="width: 100%"></select>').appendTo(vChooseBox);
 
 			vehicleChoose.change(function(event) {
 				updateConfigurations(vehicleChoose.children('option:selected').attr('value'));
@@ -28,21 +28,21 @@ var VehicleChooser = (function() {
 			});
 
 			cChooseBox = $('<div><label>Choose Configuration</label></div>').appendTo(mainDiv);
-			configurationChoose = $('<select></select>').appendTo(cChooseBox);
+			configurationChoose = $('<select style="width: 100%"></select>').appendTo(cChooseBox);
 
 			updateConfigurations(0);
 
-			changeButton = $('<a>Change</a>').appendTo(mainDiv).button().click(function(event) {
+			changeButton = $('<a style="ui-widget">Change</a>').appendTo(mainDiv).button().click(function(event) {
 				changeVehicle();
 			});
 		});
 
 
-		mainDiv = $("<div id='vehiclechooser' style='background: #fff'></div>").appendTo("body");
+		mainDiv = $("<div id='vehiclechooser' style='background: #fff; overflow: hidden'></div>").appendTo($("body"));
 		mainDiv.dialog({
 			title: "Vehicle Selector",
-			width: 300,
-			height: 200,
+			width: 350,
+			height: 'auto',
 			beforeClose : function(event, ui){
 				close();
 				return false;
