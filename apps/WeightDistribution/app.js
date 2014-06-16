@@ -1,6 +1,11 @@
 function WeightDistribution(){}
 
 WeightDistribution.prototype.initialize = function(){
+	if(this.persistance.Unit === undefined){
+		this.persistance.Unit = "metric";
+		this.save();
+	}
+	
 	this.canvas = $('<canvas></canvas>').appendTo(this.rootElement);
 	this.canvas.width=220;
 
