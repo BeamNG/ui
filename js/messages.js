@@ -1,26 +1,29 @@
 function oMessage(args){
-	MessageManager.message(args);
+	MessageManager.message(args.category, args.msg, args.ttl);
 }
 
 var MessageManager = {
 	displaytime : 1000,
-	message : function(args){
+	message : function(category, message, time){
+		var slot;
+		var self = this;
 		if(this.initialized === undefined){
 			this.inititalize();
 		}
-		console.log("new exisd" + JSON.stringify(args));
-		var slot = this.messageSlot[args.ttl];
-
-		if(slot.html() !== ""){
+		if( this.messageSlot[category] !== undefined ){
+			slot = this.messageSlot[category];
 			slot.stop(1);
 		}else{
+			this.messageSlot[category] = $("<div style='font-size: 20px; text-shadow: 1px 0 2px black, -1px 0 2px black, 0 1px 2px black, 0 -1px 2px black, 0 0 7px black; color: white;'></div>").appendTo(this.container);
+			slot = this.messageSlot[category];
 			slot.animate({opacity: 1}, 300);
 		}
 
-		slot.html("<b>"+args.category+"</b> "+args.msg);
-		slot.animate({opacity: 1}, 2000);
+		slot.html("<b>"+category+"</b> "+message);
+		slot.animate({opacity: 1}, time * 1000);
 		slot.animate({opacity: 0}, 300, function(){
-			slot.html("");
+			slot.remove();
+			self.messageSlot[category] = undefined;
 		});
 
 	},
@@ -28,15 +31,11 @@ var MessageManager = {
 		console.log("initializing");
 		this.container = $("<div></div>").appendTo($("body")).css({
 			top: '40px',
-			left: '5px',
+			left: '10px',
 			position: 'absolute'
 		});
 
 		this.messageSlot = [];
-		
-		for (var i = 0; i <= 5; i++){
-			this.messageSlot[i] = $("<div></div>").appendTo(this.container);
-		}
 
 		this.initialized = true;
 	}
