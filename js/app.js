@@ -83,7 +83,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
 
 		// Background
-		var backgroundClasses = ["opaque","opaque-simple","transparent"];
+		var backgroundClasses = ["opaque","opaque-simple","transparent",""];
 		if(backgroundClasses.indexOf(this.appInfo.appearance.background)!= -1){
 			this.element.addClass(this.appInfo.appearance.background);
 		}else{
@@ -449,7 +449,6 @@ var AppEngine = {
 					width: "100%",
 					height: "100%"
 				});
-				$("<span>"+preset+"</span>").appendTo(this.presetPanel[preset]);
 
 				this.log("loading preset '"+preset+"'");
 				$.each(this.persistance.presets[preset].apps, function(index, app) {
@@ -464,6 +463,8 @@ var AppEngine = {
 					app._widget.app("calculatePosition");
 				});
 			}
+
+			MessageManager.message('preset', 'Preset: '+preset, 1);
 		}
 	},
 
@@ -568,7 +569,7 @@ var AppStore = {
 			position: 'absolute',
 			right: 50,
 			top: 10
-		}).button().click(function(event) {
+		}).jquibutton().click(function(event) {
 			AppStore.open();
 		});
 	},
@@ -798,25 +799,6 @@ var RPIndicator = {
 	hide: function(){
 		if(this.element === undefined){ this.initialize(); }
 		this.element.hide();
-	}
-};
-
-//$(document).ready(function() {
-//	DebugKeySimulator.initialize();
-//});
-var DebugKeySimulator = {
-	initialize: function(){
-		this.panel = $("<div></div>").appendTo($("body")).css({
-			bottom: '0',
-			left: '200px',
-			position: 'absolute'
-		});
-		$("<a>&lt;</a>").appendTo(this.panel).button().click(function(event) {
-			DebugManager.previousDebug();
-		});
-		$("<a>&gt;</a>").appendTo(this.panel).button().click(function(event) {
-			DebugManager.nextDebug();
-		});
 	}
 };
 

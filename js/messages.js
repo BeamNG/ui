@@ -3,8 +3,10 @@ function oMessage(args){
 }
 
 var MessageManager = {
-	displaytime : 1000,
 	message : function(category, message, time){
+		if(time === undefined){
+			time = 5;
+		}
 		var slot;
 		var self = this;
 		if(this.initialized === undefined){
@@ -30,9 +32,10 @@ var MessageManager = {
 	inititalize : function(){
 		console.log("initializing");
 		this.container = $("<div></div>").appendTo($("body")).css({
-			top: '40px',
+			top: '10px',
 			left: '10px',
-			position: 'absolute'
+			position: 'absolute',
+			'z-index': 800
 		});
 
 		this.messageSlot = [];
