@@ -710,16 +710,16 @@ var HookManager  = {
         this.hooksMap[hookName].push([obj, obj["on"+hookName]]);
     },
     unregister : function(hookName, obj){
-        if(this.hooksMap[hookName] === undefined) {
+        if(this.hooksMap[hookName] === undefined || this.hooksMap[hookName].length === 0) {
             this.log('undefined hook unregistered: ' + hookName);
             return;
         }
-        $.each(this.hooksMap[hookName], function(k, v) {
-            if(v[0] == obj){
-            	this.hooksMap.splice(k,1);
-            	return;
-            }
-        });
+        var hooks = this.hooksMap[hookName];
+        for (var i = hooks.length - 1; i >= 0; i--) {
+        	if(hooks[i][0] == obj){
+        		hooks.splice(i,1);
+        	}
+        }
         
     },
     trigger : function(hookName){
