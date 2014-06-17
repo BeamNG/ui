@@ -1,117 +1,129 @@
 html,body{
-	height:100%;
-	width:100%;
-	padding:0px;
-	margin:0px;
-	overflow: hidden;
-/*	background-color:black; */
-	
-	background: transparent !important;
-	background-image: url('') !important;
-	
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
+    overflow: hidden;
+/*    background-color:black; */
+    
+    background: transparent !important;
+    background-image: url('') !important;
+    
 }
 
 * {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 
 .physics-disabled {
-	box-shadow: inset 0px 0px 60px black;
+    box-shadow: inset 0px 0px 60px black;
 }
 
 #speed {
-	float:left;
-	background-color: white;
+    float:left;
+    background-color: white;
 }
 
 #objdebug {
-	clear:both;
-	float:none;
-	position:absolute;
-	bottom:0px;
-	left:250px;
-	font-family:monospace;
-	font-weight:bold;
-	font-size:1.1em;
-	width:550px;
-	height:800px;
-	background-color:rgba(255,255,255,0.7);
-	overflow:auto;
-	visibility:hidden;
+    clear:both;
+    float:none;
+    position:absolute;
+    bottom:0px;
+    left:250px;
+    font-family:monospace;
+    font-weight:bold;
+    font-size:1.1em;
+    width:550px;
+    height:800px;
+    background-color:rgba(255,255,255,0.7);
+    overflow:auto;
+    visibility:hidden;
+}
+
+.ui-app .ui-widget-header {
+    background-color:rgba(231, 143, 8,0.5) !important;
+    background-image: none;
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    font-size:0.9em;
 }
 
 .wheelcanvas {
-	width:100%;
-	height:100%;
-	margin:0;
-	padding:0;
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
 }
 
 /* transparent left panel */
 /*
 #leftMenu, #leftMenu div:first-child {
-	background:rgba(200,200,200,0.3) !important;
+    background:rgba(200,200,200,0.3) !important;
 }
 
 #wheelInfo h3:first-child a:first-child, #wheelInfo div:first-of-type, #wheelInfo div:first-of-type canvas:first-of-type {
-	background:transparent !important;
+    background:transparent !important;
 }
 
 #engineInfo h3:first-child a:first-child, #engineInfo div:first-of-type {
-	background:transparent !important;
+    background:transparent !important;
 }
 
 #vehicleInfo .ui-collapsible-content {
-	padding:0;
+    padding:0;
 }
 */
 
 .engineGauge {
-	width:100%; height:200px;
-	display: inline-block;
-	margin:0;
+    width:100%; height:200px;
+    display: inline-block;
+    margin:0;
 }
 
 
 #test {
-	float:none;
-	clear:both;
-	position:absolute;
-	bottom:10px;
-	right:20px;
-	width:300px
-	
+    float:none;
+    clear:both;
+    position:absolute;
+    bottom:10px;
+    right:20px;
+    width:300px
+    
 }
 
 .top-right{
-	position:absolute;
-	top:-2px;
-	right:5px;
-	margin:0;
-	padding:0;
-	border:0;
-	z-index:5000;
+    position:absolute;
+    top:-2px;
+    right:5px;
+    margin:0;
+    padding:0;
+    border:0;
+    z-index:5000;
 }
 
 .top-left{
-	position:absolute;
-	top:-2px;
-	left:5px;
-	margin:0;
-	padding:0;
-	border:0;
-	z-index:5000;
+    position:absolute;
+    top:-2px;
+    left:5px;
+    margin:0;
+    padding:0;
+    border:0;
+    z-index:5000;
 }
 
 .bottom-right{
-	position:absolute;
-	bottom:0px;
-	right:5px;
-	margin:0;
-	padding:0;
-	border:0;
-	z-index:5000;
+    position:absolute;
+    bottom:0px;
+    right:5px;
+    margin:0;
+    padding:0;
+    border:0;
+    z-index:5000;
 }
 
 
@@ -125,50 +137,50 @@ html,body{
 }
 
 .ui-panel-inner {
-	padding: 0 !important
+    padding: 0 !important
 }
 
 .ui-collapsible {
-	margin: 0 !important
+    margin: 0 !important
 }
 
 .ui-page-theme-a {
-	
-	background:transparent !important;
-	
+    
+    background:transparent !important;
+    
 }
 
 kbd {
-	border:1px solid gray;
-	color: black;
-	padding:1px 5px;
-	margin:0 5px;
-	font-size:0.8em;
-	text-transform:uppercase;
-	box-shadow:1px 0 1px 0 #fff, 0 2px 0 2px lightGray, 0 2px 0 3px #333;
-	border-radius:3px;
-	background:-webkit-linear-gradient(left, #ffffff 0%, #e2e2e2 50%);
+    border:1px solid gray;
+    color: black;
+    padding:1px 5px;
+    margin:0 5px;
+    font-size:0.8em;
+    text-transform:uppercase;
+    box-shadow:1px 0 1px 0 #fff, 0 2px 0 2px lightGray, 0 2px 0 3px #333;
+    border-radius:3px;
+    background:-webkit-linear-gradient(left, #ffffff 0%, #e2e2e2 50%);
 }
 
 #rightMenu .menu-content{
-	overflow: auto;
+    overflow: auto;
 }
 
 
 .custom-combobox {
-	position: relative;
-	display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .custom-combobox-toggle {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	margin-left: -1px;
-	padding: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
 }
 
 .custom-combobox-input {
-	margin: 0;
-	padding: 0.3em;
+    margin: 0;
+    padding: 0.3em;
 }
