@@ -368,6 +368,12 @@ var AppEngine = {
 		for(var i=0; i<streams.length; i++){
 			streamAdd(streams[i]);
 		}
+		// adding hooks
+		for(var attr in app){
+			if(typeof app[attr] === "function" && attr.substring(0,2) == "on"){
+				HookManager.registerHook(app, attr.substring(2));
+			}
+		}
 	},
 
 	unregisterApp : function(app){
@@ -377,6 +383,8 @@ var AppEngine = {
 		for(var i=0; i<streams.length; i++){
 			streamRemove(streams[i]);
 		}
+		// removing hooks
+		HookManager.unregisterHook(app);
 	},
 
 	loadApp : function(app, position, size, persistance){
@@ -691,15 +699,17 @@ var AppLoader = {
 
 var HookManager  = {
 	hooks : [],
-	registerHook : function(object, methodname, hookname){
-		this.hooks.push([object, methodname, hookname]);
+	registerHook : function(object, hookname){
+		this.log("registering hook: "+object+" : "+hookname);
+		this.hooks.push([object, hookname.toLowerCase()]);
 	},
 	unregisterHook : function(object){
+		var hook, hookname;
 		if(arguments[1]!==undefined){
-			hookname = arguments[1];
+			hookname = arguments[1].toLowerCase();
 			for(i = 0; i<this.hooks.length; i++){
 				hook = this.hooks[i];
-				if(hook[0] == object && hook[2] == hookname){
+				if(hook[0] == object && hook[1] == hookname){
 					this.hooks.splice(i,1);
 				}
 			}
@@ -714,12 +724,12 @@ var HookManager  = {
 	},
 	triggerHook : function(hookname, data){
 		this.log(hookname+" triggered");
+		var method = "on"+hookname.substring(0,1).toUpperCase() + hookname.substring(1).toLowerCase();
 		for(i = 0; i<this.hooks.length; i++){
 			hook = this.hooks[i];
-			if(hook[2] == hookname){
+			if(hook[1] == hookname){
 				object = hook[0];
-				methodname = hook[1];
-				object[methodname](data);
+				object[method](data);
 			}
 		}
 	},

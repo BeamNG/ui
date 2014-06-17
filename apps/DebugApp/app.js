@@ -17,7 +17,7 @@ DebugApp.prototype.initialize = function(){
 	callGameEngineFuncCallback("getAppList()", function(res){self.apps.html(JSON.stringify(res));});
 	callGameEngineFuncCallback("getVehicleList()", function(res){self.vehicles.html(JSON.stringify(res)); self.vehiclelist = res;});
 
-	this.accordion.accordion({heightStyle: "content", collapsible: true});
+	//this.accordion.accordion({heightStyle: "content", collapsible: true});
 };
 
 DebugApp.prototype.update = function(streams){
