@@ -50,11 +50,15 @@ DebugApp.prototype.update = function(streams){
 	ctx.clearRect(0,0,50,50);
 	ctx.save();
 	ctx.translate(25,25);
-	ctx.rotate(-sensors.roll * Math.PI/2);
+	ctx.rotate(Math.asin(-sensors.roll));
 	ctx.beginPath();
-	ctx.arc(0,0,10,0,2*Math.PI);
+	ctx.arc(15,10,5,0,2*Math.PI);
 	ctx.fill();
-	ctx.fillRect(-20,-5,40,10);
+	ctx.beginPath();
+	ctx.arc(-15,10,5,0,2*Math.PI);
+	ctx.fill();
+	ctx.fillRect(-20,-20,40,30);
+	ctx.clearRect(-15,-15,30,10);
 	ctx.restore();
 
 	//update pitch
@@ -63,23 +67,31 @@ DebugApp.prototype.update = function(streams){
 	ctx.clearRect(0,0,50,50);
 	ctx.save();
 	ctx.translate(25,25);
-	ctx.rotate(-sensors.pitch  * Math.PI/2);
+	ctx.rotate(Math.asin(-sensors.pitch));
+	ctx.fillRect(-20,-15,30,10);
+	ctx.fillRect(-20,-8,40,10);
 	ctx.beginPath();
-	ctx.arc(0,0,10,0,2*Math.PI);
+	ctx.arc(-10,0,5,0,2*Math.PI);
 	ctx.fill();
-	ctx.fillRect(-20,-5,40,10);
+	ctx.beginPath();
+	ctx.arc(10,0,5,0,2*Math.PI);
+	ctx.fill();
 	ctx.restore();
 
 	// update yaw
 	c = this.canvas.yaw[0];
 	ctx = c.getContext('2d');
 	ctx.clearRect(0,0,50,50);
+	ctx.save();
+	ctx.translate(25,25);
+	ctx.rotate(-sensors.yaw);
 	ctx.beginPath();
-	ctx.arc(25,25,20,0,2*Math.PI);
+	ctx.arc(0,0,20,0,2*Math.PI);
 	ctx.stroke();
 	ctx.beginPath();
-	ctx.arc(25+20*Math.sin(sensors.yaw),25+20*Math.cos(sensors.yaw),5,0,2*Math.PI);
+	ctx.arc(0,-20,5,0,2*Math.PI);
 	ctx.fill();
+	ctx.restore();
 
 };
 
