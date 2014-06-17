@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "Angles",
+		"author": "Metalmuncher",
+		"version": "0.1",
+		"description": "lel"
+	},
+
+     "appearance": {
+      "background" : "opaque-simple",
+      "size" : {
+       "initial" : ["auto","auto"]
+      }
+     },
+
+	"data": {
+		"streams" : ["sensors"]
+	}
+}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="128"
+   height="128"
+   id="svg2">
+  <defs
+     id="defs4">
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         id="path3795"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
+    </marker>
+    <linearGradient
+       id="linearGradient3784">
+      <stop
+         id="stop3800"
+         style="stop-color:#00ff00;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop3798"
+         style="stop-color:#0000ff;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3778">
+      <stop
+         id="stop3780"
+         style="stop-color:#000000;stop-opacity:1"
+         offset="0" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="skeletal"
+       id="path-effect3002" />
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     d="M 19.198102,65.40149 C 19.936257,89.522588 39.699824,108.84572 64,108.84572 c 24.300167,0 44.06373,-19.323132 44.8019,-43.44423 l -89.603798,0 z"
+     id="rect3814"
+     style="fill:#350008;fill-opacity:1;stroke:none" />
+  <path
+     d="m 64,19.154275 c -24.300176,0 -44.063743,19.323268 -44.801898,43.444357 l 89.603798,0 C 108.06373,38.477543 88.300167,19.154275 64,19.154275 z"
+     id="rect3814-1"
+     style="fill:#50549b;fill-opacity:1;stroke:none" />
+  <path
+     d="m 19.198102,62.598632 c -0.0142,0.464016 -0.04379,0.934058 -0.04379,1.401434 0,0.467375 0.02959,0.937418 0.04379,1.401424 l 89.603798,0 c 0.0142,-0.464006 0.0438,-0.934049 0.0438,-1.401424 0,-0.467376 -0.0296,-0.937418 -0.0438,-1.401434 l -89.603798,0 z"
+     id="rect3814-1-7"
+     style="fill:#585d46;fill-opacity:1;stroke:none" />
+  <g
+     transform="matrix(0,0.91045927,-0.91045927,0,122.51629,6.2285069)"
+     id="g5509"
+     style="fill:#ffffff;fill-opacity:1;stroke:none">
+    <path
+       d="m 46.90625,63.15625 a 1.109375,1.109375 0 1 0 0,2.21875 L 80,65.375 a 1.109375,1.109375 0 0 0 0,-2.21875 l -33.09375,0 z"
+       id="path3789"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.20000005;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" />
+    <path
+       d="m 68.915254,64.271186 8.800001,-8.8 -30.800001,8.8 30.800001,8.8 -8.800001,-8.8 z"
+       id="path5515"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+  </g>
+</svg>
