@@ -473,7 +473,7 @@ var AppEngine = {
 				});
 			}
 
-			MessageManager.message('preset', 'Preset: '+preset, 1);
+			HookManager.triggerHook('message', {category: 'preset', msg: 'Preset: '+preset, ttl: 1});
 		}
 	},
 

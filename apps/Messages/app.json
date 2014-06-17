@@ -1,0 +1,19 @@
+{
+	"info": {
+		"name" : "Messages",
+		"author": "beamng.ui Team",
+		"version": "0.1",
+		"description": "This App shows ingame Messages"
+	},
+
+	"appearance": {
+		"background" : "transparent",
+		"size" : {
+			"initial" : [500,200]
+		}
+	},
+	
+	"data": {
+		"streams" : []
+	}
+}
