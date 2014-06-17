@@ -151,27 +151,30 @@ function changeBullettime(v) {
 </script>
 		<label for="option_simspeed">Simulation Speed</label>
 		<input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="0" max="100" value="100">
-		<input type="button" value="1/100" data-mini="true" onclick="changeBullettime(1);">
-		<input type="button" value="1/10" data-mini="true" onclick="changeBullettime(10);">
-		<input type="button" value="1/2" data-mini="true" onclick="changeBullettime(50);">
-		<input type="button" value="3/4" data-mini="true" onclick="changeBullettime(75);">
-		<input type="button" value="1" data-mini="true" onclick="changeBullettime(100);">
-		
+		<div class="narrowbuttons">
+			<input type="button" value="1/100" data-mini="true" onclick="changeBullettime(1);">
+			<input type="button" value="1/10" data-mini="true" onclick="changeBullettime(10);">
+			<input type="button" value="1/2" data-mini="true" onclick="changeBullettime(50);">
+			<input type="button" value="3/4" data-mini="true" onclick="changeBullettime(75);">
+			<input type="button" value="1" data-mini="true" onclick="changeBullettime(100);">
+		</div>
 		<label for="option_gravity">Gravity</label>
 		<input type="range" name="option_gravity" id="option_gravity" data-highlight="true" data-mini="true" min="-280" max="10" step="0.01" value="-9.81">
-		<input type="button" value="Zero Gravity" data-mini="true" onclick="changeGravity(0);">
-		<input type="button" value="Earth" data-mini="true" onclick="changeGravity(-9.798);">
-		<input type="button" value="Moon" data-mini="true" onclick="changeGravity(-1.62);">
-		<input type="button" value="Mars" data-mini="true" onclick="changeGravity(-3.71);">
-		<input type="button" value="Sun" data-mini="true" onclick="changeGravity(-274);">
-		<input type="button" value="Jupiter" data-mini="true" onclick="changeGravity(-24.92);">
-		<input type="button" value="Neptune" data-mini="true" onclick="changeGravity(-11.15);">
-		<input type="button" value="Saturn" data-mini="true" onclick="changeGravity(-10.44);">
-		<input type="button" value="Uranus" data-mini="true" onclick="changeGravity(-8.87);">
-		<input type="button" value="Venus" data-mini="true" onclick="changeGravity(-8.87);">
-		<input type="button" value="Mercury" data-mini="true" onclick="changeGravity(-3.7);">
-		<input type="button" value="Pluto" data-mini="true" onclick="changeGravity(-0.58);">
-		<input type="button" value="negative Earth" data-mini="true" onclick="changeGravity(9.798);">
+		<div class="narrowbuttons">
+			<input type="button" value="Zero Gravity" data-mini="true" onclick="changeGravity(0);">
+			<input type="button" value="Earth" data-mini="true" onclick="changeGravity(-9.798);">
+			<input type="button" value="Moon" data-mini="true" onclick="changeGravity(-1.62);">
+			<input type="button" value="Mars" data-mini="true" onclick="changeGravity(-3.71);">
+			<input type="button" value="Sun" data-mini="true" onclick="changeGravity(-274);">
+			<input type="button" value="Jupiter" data-mini="true" onclick="changeGravity(-24.92);">
+			<input type="button" value="Neptune" data-mini="true" onclick="changeGravity(-11.15);">
+			<input type="button" value="Saturn" data-mini="true" onclick="changeGravity(-10.44);">
+			<input type="button" value="Uranus" data-mini="true" onclick="changeGravity(-8.87);">
+			<input type="button" value="Venus" data-mini="true" onclick="changeGravity(-8.87);">
+			<input type="button" value="Mercury" data-mini="true" onclick="changeGravity(-3.7);">
+			<input type="button" value="Pluto" data-mini="true" onclick="changeGravity(-0.58);">
+			<input type="button" value="negative Earth" data-mini="true" onclick="changeGravity(9.798);">
+		</div>
 </div>
 
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
