@@ -12,6 +12,8 @@
     color: black;
     height:13px;
 
+    cursor: pointer;
+
     line-height: 14px; /* Dont even ask it just works :| */
 }
 

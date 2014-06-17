@@ -13,7 +13,12 @@
 {
     width:          33px;
     height:         33px;
-    display: inline-block;
+    display: 		inline-block;
+}
+
+.app .SimpleDash .clickable
+{
+	cursor: pointer;
 }
 
 .app .SimpleDash .clickable:hover

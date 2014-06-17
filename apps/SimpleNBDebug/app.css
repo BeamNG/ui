@@ -1,6 +1,7 @@
 .app .SimpleNBDebug .table
 {
     padding: 5px;
+    cursor: pointer;
 }
 
 .app .SimpleNBDebug .table:hover
