@@ -2,7 +2,7 @@ function HydrosController(){}
 
 HydrosController.prototype._updateHydrosData = function(){
     beamng.sendActiveObjectLua("hydros.sendHydroStateToGUI()");
-}
+};
 
 
 HydrosController.prototype.initialize = function(){

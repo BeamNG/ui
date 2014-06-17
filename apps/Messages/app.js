@@ -9,8 +9,6 @@ Messages.prototype.update = function(streams) {
 };
 
 Messages.prototype.onMessage = function(args) {
-    if(this.messageSlot === undefined) return;
-
     var time = args.ttl !== undefined ? args.ttl : 5;
     var category = args.category !== undefined ? args.category : 'default';
     var message = args.msg;
