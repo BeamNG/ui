@@ -3,7 +3,8 @@
 	{
 		"default":{
 			"apps":[
-				{"name":"Tacho","position":[[1,1],[-218,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}}
+				{"name":"Tacho","position":[[1,1],[-218,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}},
+				{"name":"Messages","position":[[0,0],[5,5]]}
 			]
 		},
 		"race":{
