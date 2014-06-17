@@ -126,6 +126,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 		});
 
 		$(this.element).parents('.ui-dialog').addClass("ui-app");
+		$(this.element).parents('.ui-dialog').removeClass('ui-corner-all');
 		this.dialogParent = $(this.element).parents('.ui-dialog');
 		this.dialogParent.draggable('option', 'snap', '.preset-'+AppEngine.preset+' .ui-app');
 //		this.dialogParent.draggable('option', 'grid', [ 10, 10 ]);
