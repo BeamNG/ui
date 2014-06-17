@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/beamng.css">
-	<script src="js/jquery.js"></script>
+    <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/beamng.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/minimal.js"></script>
 </head>
 <body style="margin: 0;height:100%;min-height:100%;">
 
 
 <div style="background-color:#cccccc;height:25px;vertical-align:middle;width:100%;border-bottom:1px solid black;">
-	<button type="button" onclick="window.location.href='file:///html/mainmenu.html'" id="back">Main Menu</button>
+    <button type="button" onclick="window.location.href='file:///html/mainmenu.html'" id="back">Main Menu</button>
 
-	<button type="button" onclick="back();" id="back">Back</button>
-	<button type="button" onclick="forward();" id="forward">Forward</button>
-	<button type="button" onclick="refresh();" id="refresh">Refresh</button>
+    <button type="button" onclick="back();" id="back">Back</button>
+    <button type="button" onclick="forward();" id="forward">Forward</button>
+    <button type="button" onclick="refresh();" id="refresh">Refresh</button>
 
-	<img src="http://www.beamng.com/favicon.ico" alt="Web" id="webImg" style="vertical-align: middle;"></img>
-	<input type="url" id="address" value="http://beamng.com" size="60">
-	<button type="button" onclick="go();" id="refresh">Go</button>
+    <img src="http://www.beamng.com/favicon.ico" alt="Web" id="webImg" style="vertical-align: middle;"></img>
+    <input type="url" id="address" value="http://beamng.com" size="60">
+    <button type="button" onclick="go();" id="refresh">Go</button>
 
-	<button type="button" onclick="javascript:location.reload();" id="refresh">ReloadUI</button>
+    <button type="button" class="cefdev" onclick="javascript:location.reload();" id="refresh">ReloadUI</button>
 </div>
 
 <iframe src="http://beamng.com" id="iframe" frameborder="0" style="position:fixed;top:26px;bottom:0px;width:100%;">
@@ -67,14 +68,14 @@ function updateImg()
 }
 
 $( document ).ready(function() {
-	function fixIframeHeight() {
-		var newHeight = $(window).height();
-		var buffer = 26;
-		var newIframeHeight = newHeight - buffer;
-		$('#iframe').css('height',newIframeHeight);
-	}
-	$( window ).resize(fixIframeHeight);
-	fixIframeHeight();
+    function fixIframeHeight() {
+        var newHeight = $(window).height();
+        var buffer = 26;
+        var newIframeHeight = newHeight - buffer;
+        $('#iframe').css('height',newIframeHeight);
+    }
+    $( window ).resize(fixIframeHeight);
+    fixIframeHeight();
 });
 </script>
 
