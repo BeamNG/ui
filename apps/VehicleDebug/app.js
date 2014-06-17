@@ -11,11 +11,14 @@ VehicleDebug.prototype.initialize = function(){
     $('<button>Deflate Tires</button>').appendTo(this.rootElement).click(function(){
         beamng.sendActiveObjectLua("beamstate.deflateTires()");
     });
-    $('<button>TEST</button>').appendTo(this.rootElement).click(function(){
-        alert(cefdev);
-    });
-    // TODO: hydros
 
+    /*
+    $('<button>Post test message</button>').appendTo(this.rootElement).click(function(){
+        HookManager.trigger('Message', {category: 'bla', msg: 'Hello world', ttl: 10});
+    });
+    */
+
+    // TODO: hydros
 };
 
 

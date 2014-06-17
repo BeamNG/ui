@@ -1,0 +1,19 @@
+{
+    "info": {
+        "name" : "HydrosController",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "lets you control hydros"
+    },
+
+    "appearance": {
+        "background" : "opaque-simple",
+        "size" : {
+            "initial" : [300,300]
+        }
+    },
+    
+    "data": {
+        "streams" : ["engineInfo", "electrics"]
+    }
+}
