@@ -1,7 +1,10 @@
 {
-  "undef": true,
-  "unused": true,
-  "trailing": true,
-  "latedef": true,
-  "predef": [ "$", "beamng", "window", "document" ]
+    "undef": true,
+    "unused": true,
+    "trailing": true,
+    "latedef": true,
+    "predef": [
+        "$", "window", "document", "console",
+        "beamng", "objectData", "state"
+    ]
 }

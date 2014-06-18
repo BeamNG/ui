@@ -45,7 +45,7 @@ Tacho.prototype.initialize = function(){
 };
 
 Tacho.prototype.resize = function(){
-	size = Math.min(this.rootElement.height(),this.rootElement.width());
+	var size = Math.min(this.rootElement.height(),this.rootElement.width());
 	this.canvas.height(size);
 	this.canvas.width(size);
 
@@ -74,7 +74,7 @@ Tacho.prototype.update = function(streams){
 	ctx.lineWidth = 5;
 
 	ctx.translate(150,150);
-	ctx.rotate(rpmConverter.convertValue(streams.electrics.rpm));
+	ctx.rotate(this.rpmConverter.convertValue(streams.electrics.rpm));
 	ctx.beginPath();
 	ctx.moveTo(0,-140);
 	ctx.lineTo(0,-100);
@@ -123,7 +123,7 @@ Tacho.prototype.update = function(streams){
 
 	//reflection yo
 
-	grad = ctx.createLinearGradient(0,150,150,0);
+	var grad = ctx.createLinearGradient(0,150,150,0);
 	grad.addColorStop(0,'rgba(255,255,255,0)');
 	grad.addColorStop(0.5,'rgba(255,255,255,0)');
 	grad.addColorStop(1,'rgba(255,255,255,0.3)');
@@ -139,7 +139,7 @@ Tacho.prototype.update = function(streams){
 
 Tacho.prototype.addMemoryCanvas = function(name)
 {
-	c = document.createElement('canvas');
+	var c = document.createElement('canvas');
 	c.width = 300;
 	c.height = 300;
 
@@ -151,7 +151,7 @@ Tacho.prototype.updateRPM = function()
 	if(this.rpmInfo.rpm == this.engineInfo[1]) return;
 	
 	this.rpmInfo.rpm = this.engineInfo[1];
-	rpmConverter = new Converter(0,this.engineInfo[1],-(Math.PI/4)*3,(Math.PI/4)*3);
+	this.rpmConverter = new Converter(0,this.engineInfo[1],-(Math.PI/4)*3,(Math.PI/4)*3);
 
 	if(this.rpmInfo.rpm <= 3000)
 	{
@@ -183,7 +183,7 @@ Tacho.prototype.updateRPM = function()
 Tacho.prototype.drawBackground = function()
 {
 	// Draw background
-	ctx = this.memoryCanvas.background.getContext('2d');
+	var ctx = this.memoryCanvas.background.getContext('2d');
 	// background
 	ctx.save();
 
@@ -194,7 +194,7 @@ Tacho.prototype.drawBackground = function()
 
 	// dial
 
-	grad = ctx.createRadialGradient(150,150,100,150,150,140);
+	var grad = ctx.createRadialGradient(150,150,100,150,150,140);
 	grad.addColorStop(0,'rgb(100,100,100)');
 	grad.addColorStop(0.15,'rgb(200,200,200)');
 	grad.addColorStop(0.85,'rgb(200,200,200)');
@@ -225,7 +225,7 @@ Tacho.prototype.drawBackground = function()
 	ctx.lineWidth = 5;
 
 	ctx.translate(150,150);
-	ctx.rotate(rpmConverter.convertValue(this.rpmInfo.rpm));
+	ctx.rotate(this.rpmConverter.convertValue(this.rpmInfo.rpm));
 	ctx.beginPath();
 	ctx.moveTo(0,-140);
 	ctx.lineTo(0,-100);
@@ -241,7 +241,7 @@ Tacho.prototype.drawBackground = function()
 	ctx.lineWidth = 3;
 	
 	ctx.translate(150,150);
-	ctx.rotate(rpmConverter.convertValue(0));
+	ctx.rotate(this.rpmConverter.convertValue(0));
 	for(var i = 0 ; i <= this.engineInfo[1]; i += this.rpmInfo.smallStep)
 	{
 		if(i % this.rpmInfo.bigStep === 0)
@@ -264,7 +264,7 @@ Tacho.prototype.drawBackground = function()
 			ctx.stroke();
 			ctx.closePath();
 		}
-		ctx.rotate(rpmConverter.convertLength(this.rpmInfo.smallStep));
+		ctx.rotate(this.rpmConverter.convertLength(this.rpmInfo.smallStep));
 	}
 	ctx.restore();
 };
