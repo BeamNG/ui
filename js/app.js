@@ -130,7 +130,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
         this.dialogParent = $(this.element).parents('.ui-dialog');
         this.dialogParent.draggable('option', 'snap', '.preset-'+AppEngine.preset+' .ui-app');
 //        this.dialogParent.draggable('option', 'grid', [ 10, 10 ]);
-
+        
+        HookManager.register('Editmode', this);
         this._setOption('editMode',AppEngine.editMode);
     },
 
@@ -169,6 +170,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
         }
 
         this._super();
+        // unregistering Hooks
+        HookManager.unregisterAll(this);
+        // removing element
         this.element.remove();
     },
 
@@ -236,6 +240,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
     },
     log: function(message){
         Logger.log("AppContainer",message,this.appName);
+    },
+    onEditmode: function(state){
+        this._optionEditMode(state);
     }
 
 });
@@ -313,25 +320,22 @@ var AppEngine = {
 
     toggleEditMode: function() {
         this.editMode = !this.editMode;
+        HookManager.trigger("Editmode",this.editMode);
 
         if (this.editMode) {
             $('.appengine-blending').show();
-            $('.appstorebutton').show();
         } else{
             $('.appengine-blending').hide();
-            $('.appstorebutton').hide();
-            
-            AppStore.close();
             
             this.savePreset();
         }
 
         // changing appstates
-        $.each(this.runningApps, function(i, preset){
+ /*       $.each(this.runningApps, function(i, preset){
             $.each(preset, function(index, app){
                 app._widget.app("option", "editMode", AppEngine.editMode);
             });
-        });
+        });*/
     },
 
     update : function(data){
@@ -386,11 +390,7 @@ var AppEngine = {
             streamRemove(streams[i]);
         }
         // removing hooks
-        for(var attr in app){
-            if(typeof app[attr] === "function" && attr.substring(0,2) == "on"){
-                HookManager.unregister(attr.substring(2), app);
-            }
-        }
+        HookManager.unregisterAll(app);
     },
 
     loadApp : function(app, position, size, persistance){
@@ -580,7 +580,7 @@ var AppStore = {
         });
 
         // button
-        $("<a class='appstorebutton'>+</a>").appendTo($('body')).css({
+        this.storeButton = $("<a class='appstorebutton'>+</a>").appendTo($('body')).css({
             position: 'absolute',
             right: 50,
             top: 10,
@@ -588,6 +588,7 @@ var AppStore = {
         }).jquibutton().click(function(event) {
             AppStore.open();
         });
+        HookManager.register("Editmode",this);
     },
     open: function(){
         this.mainDiv.parent().show();
@@ -600,6 +601,14 @@ var AppStore = {
     resize: function(){
         this.mainDiv.dialog("option","width",$(window).width()-70);
         this.mainDiv.dialog("option","height",$(window).height()-70);
+    },
+    onEditmode: function(state){
+        if(state) {
+            this.storeButton.show();
+        } else {
+            this.storeButton.hide();
+            this.close();
+        }
     }
 };
 
@@ -722,12 +731,23 @@ var HookManager  = {
         	if(hooks[i][0] == obj){
         		hooks.splice(i,1);
         	}
-        }
-        
+        } 
+    },
+    unregisterAll: function(obj){
+        $.each(this.hooksMap, function(index, hooks) {
+            if(hooks.length > 0){
+                for (var i = hooks.length - 1; i >= 0; i--) {
+                    if(hooks[i][0] == obj){
+                        hooks.splice(i,1);
+                    }
+                }
+            }
+        });
     },
     trigger : function(hookName){
+        this.log(hookName);
         if(this.hooksMap[hookName] === undefined) {
-            //this.log('undefined hook triggered: ' + hookName);
+            this.log('undefined hook triggered: ' + hookName);
             return;
         }
         var args = Array.prototype.slice.call(arguments, 1);
