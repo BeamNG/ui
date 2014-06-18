@@ -1,3 +1,7 @@
+var debugObjectData = false;
+
+var sparkPoints = {};
+
 function updateSparcLines()
 {
     if(debugObjectData) {

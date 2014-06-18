@@ -3,10 +3,6 @@ var objectData = {};
 
 var state = {'changes':[], 'streams':{}};
 
-var debugObjectData = false;
-
-var sparkPoints = {};
-
 var functionCallbacks = {};
 var functionCallbackCounter = 0;
 
