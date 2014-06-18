@@ -33,6 +33,7 @@ html, body {position: relative}
     font-family: Arial;
     text-shadow: none;
     font-size: 11pt;
+    cursor:default;
 }
 
 .ui-app .ui-dialog-content
