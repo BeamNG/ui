@@ -15,6 +15,7 @@ html, body {position: relative}
     left:0;
     right:0;
     text-shadow: none;
+    background-image: none;
 }
 
 .ui-dialog .ui-dialog-content
@@ -50,6 +51,16 @@ html, body {position: relative}
     position:absolute;
     z-index:10;
     border-radius:0 !important;
+
+    background-color:rgba(231, 143, 8,0.5) !important;
+    background-image: none;
+    color: white;
+    text-shadow:
+    -1px -1px 1px #000,
+    1px -1px 1px #000,
+    -1px 1px 1px #000,
+    1px 1px 1px #000;
+    font-size:0.9em;
 }
 
 .ui-app-editmode
