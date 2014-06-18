@@ -114,7 +114,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
         }catch(e){
             this.log("An Error occured while trying to call "+this.app.name+".initialize() : "+e.stack+". Killing App.");
             var self = this;
-            setTimeout(function(){self.close();},0);
+            window.setTimeout(function(){self.close();},0);
         }
 
         // installing handlers
@@ -266,13 +266,13 @@ $.widget("beamNG.appButton", {
         this.front.css('background-image', 'url(apps/'+appName+'/app.png), url(images/appDefault.png)');
 
         // interactivity
-        this.element.hover(function(obj) {
+        this.element.hover(function() {
             $(this).children('.appButtonImage').first().stop(true, false).animate({height: 0}, 300);
         }, function() {
             $(this).children('.appButtonImage').first().stop(true, false).animate({height: 120}, 300);
         });
 
-        this.element.click(function(event) {
+        this.element.click(function() {
             AppEngine.loadApp(appName);
             AppStore.close();
         });
@@ -489,7 +489,7 @@ var AppEngine = {
         this.log("Saving Preset "+this.preset);
         $.each(this.runningApps[this.preset], function(index, app) {
             
-            appData = {};
+            var appData = {};
             appData.name = app.constructor.name;
             appData.position = [app._widget.app("option","referencePoint"), app._widget.app("option","refPointOffset")];
             appData.size = [app._widget.app("option","width"),app._widget.app("option","height")];
@@ -511,15 +511,15 @@ var AppEngine = {
     },
 
     _loadPersistance : function(){
-        if (localStorage.getItem("AppEngine") !== null) {
-            this.persistance = JSON.parse(localStorage.getItem("AppEngine"));
+        if (window.localStorage.getItem("AppEngine") !== null) {
+            this.persistance = JSON.parse(window.localStorage.getItem("AppEngine"));
             AppEngine.loadPreset("default");
         } else{
             $.getJSON('apps/persistance.json', function(data) {
                 AppEngine.log( "worked");
                 AppEngine.persistance = data;
                 AppEngine._savePersistance();
-                location.reload();
+                window.location.reload();
             }).fail(function(data) {
                 AppEngine.log( "error" );
                 AppEngine.log( JSON.stringify(data) );
@@ -528,16 +528,16 @@ var AppEngine = {
     },
 
     _savePersistance : function(){
-        localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
+        window.localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
     },
 
-    resize : function(event){
-        windowsize = [$(window).width(),$(window).height()];
+    resize : function(){
+        var windowsize = [$(window).width(),$(window).height()];
         $.each(this.runningApps[this.preset], function(index, app) {
             app._widget.app("calculatePosition");
-            position = app._widget.app("option","position");
-            size = [app._widget.app("option","width"),app._widget.app("option","height")];
-            change = 0;
+            var position = app._widget.app("option","position");
+            var size = [app._widget.app("option","width"),app._widget.app("option","height")];
+            var change = 0;
             for (var i = 0; i < 2; i++) {
                 if(position[i]+size[i] > windowsize[i]){
                     change++;
@@ -561,7 +561,7 @@ var AppStore = {
             title: "Add App",
             width: $(window).width()-70,
             height: $(window).height()-70,
-            beforeClose : function(event, ui){
+            beforeClose : function(){
                 AppStore.close();
                 return false;
             },
@@ -575,7 +575,7 @@ var AppStore = {
             $("<a></a>").appendTo(AppStore.mainDiv).appButton({app: val});
         });
 
-        $(window).resize(function(event) {
+        $(window).resize(function() {
             AppStore.resize();
         });
 
@@ -585,7 +585,7 @@ var AppStore = {
             right: 50,
             top: 10,
             display: 'none'
-        }).jquibutton().click(function(event) {
+        }).jquibutton().click(function() {
             AppStore.open();
         });
         HookManager.register("Editmode",this);
@@ -648,7 +648,7 @@ var AppLoader = {
     _loadAppJs : function(app){
         this._setLoadState(app,'js',this.LOADSTATE.LOADING);
         
-        $.getScript( "apps/"+app+"/app.js", function( data, textStatus, jqxhr) {
+        $.getScript( "apps/"+app+"/app.js", function() {
             AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.DONE);
         }).fail(function(){
             AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.ERROR);
@@ -689,7 +689,7 @@ var AppLoader = {
 
     _checkProgress : function(){
         //this.log(JSON.stringify(this.loadstates));
-        allLoaded = true;
+        var allLoaded = true;
         $.each(this.loadstates, function(appindex, app) {
             $.each(app, function(typeindex, state) {
                 if(state == AppLoader.LOADSTATE.LOADING){ allLoaded=false; }
@@ -838,6 +838,6 @@ var Logger = {
             logMessage += "["+instance+"]";
         }
         logMessage += ": "+message;
-        console.log(logMessage);
+        window.console.log(logMessage);
     }
 };
