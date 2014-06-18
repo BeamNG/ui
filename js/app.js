@@ -316,8 +316,10 @@ var AppEngine = {
 
         if (this.editMode) {
             $('.appengine-blending').show();
+            $('.appstorebutton').show();
         } else{
             $('.appengine-blending').hide();
+            $('.appstorebutton').hide();
             
             AppStore.close();
             
@@ -578,10 +580,11 @@ var AppStore = {
         });
 
         // button
-        $("<a class='appstorebutton'>+</a>").appendTo($(".appengine-blending")).css({
+        $("<a class='appstorebutton'>+</a>").appendTo($('body')).css({
             position: 'absolute',
             right: 50,
-            top: 10
+            top: 10,
+            display: 'none'
         }).jquibutton().click(function(event) {
             AppStore.open();
         });
