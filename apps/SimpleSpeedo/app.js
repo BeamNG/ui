@@ -27,9 +27,10 @@ SimpleSpeedo.prototype.toggleUnit = function(){
 SimpleSpeedo.prototype.update = function(streams){
 
     //Get the values to work with, do rounding and stuff as needed
-    speedMs = streams.electrics.wheelspeed;
+    var speedMs = streams.electrics.wheelspeed;
     if (isNaN(speedMs)) speedMs = streams.electrics.airspeed;    //If no wheelspeedo present use airspeed
 
+    var speedUnits;
     //Modify with selected units
     if(this.persistance.Unit == "MPH"){
         speedUnits = toInt(2.236*speedMs);
@@ -37,6 +38,7 @@ SimpleSpeedo.prototype.update = function(streams){
         speedUnits = toInt(3.6*speedMs);
     }
 
+    var speedStart
     //for resetting scale >160
     if (speedUnits > 160) {
         speedStart = 160;
@@ -45,8 +47,8 @@ SimpleSpeedo.prototype.update = function(streams){
     }
 
     //start canvas stuff
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,200,53);
@@ -83,17 +85,17 @@ SimpleSpeedo.prototype.update = function(streams){
 
     //Add Graduations
     //20px/20unit intervals
-    for (var x1=20; x<=180; x+=interval) {
+    for (var x1=20; x1<=180; x1+=interval) {
         ctx.beginPath();
-        ctx.moveTo(x, 35);
-        ctx.lineTo(x, 40);
+        ctx.moveTo(x1, 35);
+        ctx.lineTo(x1, 40);
         ctx.stroke();
     }
     //and 10px/10unit intervals
-    for (var x2=30; x<=180; x+=interval) {
+    for (var x2=30; x2<=180; x2+=interval) {
         ctx.beginPath();
-        ctx.moveTo(x, 35);
-        ctx.lineTo(x, 38);
+        ctx.moveTo(x2, 35);
+        ctx.lineTo(x2, 38);
         ctx.stroke();
     }
 };

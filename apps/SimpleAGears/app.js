@@ -12,13 +12,13 @@ SimpleAGears.prototype.initialize = function () {
 SimpleAGears.prototype.update = function (streams) {
 
     //Get the values to work with, do rounding and stuff as needed
-    aGear = Math.round(streams.electrics.gear_A*5);
+    var aGear = Math.round(streams.electrics.gear_A*5);
 
-    gearNames = ["P","R","N","D","2","1"];
+    var gearNames = ["P","R","N","D","2","1"];
 
     //start canvas stuff
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,200,33);
@@ -29,7 +29,7 @@ SimpleAGears.prototype.update = function (streams) {
 
     // //deselected gears
     ctx.fillStyle = "RGBA(0,0,0,0.5)";
-    for (i=0; i<6; i++){
+    for (var i=0; i<6; i++){
         ctx.fillText(gearNames[i],25+(i*30),22);
     }
 

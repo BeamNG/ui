@@ -14,14 +14,14 @@ SimplePedals.prototype.initialize = function(){
 SimplePedals.prototype.update = function(streams){
 
     //Get the values to work with, do rounding and stuff as needed
-    throttleVal = toInt(streams.electrics.throttle * 100);
-    brakeVal = toInt(streams.electrics.brake * 100);
-    clutchVal = Math.round(streams.electrics.clutch * 100 + 0.49);
-    parkingVal = toInt(streams.electrics.parkingbrake * 100);
+    var throttleVal = toInt(streams.electrics.throttle * 100);
+    var brakeVal = toInt(streams.electrics.brake * 100);
+    var clutchVal = Math.round(streams.electrics.clutch * 100 + 0.49);
+    var parkingVal = toInt(streams.electrics.parkingbrake * 100);
 
     //start canvas stuff
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx  = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,100,53);

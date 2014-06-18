@@ -55,8 +55,8 @@ SimpleDash.prototype.update = function (streams) {
     var absOn       = Math.round(streams.electrics.abs);
     var lightsState = Math.round(streams.electrics.lights);
 
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
     ctx.clearRect(0,0,33,33);
 
     //fuel stuff

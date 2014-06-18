@@ -8,3 +8,8 @@
 {
     background: RGBA(128,128,128,0.5);
 }
+
+.app .SimpleNBDebug .noPoint
+{
+    pointer-events:none;
+}

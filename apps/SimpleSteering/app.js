@@ -10,23 +10,22 @@ SimpleSteering.prototype.initialize = function(){
 
     this.loaded = false;
 
-    steeringWheelImg = new Image();
-
-    steeringWheelImg.onload = function() {
-        console.log("loaded");
+    this.steeringWheelImg = new Image();
+    this.steeringWheelImg.onload = function() {
+        // console.log("loaded");
     };
-    steeringWheelImg.src = this.path + 'steerwheel.svg';
+    this.steeringWheelImg.src = this.path + 'steerwheel.svg';
 };
 
 SimpleSteering.prototype.update = function(streams){
 
     //Get the values to work with, do rounding and stuff as needed
-    steeringVal = Math.round(streams.electrics.steering);
-    steeringRaw = Math.round(streams.electrics.steering_input*40);
+    var steeringVal = Math.round(streams.electrics.steering);
+    var steeringRaw = Math.round(streams.electrics.steering_input*40);
 
     //start canvas stuff
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,100,53);
@@ -37,7 +36,7 @@ SimpleSteering.prototype.update = function(streams){
     ctx.fillRect(50,45,steeringRaw,5);
 
     //add some graduation lines
-    for (i=0; i<5; i++) {
+    for (var i=0; i<5; i++) {
         ctx.beginPath();
         ctx.moveTo(10+(20*i), 40+2*(i%2)); // the last bit makes lines 1,3 smaller
         ctx.lineTo(10+(20*i), 45);
@@ -49,7 +48,7 @@ SimpleSteering.prototype.update = function(streams){
     ctx.translate(50, 20);
     ctx.rotate(-steeringVal*Math.PI/180);
     ctx.translate(-18, -18);
-    ctx.drawImage(steeringWheelImg, 0, 0, 36, 36);
+    ctx.drawImage(this.steeringWheelImg, 0, 0, 36, 36);
     ctx.restore();
 
     this.labelDiv.html("Steering Position");
