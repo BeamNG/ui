@@ -32,7 +32,7 @@ var VehicleChooser = (function() {
 
 			updateConfigurations(0);
 
-			changeButton = $('<a style="ui-widget">Change</a>').appendTo(mainDiv).button().click(function(event) {
+			changeButton = $('<button>Change</button>').appendTo(mainDiv).click(function(event) {
 				changeVehicle();
 			});
 		});
