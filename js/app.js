@@ -118,7 +118,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
         var self = this;
         this.oPanelOptions.hideInCockpit.click(function() {
             self.app.options.hideInCockpit = self.oPanelOptions.hideInCockpit.is(':checked');
-            console.log("current cmaeramode: "+ self.cameraMode);
             self.onCameraChange({'mode': self.cameraMode});
         });
 
@@ -271,9 +270,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
     },
     onCameraChange: function(args){
         this.cameraMode = args.mode;
-    	this.log("camera changed: "+JSON.stringify(args.mode));
         // assuming camera:0 = Cockpit
-        this.log(JSON.stringify(this.app.options));
         if(this.app.options.hideInCockpit === true && args.mode === 0){
             this.app.rootElement.hide();
         }else{
