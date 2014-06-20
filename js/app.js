@@ -554,7 +554,7 @@ var AppEngine = {
 
 var AppStore = {
     initialize: function(){
-    	this.log("initializing AppStore");
+    	console.log("initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
         this.mainDiv.dialog({
             title: "Add App",
