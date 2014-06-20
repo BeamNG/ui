@@ -1,6 +1,7 @@
 .app .SimpleEngineDebug .text
 {
     font-family: sans-serif;
+    cursor: pointer;
 }
 
 .app .SimpleEngineDebug .text:hover

@@ -4,13 +4,11 @@ SimpleDash.prototype.initialize = function () {
     this.canvas     = $('<canvas></canvas>').appendTo(this.rootElement).addClass('canvas');
 
     this.fuelDiv    = $('<div></div>').appendTo(this.rootElement).addClass('nonclickable').addClass('nonclickable-left');
-    this.hBrake     = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
-    this.leftBlink  = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
-
-    //do this backwards because float right
-    this.lightsDiv  = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-right');
     this.absDiv     = $('<div></div>').appendTo(this.rootElement).addClass('nonclickable').addClass('nonclickable-right');
+    this.leftBlink  = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
     this.rightBlink = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-right');
+    this.lightsDiv  = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-right');
+    this.hBrake     = $('<div></div>').appendTo(this.rootElement).addClass('clickable').addClass('clickable-left');
 
     var self = this;
     this.hBrake.click(function(){self.inputhandlerthing("!");});
@@ -49,16 +47,16 @@ SimpleDash.prototype.inputhandlerthing = function(switchvar){
 };
 
 SimpleDash.prototype.update = function (streams) {
-    fuelVal     = Math.round(streams.electrics.fuel*100)/100;
-    fuelLow     = Math.round(streams.electrics.lowfuel);
-    parkingVal  = Math.round(streams.electrics.parkingbrake);
-    leftBlink   = Math.round(streams.electrics.signal_L);
-    rightBlink  = Math.round(streams.electrics.signal_R);
-    absOn       = Math.round(streams.electrics.abs);
-    lightsState = Math.round(streams.electrics.lights);
+    var fuelVal     = Math.round(streams.electrics.fuel*100)/100;
+    var fuelLow     = Math.round(streams.electrics.lowfuel);
+    var parkingVal  = Math.round(streams.electrics.parkingbrake);
+    var leftBlink   = Math.round(streams.electrics.signal_L);
+    var rightBlink  = Math.round(streams.electrics.signal_R);
+    var absOn       = Math.round(streams.electrics.abs);
+    var lightsState = Math.round(streams.electrics.lights);
 
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
     ctx.clearRect(0,0,33,33);
 
     //fuel stuff

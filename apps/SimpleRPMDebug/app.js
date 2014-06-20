@@ -11,15 +11,15 @@ SimpleRPMDebug.prototype.initialize = function(){
 SimpleRPMDebug.prototype.update = function(streams){
 
     //Get the values to work with, do rounding and stuff as needed
-    idleRPM = streams.engineInfo[0];
-    maxRPM = streams.engineInfo[1];
-    shiftUpRPM = streams.engineInfo[2];
-    shiftDnRPM = streams.engineInfo[3];
-    curRPM = streams.engineInfo[4];
+    var idleRPM = streams.engineInfo[0];
+    var maxRPM = streams.engineInfo[1];
+    var shiftUpRPM = streams.engineInfo[2];
+    var shiftDnRPM = streams.engineInfo[3];
+    var curRPM = streams.engineInfo[4];
 
     //start canvas stuff
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,this.canvas.width*2,this.canvas.height*2);
@@ -70,11 +70,11 @@ SimpleRPMDebug.prototype.update = function(streams){
 };
 
 SimpleRPMDebug.prototype.resize = function(){
-    size = Math.min(this.rootElement.height(),this.rootElement.width());
+    var size = Math.min(this.rootElement.height(),this.rootElement.width());
     this.canvas.height = size;
     this.canvas.width = size;
 
-    c = this.canvas[0];
+    var c = this.canvas[0];
     c.width = size;
     c.height = size;
 };

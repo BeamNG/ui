@@ -14,13 +14,13 @@ SimpleTacho.prototype.initialize = function(){
 SimpleTacho.prototype.update = function(streams){
 
     //Get the values to work with, do rounding and stuff as needed
-    rpm = toInt(streams.engineInfo[4]);
-    rpmMax = streams.engineInfo[1];
-    rpmIdle = streams.engineInfo[0];
+    var rpm = toInt(streams.engineInfo[4]);
+    var rpmMax = streams.engineInfo[1];
+    var rpmIdle = streams.engineInfo[0];
 
     //start canvas stuff
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
 
     //clear before drawing stuff on canvas
     ctx.clearRect(0,0,200,65);

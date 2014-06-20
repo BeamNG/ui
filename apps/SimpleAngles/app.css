@@ -1,0 +1,21 @@
+.app .SimpleAngles
+{
+    text-align:center;
+    color: RGBA(0,0,0,0.5);
+}
+.app .SimpleAngles .mainDiv
+{
+    font-size:35px;
+    height:200px;
+}
+
+.app .SimpleAngles .canvas {
+	/*background: red;*/
+}
+
+.app .SimpleAngles .labelDiv
+{
+    font-size:10px;
+    color: black;
+    height:13px;
+}

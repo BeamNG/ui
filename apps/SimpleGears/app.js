@@ -24,19 +24,20 @@ SimpleGears.prototype.toggleView = function(){
 SimpleGears.prototype.update = function (streams) {
 
     //Get the values to work with, do rounding and stuff as needed TODO: Get if car is manual or Auto Autoally when this is exposed to the ui system
-	aGear = Math.round(streams.electrics.gear_A*5);
-    mGear = streams.engineInfo[5];
-    maxFGears = streams.engineInfo[6];
-    maxRGears = streams.engineInfo[7];
+	var aGear = Math.round(streams.electrics.gear_A*5);
+    var mGear = streams.engineInfo[5];
+    var maxFGears = streams.engineInfo[6];
+    var maxRGears = streams.engineInfo[7];
 
-    gearNames = ["P","R","N","D","2","1"];
+    var gearNames = ["P","R","N","D","2","1"];
 
     if (this.persistance.View === "Manual"){
 
         //get the sign of the current manual gear
-        sign = mGear?mGear<0?-1:1:0;
+        var sign = mGear?mGear<0?-1:1:0;
 
         //get the direction
+        var gearDirStr;
         if (sign == -1) {
             gearDirStr = "R";
         } else if (sign == 1) {
@@ -45,6 +46,7 @@ SimpleGears.prototype.update = function (streams) {
             gearDirStr = "N";
         }
 
+        var gearNumStr;
         //get the gear number
         if (mGear > 0) {
             gearNumStr = Math.abs(mGear) + "/" + maxFGears;

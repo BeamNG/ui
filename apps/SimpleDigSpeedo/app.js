@@ -21,9 +21,10 @@ SimpleDigSpeedo.prototype.toggleUnits = function(){
 
 SimpleDigSpeedo.prototype.update = function (streams) {
 
-    speedMs = streams.electrics.wheelspeed;
+    var speedMs = streams.electrics.wheelspeed;
     if (isNaN(speedMs)) speedMs = streams.electrics.airspeed;    //If no wheelspeedo present use airspeed
 
+    var speedUnits;
     if(this.persistance.Unit == "MPH"){
         speedUnits = toInt(2.236*speedMs);
     } else {

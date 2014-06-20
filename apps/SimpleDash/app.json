@@ -8,9 +8,9 @@
 
      "appearance": {
       "background" : "opaque-simple",
-      "resize" : false,
       "size" : {
-       "initial" : [200,33]
+       "initial" : [200,33],
+       "minimal" : [33, 33]
       }
      },
 

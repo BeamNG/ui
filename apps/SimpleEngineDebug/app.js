@@ -18,9 +18,9 @@ SimpleEngineDebug.prototype.toggleUnits = function(){
 
 SimpleEngineDebug.prototype.update = function(streams){
 
-    str =  "Engine RPM: " + streams.engineInfo[4].toFixed();
+    var str =  "Engine RPM: " + streams.engineInfo[4].toFixed();
 
-    gear = streams.engineInfo[5];
+    var gear = streams.engineInfo[5];
 
     if(gear>0){
         str += "<br> Gear: F " + gear + " / " + streams.engineInfo[6];
