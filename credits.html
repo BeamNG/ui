@@ -2,12 +2,216 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/minimal.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/minimal.js"></script>
+    <meta charset="utf-8"> 
 </head>
 <body>
-<div style="position:fixed; left:0px; bottom: 150px;padding:0;">
-<a class="lbutton" href="#" onclick="window.location.href='file:///html/mainmenu.html';beamng.sendGameEngine('MainMenuGui.creditsToggle();');" >Back</a><br/>
+
+<div id="video-viewport">
+    <video autoplay loop preload width="1920" height="1080" id="bgvid">
+        <source src="images/mainmenu_1.webm"/>
+    </video>
+    <video autoplay loop preload width="0" height="0" id="bgsound">
+        <source src="audio/lonle.mp3" />
+    </video>
 </div>
-<button class="cefdev" onclick="javascript:location.reload();" style="width:60px;height:20px;position:absolute;right:0px;bottom:0px;margin:0;padding:0;">ReloadUI</button>
+
+
+<div id='beamng'>
+</div>
+
+<div id="creditscontainer">
+
+<img src="images/beamngdrive.png" /> <br/>
+
+
+<div id="creditsmask">
+
+<table border="0" id="creditsTable">
+<tr><td class="t">Programmer</td><td class="n">Thomas "<span>tdev</span>" Fischer</td></tr>
+<tr><td class="t">Programmer</td><td class="n">Lefteris "<span>estama</span>" Stamatogionnakis</td></tr>
+<tr><td class="t">Vehicle Artist</td><td class="n">Gabe "<span>gabester</span>" Fink</td></tr>
+<tr><td class="t">Environment Artist</td><td class="n">Sam "<span>LJFHutch</span>" Hutchinson</td></tr>
+<tr><td class="t">Programmer</td><td class="n">Luis Anton Rebollo</td></tr>
+<tr><td class="t">Helping Hands</td><td class="n">
+Mirco "<span>theshark</span>" Weigel<br/>
+Saskia Opitz<br/>
+Kamil Kozak<br/>
+Safdar Mahmood<br/>
+Xiaoyi Wang<br/>
+Rajinder<br/>
+Theodoros Manouilidis<br/>
+</td></tr>
+<tr><td class="t">Community</td><td class="n">
+Sam "<span>DrowsySam</span>" Millington<br/>
+Richard "<span>Metalmuncher</span>" Sixsmith<br/>
+Jukka "<span>Miura</span>" Muikkula<br/>
+Dustin "<span>dkutch</span>" Kutchara<br/>
+Tom "<span>Mythbuster</span>" Verhoeve<br/>
+Jali "<span>Jalkku</span>" Hautala<br/>
+Matti "<span>Masa</span>" Yrjänheikki<br/>
+Daniel "<span>daniel_j</span>" Jones<br/>
+Vasilis "<span>Vasilis</span>" Douvaras<br/>
+Dennis "<span>Dennis-W</span>" Wrekenhorst<br/>
+</td></tr>
+</table>
+</div>
+
+</div>
+
+<!--
+Special Thanks
+Developed with
+-->
+
+<a class="lbutton" href="#" onclick="window.location.href='file:///html/mainmenu.html';" >Back</a><br/>
+
+<style type="text/css">
+@font-face {
+  font-family: "OpenSansBold";
+  src: url(fonts/OpenSans-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "OpenSans";
+  src: url(fonts/OpenSans-Regular.ttf) format("truetype");
+}
+
+body {
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+#video-viewport {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    z-index: -2; /* for accessing the video by click */
+}
+#creditsmask {
+    position: absolute;
+    top:150px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    overflow:hidden;
+    /* background-color:red; */
+    -webkit-mask-box-image: url(images/vignette-mask.png) 75 stretch;
+}
+#creditsTable {
+    font-family: 'OpenSansBold';
+    font-size:2em;
+    color:white;
+    border-collapse:collapse;
+    position: absolute;
+    margin:0px;
+    padding:0px;
+    margin: 0 auto 0 auto;
+    width:80%;
+}
+#creditsTable span {
+    color:rgba(254,110,0,1);
+}
+#creditscontainer {
+    width:100%;
+    text-align: center;
+    border:0;
+}
+
+#creditscontainer img {
+    padding:20px;
+    /*background-color:rgba(20,20,20,0.4);*/
+    margin:30px;
+}
+#creditsTable td {
+    padding:5px;
+}
+#creditsTable td.t {
+    text-align:right;
+    vertical-align:top;
+    /*background-color:rgba(20,20,20,0.4);*/
+    font-family: 'OpenSans';
+    padding-right:40px;
+}
+#creditsTable td.n {
+    text-align:left;
+    vertical-align:top;
+    /*background-color:rgba(20,20,20,0.4);*/
+}
+</style>
+
+<script type="text/javascript">
+
+var min_w = 300; // minimum video width allowed
+var vid_w_orig;  // original video dimensions
+var vid_h_orig;
+
+
+function resizeToCover() {
+    // set the video viewport to the window size
+    $('#video-viewport').width($(window).width());
+    $('#video-viewport').height($(window).height());
+
+    // use largest scale factor of horizontal/vertical
+    var scale_h = $(window).width() / vid_w_orig;
+    var scale_v = $(window).height() / vid_h_orig;
+    var scale = scale_h > scale_v ? scale_h : scale_v;
+
+    // don't allow scaled width < minimum video width
+    if (scale * vid_w_orig < min_w) {scale = min_w / vid_w_orig;}
+
+    // now scale the video
+    $('video').width(scale * vid_w_orig);
+    $('video').height(scale * vid_h_orig);
+    // and center it by scrolling the video viewport
+    $('#video-viewport').scrollLeft(($('video').width() - $(window).width()) / 2);
+    $('#video-viewport').scrollTop(($('video').height() - $(window).height()) / 2);
+}
+
+function resizeCredits() {
+    var maskHeight = $('#creditsmask').height();
+    var maskWidth  = $('#creditsmask').width();
+    $('#creditsTable').css("left", ($('#creditsmask').width() / 2 - $('#creditsTable').width() / 2) + "px");
+    $('#creditsTable').css("top", ($('#creditsmask').height()) + "px");
+}
+
+$(window).resize(function(){
+    //console.log('resized');
+    resizeCredits();
+    resizeToCover();
+});
+
+$(document).ready(function() {
+    vid_w_orig = parseInt($('video').attr('width'));
+    vid_h_orig = parseInt($('video').attr('height'));
+
+    var cm = $('#creditsmask');
+    var c = $('#creditsTable');
+
+    var maskHeight = cm.height();
+
+    $(window).trigger('resize');
+
+    function animateCredits() {
+        c.animate({
+                    top:  '-' + $('#creditsTable').height() * 1.5 + "px"
+                }, {
+                    easing: 'linear',
+                    duration: 30000,
+                    complete: function () {
+                        animateCredits();
+                        $('#creditsTable').css("top", ($('#creditsmask').height()) + "px");
+                    },
+                });
+    }
+    animateCredits();
+
+});
+
+</script>
 </body>
 </html>
