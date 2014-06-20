@@ -280,7 +280,9 @@ $.widget("beamNG.appButton", {
 });
 
 $(document).ready(function() {
+    console.log('getting Applist from Backend:');
     callGameEngineFuncCallback("getAppList()", function(res){
+        console.log('got: '+JSON.stringify(res));
         AppLoader.installedApps = res;
         AppLoader.initialize();
     });
@@ -300,6 +302,7 @@ var AppEngine = {
     initialized : false,
 
     initialize : function() {
+        this.log("initializing AppEngine");
         // adding blendingdiv for editingmode
         $("<div class='appengine-blending'></div>").hide().appendTo('body');
 
@@ -551,6 +554,7 @@ var AppEngine = {
 
 var AppStore = {
     initialize: function(){
+    	this.log("initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
         this.mainDiv.dialog({
             title: "Add App",
@@ -639,7 +643,7 @@ var AppLoader = {
     },
     
     initialize: function(){
-        this.log("Starting to load apps.");
+        this.log("initializing Apploader");
         this.loadApps();
         this.loadInitialized = true;
         this._checkProgress();
