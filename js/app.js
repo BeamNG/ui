@@ -102,8 +102,29 @@ $.widget( "beamNG.app", $.ui.dialog, {
         }).appendTo($(this.element));
         this.app.rootElement.addClass(this.appName);
 
+        // adding optionspanel
+        this.optionsPanel = $("<div></div>").css({
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right:0,
+            display: 'none',
+            background: 'rgba(200,200,200,0.5)'
+        }).appendTo(this.element);
+
+        this.oPanelOptions = {};
+        this.oPanelOptions.hideInCockpit = $('<input type="checkbox" value="hideInCockpit">').appendTo(this.optionsPanel);
+        $("<span>Hide in Cockpitview</span>").appendTo(this.optionsPanel);
+        var self = this;
+        this.oPanelOptions.hideInCockpit.click(function() {
+            self.app.options.hideInCockpit = self.oPanelOptions.hideInCockpit.is(':checked');
+            console.log("current cmaeramode: "+ self.cameraMode);
+            self.onCameraChange({'mode': self.cameraMode});
+        });
+
         // adding savemethod
         this.app.save = function(){ AppEngine.savePreset(); };
+
         // adding logmethod
         var appname = this.appName;
         this.app.log = function(message){ Logger.log("App", message, appname); };
@@ -131,7 +152,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
         this.dialogParent.draggable('option', 'snap', '.preset-'+AppEngine.preset+' .ui-app');
 //        this.dialogParent.draggable('option', 'grid', [ 10, 10 ]);
         
-        HookManager.register('Editmode', this);
+        HookManager.registerAllHooks(this);
         this._setOption('editMode',AppEngine.editMode);
     },
 
@@ -151,10 +172,14 @@ $.widget( "beamNG.app", $.ui.dialog, {
             this.element.addClass('ui-app-editmode');
             this.dialogParent.children('.ui-dialog-titlebar').show();
             this.dialogParent.children('.ui-resizable-handle').show();
+            this.optionsPanel.show();
+            // TODO: make options dynmic
+            this.oPanelOptions.hideInCockpit.attr('checked', (this.app.options.hideInCockpit === true ));
         }else{
             this.element.removeClass('ui-app-editmode');
             this.dialogParent.children('.ui-dialog-titlebar').hide();
             this.dialogParent.children('.ui-resizable-handle').hide();
+            this.optionsPanel.hide();
         }
     },
 
@@ -244,6 +269,17 @@ $.widget( "beamNG.app", $.ui.dialog, {
     onEditmode: function(state){
         this._optionEditMode(state);
     },
+    onCameraChange: function(args){
+        this.cameraMode = args.mode;
+    	this.log("camera changed: "+JSON.stringify(args.mode));
+        // assuming camera:0 = Cockpit
+        this.log(JSON.stringify(this.app.options));
+        if(this.app.options.hideInCockpit === true && args.mode === 0){
+            this.app.rootElement.hide();
+        }else{
+            this.app.rootElement.show();
+        }
+    }
 });
 
 $.widget("beamNG.appButton", {
