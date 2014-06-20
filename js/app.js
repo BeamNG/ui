@@ -121,9 +121,6 @@ $.widget( "beamNG.app", $.ui.dialog, {
             self.onCameraChange({'mode': self.cameraMode});
         });
 
-        // adding savemethod
-        this.app.save = function(){ AppEngine.savePreset(); };
-
         // adding logmethod
         var appname = this.appName;
         this.app.log = function(message){ Logger.log("App", message, appname); };
@@ -136,6 +133,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
             var self = this;
             window.setTimeout(function(){self.close();},0);
         }
+
+        // adding savemethod - this must be after initializing the apps, destorys preset otherwise
+        this.app.save = function(){ AppEngine.savePreset(); };
 
         // installing handlers
         this._on(this.element.parent(), {
@@ -497,6 +497,7 @@ var AppEngine = {
                 });
 
                 this.log("loading preset '"+preset+"'");
+                this.log("loading "+this.persistance.presets[preset].apps.length+" Apps:");
                 $.each(this.persistance.presets[preset].apps, function(index, app) {
                     AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
 
@@ -543,7 +544,9 @@ var AppEngine = {
 
     _loadPersistance : function(){
         if (window.localStorage.getItem("AppEngine") !== null) {
-            this.persistance = JSON.parse(window.localStorage.getItem("AppEngine"));
+            var storageString = window.localStorage.getItem("AppEngine");
+            this.persistance = JSON.parse(storageString);
+            this.log("LOADED CACHE: "+storageString);
             AppEngine.loadPreset("default");
         } else{
             $.getJSON('apps/persistance.json', function(data) {
@@ -559,6 +562,9 @@ var AppEngine = {
     },
 
     _savePersistance : function(){
+        console.log(stacktrace());
+        this.log("SAVING CACHE =======================================================================");
+        this.log("Contents: "+JSON.stringify(this.persistance));
         window.localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
     },
 

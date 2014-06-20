@@ -3,7 +3,6 @@ function Tacho(){}
 Tacho.prototype.initialize = function(){
 	if(this.persistance.Unit === undefined){
 		this.persistance.Unit = "metric";
-		this.save();
 	}
 
 	this.data = {
