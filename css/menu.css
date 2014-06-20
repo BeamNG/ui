@@ -1,109 +1,101 @@
 ﻿/* menu */
 #menu {
-background: rgba(0,0,0,0.5);
-/*border-left: 3px solid #ee4e1d;*/
-width: 200px;
-padding: 5px;
-position: fixed;
-z-index: 100000;
-
-/* 
-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
--moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
--webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+    background: rgba(0,0,0,0.5);
+    /*border-left: 3px solid #ee4e1d;*/
+    width: 200px;
+    padding: 5px;
+    position: fixed;
+    z-index: 100000;
+/*
+    box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+    -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
 */
 }
- 
+
 #menu {
-right: 0; /* Change to right: 0; if you want the panel to display on the right side. */
-top:0;
-transition: 0.2s;
+    right: 0; /* Change to right: 0; if you want the panel to display on the right side. */
+    top:0;
+    transition: 0.2s;
 }
 
- 
 #menu:hover { /*, #menu:focus {*/
-transition: 0.2s;
-right: 0 !important; /* Change to right: 0 !important; if you want the panel to display on the right side. */
+    transition: 0.2s;
+    right: 0 !important; /* Change to right: 0 !important; if you want the panel to display on the right side. */
 }
 
 /* arrow */
 #menu .arrow {
-left: 2px; /* Change to left: 2px; if you want the panel to display on the right side. */
+    left: 2px; /* Change to left: 2px; if you want the panel to display on the right side. */
 }
- 
+
 #menu .arrow {
-/*font: normal 400 25px/25px 'Acme', Helvetica, Arial, sans-serif;*/ /* Acme font is required for .arrow */
-color: rgba(0,0,0,0.75); /* Arrow color */
-width: 16px;
-height: 25px;
-/*display: block;*/
-display:none;
-position: absolute;
-top: 20px;
-cursor: default;
+    /*font: normal 400 25px/25px 'Acme', Helvetica, Arial, sans-serif;*/ /* Acme font is required for .arrow */
+    color: rgba(0,0,0,0.75); /* Arrow color */
+    width: 16px;
+    height: 25px;
+    /*display: block;*/
+    display:none;
+    position: absolute;
+    top: 20px;
+    cursor: default;
 }
- 
+
 /*
 #menu:hover .arrow {
-transform: rotate(-180deg) translate(6px,-3px);
--moz-transform: rotate(-180deg) translate(6px,-3px);
--webkit-transform: rotate(-180deg) translate(6px,-3px);
-}*/
+    transform: rotate(-180deg) translate(6px,-3px);
+    -moz-transform: rotate(-180deg) translate(6px,-3px);
+    -webkit-transform: rotate(-180deg) translate(6px,-3px);
+}
+*/
 
 /* nav */
 #menu nav {
-position: relative;
-top: 75px;
+    position: relative;
+    top: 75px;
 }
- 
+
 #menu nav a {
-padding: 10px 5px;
-/*border-bottom: 1px dotted #c0c0c0;*/
-display: block;
-clear: both;
-/*font: bold 13px/18px 'Open Sans', Helvetica, Arial, sans-serif;*/
-color: #fff;
-text-decoration: none;
-
-
-	display:block;
-	color:#eee;
-	
-	font-family:Verdana;
-	font-size:18px;
-	font-weight:bold;
-	font-style:normal;
-	height:40px;
-	
-	line-height:30px;
-	
-	text-decoration:none;
-	text-align:left;
-	vertical-align: top;
-	
-	transition: all 0.2s ease-out;
-
+    padding: 10px 5px;
+    /*border-bottom: 1px dotted #c0c0c0;*/
+    display: block;
+    clear: both;
+    /*font: bold 13px/18px 'Open Sans', Helvetica, Arial, sans-serif;*/
+    color: #fff;
+    text-decoration: none;
+    display:block;
+    color:#eee;
+    font-family:Verdana;
+    font-size:18px;
+    font-weight:bold;
+    font-style:normal;
+    height:40px;
+    line-height:30px;
+    text-decoration:none;
+    text-align:left;
+    vertical-align: top;
+    transition: all 0.2s ease-out;
 }
- 
+
 #menu nav a:hover {
-color: #66fa66; /*#ee4e1d;*/
-cursor: pointer;
--webkit-filter: drop-shadow( 0px 0px 10px #fff );
-filter: drop-shadow( 0px 0px 10px #fff );
-font-size:22px;
-transition: 0.2s;
+    color: #66fa66; /*#ee4e1d;*/
+    cursor: pointer;
+    -webkit-filter: drop-shadow( 0px 0px 10px #fff );
+    filter: drop-shadow( 0px 0px 10px #fff );
+    font-size:22px;
+    transition: 0.2s;
 }
 
 #menu nav a:hover .icon {
-width:38px !important;
-height:38px !important;
-fill:#66fa66 !important;
+    width:38px !important;
+    height:38px !important;
+    fill:#66fa66 !important;
 }
 
 .icon {
-	display: inline-block;
-	width: 32px;
-	height: 32px;
-	fill: #fff;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    fill: #fff;
     transition: 0.2s;
 }
