@@ -38,7 +38,7 @@ SimpleSpeedo.prototype.update = function(streams){
         speedUnits = toInt(3.6*speedMs);
     }
 
-    var speedStart
+    var speedStart;
     //for resetting scale >160
     if (speedUnits > 160) {
         speedStart = 160;
