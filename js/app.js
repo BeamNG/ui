@@ -243,8 +243,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
     },
     onEditmode: function(state){
         this._optionEditMode(state);
-    }
-
+    },
 });
 
 $.widget("beamNG.appButton", {
@@ -375,11 +374,7 @@ var AppEngine = {
             streamAdd(streams[i]);
         }
         // adding hooks
-        for(var attr in app){
-            if(typeof app[attr] === "function" && attr.substring(0,2) == "on"){
-                HookManager.register(attr.substring(2), app);
-            }
-        }
+        HookManager.registerAllHooks(app);
     },
 
     unregisterApp : function(app){
@@ -588,7 +583,8 @@ var AppStore = {
         }).jquibutton().click(function() {
             AppStore.open();
         });
-        HookManager.register("Editmode",this);
+        
+        HookManager.registerAllHooks(this);
     },
     open: function(){
         this.mainDiv.parent().show();
@@ -609,7 +605,27 @@ var AppStore = {
             this.storeButton.hide();
             this.close();
         }
-    }
+    },
+    onHelpToggle: function(enabled) {
+        // placeholder until we have sth better
+        if(! $('#beamnghelp').length) {
+            $("#mainpage").append('<div id="beamnghelp" style="margin:20px;"><img id="beamnghelpimg" src="images/beamnghelp1.png" /></div>');
+            this.helpcounter = 0;
+        }
+        var display = true;
+        this.helpcounter++;
+        if(this.helpcounter > 2) {
+            this.helpcounter = 0;
+            display = false;
+        }
+        if(display)
+            $('#beamnghelpimg').attr('src', 'images/beamnghelp'+this.helpcounter+'.png');
+        $('#beamnghelp').css('display', (display == 1)?'block' : 'none');
+    },
+
+    onCameraChange: function() {
+    },
+
 };
 
 var AppLoader = {
@@ -715,25 +731,40 @@ var AppLoader = {
 
 var HookManager  = {
     hooksMap : {},
-    register : function(hookName, obj){
+    register : function(hookName, obj) {
         if(this.hooksMap[hookName] === undefined) {
             this.hooksMap[hookName] = [];
         }
+        if(obj["on"+hookName] === undefined) {
+            this.log("Error: registered for a hook but function is missing: " + hookName + ". Missing function: 'on"+hookName+"'");
+            //this.log(obj);
+            return;
+        }
         this.hooksMap[hookName].push([obj, obj["on"+hookName]]);
     },
-    unregister : function(hookName, obj){
+    registerAllHooks : function(obj) {
+        //this.log('unregistering hook: ' + obj);
+        for(var attr in obj) {
+            if(typeof obj[attr] === "function" && attr.substring(0,2) == "on") {
+                HookManager.register(attr.substring(2), obj);
+            }
+        }
+    },
+    unregister : function(hookName, obj) {
+        //this.log('unregistering hook: ' + obj);
         if(this.hooksMap[hookName] === undefined || this.hooksMap[hookName].length === 0) {
             this.log('undefined hook unregistered: ' + hookName);
             return;
         }
         var hooks = this.hooksMap[hookName];
         for (var i = hooks.length - 1; i >= 0; i--) {
-        	if(hooks[i][0] == obj){
-        		hooks.splice(i,1);
-        	}
+            if(hooks[i][0] == obj) {
+                hooks.splice(i,1);
+            }
         } 
     },
-    unregisterAll: function(obj){
+    unregisterAll: function(obj) {
+        //this.log('unregistering object: ' + obj);
         $.each(this.hooksMap, function(index, hooks) {
             if(hooks.length > 0){
                 for (var i = hooks.length - 1; i >= 0; i--) {
@@ -745,18 +776,18 @@ var HookManager  = {
         });
     },
     trigger : function(hookName){
-        this.log(hookName);
         if(this.hooksMap[hookName] === undefined) {
             this.log('undefined hook triggered: ' + hookName);
             return;
         }
         var args = Array.prototype.slice.call(arguments, 1);
+        this.log(hookName + '(' +  JSON.stringify(args) + ')');
         $.each(this.hooksMap[hookName], function(k, v) {
             v[1].apply(v[0], args);
         });
     },
     log: function(message){
-        Logger.log("HookManager",message);
+        Logger.log("HookManager", message);
     }
 };
 

@@ -39,6 +39,3 @@ HydrosController.prototype.onHydrosUpdate = function(val){
     });
     //$('<textarea>'+JSON.stringify(val)+'</textarea>').appendTo(root);;
 };
-
-HydrosController.prototype.update = function(streams){
-};
