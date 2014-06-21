@@ -958,6 +958,8 @@ var KeyManager = {
     },
     ku79: function(modifiers){ // O
         $('#debug_globalonoff').click();
+        var state = $('#debug_globalonoff').is(':checked') ? 'enabled' : 'disabled';
+        HookManager.trigger('Message',{msg:'Debug '+state, category:'debug',ttl: 2});
     },
     ku85: function(modifiers){ // U
         if(modifiers.ctrl){
@@ -968,10 +970,20 @@ var KeyManager = {
         }
     },
     ku187: function(modifiers){ // +
-
+    	if(modifiers.shift){
+    		var oldValue = $('#debug_mesh_visibility').val();
+    		var newValue = Math.min((Math.floor(oldValue/20)+1)*20,100);
+    		$('#debug_mesh_visibility').val(newValue).slider('refresh');
+    		HookManager.trigger('Message',{msg:'Mesh Visibility changed to '+newValue+'%', category:'debug',ttl: 2});
+    	}
     },
     ku189: function(modifiers){ // -
-
+    	if(modifiers.shift){
+    		var oldValue = $('#debug_mesh_visibility').val();
+    		var newValue = Math.max((Math.ceil(oldValue/20)-1)*20,0);
+    		$('#debug_mesh_visibility').val(newValue).slider('refresh');
+    		HookManager.trigger('Message',{msg:'Mesh Visibility changed to '+newValue+'%', category:'debug',ttl: 2});
+    	}
     },
     ku219: function(modifiers){ // [
         DebugManager.previousDebug();
@@ -979,6 +991,8 @@ var KeyManager = {
     ku221: function(modifiers){ // ]
         DebugManager.nextDebug();
     },
+/*	Removed until we find a way to check if the Application has the focus and
+	prevent alt+tab triggering this
     kd18: function(){ // alt v
         if(!AppEngine.editMode){
             AppEngine.toggleEditMode();
@@ -991,6 +1005,7 @@ var KeyManager = {
         }
         this.altpressed = false;
     }
+    */
 
 };
 KeyManager.initialize();
