@@ -1,18 +1,18 @@
 {
-	"info": {
-		"name" : "VehicleDebug",
-		"author": "beamng.ui Team",
-		"version": "0.1",
-		"description": "An app with various debug helpers"
-	},
+    "info": {
+        "name" : "VehicleDebug",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "An app with various debug helpers"
+    },
 
-	"appearance": {
-		"size" : {
-			"initial" : [300,300]
-		}
-	},
-	
-	"data": {
-		"streams" : ["engineInfo", "electrics"]
-	}
+    "appearance": {
+        "size" : {
+            "initial" : [300,300]
+        }
+    },
+
+    "data": {
+        "streams" : ["engineInfo", "electrics"]
+    }
 }

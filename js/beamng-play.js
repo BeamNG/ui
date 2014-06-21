@@ -73,7 +73,7 @@ $(document).ready(function() {
     widgetEventHandler(updateGameEngineValue, 'debug_render_bb', '$Scene::renderBoundingBoxes');
     widgetEventHandler(updateGameEngineValue, 'debug_render_shadows', '$Shadows::disable');
     widgetEventHandler(updateGameEngineValue, 'debug_render_wireframe', '$gfx::wireframe');
-    
+
     widgetEventHandler(callGameEngineFunc, 'debug_render_depthviz', 'toggleDepthViz');
     widgetEventHandler(callGameEngineFunc, 'debug_render_normalviz', 'toggleNormalsViz');
     widgetEventHandler(callGameEngineFunc, 'debug_render_lightcolorviz', 'toggleLightColorViz');

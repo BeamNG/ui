@@ -25,7 +25,7 @@ html, body {position: relative}
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     left:0;
-    right:0;    
+    right:0;
 }
 
 
@@ -185,4 +185,3 @@ html, body {position: relative}
     background-color: rgba(0,0,0,0.5);
     z-index: -250;
 }
-

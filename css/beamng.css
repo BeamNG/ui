@@ -5,10 +5,10 @@ html,body{
     margin:0px;
     overflow: hidden;
 /*    background-color:black; */
-    
+
     background: transparent !important;
     background-image: url('') !important;
-    
+
 }
 
 * {
@@ -81,7 +81,7 @@ html,body{
     bottom:10px;
     right:20px;
     width:300px
-    
+
 }
 
 .top-right{
@@ -133,9 +133,9 @@ html,body{
 }
 
 .ui-page-theme-a {
-    
+
     background:transparent !important;
-    
+
 }
 
 kbd {

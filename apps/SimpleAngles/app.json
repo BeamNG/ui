@@ -1,10 +1,10 @@
 {
-	"info": {
-		"name" : "Angles",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "lel"
-	},
+    "info": {
+        "name" : "Angles",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "lel"
+    },
 
      "appearance": {
       "background" : "opaque-simple",
@@ -13,7 +13,7 @@
       }
      },
 
-	"data": {
-		"streams" : ["sensors"]
-	}
+    "data": {
+        "streams" : ["sensors"]
+    }
 }

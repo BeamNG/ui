@@ -21,7 +21,7 @@ function BeamNGPropertyGrid(data) {
         $( document ).tooltip();
     }
 
-    function escapeJQuerySelector(str) 
+    function escapeJQuerySelector(str)
     {
         if (str)
             return str.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
@@ -33,7 +33,7 @@ function BeamNGPropertyGrid(data) {
             var selector = '#' + escapeJQuerySelector(d.path);
             PGBool.prototype.get    = function()  { return $(selector).is(':checked'); }
             PGBool.prototype.set    = function(v) { $(selector).prop('checked', v); }
-            PGBool.prototype.create = function()  { return '<input type="checkbox" id="' + d.path + '" value="' + d.val + '" >'; } // class="regular-checkbox" 
+            PGBool.prototype.create = function()  { return '<input type="checkbox" id="' + d.path + '" value="' + d.val + '" >'; } // class="regular-checkbox"
         },
         'combo' : function PGCombo(d) {
             var selector = '#' + escapeJQuerySelector(d.path);
@@ -52,7 +52,7 @@ function BeamNGPropertyGrid(data) {
                     for(var k in d.options) {
                         var o = d.options[k];
                         res += '<option value="' + k + '">' + o + '</option>';
-                    }                    
+                    }
                 }
                 res += '</select>';
                 return res;
@@ -71,11 +71,11 @@ function BeamNGPropertyGrid(data) {
         //container.flexigrid();
         //console.log(html);
     }
-    
+
     BeamNGPropertyGrid.prototype.workRec = function(d, path, level) {
         // this function is called "per value" / "per control" - not for lists of controls
         var res = '';
-        
+
         // set path correctly
         d.path = path;
         if(d.id)
@@ -93,7 +93,7 @@ function BeamNGPropertyGrid(data) {
             // work off all child data
             if(d.name)
                 res += '</table><table border="0" class="propertyGridContainer"><tr class="pgGroupTitle"><td colspan="3" class="pgMinus">' + d.name + '</td></tr><tr>'+spacetd+'<td colspan="2"><table border="0" class="propertyGridContainer">\n';
-            
+
             if(d.childs) {
                 for(var k in d.childs) {
                     d.childs[k].id = k; // always assign the id

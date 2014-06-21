@@ -139,7 +139,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
         // installing handlers
         this._on(this.element.parent(), {
-            resize:"resize", 
+            resize:"resize",
             dragstart:"dragStart",
             drag:"drag",
             dragstop:"dragStop"
@@ -150,7 +150,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
         this.dialogParent = $(this.element).parents('.ui-dialog');
         this.dialogParent.draggable('option', 'snap', '.preset-'+AppEngine.preset+' .ui-app');
 //        this.dialogParent.draggable('option', 'grid', [ 10, 10 ]);
-        
+
         HookManager.registerAllHooks(this);
         this._setOption('editMode',AppEngine.editMode);
     },
@@ -284,7 +284,7 @@ $.widget("beamNG.appButton", {
         var appName = this.options.app;
         this.appSettings = AppEngine.appSettings[appName];
 
-        
+
         // creating the widget
         this.element.addClass('appButton');
 
@@ -361,7 +361,7 @@ var AppEngine = {
             $('.appengine-blending').show();
         } else{
             $('.appengine-blending').hide();
-            
+
             this.savePreset();
         }
 
@@ -394,7 +394,7 @@ var AppEngine = {
                         app.update(streamList);
                     }catch(e){
                         this.log("An Error occured while trying to call "+app.name+".update() : "+e.stack);
-                    }                
+                    }
                 }else{
                     this.log("A least one stream of "+app.name+" isn't not ready or non existing, no update.");
                 }
@@ -486,7 +486,7 @@ var AppEngine = {
             }
 
             this.preset = preset;
-            
+
 
             if(this.runningApps[preset] === undefined){ // Preset wasn't loaded before
                 this.runningApps[preset] = [];
@@ -520,7 +520,7 @@ var AppEngine = {
         this.persistance.presets[this.preset].apps = [];
         this.log("Saving Preset "+this.preset);
         $.each(this.runningApps[this.preset], function(index, app) {
-            
+
             var appData = {};
             appData.name = app.constructor.name;
             appData.position = [app._widget.app("option","referencePoint"), app._widget.app("option","refPointOffset")];
@@ -593,7 +593,7 @@ var AppEngine = {
 
 var AppStore = {
     initialize: function(){
-    	console.log("initializing AppStore");
+        console.log("initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
         this.mainDiv.dialog({
             title: "Add App",
@@ -626,7 +626,7 @@ var AppStore = {
         }).jquibutton().click(function() {
             AppStore.open();
         });
-        
+
         HookManager.registerAllHooks(this);
     },
     open: function(){
@@ -680,7 +680,7 @@ var AppLoader = {
         ERROR: -1,
         LOADING : 0
     },
-    
+
     initialize: function(){
         this.log("initializing Apploader");
         this.loadApps();
@@ -706,7 +706,7 @@ var AppLoader = {
 
     _loadAppJs : function(app){
         this._setLoadState(app,'js',this.LOADSTATE.LOADING);
-        
+
         $.getScript( "apps/"+app+"/app.js", function() {
             AppLoader._setLoadState(app,'js',AppLoader.LOADSTATE.DONE);
         }).fail(function(){
@@ -804,7 +804,7 @@ var HookManager  = {
             if(hooks[i][0] == obj) {
                 hooks.splice(i,1);
             }
-        } 
+        }
     },
     unregisterAll: function(obj) {
         //this.log('unregistering object: ' + obj);

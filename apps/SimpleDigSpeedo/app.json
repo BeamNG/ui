@@ -1,10 +1,10 @@
 {
-	"info": {
-		"name" : "Digital Speedometer",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "Displays current speed in km/h or MPH. Click the unit label to swap between metric and imperial."
-	},
+    "info": {
+        "name" : "Digital Speedometer",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Displays current speed in km/h or MPH. Click the unit label to swap between metric and imperial."
+    },
 
      "appearance": {
       "background" : "opaque-simple",
@@ -14,7 +14,7 @@
       }
      },
 
-	"data": {
-		"streams" : ["electrics"]
-	}
+    "data": {
+        "streams" : ["electrics"]
+    }
 }

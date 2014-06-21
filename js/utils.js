@@ -1,36 +1,36 @@
 function Converter(inMin, inMax, outMin, outMax)
 {
-	this.inMin = inMin;
-	this.inMax = inMax;
-	this.inLength = inMax - inMin;
-	this.outMin = outMin;
-	this.outMax = outMax;
-	this.outLength = outMax- outMin;
+    this.inMin = inMin;
+    this.inMax = inMax;
+    this.inLength = inMax - inMin;
+    this.outMin = outMin;
+    this.outMax = outMax;
+    this.outLength = outMax- outMin;
 }
 Converter.prototype.convertValue = function(value)
 {
-	if(value<this.inMin) valueIn = this.inMin;
-	if(value>this.inMax) valueIn = this.inMax;
-	return (value/this.inLength)*this.outLength + this.outMin;
+    if(value<this.inMin) valueIn = this.inMin;
+    if(value>this.inMax) valueIn = this.inMax;
+    return (value/this.inLength)*this.outLength + this.outMin;
 };
 Converter.prototype.convertLength = function(length)
 {
-	return (length/this.inLength)*this.outLength;
+    return (length/this.inLength)*this.outLength;
 };
 
 function toInt(val){
-	if(typeof val == "string"){
-		return toInt(parseInt(val));
-	}else if(typeof val == "number"){
-		return val | 0;
-	}else{
-		return NaN;
-	}
+    if(typeof val == "string"){
+        return toInt(parseInt(val));
+    }else if(typeof val == "number"){
+        return val | 0;
+    }else{
+        return NaN;
+    }
 }
 
 function stacktrace() {
     var stack = new Error().stack.split('\n');
-	stack.splice(0,2);
+    stack.splice(0,2);
     return "STACKTRACE\n" + stack.join('\n');
 }
 
@@ -50,18 +50,18 @@ function rSet(toModify, newLength, padChar) {
 }
 
 function randomNumbers(size){
-	var perm = [];
-	var i, j, ex;
-	for (i = 0; i < size; i++) {
-		perm[i] = i;
-	}
+    var perm = [];
+    var i, j, ex;
+    for (i = 0; i < size; i++) {
+        perm[i] = i;
+    }
 
-	for (i = size-1; i >= 0; i--) {
-		j = (Math.random()*i) | 0;
-		ex = perm[j];
-		perm[j] = perm[i];
-		perm[i] = ex;
-	}
+    for (i = size-1; i >= 0; i--) {
+        j = (Math.random()*i) | 0;
+        ex = perm[j];
+        perm[j] = perm[i];
+        perm[i] = ex;
+    }
 
-	return perm;
+    return perm;
 }

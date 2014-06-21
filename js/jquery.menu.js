@@ -9,6 +9,6 @@
     //$(".icon").hover(function () {
     //    $(this).show("slide", { direction: "left" }, 3000);  //toggleClass("hover");
     //});
-    
+
     //$("#menu").hover(function () { $(this).show("slide", { direction: "left" }, 1000); },function () { $(this).hide("slide", { direction: "right" }, 1000); });
 });

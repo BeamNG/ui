@@ -1,10 +1,10 @@
 {
-	"info": {
-		"name" : "Digital Tachometer",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "Displays current engine RPM."
-	},
+    "info": {
+        "name" : "Digital Tachometer",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Displays current engine RPM."
+    },
 
      "appearance": {
       "background" : "opaque-simple",
@@ -14,7 +14,7 @@
       }
      },
 
-	"data": {
-		"streams" : ["engineInfo"]
-	}
+    "data": {
+        "streams" : ["engineInfo"]
+    }
 }

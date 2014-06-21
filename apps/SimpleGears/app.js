@@ -24,7 +24,7 @@ SimpleGears.prototype.toggleView = function(){
 SimpleGears.prototype.update = function (streams) {
 
     //Get the values to work with, do rounding and stuff as needed TODO: Get if car is manual or Auto Autoally when this is exposed to the ui system
-	var aGear = Math.round(streams.electrics.gear_A*5);
+    var aGear = Math.round(streams.electrics.gear_A*5);
     var mGear = streams.engineInfo[5];
     var maxFGears = streams.engineInfo[6];
     var maxRGears = streams.engineInfo[7];

@@ -1,19 +1,19 @@
 {
-	"info": {
-		"name" : "Node/Beam info",
-		"author": "beamng.ui Team",
-		"version": "0.1",
-		"description": "Shows some N/B statistics"
-	},
+    "info": {
+        "name" : "Node/Beam info",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "Shows some N/B statistics"
+    },
 
-	"appearance": {
-		"background" : "opaque",
-		"size" : {
-			"initial" : [300,"auto"]
-		}
-	},
-	
-	"data": {
-		"streams" : ["stats"]
-	}
+    "appearance": {
+        "background" : "opaque",
+        "size" : {
+            "initial" : [300,"auto"]
+        }
+    },
+
+    "data": {
+        "streams" : ["stats"]
+    }
 }

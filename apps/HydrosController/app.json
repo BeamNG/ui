@@ -12,7 +12,7 @@
             "initial" : [300,300]
         }
     },
-    
+
     "data": {
         "streams" : ["engineInfo", "electrics"]
     }

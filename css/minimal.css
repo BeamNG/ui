@@ -1,66 +1,66 @@
 .lbutton, .rbutton {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #2d6db5), color-stop(1, #184fa7) );
-	background-color:#2d6db5;
-	border-radius:25px;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #2d6db5), color-stop(1, #184fa7) );
+    background-color:#2d6db5;
+    border-radius:25px;
 
-	border:3px solid #337fed;
-	display:inline-block;
-	color:#eee;
-	
-	font-family:Verdana;
-	font-size:18px;
-	font-weight:bold;
-	font-style:normal;
-	height:50px;
-	
-	line-height:50px;
-	width:150px;
-	
-	text-decoration:none;
-	text-align:left;
-	
-	margin: 0;
-	box-shadow: -8px 0 30px -5px rgba(0,0,0,.8);
-	z-index:5;
-	transition: all 0.2s ease-out;	
+    border:3px solid #337fed;
+    display:inline-block;
+    color:#eee;
+
+    font-family:Verdana;
+    font-size:18px;
+    font-weight:bold;
+    font-style:normal;
+    height:50px;
+
+    line-height:50px;
+    width:150px;
+
+    text-decoration:none;
+    text-align:left;
+
+    margin: 0;
+    box-shadow: -8px 0 30px -5px rgba(0,0,0,.8);
+    z-index:5;
+    transition: all 0.2s ease-out;
 }
 .rbutton {
-	border-top-right-radius:0;
-	border-bottom-right-radius:0;
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
 
-	border-right:0;
+    border-right:0;
 
-	text-align:left;
+    text-align:left;
 
-	padding-left:25px;
+    padding-left:25px;
 }
 .lbutton {
-	border-top-left-radius:0;
-	border-bottom-left-radius:0;
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
 
-	border-left:0;
+    border-left:0;
 
-	text-align:right;
+    text-align:right;
 
-	padding-right:25px;
+    padding-right:25px;
 }
 
 .lbutton:hover, .rbutton:hover {
-	transition: all 0.2s ease-out;
-	text-shadow: 0 0 15px white;
-	color:white;
-	border:3px solid white;
-	width:180px;
+    transition: all 0.2s ease-out;
+    text-shadow: 0 0 15px white;
+    color:white;
+    border:3px solid white;
+    width:180px;
 }
 
 .rbutton:hover {
-	border-right:0;
+    border-right:0;
 }
 .lbutton:hover {
-	border-left:0;
+    border-left:0;
 }
 
 .rbutton:active, .lbutton:active {
-	position:relative;
-	top:1px;
+    position:relative;
+    top:1px;
 }

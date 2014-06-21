@@ -1,10 +1,10 @@
 {
-	"info": {
-		"name" : "Pedals and Axis",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "Shows current clutch, brake, throttle and parkingbrake axis positions."
-	},
+    "info": {
+        "name" : "Pedals and Axis",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Shows current clutch, brake, throttle and parkingbrake axis positions."
+    },
 
      "appearance": {
       "background" : "opaque-simple",
@@ -14,7 +14,7 @@
       }
      },
 
-	"data": {
-		"streams" : ["electrics"]
-	}
+    "data": {
+        "streams" : ["electrics"]
+    }
 }

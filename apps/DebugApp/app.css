@@ -1,9 +1,9 @@
 .app .DebugApp
 {
-	overflow: auto;
+    overflow: auto;
 }
 .app .DebugApp .someOtherClass
 {
-	background: blue;
-	color: white;
+    background: blue;
+    color: white;
 }

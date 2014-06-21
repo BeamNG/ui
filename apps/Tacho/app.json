@@ -1,18 +1,18 @@
 {
-	"info": {
-		"name" : "Tacho",
-		"author": "beamng.ui Team",
-		"version": "0.1",
-		"description": "Tacho (does what a tacho should do)"
-	},
+    "info": {
+        "name" : "Tacho",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "Tacho (does what a tacho should do)"
+    },
 
-	"appearance": {
-		"size" : {
-			"initial" : [300,300]
-		}
-	},
-	
-	"data": {
-		"streams" : ["engineInfo", "electrics"]
-	}
+    "appearance": {
+        "size" : {
+            "initial" : [300,300]
+        }
+    },
+
+    "data": {
+        "streams" : ["engineInfo", "electrics"]
+    }
 }

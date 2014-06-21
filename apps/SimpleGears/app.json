@@ -1,10 +1,10 @@
 {
-	"info": {
-		"name" : "Gears",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "Displays current manual or automatic gear. Click the label to swap Automatic and Manual gearbox display."
-	},
+    "info": {
+        "name" : "Gears",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Displays current manual or automatic gear. Click the label to swap Automatic and Manual gearbox display."
+    },
 
      "appearance": {
       "background" : "opaque-simple",
@@ -14,7 +14,7 @@
       }
      },
 
-	"data": {
-		"streams" : ["electrics","engineInfo"]
-	}
+    "data": {
+        "streams" : ["electrics","engineInfo"]
+    }
 }

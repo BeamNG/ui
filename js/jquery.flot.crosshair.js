@@ -5,11 +5,11 @@ Licensed under the MIT license.
 
 The plugin supports these options:
 
-	crosshair: {
-		mode: null or "x" or "y" or "xy"
-		color: color
-		lineWidth: number
-	}
+    crosshair: {
+        mode: null or "x" or "y" or "xy"
+        color: color
+        lineWidth: number
+    }
 
 Set the mode to one of "x", "y" or "xy". The "x" mode enables a vertical
 crosshair that lets you trace the values on the x axis, "y" enables a
@@ -39,19 +39,19 @@ The plugin also adds four public methods:
 
     Example usage:
 
-	var myFlot = $.plot( $("#graph"), ..., { crosshair: { mode: "x" } } };
-	$("#graph").bind( "plothover", function ( evt, position, item ) {
-		if ( item ) {
-			// Lock the crosshair to the data point being hovered
-			myFlot.lockCrosshair({
-				x: item.datapoint[ 0 ],
-				y: item.datapoint[ 1 ]
-			});
-		} else {
-			// Return normal crosshair operation
-			myFlot.unlockCrosshair();
-		}
-	});
+    var myFlot = $.plot( $("#graph"), ..., { crosshair: { mode: "x" } } };
+    $("#graph").bind( "plothover", function ( evt, position, item ) {
+        if ( item ) {
+            // Lock the crosshair to the data point being hovered
+            myFlot.lockCrosshair({
+                x: item.datapoint[ 0 ],
+                y: item.datapoint[ 1 ]
+            });
+        } else {
+            // Return normal crosshair operation
+            myFlot.unlockCrosshair();
+        }
+    });
 
   - unlockCrosshair()
 
@@ -66,7 +66,7 @@ The plugin also adds four public methods:
             lineWidth: 1
         }
     };
-    
+
     function init(plot) {
         // position of crosshair in pixels
         var crosshair = { x: -1, y: -1, locked: false };
@@ -79,12 +79,12 @@ The plugin also adds four public methods:
                 crosshair.x = Math.max(0, Math.min(o.left, plot.width()));
                 crosshair.y = Math.max(0, Math.min(o.top, plot.height()));
             }
-            
+
             plot.triggerRedrawOverlay();
         };
-        
+
         plot.clearCrosshair = plot.setCrosshair; // passes null for pos
-        
+
         plot.lockCrosshair = function lockCrosshair(pos) {
             if (pos)
                 plot.setCrosshair(pos);
@@ -108,18 +108,18 @@ The plugin also adds four public methods:
         function onMouseMove(e) {
             if (crosshair.locked)
                 return;
-                
+
             if (plot.getSelection && plot.getSelection()) {
                 crosshair.x = -1; // hide the crosshair while selecting
                 return;
             }
-                
+
             var offset = plot.offset();
             crosshair.x = Math.max(0, Math.min(e.pageX - offset.left, plot.width()));
             crosshair.y = Math.max(0, Math.min(e.pageY - offset.top, plot.height()));
             plot.triggerRedrawOverlay();
         }
-        
+
         plot.hooks.bindEvents.push(function (plot, eventHolder) {
             if (!plot.getOptions().crosshair.mode)
                 return;
@@ -134,7 +134,7 @@ The plugin also adds four public methods:
                 return;
 
             var plotOffset = plot.getPlotOffset();
-            
+
             ctx.save();
             ctx.translate(plotOffset.left, plotOffset.top);
 
@@ -166,7 +166,7 @@ The plugin also adds four public methods:
             eventHolder.unbind("mousemove", onMouseMove);
         });
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,

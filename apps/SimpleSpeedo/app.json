@@ -1,10 +1,10 @@
 {
-	"info": {
-		"name" : "Speedometer",
-		"author": "Metalmuncher",
-		"version": "0.1",
-		"description": "Displays speed from wheels if avaliable, falls back to airspeed. Click the unit label to swap between metric and imperial."
-	},
+    "info": {
+        "name" : "Speedometer",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Displays speed from wheels if avaliable, falls back to airspeed. Click the unit label to swap between metric and imperial."
+    },
      "appearance": {
       "background" : "opaque-simple",
       "resize" : false,
@@ -13,7 +13,7 @@
       }
      },
 
-	"data": {
-		"streams" : ["electrics"]
-	}
+    "data": {
+        "streams" : ["electrics"]
+    }
 }

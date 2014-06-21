@@ -24,7 +24,7 @@ if(typeof(beamng) === 'undefined') {
         };
         this.sendSystemLua = function(s) {
                 console.log("beamng.sendSystemLua('" + s + "')");
-        };        
+        };
     }
 
     beamng = new beamngEmulation();

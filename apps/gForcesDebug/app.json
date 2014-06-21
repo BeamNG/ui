@@ -1,22 +1,22 @@
 {
-	"info": {
-		"name" : "g-Forces",
-		"author": "beamng.ui Team",
-		"version": "0.1",
-		"description": "Simple visualisation of the g-forces affecting the vehicle."
-	},
+    "info": {
+        "name" : "g-Forces",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "Simple visualisation of the g-forces affecting the vehicle."
+    },
 
-	"appearance": {
-		"background" : "transparent",
-		"resize" : "aspectRatio",
-		"size" : {
-			"initial" : [300,300],
-			"minimal" : [200,200],
-			"maximal" : [500,500]
-		}
-	},
-	
-	"data": {
-		"streams" : ["sensors"]
-	}
+    "appearance": {
+        "background" : "transparent",
+        "resize" : "aspectRatio",
+        "size" : {
+            "initial" : [300,300],
+            "minimal" : [200,200],
+            "maximal" : [500,500]
+        }
+    },
+
+    "data": {
+        "streams" : ["sensors"]
+    }
 }

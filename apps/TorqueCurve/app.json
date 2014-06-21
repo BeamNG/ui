@@ -1,19 +1,19 @@
 {
-	"info": {
-		"name" : "Torquecurve",
-		"author": "beamng.ui Team",
-		"version": "0.1",
-		"description": "Shows a Torque- and Powergraph of the current engine"
-	},
+    "info": {
+        "name" : "Torquecurve",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "Shows a Torque- and Powergraph of the current engine"
+    },
 
-	"appearance": {
-		"background" : "opaque",
-		"size" : {
-			"initial" : [500,200]
-		}
-	},
-	
-	"data": {
-		"streams" : ["torqueCurve", "engineInfo","electrics"]
-	}
+    "appearance": {
+        "background" : "opaque",
+        "size" : {
+            "initial" : [500,200]
+        }
+    },
+
+    "data": {
+        "streams" : ["torqueCurve", "engineInfo","electrics"]
+    }
 }
