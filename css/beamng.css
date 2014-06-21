@@ -141,8 +141,10 @@ html,body{
 
 }
 
-.ui-btn-icon-notext {
-    box-shadow: 0 0 2px white;
+.top-right .ui-btn-icon-notext, .bottom-right .ui-btn-icon-notext {
+    box-shadow: 0 0 1px 2px white !important;
+    width: 0;
+    height:10px;
 }
 
 kbd {
