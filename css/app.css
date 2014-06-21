@@ -94,7 +94,7 @@ html, body {position: relative; cursor:default;}
 
 .ui-app-hidden
 {
-    background: transparent;
+    background: transparent !important;
 }
 
 .ui-app-editmode, .ui-app-editMode.ui-app-hidden

@@ -117,6 +117,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
         this.oPanelOptions.hideInCockpit = $('<input type="checkbox" value="hideInCockpit">').appendTo(this.optionsPanel);
         $("<span>Hide in Cockpitview</span>").appendTo(this.optionsPanel);
         var self = this;
+        this.cameraMode = AppEngine.cameraMode;
         this.oPanelOptions.hideInCockpit.click(function() {
             self.app.options.hideInCockpit = self.oPanelOptions.hideInCockpit.is(':checked');
             self.onCameraChange({'mode': self.cameraMode});
@@ -273,10 +274,10 @@ $.widget( "beamNG.app", $.ui.dialog, {
         this.cameraMode = args.mode;
         // assuming camera:0 = Cockpit
         if(this.app.options.hideInCockpit === true && args.mode === 0){
-            this.app.rootElement.hide();
+            this.app.rootElement.css('visibility','hidden');
             this.element.addClass('ui-app-hidden');
         }else{
-            this.app.rootElement.show();
+            this.app.rootElement.css('visibility','visible');
             this.element.removeClass('ui-app-hidden');
         }
     }
@@ -336,6 +337,7 @@ var AppEngine = {
     runningRequests : 0,
     presetPanel : {},
     initialized : false,
+    cameraMode: -1,
 
     initialize : function() {
         this.log("initializing AppEngine");
@@ -366,6 +368,9 @@ var AppEngine = {
         // load persistance
         this._loadPersistance();
 
+        // register Hooks
+        HookManager.registerAllHooks(this);
+
         AppStore.initialize();
         DebugManager.initialize();
 
@@ -383,13 +388,6 @@ var AppEngine = {
 
             this.savePreset();
         }
-
-        // changing appstates
- /*       $.each(this.runningApps, function(i, preset){
-            $.each(preset, function(index, app){
-                app._widget.app("option", "editMode", AppEngine.editMode);
-            });
-        });*/
     },
 
     update : function(data){
@@ -609,6 +607,9 @@ var AppEngine = {
     },
     log: function(message){
         Logger.log("AppEngine",message);
+    },
+    onCameraChange: function(args){
+    	this.cameraMode = args.mode;
     }
 };
 
