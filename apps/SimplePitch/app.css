@@ -1,0 +1,10 @@
+.app .SimplePitch
+{
+    text-align:center;
+    color: RGBA(0,0,0,0.5);
+}
+
+.app .SimplePitch .canvas {
+    height:200px;
+    cursor: pointer;
+}

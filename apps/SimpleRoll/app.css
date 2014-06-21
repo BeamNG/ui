@@ -1,0 +1,10 @@
+.app .SimpleRoll
+{
+    text-align:center;
+    color: RGBA(0,0,0,0.5);
+}
+
+.app .SimpleRoll .canvas {
+    height:200px;
+    cursor: pointer;
+}

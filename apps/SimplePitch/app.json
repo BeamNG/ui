@@ -1,0 +1,20 @@
+{
+    "info": {
+        "name" : "Pitch",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "Displays the current pitch of the vehicle. Click the app to swap which side the scale is on."
+    },
+
+     "appearance": {
+      "background" : "opaque-simple",
+      "size" : {
+        "initial" : [200,200],
+        "maximal" : [512,512]
+      }
+     },
+
+    "data": {
+        "streams" : ["sensors"]
+    }
+}
