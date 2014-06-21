@@ -55,10 +55,17 @@
 <div class="menu-content">
 
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
-    <h3>Physics</h3>
+    <h3>Vehicles</h3>
 <form>
+    <input type="button" value="Spawn new" data-mini="true" onclick="executeGameEngineCode('spawnVehicle();');">
     <input type="button" value="Reset all" data-mini="true" onclick="callSystemLuaFunction('objectBroadcast(\'obj:requestReset(RESET_PHYSICS)\')');">
     <input type="button" value="Reload all" data-mini="true" onclick="callGameEngineFunc('beamNGReloadAllVehicles');">
+    <input type="button" value="Part Configuration" data-mini="true" onclick="beamng.sendActiveObjectLua('partmgmt.showGUI()');">
+    <input type="button" value="Change Vehicle" data-mini="true" onclick="executeGameEngineCode('Canvas.pushDialog(VehicleChooser);');">
+    <input type="button" value="AI (experimental)" data-mini="true" onclick="beamng.sendSystemLua('showAIGUI();');">
+    <input type="button" value="Toggle Free Camera" data-mini="true" onclick="executeGameEngineCode('toggleCamera(1);');">
+
+
     <label for="physics_enabled">Physics enabled:</label>
     <input type="checkbox" data-role="flipswitch" name="physics_enabled" id="physics_enabled" checked="">
 </form>
@@ -151,9 +158,9 @@ function changeBullettime(v) {
 }
 </script>
         <label for="option_simspeed">Simulation Speed</label>
-        <input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="0" max="100" value="100">
+        <input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="2" max="100" value="100">
         <div class="narrowbuttons">
-            <input type="button" value="1/100" data-mini="true" onclick="changeBullettime(1);">
+            <input type="button" value="2/100" data-mini="true" onclick="changeBullettime(1);">
             <input type="button" value="1/10" data-mini="true" onclick="changeBullettime(10);">
             <input type="button" value="1/2" data-mini="true" onclick="changeBullettime(50);">
             <input type="button" value="3/4" data-mini="true" onclick="changeBullettime(75);">

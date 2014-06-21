@@ -56,17 +56,26 @@ Daniel "<span>daniel_j</span>" Jones<br/>
 Vasilis "<span>Vasilis</span>" Douvaras<br/>
 Dennis "<span>Dennis-W</span>" Wrekenhorst<br/>
 </td></tr>
+<tr><td class="t">Special thanks to</td><td class="n">
+Pierre-Michel "<span>pricorde</span>" Ricordel<br/>
+</td></tr>
+<tr><td class="t">Made possible with</td><td class="n">
+LuaJIT<br/>
+LuaBridge<br/>
+Chromium Embedded Framework<br/>
+Torque3D<br/>
+jQuery, jQuery.ui, jQuery.mobile<br/>
+libtorrent<br/>
+LuaSocket<br/>
+Sublime Text<br/>
+</td></tr>
+
 </table>
 </div>
 
 </div>
 
-<!--
-Special Thanks
-Developed with
--->
-
-<a class="lbutton" href="#" onclick="window.location.href='file:///html/mainmenu.html';" >Back</a><br/>
+<input type="button" id="backbutton" href="#" onclick="window.location.href='file:///html/mainmenu.html';" value="Back" /><br/>
 
 <style type="text/css">
 @font-face {
@@ -102,6 +111,17 @@ body {
     /* background-color:red; */
     -webkit-mask-box-image: url(images/vignette-mask.png) 75 stretch;
 }
+#backbutton {
+    position: absolute;
+    bottom:0px;
+    left:0px;
+    margin:10px;
+    z-index: 9999;
+    width:100px;
+    height:50px;
+    background-color:#ddd;
+    border:1px solid #444;
+}
 #creditsTable {
     font-family: 'OpenSansBold';
     font-size:2em;
@@ -112,6 +132,7 @@ body {
     padding:0px;
     margin: 0 auto 0 auto;
     width:80%;
+    min-width:950px;
 }
 #creditsTable span {
     color:rgba(254,110,0,1);
@@ -124,7 +145,7 @@ body {
 
 #creditscontainer img {
     padding:20px;
-    /*background-color:rgba(20,20,20,0.4);*/
+    background-color:rgba(20,20,20,0.4);
     margin:30px;
 }
 #creditsTable td {
@@ -133,14 +154,14 @@ body {
 #creditsTable td.t {
     text-align:right;
     vertical-align:top;
-    /*background-color:rgba(20,20,20,0.4);*/
+    background-color:rgba(20,20,20,0.4);
     font-family: 'OpenSans';
     padding-right:40px;
 }
 #creditsTable td.n {
     text-align:left;
     vertical-align:top;
-    /*background-color:rgba(20,20,20,0.4);*/
+    background-color:rgba(20,20,20,0.4);
 }
 </style>
 
@@ -201,7 +222,7 @@ $(document).ready(function() {
                     top:  '-' + $('#creditsTable').height() * 1.5 + "px"
                 }, {
                     easing: 'linear',
-                    duration: 30000,
+                    duration: 60000,
                     complete: function () {
                         animateCredits();
                         $('#creditsTable').css("top", ($('#creditsmask').height()) + "px");

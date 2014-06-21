@@ -379,6 +379,9 @@ var AppEngine = {
                 var app = this.runningApps[this.preset][j];
                 var streamList = {};
                 var streams = this.appSettings[app.name].data.streams;
+                if(streams.length === 0){
+                    continue;
+                }
                 var streamsReady = true;
                 for(var i=0; i<streams.length; i++){
                     var stream = streams[i];
