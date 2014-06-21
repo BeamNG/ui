@@ -63,12 +63,6 @@ html, body {position: relative; cursor:default;}
     font-size:0.9em;
 }
 
-.ui-app-editmode
-{
-    background-color:#ddd !important;
-    border-radius:0 !important;
-}
-
 .ui-dialog .ui-resizable-handle {
 /*    display:none; */
 /*    background-color:rgba(255,0,0,0.3) !important;*/
@@ -96,6 +90,17 @@ html, body {position: relative; cursor:default;}
 .ui-app .transparent
 {
     background: transparent;
+}
+
+.ui-app-hidden
+{
+    background: transparent;
+}
+
+.ui-app-editmode, .ui-app-editMode.ui-app-hidden
+{
+    background-color:#ddd !important;
+    border-radius:0 !important;
 }
 
 /* Styling of Appstore */

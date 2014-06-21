@@ -5,7 +5,8 @@ $.widget( "beamNG.app", $.ui.dialog, {
         active: true,
         editMode: false,
         refPointOffset : [0, 0],
-        referencePoint : [0, 0] // [0,0] = upper left, [1,1] = lower right
+        referencePoint : [0, 0], // [0,0] = upper left, [1,1] = lower right
+        closeOnEscape : false
     },
 
     _create : function(){
@@ -273,8 +274,10 @@ $.widget( "beamNG.app", $.ui.dialog, {
         // assuming camera:0 = Cockpit
         if(this.app.options.hideInCockpit === true && args.mode === 0){
             this.app.rootElement.hide();
+            this.element.addClass('ui-app-hidden');
         }else{
             this.app.rootElement.show();
+            this.element.removeClass('ui-app-hidden');
         }
     }
 });

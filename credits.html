@@ -13,9 +13,12 @@
     <video autoplay loop preload width="1920" height="1080" id="bgvid">
         <source src="images/mainmenu_credits.webm"/>
     </video>
-    <video autoplay loop preload width="0" height="0" id="bgsound">
+    <audio autoplay loop preload width="0" height="0" id="bgsound">
         <source src="audio/lonle.ogg" />
-    </video>
+    </audio>
+    <script type="text/javascript">
+        $('#bgsound')[0].volume = 0.3;
+    </script>
 </div>
 
 
