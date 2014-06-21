@@ -91,7 +91,7 @@ html,body{
     margin:0;
     padding:0;
     border:0;
-    z-index:5000;
+    z-index:5500;
 }
 
 .top-left{
@@ -114,6 +114,9 @@ html,body{
     z-index:5000;
 }
 
+#rightMenu{
+    z-index:5250;
+}
 
 .ui-panel {
     width:18em !important;
@@ -136,6 +139,10 @@ html,body{
 
     background:transparent !important;
 
+}
+
+.ui-btn-icon-notext {
+    box-shadow: 0 0 2px white;
 }
 
 kbd {

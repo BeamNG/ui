@@ -1,4 +1,4 @@
-html, body {position: relative}
+html, body {position: relative; cursor:default;}
 
 /* custom jquery ui dialog style */
 
