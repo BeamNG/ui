@@ -565,7 +565,6 @@ var AppEngine = {
     },
 
     _savePersistance : function(){
-        console.log(stacktrace());
         this.log("SAVING CACHE =======================================================================");
         this.log("Contents: "+JSON.stringify(this.persistance));
         window.localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
@@ -841,6 +840,7 @@ var HookManager  = {
 var DebugManager = {
     presets: [],
     presetPosition: -1,
+    initialized: false,
     initialize: function(){
         $.each(AppEngine.persistance.presets, function(index, preset) {
             if(preset.debug){
@@ -848,28 +848,25 @@ var DebugManager = {
             }
         });
         this.log("Debugpresets: "+JSON.stringify(this.presets));
-        $(document).keypress(function(event) {
-            DebugManager.log("KEY: "+JSON.stringify(event.which));
-            if(event.which == 107){
-                DebugManager.previousDebug();
-            }else if(event.which == 108){
-                DebugManager.nextDebug();
-            }
-        });
+        this.initialized = true;
     },
     nextDebug: function(){
-        this.presetPosition++;
-        if(this.presetPosition == this.presets.length){
-            this.presetPosition = -1;
+        if(this.initialized){
+            this.presetPosition++;
+            if(this.presetPosition == this.presets.length){
+                this.presetPosition = -1;
+            }
+            this.updatePreset();
         }
-        this.updatePreset();
     },
     previousDebug: function(){
-        this.presetPosition--;
-        if(this.presetPosition == -2){
-            this.presetPosition = this.presets.length - 1;
+        if(this.initialized){
+            this.presetPosition--;
+            if(this.presetPosition == -2){
+                this.presetPosition = this.presets.length - 1;
+            }
+            this.updatePreset();            
         }
-        this.updatePreset();
     },
     updatePreset: function(){
         if(this.presetPosition == -1){
@@ -918,3 +915,23 @@ var Logger = {
         window.console.log(logMessage);
     }
 };
+
+var KeyManager = {
+    initialize: function(){
+        $(document).keyup(function(event) {
+            console.log("KEY: "+JSON.stringify(event.which));
+            
+            var func = "k"+event.which;
+            if(typeof(KeyManager[func]) == 'function'){
+                KeyManager[func]({ctrl: event.ctrlKey, alt: event.altKey, shift: event.shiftKey});
+            }
+        });
+    },
+    k75: function(modifiers){ // K
+        DebugManager.previousDebug();
+    },
+    k76: function(modifiers){ // L
+        DebugManager.nextDebug();
+    }
+};
+KeyManager.initialize();
