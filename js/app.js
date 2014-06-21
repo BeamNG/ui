@@ -337,7 +337,23 @@ var AppEngine = {
     initialize : function() {
         this.log("initializing AppEngine");
         // adding blendingdiv for editingmode
-        $("<div class='appengine-blending'></div>").hide().appendTo('body');
+        this.backgroundblending = $("<div class='appengine-blending'></div>").hide().appendTo('body');
+
+        this.backgroundblending.mousedown(function() {
+            $(this).data('time',new Date());
+        }).mouseup(function() {
+            var oldtime = $(this).data('time');
+            if(oldtime !== undefined){
+                console.log(new Date() - oldtime);
+                if(new Date() - oldtime < 250){
+                    if(AppEngine.editMode && !KeyManager.altpressed){
+                        AppEngine.toggleEditMode();
+                    }
+                }
+
+                $(this).removeData('time');
+            }
+        });
 
         // Install resizehandler
         $(window).resize(function(event) { AppEngine.resize(event); });
@@ -358,9 +374,9 @@ var AppEngine = {
         HookManager.trigger("Editmode",this.editMode);
 
         if (this.editMode) {
-            $('.appengine-blending').show();
+            $('.appengine-blending').stop(0,1).fadeIn(100);
         } else{
-            $('.appengine-blending').hide();
+            $('.appengine-blending').stop(0,1).fadeOut(100);
 
             this.savePreset();
         }
@@ -594,6 +610,7 @@ var AppEngine = {
 };
 
 var AppStore = {
+    opened: false,
     initialize: function(){
         console.log("initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
@@ -619,35 +636,27 @@ var AppStore = {
             AppStore.resize();
         });
 
-        // button
-        this.storeButton = $("<a class='appstorebutton'>+</a>").appendTo($('body')).css({
-            position: 'absolute',
-            right: 50,
-            top: 10,
-            display: 'none'
-        }).jquibutton().click(function() {
-            AppStore.open();
-        });
-
         HookManager.registerAllHooks(this);
     },
     open: function(){
+        if(!AppEngine.editMode){
+            AppEngine.toggleEditMode();
+        }
+        this.opened = true;
         this.mainDiv.parent().show();
         this.resize();
         this.mainDiv.dialog( "moveToTop" );
     },
     close: function(){
         this.mainDiv.parent().hide();
+        this.opened = false;
     },
     resize: function(){
         this.mainDiv.dialog("option","width",$(window).width()-70);
         this.mainDiv.dialog("option","height",$(window).height()-70);
     },
     onEditmode: function(state){
-        if(state) {
-            this.storeButton.show();
-        } else {
-            this.storeButton.hide();
+        if(!state) {
             this.close();
         }
     },
@@ -917,46 +926,66 @@ var Logger = {
 };
 
 var KeyManager = {
+    altpressed: false,
     initialize: function(){
         $(document).keyup(function(event) {
             console.log("KEY: "+JSON.stringify(event.keyCode));
             
-            var func = "k"+event.keyCode;
+            var func = "ku"+event.keyCode;
             if(typeof(KeyManager[func]) == 'function'){
                 KeyManager[func]({ctrl: event.ctrlKey, alt: event.altKey, shift: event.shiftKey});
             }
         });
+        $(document).keydown(function(event) {
+            var func = "kd"+event.keyCode;
+            if(typeof(KeyManager[func]) == 'function'){
+                KeyManager[func]({ctrl: event.ctrlKey, alt: event.altKey, shift: event.shiftKey});
+            }            
+        });
     },
-    k73: function(modifiers){ // I
+    ku73: function(modifiers){ // I
 
     },
-    k75: function(modifiers){ // K
+    ku75: function(modifiers){ // K
         
     },
-    k76: function(modifiers){ // L
+    ku76: function(modifiers){ // L
         
     },
-    k79: function(modifiers){ // O
+    ku79: function(modifiers){ // O
         $('#debug_globalonoff').click();
     },
-    k85: function(modifiers){ // U
+    ku85: function(modifiers){ // U
         if(modifiers.ctrl){
             AppEngine.toggleEditMode();
-        }else{
+        }
+        if(modifiers.shift){
             $('body').toggle();
         }
     },
-    k187: function(modifiers){ // +
+    ku187: function(modifiers){ // +
 
     },
-    k189: function(modifiers){ // -
+    ku189: function(modifiers){ // -
 
     },
-    k219: function(modifiers){ // [
+    ku219: function(modifiers){ // [
         DebugManager.previousDebug();
     },
-    k221: function(modifiers){ // ]
+    ku221: function(modifiers){ // ]
         DebugManager.nextDebug();
+    },
+    kd18: function(){ // alt v
+        if(!AppEngine.editMode){
+            AppEngine.toggleEditMode();
+        }
+        this.altpressed = true;
+    },
+    ku18: function(){ // alt ^
+        if(AppEngine.editMode && !AppStore.opened){
+            AppEngine.toggleEditMode();
+        }
+        this.altpressed = false;
     }
 
 };
