@@ -919,19 +919,45 @@ var Logger = {
 var KeyManager = {
     initialize: function(){
         $(document).keyup(function(event) {
-            console.log("KEY: "+JSON.stringify(event.which));
+            console.log("KEY: "+JSON.stringify(event.keyCode));
             
-            var func = "k"+event.which;
+            var func = "k"+event.keyCode;
             if(typeof(KeyManager[func]) == 'function'){
                 KeyManager[func]({ctrl: event.ctrlKey, alt: event.altKey, shift: event.shiftKey});
             }
         });
     },
+    k73: function(modifiers){ // I
+
+    },
     k75: function(modifiers){ // K
-        DebugManager.previousDebug();
+        
     },
     k76: function(modifiers){ // L
+        
+    },
+    k79: function(modifiers){ // O
+        $('#debug_globalonoff').click();
+    },
+    k85: function(modifiers){ // U
+        if(modifiers.ctrl){
+            AppEngine.toggleEditMode();
+        }else{
+            $('body').toggle();
+        }
+    },
+    k187: function(modifiers){ // +
+
+    },
+    k189: function(modifiers){ // -
+
+    },
+    k219: function(modifiers){ // [
+        DebugManager.previousDebug();
+    },
+    k221: function(modifiers){ // ]
         DebugManager.nextDebug();
     }
+
 };
 KeyManager.initialize();
