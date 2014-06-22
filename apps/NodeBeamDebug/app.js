@@ -21,7 +21,7 @@ NodeBeamDebug.prototype.initialize = function(){
 };
 
 NodeBeamDebug.prototype.update = function(streams){
-    str =  streams.stats.beam_count + " beams <br>";
+    var str =  streams.stats.beam_count + " beams <br>";
     str    += " - " + streams.stats.beams_deformed + " ("+((streams.stats.beams_deformed/streams.stats.beam_count)*100).toFixed(2)+"%) deformed <br>";
     str    += " - " + streams.stats.beams_broken + " ("+((streams.stats.beams_broken/streams.stats.beam_count)*100).toFixed(2)+"%) broken <br>";
 

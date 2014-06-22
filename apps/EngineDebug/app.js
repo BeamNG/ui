@@ -3,9 +3,9 @@ function EngineDebug(){}
 EngineDebug.prototype.initialize = function(){};
 
 EngineDebug.prototype.update = function(streams){
-    str =  "rpm: " + streams.engineInfo[4].toFixed();
+    var str =  "rpm: " + streams.engineInfo[4].toFixed();
 
-    gear = streams.engineInfo[5];
+    var gear = streams.engineInfo[5];
     if(gear>0){
         str += "<br> gear: F " + gear + " / " + streams.engineInfo[6];
     }else if(gear<0){

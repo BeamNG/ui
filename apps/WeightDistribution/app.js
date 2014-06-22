@@ -24,7 +24,7 @@ WeightDistribution.prototype.initialize = function(){
 };
 
 WeightDistribution.prototype.update = function(streams){
-    value = streams.wheelInfo;
+    var value = streams.wheelInfo;
     /* value format:
     0  wd.name
     1  wd.radius

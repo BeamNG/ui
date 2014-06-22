@@ -9,13 +9,13 @@ gForcesDebug.prototype.initialize = function(){
 
 gForcesDebug.prototype.update = function(streams){
     //convert to G
-    gForces = {};
+    var gForces = {};
     $.each(streams.sensors, function(index, val) {
         gForces[index] = val / 9.81;
     });
 
-    c = this.canvas[0];
-    ctx = c.getContext('2d');
+    var c = this.canvas[0];
+    var ctx = c.getContext('2d');
     ctx.font = '16px "Lucida Console", Monaco, monospace';
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
@@ -23,6 +23,11 @@ gForcesDebug.prototype.update = function(streams){
     ctx.clearRect(-100,-100,200,200);
 
     // Circles
+	ctx.fillStyle = "RGBA(255,255,255,0.5)";
+    ctx.beginPath();
+    ctx.arc(0,0,50*2,0,2*Math.PI,false);
+    ctx.fill();
+
     ctx.fillStyle = "RGBA(128,128,128,0.2)";
     for (var i = 1; i < 3; i++) {
         ctx.beginPath();
@@ -67,14 +72,14 @@ gForcesDebug.prototype.update = function(streams){
 };
 
 gForcesDebug.prototype.resize = function(){
-    size = Math.min(this.rootElement.height(),this.rootElement.width());
+    var size = Math.min(this.rootElement.height(),this.rootElement.width());
     this.canvas.height(size);
     this.canvas.width(size);
 
-    c = this.canvas[0];
+    var c = this.canvas[0];
     c.width = size;
     c.height = size;
 
-    ctx = c.getContext('2d');
+    var ctx = c.getContext('2d');
     ctx.setTransform(c.width/200, 0, 0, c.height/200, c.width/2,c.height/2);
 };

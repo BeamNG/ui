@@ -24,28 +24,106 @@
                     }
                 },
                 {
-                    "name": "Tacho",
+                    "name": "SimpleDash",
                     "position": [
                         [
                             1,
                             1
                         ],
                         [
-                            -330,
-                            -306
+                            -242,
+                            -165
                         ]
                     ],
                     "size": [
-                        300,
-                        300
+                        200,
+                        33
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "SimpleGears",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -342,
+                            -132
+                        ]
                     ],
                     "persistance": {
                         "options": {
                             "hideInCockpit": true
                         },
                         "custom": {
-                            "Unit": "metric"
+                            "View": "Manual"
                         }
+                    }
+                },
+                {
+                    "name": "SimplePedals",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -342,
+                            -66
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "SimpleSpeedo",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -242,
+                            -132
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {
+                            "Unit": "MPH"
+                        }
+                    }
+                },
+                {
+                    "name": "SimpleTacho",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -242,
+                            -66
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {}
                     }
                 }
             ]
@@ -78,76 +156,17 @@
                     "name": "TorqueCurve",
                     "position": [
                         [
-                            0,
-                            1
-                        ],
-                        [
-                            43,
-                            -280
-                        ]
-                    ],
-                    "size": [
-                        500,
-                        240
-                    ],
-                    "persistance": {
-                        "options": {},
-                        "custom": {}
-                    }
-                },
-                {
-                    "name": "EngineDebug",
-                    "position": [
-                        [
-                            0,
-                            1
-                        ],
-                        [
-                            43,
-                            -394.671875
-                        ]
-                    ],
-                    "size": [
-                        300,
-                        "auto"
-                    ],
-                    "persistance": {
-                        "options": {},
-                        "custom": {}
-                    }
-                },
-                {
-                    "name": "gForcesDebug",
-                    "position": [
-                        [
                             1,
                             0
                         ],
                         [
-                            -351,
-                            46.328125
+                            -581,
+                            46
                         ]
                     ],
                     "size": [
-                        300,
-                        300
-                    ],
-                    "persistance": {
-                        "options": {},
-                        "custom": {}
-                    }
-                },
-                {
-                    "name": "SimpleTacho",
-                    "position": [
-                        [
-                            1,
-                            1
-                        ],
-                        [
-                            -260,
-                            -152.671875
-                        ]
+                        535,
+                        277
                     ],
                     "persistance": {
                         "options": {},
@@ -162,32 +181,53 @@
                             1
                         ],
                         [
-                            -260,
-                            -86.671875
+                            -242,
+                            -132
                         ]
                     ],
                     "persistance": {
-                        "options": {},
+                        "options": {
+                            "hideInCockpit": true
+                        },
                         "custom": {
-                            "Unit": "km/h"
+                            "Unit": "MPH"
                         }
                     }
                 },
                 {
-                    "name": "SimpleRPMDebug",
+                    "name": "SimpleTacho",
                     "position": [
                         [
                             1,
                             1
                         ],
                         [
-                            -269,
-                            -349.671875
+                            -242,
+                            -66
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "SimpleRPMDebug",
+                    "position": [
+                        [
+                            0,
+                            1
+                        ],
+                        [
+                            29,
+                            -172
                         ]
                     ],
                     "size": [
-                        199,
-                        183
+                        150,
+                        150
                     ],
                     "persistance": {
                         "options": {},
@@ -195,25 +235,25 @@
                     }
                 },
                 {
-                    "name": "NodeBeamDebug",
+                    "name": "SimpleEngineDebug",
                     "position": [
                         [
-                            1,
-                            0
+                            0,
+                            1
                         ],
                         [
-                            -350,
-                            371.328125
+                            179,
+                            -172
                         ]
                     ],
                     "size": [
-                        300,
-                        "auto"
+                        265,
+                        150
                     ],
                     "persistance": {
                         "options": {},
                         "custom": {
-                            "Unit": "metric"
+                            "Unit": "Imperial"
                         }
                     }
                 }
@@ -290,23 +330,6 @@
                     }
                 },
                 {
-                    "name": "SimpleTacho",
-                    "position": [
-                        [
-                            1,
-                            1
-                        ],
-                        [
-                            -260,
-                            -152.671875
-                        ]
-                    ],
-                    "persistance": {
-                        "options": {},
-                        "custom": {}
-                    }
-                },
-                {
                     "name": "SimpleSpeedo",
                     "position": [
                         [
@@ -314,61 +337,188 @@
                             1
                         ],
                         [
-                            -260,
-                            -86.671875
+                            -242,
+                            -132
                         ]
                     ],
                     "persistance": {
-                        "options": {},
+                        "options": {
+                            "hideInCockpit": true
+                        },
                         "custom": {
-                            "Unit": "km/h"
+                            "Unit": "MPH"
                         }
                     }
                 },
                 {
-                    "name": "SimplePitch",
+                    "name": "SimpleTacho",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -242,
+                            -66
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "gForcesDebug",
                     "position": [
                         [
                             0,
                             1
                         ],
                         [
-                            35,
-                            -238.671875
+                            46,
+                            -339.671875
                         ]
                     ],
                     "size": [
-                        200,
+                        300,
+                        300
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                }
+            ]
+        },
+        "Node Beam Debug": {
+            "debug": true,
+            "apps": [
+                {
+                    "name": "Messages",
+                    "position": [
+                        [
+                            0,
+                            0
+                        ],
+                        [
+                            40,
+                            40
+                        ]
+                    ],
+                    "size": [
+                        500,
                         200
                     ],
                     "persistance": {
                         "options": {},
+                        "custom": {}
+                    }
+                },
+                                {
+                    "name": "SimpleSpeedo",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -242,
+                            -132
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
                         "custom": {
-                            "displaySide": "left"
+                            "Unit": "MPH"
                         }
                     }
                 },
                 {
-                    "name": "SimpleRoll",
+                    "name": "SimpleTacho",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -242,
+                            -66
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "VehicleDebug",
                     "position": [
                         [
                             0,
                             1
                         ],
                         [
-                            235,
-                            -238.671875
+                            38,
+                            -292.671875
                         ]
                     ],
                     "size": [
-                        200,
-                        200
+                        264,
+                        150
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "NodeBeamDebug",
+                    "position": [
+                        [
+                            0,
+                            1
+                        ],
+                        [
+                            38,
+                            -219.671875
+                        ]
+                    ],
+                    "size": [
+                        300,
+                        "auto"
                     ],
                     "persistance": {
                         "options": {},
                         "custom": {
-                            "displaySide": "right"
+                            "Unit": "metric"
                         }
+                    }
+                },
+                {
+                    "name": "HydrosController",
+                    "position": [
+                        [
+                            1,
+                            0
+                        ],
+                        [
+                            -368,
+                            35.328125
+                        ]
+                    ],
+                    "size": [
+                        300,
+                        300
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
                     }
                 }
             ]
