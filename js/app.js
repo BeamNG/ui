@@ -947,14 +947,65 @@ var KeyManager = {
             }            
         });
     },
-    ku73: function(modifiers){ // I
-
-    },
     ku75: function(modifiers){ // K
-        
+        // Skeleton
+        var options = $('#skeleton_debug_options')
+            .controlgroup( "container" )
+            .find('input');
+        var size = options.length;
+
+        options.each(function(index){
+            if($(this).is(':checked')){
+
+                if(modifiers.shift){
+                    index = index - 1;
+                    if(index == -1) index = size - 1;
+                }else{
+                    index = (index + 1) % size;
+                }
+
+                options.get(index).click();
+                var id = options.get(index).id;
+                var name = $('label[for="'+id+'"]').text();
+                HookManager.trigger('Message',{msg:'Skeleton: '+name, category:'debug',ttl: 2});
+                return false;
+            }
+        });
     },
     ku76: function(modifiers){ // L
-        
+        var options = $('#nodeinfo_debug_options')
+            .find('option[data-placeholder!="true"]');
+        var size = options.length;
+        var found = false;
+        var newIndex = 0;
+        options.each(function(index){
+            if($(this).is(':selected')){
+
+                if(modifiers.shift){
+                    newIndex = index - 1;
+                    if(newIndex == -1) newIndex = size - 1;
+                }else{
+                    newIndex = (index + 1) % size;
+                }
+
+                found = true;
+                return false;
+            }
+        });
+        if(!found){
+            if(modifiers.shift){
+                    newIndex = size - 1;
+                }else{
+                    newIndex = 0;
+                }
+        }
+
+        var name = options.get(newIndex).text;
+        var value = options.get(newIndex).value;
+        console.log(name);
+        $('#nodeinfo_debug_options').val(value).change().selectmenu('refresh');
+
+        HookManager.trigger('Message',{msg:'Node Information: '+name, category:'debug',ttl: 2});
     },
     ku79: function(modifiers){ // O
         $('#debug_globalonoff').click();

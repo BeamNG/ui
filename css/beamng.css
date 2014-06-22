@@ -111,11 +111,11 @@ html,body{
     margin:0;
     padding:0;
     border:0;
-    z-index:5000;
+    z-index:990;
 }
 
 #rightMenu{
-    z-index:5250;
+    z-index:1000;
 }
 
 .ui-panel {
