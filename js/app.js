@@ -155,6 +155,7 @@ $.widget( "beamNG.app", $.ui.dialog, {
 
         HookManager.registerAllHooks(this);
         this._setOption('editMode',AppEngine.editMode);
+        this.element.trigger("resize");
     },
 
     _setOption: function( key, value ) {
