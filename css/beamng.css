@@ -18,6 +18,13 @@ html,body{
 
 .physics-disabled {
     box-shadow: inset 0px 0px 60px black;
+    display: none;
+    z-index: -500;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 #speed {

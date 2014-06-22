@@ -199,17 +199,13 @@ function updateGroundModelDebug(data)
 function updatePhysicsState(enabled)
 {
     if(!enabled) {
-        $('#main').addClass('physics-disabled');
+        $('.physics-disabled').show();
     } else {
-        $('#main').removeClass('physics-disabled');
+        $('.physics-disabled').hide();
     }
 
-    // TODO: FIX
-    /*
-    var flipSwitch = $('#physics_enabled');
-    flipSwitch.val(enabled ? 'on' : 'off');
-    try{ flipSwitch.slider("refresh"); } catch(err) {};
-    */
+
+    $('#physics_enabled').prop('checked', enabled).flipswitch("refresh");
 }
 
 function panelScrollfix(){
