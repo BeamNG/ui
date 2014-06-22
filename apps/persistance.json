@@ -1,33 +1,376 @@
 {
-    "presets":
-    {
-        "default":{
-            "apps":[
-                {"name":"Tacho","position":[[1,1],[-218,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}},
-                {"name":"Messages","position":[[0,0],[5,5]]}
+    "presets": {
+        "default": {
+            "apps": [
+                {
+                    "name": "Messages",
+                    "position": [
+                        [
+                            0,
+                            0
+                        ],
+                        [
+                            40,
+                            40
+                        ]
+                    ],
+                    "size": [
+                        500,
+                        200
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "Tacho",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -330,
+                            -306
+                        ]
+                    ],
+                    "size": [
+                        300,
+                        300
+                    ],
+                    "persistance": {
+                        "options": {
+                            "hideInCockpit": true
+                        },
+                        "custom": {
+                            "Unit": "metric"
+                        }
+                    }
+                }
             ]
         },
-        "race":{
-            "apps":[
-                {"name":"Tacho","position":[[0,1],[20,-237]],"size":[218,237],"persistance":{"options":{},"custom":{}}}
-            ]
-        },
-        "debug":{
+        "Performance": {
             "debug": true,
-            "apps":[
-                {"name":"gForcesDebug","position":[[0,0],[20,20]],"persistance":{"options":{},"custom":{}}}
+            "apps": [
+                {
+                    "name": "Messages",
+                    "position": [
+                        [
+                            0,
+                            0
+                        ],
+                        [
+                            40,
+                            40
+                        ]
+                    ],
+                    "size": [
+                        500,
+                        200
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "TorqueCurve",
+                    "position": [
+                        [
+                            0,
+                            1
+                        ],
+                        [
+                            43,
+                            -280
+                        ]
+                    ],
+                    "size": [
+                        500,
+                        240
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "EngineDebug",
+                    "position": [
+                        [
+                            0,
+                            1
+                        ],
+                        [
+                            43,
+                            -394.671875
+                        ]
+                    ],
+                    "size": [
+                        300,
+                        "auto"
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "gForcesDebug",
+                    "position": [
+                        [
+                            1,
+                            0
+                        ],
+                        [
+                            -351,
+                            46.328125
+                        ]
+                    ],
+                    "size": [
+                        300,
+                        300
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "SimpleTacho",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -260,
+                            -152.671875
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "SimpleSpeedo",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -260,
+                            -86.671875
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "Unit": "km/h"
+                        }
+                    }
+                },
+                {
+                    "name": "SimpleRPMDebug",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -269,
+                            -349.671875
+                        ]
+                    ],
+                    "size": [
+                        199,
+                        183
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "NodeBeamDebug",
+                    "position": [
+                        [
+                            1,
+                            0
+                        ],
+                        [
+                            -350,
+                            371.328125
+                        ]
+                    ],
+                    "size": [
+                        300,
+                        "auto"
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "Unit": "metric"
+                        }
+                    }
+                }
             ]
         },
-        "debug2":{
+        "Suspension": {
             "debug": true,
-            "apps":[
-                {"name":"WheelsDebug","position":[[0,0],[20,20]],"persistance":{"options":{},"custom":{}}}
-            ]
-        },
-        "debug3":{
-            "debug": true,
-            "apps":[
-                {"name":"NodeBeamDebug","position":[[0,0],[20,20]],"persistance":{"options":{},"custom":{}}}
+            "apps": [
+                {
+                    "name": "Messages",
+                    "position": [
+                        [
+                            0,
+                            0
+                        ],
+                        [
+                            40,
+                            40
+                        ]
+                    ],
+                    "size": [
+                        500,
+                        200
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "WeightDistribution",
+                    "position": [
+                        [
+                            1,
+                            0
+                        ],
+                        [
+                            -518,
+                            40.328125
+                        ]
+                    ],
+                    "size": [
+                        220,
+                        "auto"
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "Unit": "metric"
+                        }
+                    }
+                },
+                {
+                    "name": "WheelsDebug",
+                    "position": [
+                        [
+                            1,
+                            0
+                        ],
+                        [
+                            -274,
+                            40.328125
+                        ]
+                    ],
+                    "size": [
+                        220,
+                        "auto"
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "Unit": "metric"
+                        }
+                    }
+                },
+                {
+                    "name": "SimpleTacho",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -260,
+                            -152.671875
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {}
+                    }
+                },
+                {
+                    "name": "SimpleSpeedo",
+                    "position": [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            -260,
+                            -86.671875
+                        ]
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "Unit": "km/h"
+                        }
+                    }
+                },
+                {
+                    "name": "SimplePitch",
+                    "position": [
+                        [
+                            0,
+                            1
+                        ],
+                        [
+                            35,
+                            -238.671875
+                        ]
+                    ],
+                    "size": [
+                        200,
+                        200
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "displaySide": "left"
+                        }
+                    }
+                },
+                {
+                    "name": "SimpleRoll",
+                    "position": [
+                        [
+                            0,
+                            1
+                        ],
+                        [
+                            235,
+                            -238.671875
+                        ]
+                    ],
+                    "size": [
+                        200,
+                        200
+                    ],
+                    "persistance": {
+                        "options": {},
+                        "custom": {
+                            "displaySide": "right"
+                        }
+                    }
+                }
             ]
         }
     }

@@ -574,9 +574,8 @@ var AppEngine = {
                 AppEngine.persistance = data;
                 AppEngine._savePersistance();
                 window.location.reload();
-            }).fail(function(data) {
-                AppEngine.log( "error" );
-                AppEngine.log( JSON.stringify(data) );
+            }).fail(function(jqxhr, textStatus, error) {
+                AppEngine.log( "error "+error+" : "+textStatus );
             });
         }
     },
@@ -619,7 +618,7 @@ var AppStore = {
         console.log("initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
         this.mainDiv.dialog({
-            title: "Add App",
+            title: "Add User Interface App",
             width: $(window).width()-70,
             height: $(window).height()-70,
             beforeClose : function(){

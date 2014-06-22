@@ -58,7 +58,6 @@
 </div>
 
 <div class="menu-content">
-
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
     <h3>Vehicles</h3>
 <form>
@@ -163,9 +162,8 @@ function changeBullettime(v) {
 }
 </script>
         <label for="option_simspeed">Simulation Speed</label>
-        <input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="2" max="100" value="100">
+        <input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="10" max="100" value="100">
         <div class="narrowbuttons">
-            <input type="button" value="2/100" data-mini="true" onclick="changeBullettime(1);">
             <input type="button" value="1/10" data-mini="true" onclick="changeBullettime(10);">
             <input type="button" value="1/2" data-mini="true" onclick="changeBullettime(50);">
             <input type="button" value="3/4" data-mini="true" onclick="changeBullettime(75);">
@@ -216,6 +214,10 @@ function changeBullettime(v) {
         <input type="button" id="option_open_postfxmanager" value="Open PostFX Manager" data-mini="true">
         <input type="button" id="option_open_options" value="Open Options" data-mini="true">
 </div>
+
+<table border="0" style="padding:10px;">
+<tr><td><img src="images/questionmark.png" /></td><td style="font-weight:bold">Press F1 for help.</td></tr>
+</table>
 
 </div>
 
