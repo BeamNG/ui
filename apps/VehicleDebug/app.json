@@ -13,6 +13,6 @@
     },
 
     "data": {
-        "streams" : ["engineInfo", "electrics"]
+        "streams" : ["wheelInfo", "torqueCurve"]
     }
 }
