@@ -50,9 +50,9 @@ $.widget( "beamNG.app", $.ui.dialog, {
         // minsize must be <= size
         this.options.minWidth = Math.min(this.options.minWidth, this.options.width);
         if(this.options.height != "auto"){
-            this.log("setting minsize");
-            this.options.minHeight = Math.min(this.options.minHeight, this.options.height);
-            this.log(this.options.minHeight);
+//            this.log("setting minsize");
+//            this.options.minHeight = Math.min(this.options.minHeight, this.options.height);
+//            this.log(this.options.minHeight);
         }
 
         // maximal size
@@ -250,14 +250,14 @@ $.widget( "beamNG.app", $.ui.dialog, {
         }
     },
     _calculateRefPointOffset: function(){
-        this.log("calculateRefPointOffset()");
+//        this.log("calculateRefPointOffset()");
         var windowsize = [$(window).width(),$(window).height()];
         for (var i = 0; i < 2; i++) {
             this.options.refPointOffset[i] = this.options.position[i] - ( this.options.referencePoint[i] * windowsize[i] );
         }
     },
     calculatePosition: function(){
-        this.log("calculatePosition() offset: "+this.options.refPointOffset);
+//        this.log("calculatePosition() offset: "+this.options.refPointOffset);
         var windowsize = [$(window).width(),$(window).height()];
         var position = [0,0];
         for (var i = 0; i < 2; i++) {
@@ -350,7 +350,7 @@ var AppEngine = {
         }).mouseup(function() {
             var oldtime = $(this).data('time');
             if(oldtime !== undefined){
-                console.log(new Date() - oldtime);
+//                console.log(new Date() - oldtime);
                 if(new Date() - oldtime < 250){
                     if(AppEngine.editMode && !KeyManager.altpressed){
                         AppEngine.toggleEditMode();
@@ -416,8 +416,8 @@ var AppEngine = {
                     }catch(e){
                         this.log("An Error occured while trying to call "+app.name+".update() : "+e.stack);
                     }
-                }else{
-                    this.log("A least one stream of "+app.name+" isn't not ready or non existing, no update.");
+//                }else{
+//                    this.log("A least one stream of "+app.name+" isn't not ready or non existing, no update.");
                 }
             }
         }
@@ -453,13 +453,13 @@ var AppEngine = {
                     return;
                 }
                 var appInstance = new window[app]();
-                this.log("Adding app "+app+" to Screen");
+                this.log("Adding App "+app+" to Screen");
                 var appElement = $('<div></div>').appendTo($('body'));
                 appElement.app({ app: appInstance, "persistance" : persistance, appendTo : this.presetPanel[this.preset] });
                 if(position !== undefined){
-                    this.log("position:");
-                    this.log(position[0]);
-                    this.log(position[1]);
+ //                   this.log("position:");
+ //                   this.log(position[0]);
+ //                   this.log(position[1]);
                     appElement.app("option","refPointOffset",position[1]);
                     appElement.app("option","referencePoint",position[0]);
                 }else{
@@ -467,9 +467,9 @@ var AppEngine = {
                     appElement.app("option","referencePoint",[0,0]);
                 }
                 if(size !== undefined){
-                    this.log("size defined: "+size);
-                    appElement.app("option","width",size[0]);
-                    appElement.app("option","height",size[1]);
+//                    this.log("size defined: "+size);
+//                    appElement.app("option","width",size[0]);
+//                    appElement.app("option","height",size[1]);
                 }else{
                     //heighthack :|
                     appElement.app("option","height",this.appSettings[app].appearance.size.initial[1]);
@@ -495,7 +495,7 @@ var AppEngine = {
 
     loadPreset : function(preset){
         if(this.persistance.presets[preset] !== undefined){
-            this.log("Preset exists");
+//            this.log("Preset exists");
 
             if(this.presetPanel[this.preset] !== undefined){
                 //desactivate old apps
@@ -518,12 +518,12 @@ var AppEngine = {
                 });
 
                 this.log("loading preset '"+preset+"'");
-                this.log("loading "+this.persistance.presets[preset].apps.length+" Apps:");
+//                this.log("loading "+this.persistance.presets[preset].apps.length+" Apps:");
                 $.each(this.persistance.presets[preset].apps, function(index, app) {
                     AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
 
                 });
-                this.log("done");
+//                this.log("done");
             }else{
                 this.presetPanel[this.preset].fadeIn(250);
                 $.each(this.runningApps[this.preset], function(index, app) {
@@ -567,11 +567,11 @@ var AppEngine = {
         if (window.localStorage.getItem("AppEngine") !== null) {
             var storageString = window.localStorage.getItem("AppEngine");
             this.persistance = JSON.parse(storageString);
-            this.log("LOADED CACHE: "+storageString);
+//            this.log("LOADED CACHE: "+storageString);
             AppEngine.loadPreset("default");
         } else{
             $.getJSON('apps/persistance.json', function(data) {
-                AppEngine.log( "worked");
+//                AppEngine.log( "worked");
                 AppEngine.persistance = data;
                 AppEngine._savePersistance();
                 window.location.reload();
@@ -582,8 +582,8 @@ var AppEngine = {
     },
 
     _savePersistance : function(){
-        this.log("SAVING CACHE =======================================================================");
-        this.log("Contents: "+JSON.stringify(this.persistance));
+//        this.log("SAVING CACHE =======================================================================");
+//        this.log("Contents: "+JSON.stringify(this.persistance));
         window.localStorage.setItem("AppEngine",JSON.stringify(this.persistance));
     },
 
@@ -616,7 +616,7 @@ var AppEngine = {
 var AppStore = {
     opened: false,
     initialize: function(){
-        console.log("initializing AppStore");
+        Logger.log("AppStore","initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
         this.mainDiv.dialog({
             title: "Add User Interface App",
@@ -740,7 +740,7 @@ var AppLoader = {
         this._setLoadState(app,'json',this.LOADSTATE.LOADING);
 
         $.getJSON("apps/"+app+"/app.json", function(data) {
-            AppLoader.log(data);
+//            AppLoader.log(data);
             AppEngine.appSettings[app] = data;
             AppLoader._setLoadState(app,'json',AppLoader.LOADSTATE.DONE);
 
@@ -839,7 +839,7 @@ var HookManager  = {
             return;
         }
         var args = Array.prototype.slice.call(arguments, 1);
-        this.log(hookName + '(' +  JSON.stringify(args) + ')');
+//        this.log(hookName + '(' +  JSON.stringify(args) + ')');
         $.each(this.hooksMap[hookName], function(k, v) {
             v[1].apply(v[0], args);
         });
@@ -860,7 +860,7 @@ var DebugManager = {
                 DebugManager.presets.push(index);
             }
         });
-        this.log("Debugpresets: "+JSON.stringify(this.presets));
+//        this.log("Debugpresets: "+JSON.stringify(this.presets));
         this.initialized = true;
     },
     nextDebug: function(){
@@ -933,7 +933,7 @@ var KeyManager = {
     altpressed: false,
     initialize: function(){
         $(document).keyup(function(event) {
-            console.log("KEY: "+JSON.stringify(event.keyCode));
+//            console.log("KEY: "+JSON.stringify(event.keyCode));
             
             var func = "ku"+event.keyCode;
             if(typeof(KeyManager[func]) == 'function'){
@@ -1002,7 +1002,7 @@ var KeyManager = {
 
         var name = options.get(newIndex).text;
         var value = options.get(newIndex).value;
-        console.log(name);
+//        console.log(name);
         $('#nodeinfo_debug_options').val(value).change().selectmenu('refresh');
 
         HookManager.trigger('Message',{msg:'Node Information: '+name, category:'debug',ttl: 2});

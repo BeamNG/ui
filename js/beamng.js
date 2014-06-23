@@ -101,8 +101,8 @@ function streamAdd(streamName)
     }
     state.changes.push('streams');
     sendObjectState();
-    console.log("Stream '"+streamName+"' added, Count: "+state.streams[streamName]);
-    console.log(JSON.stringify(state.streams));
+//    console.log("Stream '"+streamName+"' added, Count: "+state.streams[streamName]);
+//    console.log(JSON.stringify(state.streams));
 }
 
 function streamRemove(streamName)
@@ -114,7 +114,7 @@ function streamRemove(streamName)
         state.changes.push('streams');
         sendObjectState();
     }
-    console.log("Stream '"+streamName+"' removed, Count: "+state.streams[streamName]);
+//    console.log("Stream '"+streamName+"' removed, Count: "+state.streams[streamName]);
 }
 
 
