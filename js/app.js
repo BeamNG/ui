@@ -51,9 +51,15 @@ $.widget( "beamNG.app", $.ui.dialog, {
         this.options.minWidth = Math.min(this.options.minWidth, this.options.width);
         if(this.options.height != "auto"){
 //            this.log("setting minsize");
-//            this.options.minHeight = Math.min(this.options.minHeight, this.options.height);
+            this.options.minHeight = Math.min(this.options.minHeight, this.options.height);
 //            this.log(this.options.minHeight);
         }
+
+        // minimal size is 20 px
+        this.options.minWidth = Math.max(20, this.options.minWidth);
+        this.options.width = Math.max(20, this.options.width);
+        this.options.minHeight = Math.max(20, this.options.minHeight);
+        this.options.height = Math.max(20, this.options.height);
 
         // maximal size
         if(this.appInfo.appearance.size.maximal !== undefined){
@@ -468,8 +474,10 @@ var AppEngine = {
                 }
                 if(size !== undefined){
 //                    this.log("size defined: "+size);
-//                    appElement.app("option","width",size[0]);
-//                    appElement.app("option","height",size[1]);
+                    size[0] = Math.max(size[0],20);
+                    size[1] = Math.max(size[1],20);
+                    appElement.app("option","width",size[0]);
+                    appElement.app("option","height",size[1]);
                 }else{
                     //heighthack :|
                     appElement.app("option","height",this.appSettings[app].appearance.size.initial[1]);
@@ -1018,6 +1026,11 @@ var KeyManager = {
         }
         if(modifiers.shift){
             $('body').toggle();
+            if ($('body').is(':visible')){
+            	$('html').css('cursor', 'pointer');
+            }else{
+				$('html').css('cursor', 'none');
+            }
         }
     },
     ku187: function(modifiers){ // +
