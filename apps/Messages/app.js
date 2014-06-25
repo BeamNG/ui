@@ -32,3 +32,11 @@ Messages.prototype.onMessage = function(args) {
         self.messageSlot[category] = undefined;
     });
 };
+
+Messages.prototype.onEditmode = function(enabled) {
+    if(enabled) {
+        this.onMessage({msg:"<br/>do not delete this app<br/>it is essential for ingame messages of events.<br/><br/>example:<br/>40 times slower than realtime", ttl:60000, category:'editmodewarning'})
+    } else {
+        this.onMessage({msg:'', ttl:60000, category:'editmodewarning'})
+    }
+};

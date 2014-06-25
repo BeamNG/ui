@@ -8,20 +8,10 @@
 </head>
 <body>
 
-<div id="video-viewport">
-    <video preload width="1920" height="1080" id="bgvid">
-    </video>
-</div>
-
 <div id='infobox'>
     <img style="vertical-align:middle;margin:2px;padding-bottom:1px;" src="images/loading.gif" />
     <span id='infoboxtxt'></span>
 </div>
-
-<div id='loading'>Loading</div>
-
-<div id='blending'></div>
-
 
 <style type="text/css">
 body {
@@ -31,22 +21,8 @@ body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
-}
-#video-viewport {
-    position: absolute;
-    top: 0;
-    overflow: hidden;
-    z-index: -2; /* for accessing the video by click */
-}
-#blending {
-    position: absolute;
-    background: black;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    display: none;
+    background-size: cover;
+    background: url(images/mainmenu_loading_01.jpg) no-repeat center center fixed; 
 }
 
 #infobox {
@@ -62,127 +38,25 @@ body {
     font-size:0.8em;
     font-family:verdana;
 }
-
-#loading {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
-    padding: 5px;
-    margin:30px;
-    font-size:4.0em;
-    font-family:verdana;
-    color: white;
-    text-shadow:
-    -1px -1px 1px #000,
-    1px -1px 1px #000,
-    -1px 1px 1px #000,
-    1px 1px 1px #000;
-}
 </style>
 
 <script type="text/javascript">
-var videoConfig = [
-    // video, title, description, mission name to load, position/rotation
-    ["images/mainmenu_1.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
-    ["images/mainmenu_2.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
-    ["images/mainmenu_3.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-354.373 170.426 39.4306 0 0 1 208.446"],
-    ["images/mainmenu_4.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 -0.0613498 -0.0460925 0.997052 106.327"],
-    ["images/mainmenu_5.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-242.088 87.4816 39.6549 -0.00772832 -0.036043 0.99932 189.094"],
-    ["images/mainmenu_6.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "16.6853 -395.176 31.446 0 0 1 73.887"],
-    ["images/mainmenu_7.webm",  "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-172.176 235.843 48.1855 0 0 1 87.774"],
-    ["images/mainmenu_8.webm",  "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-450.022 -106.288 63.4009 0 0 -1 4.68703"],
-    ["images/mainmenu_9.webm",  "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-703.965 309.649 41.908 0 0 1 152.314"],
-    ["images/mainmenu_10.webm", "Industrial", "Port, rallycross, circuit, offroad track", "dry_rock_island.mis", "216.223 116.715 42.6993 -0.0362537 0.0379904 -0.99862 87.399"],
-];
 
-var min_w = 300; // minimum video width allowed
-var vid_w_orig;  // original video dimensions
-var vid_h_orig;
-
-var videoElement = null;
-
-var fadeTime = 2; // in seconds
-
-var randomArray = randomNumbers(videoConfig.length);
-
-var randomPosition = -1;
-var currentEntryID = -1;
-var currentEntry = null;
-
-function resizeToCover() {
-    // set the video viewport to the window size
-    $('#video-viewport').width($(window).width());
-    $('#video-viewport').height($(window).height());
-
-    // use largest scale factor of horizontal/vertical
-    var scale_h = $(window).width() / vid_w_orig;
-    var scale_v = $(window).height() / vid_h_orig;
-    var scale = scale_h > scale_v ? scale_h : scale_v;
-
-    // don't allow scaled width < minimum video width
-    if (scale * vid_w_orig < min_w) {scale = min_w / vid_w_orig;}
-
-    // now scale the video
-    $('video').width(scale * vid_w_orig);
-    $('video').height(scale * vid_h_orig);
-    // and center it by scrolling the video viewport
-    $('#video-viewport').scrollLeft(($('video').width() - $(window).width()) / 2);
-    $('#video-viewport').scrollTop(($('video').height() - $(window).height()) / 2);
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
 }
 
-$(document).ready(function() {
-    videoElement = document.getElementById('bgvid');
-
-    playNewEntry();
-
-    $('#bgvid').bind('ended', function(event) {
-        playNewEntry();
-        $('#blending').fadeOut(fadeTime * 1000);
-    });
-
-    // fixes video size
-    vid_w_orig = parseInt($('video').attr('width'));
-    vid_h_orig = parseInt($('video').attr('height'));
-    $(window).resize(function () { resizeToCover(); });
-    $(window).trigger('resize');
-
-    // run blending
-    checkTime();
-    updateProgress(0, "loading");
-});
-
-function checkTime() {
-    if(videoElement.duration - videoElement.currentTime < fadeTime + 0.1) {
-        $('#blending').fadeIn(fadeTime * 1000);
-        setTimeout(checkTime, 4000);
-    } else {
-        setTimeout(checkTime, videoElement.duration - videoElement.currentTime - (fadeTime+ 0.05) * 1000);
-    }
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function playNewEntry() {
-    if (videoConfig.length < 1)  return;
-
-    randomPosition++;
-    if(randomPosition == videoConfig.length) {
-        randomPosition = 0;
-        while(randomArray[0] == currentEntryID) {
-            randomArray = randomNumbers(videoConfig.length);
-        }
-    }
-    currentEntryID = randomArray[randomPosition];
-    currentEntry = videoConfig[currentEntryID];
-
-    // play the video
-    $('#bgvid').attr("src", currentEntry[0]);
-    videoElement.play();
-
-    // update the info text
-    //$('#infobox').html(currentEntry[1] + '<br/>' + currentEntry[2]);
-}
+var img = 'images/mainmenu_loading_' + pad(getRandomInt(1,16), 2) + '.jpg';
+$('body').css({'background-image': 'url('+img+')'});
 
 var oldStatus = '';
+// this function is called by T3D, do not change
 function updateProgress(val, txt) {
     //console.log('updateProgress(' + val + ', ' + txt);
     //var t = '';
@@ -201,6 +75,10 @@ function updateProgress(val, txt) {
     }
     $('#infoboxtxt').html(t);
 }
+
+$(document).ready(function() {
+    updateProgress(0, "loading");
+});
 </script>
 </body>
 </html>

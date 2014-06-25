@@ -206,9 +206,23 @@ function callLuaFuncCallback(func, callback)
     beamng.sendActiveObjectLua(commandString);
 }
 
+function callSystemLuaFuncCallback(func, callback)
+{
+    functionCallbackCounter++;
+    functionCallbacks[functionCallbackCounter] = callback;
+    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+", ' .. encodeJson("+func+") ..')')";
+    beamng.sendSystemLua(commandString);
+}
+
 function _fCallback(number, result)
 {
-    functionCallbacks[number](JSON.parse(result));
+	var res;
+	try{
+		res = JSON.parse(result);
+	}catch(e){
+		res = result;
+	}
+    functionCallbacks[number](res);
     functionCallbacks[number] = undefined;
 }
 

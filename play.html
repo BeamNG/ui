@@ -162,12 +162,13 @@ function changeBullettime(v) {
 }
 </script>
         <label for="option_simspeed">Simulation Speed</label>
-        <input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="10" max="100" value="100">
+        <input type="range" name="option_simspeed" id="option_simspeed" data-highlight="true" data-mini="true" min="1" max="100" value="1">
         <div class="narrowbuttons">
-            <input type="button" value="1/10" data-mini="true" onclick="changeBullettime(10);">
-            <input type="button" value="1/2" data-mini="true" onclick="changeBullettime(50);">
-            <input type="button" value="3/4" data-mini="true" onclick="changeBullettime(75);">
-            <input type="button" value="1" data-mini="true" onclick="changeBullettime(100);">
+            <input type="button" value="realtime" data-mini="true" onclick="changeBullettime(1);">
+            <input type="button" value="2x" data-mini="true" onclick="changeBullettime(2);">
+            <input type="button" value="4x" data-mini="true" onclick="changeBullettime(4);">
+            <input type="button" value="10x" data-mini="true" onclick="changeBullettime(10);">
+            <input type="button" value="100x" data-mini="true" onclick="changeBullettime(100);">
         </div>
         <label for="option_gravity">Gravity</label>
         <input type="range" name="option_gravity" id="option_gravity" data-highlight="true" data-mini="true" min="-280" max="10" step="0.01" value="-9.81">
