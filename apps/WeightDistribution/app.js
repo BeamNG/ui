@@ -68,11 +68,12 @@ WeightDistribution.prototype.update = function(streams){
 
         ctx.fillStyle = '#000';
 
-        ctx.fillText(w[0], x, y);
+        ctx.fillText(w[0], x, y - (fontSize + 3));
         filledArc(ctx, x, y, r, 1, 1, '#444444');
 
-        ctx.fillText(Math.round((downForce / 9.81) *this.data.factor[this.persistance.Unit]) + ' ' + this.data.unitname[this.persistance.Unit]    , x, y + fontSize + 3);
-        ctx.fillText(Math.round(downForce ) + ' N', x, y + 2 * (fontSize + 3));
+        ctx.fillText(Math.round((downForce / 9.81) *this.data.factor[this.persistance.Unit]) + ' ' + this.data.unitname[this.persistance.Unit]    , x, y );
+        ctx.fillText(Math.round(downForce ) + ' N', x, y + (fontSize + 3));
+        ctx.fillText(Math.round((downForce/max)*100 ) + ' %', x, y + 2 * (fontSize + 3));
 
 
         x += 2 * r +  5;
