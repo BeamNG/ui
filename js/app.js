@@ -960,6 +960,11 @@ var KeyManager = {
     },
     ku75: function(modifiers){ // K
         // Skeleton
+
+        // activate Debug, if its deactivated
+        if( !$('#debug_globalonoff').is(':checked')){
+        	$('#debug_globalonoff').click();
+        }
         var options = $('#skeleton_debug_options')
             .controlgroup( "container" )
             .find('input');
@@ -984,6 +989,12 @@ var KeyManager = {
         });
     },
     ku76: function(modifiers){ // L
+
+        // activate Debug, if its deactivated
+        if( !$('#debug_globalonoff').is(':checked')){
+        	$('#debug_globalonoff').click();
+        }
+
         var options = $('#nodeinfo_debug_options')
             .find('option[data-placeholder!="true"]');
         var size = options.length;
@@ -1007,7 +1018,7 @@ var KeyManager = {
             if(modifiers.shift){
                     newIndex = size - 1;
                 }else{
-                    newIndex = 0;
+                    newIndex = 1;
                 }
         }
 
