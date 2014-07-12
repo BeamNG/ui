@@ -59,7 +59,7 @@ SimpleTrip.prototype.update = function (streams) {
     curTime  = performance.now();
     var dt = (curTime - prevTime)/1000;
 
-    timer = timer - dt;
+    timer -= dt;
     if(timer < 0) {
         totalDistance += ((1 - timer) * wheelspeed);
 

@@ -3,7 +3,7 @@
         "name" : "Trip Computer",
         "author": "Metalmuncher",
         "version": "0.1",
-        "description": "Includes functionality usually found on a trip computer."
+        "description": "Includes functionality usually found on a trip computer. Clicking the measurement and unit will swap through the possible measurements and units respectively."
     },
 
      "appearance": {

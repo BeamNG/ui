@@ -27,3 +27,9 @@
 {
     background: RGBA(128,128,128,0.5);
 }
+
+.app .SimpleTrip .unitDiv:hover
+{
+    background: RGBA(128,128,128,0.5);
+}
+
