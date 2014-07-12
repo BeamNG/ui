@@ -19,7 +19,7 @@ SimpleGears.prototype.update = function (streams) {
     var maxFGears = streams.engineInfo[6];
     var maxRGears = streams.engineInfo[7];
 
-    callLuaFuncCallback("v.data.engine.transmissionType", function(res){gearmode = res;})
+    callLuaFuncCallback("v.data.engine.transmissionType", function(res){gearmode = res;});
 
     var gearNames = ["P","R","N","D","2","1"];
 
