@@ -1,0 +1,19 @@
+{
+    "info": {
+        "name" : "perf debug",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "blabla"
+    },
+
+    "appearance": {
+        "background" : "opaque-simple",
+        "size" : {
+            "initial" : [425,"auto"]
+        }
+    },
+
+    "data": {
+        "streams" : ["stats","sensors","electrics"]
+    }
+}

@@ -1,0 +1,25 @@
+.app .SimplePerfTimers {
+    padding: 5px;
+}
+
+.app .SimplePerfTimers .table tbody, .table thead {
+    display: block;
+}
+
+.app .SimplePerfTimers .table tbody
+{
+   overflow: auto;
+   overflow-y: scroll;
+   height: 100px;
+}
+
+.app .SimplePerfTimers .table th
+{
+    width: 75px;
+}
+
+.app .SimplePerfTimers .table td
+{
+    width: 75px;
+}
+
