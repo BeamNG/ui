@@ -21,7 +21,7 @@ var prevTime = 0;
 var curTime  = 0;
 
 var fuelConsumptionRate = 0;
-var avgWheelSpeed       = 0;
+var wheelspeed          = 0;
 var previousFuel        = 0;
 
 SimpleEngineDebug.prototype.update = function(streams){
@@ -34,12 +34,12 @@ SimpleEngineDebug.prototype.update = function(streams){
     curTime  = performance.now();
     var dt = (curTime - prevTime)/1000;
 
-    avgWheelSpeed = streams.electrics.wheelspeed;
+    wheelspeed = streams.electrics.wheelspeed;
 
     timer = timer - dt;
     if(timer < 0) {
         if (previousFuel > streams.engineInfo[11]) {
-            fuelConsumptionRate = (1 - timer) * avgWheelSpeed.toFixed(1) / (previousFuel - streams.engineInfo[11]); // In m/l
+            fuelConsumptionRate = (1 - timer) * wheelspeed.toFixed(1) / (previousFuel - streams.engineInfo[11]); // In m/l
         } else {
             fuelConsumptionRate = 0;
         }
