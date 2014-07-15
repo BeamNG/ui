@@ -1,6 +1,6 @@
 function SimpleGears() {}
 
-var gearmode = "automatic";
+
 
 SimpleGears.prototype.initialize = function () {
 
@@ -18,12 +18,11 @@ SimpleGears.prototype.update = function (streams) {
     var mGear = streams.engineInfo[5];
     var maxFGears = streams.engineInfo[6];
     var maxRGears = streams.engineInfo[7];
-
-    callLuaFuncCallback("v.data.engine.transmissionType", function(res){gearmode = res;});
+    var gearboxType = streams.engineInfo[13];
 
     var gearNames = ["P","R","N","D","2","1"];
 
-    if (gearmode === "manual"){
+    if (gearboxType === "manual"){
 
         //get the sign of the current manual gear
         var sign = mGear?mGear<0?-1:1:0;
@@ -60,5 +59,5 @@ SimpleGears.prototype.update = function (streams) {
         this.ltlGearDiv.html("");
     }
 
-    this.labelDiv.html("Gears (" + (gearmode.charAt(0).toUpperCase() + gearmode.slice(1)) + ")");
+    this.labelDiv.html("Gears (" + (gearboxType.charAt(0).toUpperCase() + gearboxType.slice(1)) + ")");
 };
