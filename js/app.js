@@ -371,7 +371,9 @@ var AppEngine = {
         // Install resizehandler
         $(window).resize(function(event) { AppEngine.resize(event); });
 
+        // we want to make sure lua and html are in sync
         beamng.sendGameEngine('vlua("streams.reset()");');
+        beamng.sendGameEngine('vlua("hooks.reset()");');
 
         // load persistance
         this._loadPersistance();
@@ -800,6 +802,7 @@ var AppLoader = {
 
 var HookManager  = {
     hooksMap : {},
+    hookArguments : {},
     register : function(hookName, obj) {
         if(this.hooksMap[hookName] === undefined) {
             this.hooksMap[hookName] = [];
@@ -845,15 +848,19 @@ var HookManager  = {
         });
     },
     trigger : function(hookName){
+        var args = Array.prototype.slice.call(arguments, 1);
+        this.hookArguments[hookName] = args;
+//        this.log(hookName + '(' +  JSON.stringify(args) + ')');
         if(this.hooksMap[hookName] === undefined) {
             this.log('undefined hook triggered: ' + hookName);
             return;
         }
-        var args = Array.prototype.slice.call(arguments, 1);
-//        this.log(hookName + '(' +  JSON.stringify(args) + ')');
         $.each(this.hooksMap[hookName], function(k, v) {
             v[1].apply(v[0], args);
         });
+    },
+    getArguments : function(hookName){
+        return this.hookArguments[hookName];
     },
     log: function(message){
         Logger.log("HookManager", message);
