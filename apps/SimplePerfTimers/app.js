@@ -54,13 +54,13 @@ SimplePerfTimers.prototype.update = function(streams){
             appendToTable(["Speed", Math.floor(this.startVelo), Math.floor(this.stopVelo), this.wheelTimer.toFixed(2), distance.toFixed(2)]);
         }
         if (throttle < 0.5) {
-            // console.log("this.ABORTED");
-            this.aborted = "this.Aborted: Throttle < 0.5";
+            // console.log("ABORTED");
+            this.aborted = "Aborted: Throttle < 0.5";
             this.wheelTimerState = 0;
         }
     }
     if (this.wheelTimerState == 1) {
-        this.testing = "Speed this.Testing... " + airspeed + " km/h, " + this.wheelTimer.toFixed(2) + " s";
+        this.testing = "Speed Testing... " + airspeed + " km/h, " + this.wheelTimer.toFixed(2) + " s";
     }
 
     //brake this.testing
@@ -84,13 +84,13 @@ SimplePerfTimers.prototype.update = function(streams){
             appendToTable(["Brake", Math.floor(this.startVelo), Math.floor(this.stopVelo), this.wheelTimer.toFixed(2), distance]);
         }
         if (brake < 0.5) {
-            // console.log("this.ABORTED");
-            this.aborted = "this.Aborted: Brake < 0.5";
+            // console.log("ABORTED");
+            this.aborted = "Aborted: Brake < 0.5";
             this.wheelTimerState = 0;
         }
     }
     if (this.wheelTimerState == 3) {
-        this.testing = "Brake this.Testing... " + airspeed + " km/h, " + this.wheelTimer.toFixed(2) + " s";
+        this.testing = "Brake Testing... " + airspeed + " km/h, " + this.wheelTimer.toFixed(2) + " s";
     }
     var str =  this.testing;
     str    += "<br>" + this.aborted;
