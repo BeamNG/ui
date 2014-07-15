@@ -24,6 +24,18 @@ SimpleTrip.prototype.initialize = function () {
     */
 
     if (isNaN(this.persistance.mode)) this.persistance.mode = 0;
+
+    this.timer    = 0;
+    this.prevTime = 0;
+    this.curTime  = 0;
+
+    this.count         = 0;
+    this.totalDistance = 0;
+    this.avgSpeed      = 0;
+
+    this.fuelConsumptionRate      = 0;
+    this.avgFuelConsumptionRate   = 0;
+    this.previousFuel             = 0;
 };
 
 SimpleTrip.prototype.toggleMode = function(){
@@ -39,44 +51,32 @@ SimpleTrip.prototype.toggleUnits = function(){
     this.save();
 };
 
-var timer    = 0;
-var prevTime = 0;
-var curTime  = 0;
-
-var count         = 0;
-var totalDistance = 0;
-var avgSpeed      = 0;
-
-var fuelConsumptionRate      = 0;
-var avgFuelConsumptionRate   = 0;
-var previousFuel             = 0;
-
 SimpleTrip.prototype.update = function (streams) {
 
     var wheelspeed = streams.electrics.wheelspeed;
 
-    prevTime = curTime;
-    curTime  = performance.now();
-    var dt = (curTime - prevTime)/1000;
+    this.prevTime = this.curTime;
+    this.curTime  = performance.now();
+    var dt = (this.curTime - this.prevTime)/1000;
 
-    timer -= dt;
-    if(timer < 0) {
-        totalDistance += ((1 - timer) * wheelspeed);
+    this.timer -= dt;
+    if(this.timer < 0) {
+        this.totalDistance += ((1 - this.timer) * wheelspeed);
 
-        count++;
+        this.count++;
 
-        avgSpeed += (wheelspeed - avgSpeed) / count;
+        this.avgSpeed += (wheelspeed - this.avgSpeed) / this.count;
 
-        if (previousFuel > streams.engineInfo[11]) {
-            fuelConsumptionRate = (1 - timer) * wheelspeed.toFixed(1) / (previousFuel - streams.engineInfo[11]); // In m/l
+        if (this.previousFuel > streams.engineInfo[11]) {
+            this.fuelConsumptionRate = (1 - this.timer) * wheelspeed.toFixed(1) / (this.previousFuel - streams.engineInfo[11]); // In m/l
         } else {
-            fuelConsumptionRate = 0;
+            this.fuelConsumptionRate = 0;
         }
-        previousFuel = streams.engineInfo[11];
+        this.previousFuel = streams.engineInfo[11];
 
-        avgFuelConsumptionRate += (fuelConsumptionRate - avgFuelConsumptionRate) / count;
+        this.avgFuelConsumptionRate += (this.fuelConsumptionRate - this.avgFuelConsumptionRate) / this.count;
 
-        timer = 1;
+        this.timer = 1;
     }
 
     var value;
@@ -86,50 +86,50 @@ SimpleTrip.prototype.update = function (streams) {
     switch (this.persistance.mode) {
         case 0:
             if (this.persistance.Unit === "Metric") {
-                value = (totalDistance/1000).toFixed(1);
+                value = (this.totalDistance/1000).toFixed(1);
                 unit = "km";
             } else {
-                value = (totalDistance/1609).toFixed(1);
+                value = (this.totalDistance/1609).toFixed(1);
                 unit = "mi";
             }
             display = "Total Distance";
             break;
         case 1:
             if (this.persistance.Unit === "Metric") {
-                value = (avgSpeed*3.6).toFixed(1);
+                value = (this.avgSpeed*3.6).toFixed(1);
                 unit = "km/h";
             } else {
-                value = (avgSpeed*3.6/1.60934).toFixed(1);
+                value = (this.avgSpeed*3.6/1.60934).toFixed(1);
                 unit = "MPH";
             }
             display = "AVG Speed";
             break;
         case 2:
             if (this.persistance.Unit === "Metric") {
-                value = (100000/avgFuelConsumptionRate).toFixed(1);
+                value = (100000/this.avgFuelConsumptionRate).toFixed(1);
                 unit = "L/100km";
             } else {
-                value = (avgFuelConsumptionRate * 0.00235214583).toFixed(1);
+                value = (this.avgFuelConsumptionRate * 0.00235214583).toFixed(1);
                 unit = "MPG (US)";
             }
             display = "AVG Fuel Consu.";
             break;
         case 3:
             if (this.persistance.Unit === "Metric") {
-                value = (100000/fuelConsumptionRate).toFixed(1);
+                value = (100000/this.fuelConsumptionRate).toFixed(1);
                 unit = "L/100km";
             } else {
-                value = (fuelConsumptionRate * 0.00235214583).toFixed(1);
+                value = (this.fuelConsumptionRate * 0.00235214583).toFixed(1);
                 unit = "MPG (US)";
             }
             display = "Fuel Consumption";
             break;
          case 4:
             if (this.persistance.Unit === "Metric") {
-                value = (fuelConsumptionRate * streams.engineInfo[11] / 1000).toFixed(0);
+                value = (this.fuelConsumptionRate * streams.engineInfo[11] / 1000).toFixed(0);
                 unit = "km";
             } else {
-                value = (fuelConsumptionRate * streams.engineInfo[11] / 1609).toFixed(1);
+                value = (this.fuelConsumptionRate * streams.engineInfo[11] / 1609).toFixed(1);
                 unit = "mi";
             }
             display = "Range";
