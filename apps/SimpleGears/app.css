@@ -21,10 +21,4 @@
     font-size:10px;
     color: black;
     height:13px;
-    cursor: pointer;
-}
-
-.app .SimpleGears .labelDiv:hover
-{
-    background: RGBA(128,128,128,0.5);
 }

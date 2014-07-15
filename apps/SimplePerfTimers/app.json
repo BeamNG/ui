@@ -1,0 +1,19 @@
+{
+    "info": {
+        "name" : "Performance Timers",
+        "author": "Metalmuncher",
+        "version": "0.1",
+        "description": "App with timers for 0-100 and >100-0 km/h performance."
+    },
+
+    "appearance": {
+        "background" : "opaque-simple",
+        "size" : {
+            "initial" : [425,"auto"]
+        }
+    },
+
+    "data": {
+        "streams" : ["stats","sensors","electrics"]
+    }
+}

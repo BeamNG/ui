@@ -62,9 +62,7 @@
                         "options": {
                             "hideInCockpit": true
                         },
-                        "custom": {
-                            "View": "Manual"
-                        }
+                        "custom": {}
                     }
                 },
                 {

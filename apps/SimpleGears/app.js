@@ -1,5 +1,7 @@
 function SimpleGears() {}
 
+
+
 SimpleGears.prototype.initialize = function () {
 
     this.bigGearDiv = $('<div></div>').appendTo(this.rootElement).addClass('bigGearDiv');
@@ -7,31 +9,20 @@ SimpleGears.prototype.initialize = function () {
     this.labelDiv = $('<div></div>').appendTo(this.rootElement).addClass('labelDiv');
 
     this.loaded = false;
-
-    var self = this;
-    this.labelDiv.click(function(){self.toggleView();});
-
-    //If no unit was previously selected, default to Auto
-    if ((this.persistance.View != "Manual") && (this.persistance.View != "Auto")) this.persistance.View = "Auto";
-};
-
-SimpleGears.prototype.toggleView = function(){
-    //Toggle between MPH and km/h, save the option to persistance system
-    this.persistance.View = this.persistance.View === 'Manual' ? 'Auto' : 'Manual';
-    this.save();
 };
 
 SimpleGears.prototype.update = function (streams) {
 
-    //Get the values to work with, do rounding and stuff as needed TODO: Get if car is manual or Auto Autoally when this is exposed to the ui system
+    //Get the values to work with, do rounding and stuff as needed
     var aGear = Math.round(streams.electrics.gear_A*5);
     var mGear = streams.engineInfo[5];
     var maxFGears = streams.engineInfo[6];
     var maxRGears = streams.engineInfo[7];
+    var gearboxType = streams.engineInfo[13];
 
     var gearNames = ["P","R","N","D","2","1"];
 
-    if (this.persistance.View === "Manual"){
+    if (gearboxType === "manual"){
 
         //get the sign of the current manual gear
         var sign = mGear?mGear<0?-1:1:0;
@@ -63,10 +54,10 @@ SimpleGears.prototype.update = function (streams) {
         }
 
     } else {
-        //we are in auto, display Auto gear name
+        //we are in automatic, display automatic gear name
         this.bigGearDiv.html(gearNames[aGear]);
         this.ltlGearDiv.html("");
     }
 
-    this.labelDiv.html("Gears (" + this.persistance.View + ")");
+    this.labelDiv.html("Gears (" + (gearboxType.charAt(0).toUpperCase() + gearboxType.slice(1)) + ")");
 };

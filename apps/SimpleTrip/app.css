@@ -1,0 +1,35 @@
+.app .SimpleTrip
+{
+    text-align:center;
+    color: RGBA(0,0,0,0.5);
+}
+
+.app .SimpleTrip .dataDiv
+{
+    font-size:35px;
+    height:38px;
+}
+
+.app .SimpleTrip .unitDiv
+{
+    font-size:14px;
+    height:15px;
+}
+
+.app .SimpleTrip .labelDiv
+{
+    font-size:10px;
+    color: black;
+    height:13px;
+}
+
+.app .SimpleTrip .labelDiv:hover
+{
+    background: RGBA(128,128,128,0.5);
+}
+
+.app .SimpleTrip .unitDiv:hover
+{
+    background: RGBA(128,128,128,0.5);
+}
+
