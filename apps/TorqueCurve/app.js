@@ -11,49 +11,57 @@ TorqueCurve.prototype.initialize = function(){
             crosshair: { mode: "x" }
         });
     this.plot.lockCrosshair({x:0});
+
+    var data = HookManager.getArguments("EngineChange");
+    if(data){
+    	this.updateCurves(data[0]);
+    }
+
+};
+
+TorqueCurve.prototype.onEngineChange = function(data){
+	this.updateCurves(data);
+};
+
+TorqueCurve.prototype.updateCurves = function(data){
+    this.torqueCurve = data[0];
+    this.powerCurve = data[1];
+    this.maxrpm = data[2];
+
+    //build data for plot
+    var step = toInt(this.maxrpm / 50);
+    var torqueData = [];
+    for (var i = 0; i < this.maxrpm; i+=step) {
+        torqueData.push([i,this.torqueCurve[i]]);
+    }
+    torqueData.push([this.maxrpm,this.torqueCurve[this.maxrpm]]);
+
+    var powerData = [];
+    for (var i = 0; i < this.maxrpm; i+=step) {
+        powerData.push([i,this.powerCurve[i]]);
+    }
+    powerData.push([this.maxrpm,this.powerCurve[this.maxrpm]]);
+
+    this.plot.setData([
+        {label:"Torque",data:torqueData,color:"#38659D"},
+        {label:"Power",data:powerData,color:"#E08E1B",yaxis:2}]);
+    this.plot.setupGrid();
+    this.plot.draw();
+    $(".flot-y1-axis").css('text-shadow', '0 0 0.5px #38659D');
+    $(".flot-y2-axis").css('text-shadow', '0 0 0.5px #E08E1B');
+
+    // change legend
+    this.rootElement.find(".legend").children('table').css('width', 150);
+    this.rootElement.find(".legend").children('div').css('width', 150);
+    this.rootElement.find('.legendLabel').each(function(index, el) {
+        $(el).css({
+            'text-align': 'right',
+            width: 130
+        });
+    });	
 };
 
 TorqueCurve.prototype.update = function(streams){
-    if(streams.torqueCurve!== undefined){
-        this.log("tc streamupdate");
-        this.torqueCurve = streams.torqueCurve[0];
-        this.powerCurve = streams.torqueCurve[1];
-
-        //build data for plot
-        var maxrpm = streams.engineInfo[1];
-        var step = toInt(maxrpm / 50);
-        var torqueData = [];
-        for (var i = 0; i < maxrpm; i+=step) {
-            torqueData.push([i,this.torqueCurve[i]]);
-        }
-        torqueData.push([maxrpm,this.torqueCurve[maxrpm]]);
-
-        var powerData = [];
-        for (var i = 0; i < maxrpm; i+=step) {
-            powerData.push([i,this.powerCurve[i]]);
-        }
-        powerData.push([maxrpm,this.powerCurve[maxrpm]]);
-
-        this.plot.setData([
-            {label:"Torque",data:torqueData,color:"#38659D"},
-            {label:"Power",data:powerData,color:"#E08E1B",yaxis:2}]);
-        this.plot.setupGrid();
-        this.plot.draw();
-        $(".flot-y1-axis").css('text-shadow', '0 0 0.5px #38659D');
-        $(".flot-y2-axis").css('text-shadow', '0 0 0.5px #E08E1B');
-
-        // change legend
-        this.rootElement.find(".legend").children('table').css('width', 150);
-        this.rootElement.find(".legend").children('div').css('width', 150);
-        this.rootElement.find('.legendLabel').each(function(index, el) {
-            $(el).css({
-                'text-align': 'right',
-                width: 130
-            });
-        });
-
-    }
-
     if(this.torqueCurve !== undefined){
         this.plot.setCrosshair({x:streams.engineInfo[4]});
         var legends = this.rootElement.find('.legendLabel');

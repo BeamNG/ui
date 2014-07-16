@@ -372,8 +372,8 @@ var AppEngine = {
         $(window).resize(function(event) { AppEngine.resize(event); });
 
         // we want to make sure lua and html are in sync
-        beamng.sendGameEngine('vlua("streams.reset()");');
-        beamng.sendGameEngine('vlua("hooks.reset()");');
+        beamng.sendActiveObjectLua("streams.reset()");
+        beamng.sendActiveObjectLua("hooks.reset()");
 
         // load persistance
         this._loadPersistance();
