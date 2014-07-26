@@ -35,7 +35,7 @@ SimpleEngineDebug.prototype.update = function(streams){
     this.curTime  = performance.now();
     var dt = (this.curTime - this.prevTime)/1000;
 
-    this.wheelspeed = streams.electrics.this.wheelspeed;
+    this.wheelspeed = streams.electrics.wheelspeed;
 
     this.timer = this.timer - dt;
     if(this.timer < 0) {
