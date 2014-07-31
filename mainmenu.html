@@ -38,6 +38,7 @@
             <a href="#" onclick="window.location.href='file:///html/chat.html';"><svg class="icon icon-bubbles2" viewBox="0 0 32 32"><use xlink:href="#icon-bubbles2"></use></svg>&nbsp;&nbsp;Chat</a>
             <a href="#" onclick="beamng.sendGameEngine('quit();')"><svg class="icon icon-exit" viewBox="0 0 32 32"><use xlink:href="#icon-exit"></use></svg>&nbsp;&nbsp;Exit</a>
         </nav>
+        <div class="version" id="beamngversion"></div>
     </div>
 
     <div id="video-viewport">
@@ -190,6 +191,11 @@
             // update the info text
             $('#infobox').html(currentEntry[1] + '<br/>' + currentEntry[2]);
         }
+		
+		function gotGameVersion(versionStr) {
+            $('#beamngversion').html(versionStr);
+		}
+		beamng.requestVersionInfo();
     </script>
     <button class='cefdev' onclick="javascript:location.reload();" style="width: 60px; height: 20px;
         position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;">

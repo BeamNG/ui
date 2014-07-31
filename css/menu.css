@@ -92,6 +92,22 @@
     fill:#66fa66 !important;
 }
 
+
+#menu .version {
+    position: fixed;
+    bottom: 2px;
+    right:2px;
+    display: block;
+    clear: both;
+    color:rgba(230,230,230,0.7);
+    font-family:Verdana;
+    font-size:12px;
+    font-style:normal;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    cursor:default;
+}
+
 .icon {
     display: inline-block;
     width: 32px;
