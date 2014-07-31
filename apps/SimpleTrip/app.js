@@ -32,6 +32,7 @@ SimpleTrip.prototype.initialize = function () {
     this.count         = 0;
     this.totalDistance = 0;
     this.avgSpeed      = 0;
+    this.range         = 0;
 
     this.fuelConsumptionRate      = 0;
     this.avgFuelConsumptionRate   = 0;
@@ -68,11 +69,13 @@ SimpleTrip.prototype.update = function (streams) {
         this.avgSpeed += (wheelspeed - this.avgSpeed) / this.count;
 
         if (this.previousFuel > streams.engineInfo[11]) {
-            this.fuelConsumptionRate = (1 - this.timer) * wheelspeed.toFixed(1) / (this.previousFuel - streams.engineInfo[11]); // In m/l
+            this.fuelConsumptionRate = (1 - this.timer) * wheelspeed / (this.previousFuel - streams.engineInfo[11]); // In m/l
         } else {
             this.fuelConsumptionRate = 0;
         }
         this.previousFuel = streams.engineInfo[11];
+
+        this.range = this.fuelConsumptionRate * streams.engineInfo[11] / 1000;
 
         this.avgFuelConsumptionRate += (this.fuelConsumptionRate - this.avgFuelConsumptionRate) / this.count;
 
@@ -126,10 +129,10 @@ SimpleTrip.prototype.update = function (streams) {
             break;
          case 4:
             if (this.persistance.Unit === "Metric") {
-                value = (this.fuelConsumptionRate * streams.engineInfo[11] / 1000).toFixed(0);
+                value = (this.range).toFixed(1);
                 unit = "km";
             } else {
-                value = (this.fuelConsumptionRate * streams.engineInfo[11] / 1609).toFixed(1);
+                value = (this.range / 1.609).toFixed(1);
                 unit = "mi";
             }
             display = "Range";

@@ -16,6 +16,7 @@ SimpleEngineDebug.prototype.initialize = function(){
     this.fuelConsumptionRate = 0;
     this.wheelspeed          = 0;
     this.previousFuel        = 0;
+    this.range               = 0;
 };
 
 SimpleEngineDebug.prototype.toggleUnits = function(){
@@ -35,16 +36,17 @@ SimpleEngineDebug.prototype.update = function(streams){
     this.curTime  = performance.now();
     var dt = (this.curTime - this.prevTime)/1000;
 
-    this.wheelspeed = streams.electrics.this.wheelspeed;
+    this.wheelspeed = streams.electrics.wheelspeed;
 
     this.timer = this.timer - dt;
     if(this.timer < 0) {
         if (this.previousFuel > streams.engineInfo[11]) {
-            this.fuelConsumptionRate = (1 - this.timer) * this.wheelspeed.toFixed(1) / (this.previousFuel - streams.engineInfo[11]); // In m/l
+            this.fuelConsumptionRate = (1 - this.timer) * this.wheelspeed / (this.previousFuel - streams.engineInfo[11]); // In m/l
         } else {
             this.fuelConsumptionRate = 0;
         }
         this.previousFuel = streams.engineInfo[11];
+        this.range = this.fuelConsumptionRate * streams.engineInfo[11] / 1000;
         this.timer = 1;
     }
 
@@ -63,7 +65,7 @@ SimpleEngineDebug.prototype.update = function(streams){
         str += "<br> Airspeed: " + (streams.electrics.airspeed*3.6).toFixed(2) + " km/h";
         str += "<br> Fuel: " + streams.engineInfo[11].toFixed(2) + " L/" + streams.engineInfo[12].toFixed(2) + " L, " + ((streams.engineInfo[11]/streams.engineInfo[12])*100).toFixed(2) + "%";
         str += "<br> Consumption: " + (100000 / this.fuelConsumptionRate).toFixed(2) + " L/100km";
-        str += "<br> Range: " + (this.fuelConsumptionRate * streams.engineInfo[11] / 1000).toFixed(2)  + " km";
+        str += "<br> Range: " + (this.range).toFixed(2)  + " km";
     } else {
         str += "<br> Engine Torque: " + (streams.engineInfo[8]*1.356).toFixed() + " lb ft";
         str += "<br> Wheel Torque: " + (streams.engineInfo[9]*1.356).toFixed() + " lb ft";
@@ -71,7 +73,7 @@ SimpleEngineDebug.prototype.update = function(streams){
         str += "<br> Airspeed: " + (streams.electrics.airspeed*2.23694).toFixed(2) + " MPH";
         str += "<br> Fuel: " + (streams.engineInfo[11]*0.2642).toFixed(2) + " gal/" + (streams.engineInfo[12]*0.2642).toFixed(2) + " gal, " + ((streams.engineInfo[11]/streams.engineInfo[12])*100).toFixed(2) + "%";
         str += "<br> Consumption: " + (this.fuelConsumptionRate * 0.00235214583).toFixed(2) + " mpg (US)";
-        str += "<br> Range: " + (this.fuelConsumptionRate * streams.engineInfo[11] / 1609).toFixed(2)  + " mi";
+        str += "<br> Range: " + (this.range / 1.609).toFixed(2)  + " mi";
     }
 
     this.text.html(str);
