@@ -25,6 +25,7 @@ WeightDistribution.prototype.initialize = function(){
 
 WeightDistribution.prototype.update = function(streams){
     var value = streams.wheelInfo;
+    var wheelCount = 0;
     /* value format:
     0  wd.name
     1  wd.radius
@@ -56,6 +57,7 @@ WeightDistribution.prototype.update = function(streams){
     }
 
     for(var i in value) {
+        wheelCount++;
         var w = value[i];
         var downForce = w[7];
         // then draw
@@ -83,10 +85,12 @@ WeightDistribution.prototype.update = function(streams){
             y += 2 * r + 5;
         }
     }
-    y -= r;
-    if(c.height < y)
+    //Calculating height:
+    var wheelRows = Math.ceil(wheelCount/2);
+    var height =  wheelRows * ( 2 * r  + 5);
+    if(c.height != height)
     {
-        c.height = y;
+        c.height = height;
     }
 
 };

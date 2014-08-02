@@ -25,6 +25,7 @@ WheelsDebug.prototype.initialize = function(){
 
 WheelsDebug.prototype.update = function(streams){
     var value = streams.wheelInfo;
+    var wheelCount = 0;
     /* value format:
     0  wd.name
     1  wd.radius
@@ -49,6 +50,7 @@ WheelsDebug.prototype.update = function(streams){
     var x = r + b;
     var y = r + b;
     for(var i in value) {
+        wheelCount++;
         var w = value[i];
         // then draw
         ctx.fillText(w[0], x, y);
@@ -77,10 +79,12 @@ WheelsDebug.prototype.update = function(streams){
             y += 2 * r + 5;
         }
     }
-    y -= r;
-    if(c.height < y)
+    //Calculating height:
+    var wheelRows = Math.ceil(wheelCount/2);
+    var height =  wheelRows * ( 2 * r  + 5);
+    if(c.height != height)
     {
-        c.height = y;
+        c.height = height;
     }
 
 };
