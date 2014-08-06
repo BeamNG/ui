@@ -1,9 +1,8 @@
-.app .Messages
-{
+.app .Messages {
     overflow: visible;
 }
-.app .Messages .message
-{
+
+.app .Messages .message {
     font-size: 20px;
     text-shadow:
         1px 0 2px black,
@@ -14,4 +13,128 @@
     color: white;
     margin-left: 5px;
     margin-top: 2px;
+}
+
+@-webkit-keyframes blinkOn {
+    0% {
+        opacity: 1;
+        left:0px;
+        top:0px;
+    }
+    50% {
+        opacity: 0;
+        left:-0.2px;
+        top:-0.2px;
+    }
+    100% {
+        opacity: 1;
+        left:0px;
+        top:0px;
+    }
+}
+
+
+.blink {
+    -webkit-animation: blinkOn 1.0s;
+    -webkit-animation-iteration-count: 3;
+    position: relative;
+}
+
+.imgover {
+    position: absolute;
+    left:0px;
+    top:0px;
+    display:block;
+}
+
+.imgdiv {
+    position:relative;
+    height:64px;
+    width:64px;
+    float:left;
+    margin-right:10px;
+}
+
+.controller_mask_0 {
+    -webkit-mask-image: url(file:///html/images/messages/controller_0.png);
+    width:64px;
+    height:64px;
+}
+
+.controller_mask_1 {
+    -webkit-mask-image: url(file:///html/images/messages/controller_1.png);
+    width:64px;
+    height:64px;
+}
+
+.controller_mask_2 {
+    -webkit-mask-image: url(file:///html/images/messages/controller_2.png);
+    width:64px;
+    height:64px;
+}
+
+.controller_mask_3 {
+    -webkit-mask-image: url(file:///html/images/messages/controller_3.png);
+    width:64px;
+    height:64px;
+}
+
+
+.gamepad_mask {
+    -webkit-mask-image: url(file:///html/images/messages/gamepad.png);
+    width:64px;
+    height:64px;
+}
+
+
+.green {
+    background-color:green;
+}
+
+.red {
+    background-color:red;
+}
+
+.nonsubject {
+    opacity:0.3;
+}
+
+.bat_full {
+    background-color:#09b3ff;
+}
+
+.bat_medium {
+    background-color:#0aff5c;
+}
+
+.bat_low {
+    background-color:#fee409;
+}
+
+.bat_empty {
+    background-color:#fe0a0a;
+}
+
+.battery_0_mask {
+    -webkit-mask-image: url(file:///html/images/messages/bat_0.png);
+    width:64px;
+    height:64px;
+}
+
+.battery_1_mask {
+    -webkit-mask-image: url(file:///html/images/messages/bat_1.png);
+    width:64px;
+    height:64px;
+}
+
+.battery_2_mask {
+    -webkit-mask-image: url(file:///html/images/messages/bat_2.png);
+    width:64px;
+    height:64px;
+}
+
+.battery_3_mask {
+    -webkit-mask-image: url(file:///html/images/messages/bat_3.png);
+    width:64px;
+    height:64px;
 }
