@@ -193,7 +193,7 @@ function callGameEngineFuncCallback(func, callback)
 {
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+', \'" @ strreplace('+func+',"\'","\\\\\'") @ "\')");';
+    var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+', \'" @ strreplace('+func+',"\'","\\\\\'") @ "\')", 0);';
     beamng.sendGameEngine(commandString);
 }
 

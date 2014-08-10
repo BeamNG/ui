@@ -1076,6 +1076,9 @@ var KeyManager = {
     ku221: function(modifiers){ // ]
         DebugManager.nextDebug();
     },
+    ku32: function(){
+        VehicleChooser2.open();
+    }
 /*	Removed until we find a way to check if the Application has the focus and
 	prevent alt+tab triggering this
     kd18: function(){ // alt v

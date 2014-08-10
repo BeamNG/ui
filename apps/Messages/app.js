@@ -4,6 +4,7 @@ Messages.prototype.initialize = function() {
     this.messageSlot = [];
     console.log('Messages initialize');
 
+    /*
     var t = this;
     $('<button>Connect</button>').appendTo(this.rootElement).click(function(){
         t.onXIControllerChanged({ctrl0_c: "1",ctrl1_c: "0",ctrl2_c: "0",ctrl3_c: "0",eventType: "connected",subjectCtrl: "0"});
@@ -23,6 +24,7 @@ Messages.prototype.initialize = function() {
     $('<button>b3</button>').appendTo(this.rootElement).click(function(){
         t.onXIControllerBatteryWarning({ctrlID: "0",batLevel: "3"});
     });
+    */
 };
 
 Messages.prototype.update = function(streams) {

@@ -1,0 +1,105 @@
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Bold.ttf);
+}
+
+body {
+  background: #222222;
+  color: white;
+  box-sizing: border-box;
+  margin: 30px;
+  font-size: 12px;
+  line-height: 1.35;
+  font-family: Roboto, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2 {
+  font-weight: 100;
+}
+
+h1 {
+  font-size: 300%;
+}
+
+.hint {
+  color: #ffcc00;
+}
+
+ul, li {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+.gamepad {
+  margin: 30px 0;
+  position: relative;
+}
+
+.icon {
+  color: #ffcc00;
+}
+
+h2.active {
+  color: white;
+}
+
+h2.inactive {
+  color: #666666;
+}
+
+label {
+  width: 20px;
+  font-size: 100%;
+  color: #aaaaaa;
+}
+
+value {
+  display: block;
+  text-align: right;
+  font-size: 150%;
+  margin-top: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.info, .axes, .buttons {
+  margin: 5px 0;
+}
+
+.info li, .buttons li, .axes li {
+  display: inline-block;
+  padding: 3px;
+  margin: 0 5px 5px 0;
+  background: #333333;
+  line-height: 1;
+  opacity: 0.3;
+}
+
+.info li {
+  width: 50px;
+}
+
+.info li.med {
+  width: 100px;
+}
+
+.info li.large {
+  width: 200px;
+}
+
+.axes li {
+  width: 100px;
+}
+
+.buttons li {
+  width: 50px;
+}

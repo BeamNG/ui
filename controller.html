@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/minimal.css">
+    <link rel="stylesheet" href="css/controller.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/minimal.js"></script>
+</head>
+<body>
+
+<div id='devices'>
+    <div id='device_0'>
+        <h2 class="active">
+            <span class="icon">1</span>
+            <span>foobar controller</span>
+        </h2>
+
+        <div class="info">
+            <ul class="active">
+                <li class="large"><label>TIMESTAMP</label><value>123456789</value></li>
+                <li class=""><label>INDEX</label><value>1</value></li>
+                <li class="med"><label>MAPPING</label><value>none</value></li>
+            </ul>
+        </div>
+
+        <div class="axes">
+            <ul class="">
+                <li id="axis_0" class=""><label>AXIS 1</label><value>3</value></li>
+                <li id="axis_1" class=""><label>AXIS 2</label><value>2</value></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var initialized = false;
+function controllerUpdateValue(devName, objectName, value) {
+    if(!initialized) return;
+    var dev = $('#'+devName);
+    var field = dev.find('#'+objectName);
+    field.css('opacity', Math.abs(value)+0.3);
+    field.find('value').html(parseFloat(value));
+}
+
+function setControllerConfig(cfg) {
+    console.log("setControllerConfig");
+    console.log(cfg);
+    var root = $('#devices');
+    root.html('');
+
+    for(var d = 0; d < cfg.length; d++) {
+        var dev = cfg[d];
+        var productName = dev.productName || "";
+        var devHtml = $('<div id="' + dev.name + '"><h2 class="active"><span class="icon">'+dev.name+'</span> <span>'+productName+'</span></h2></div>').appendTo(root);
+
+        // Axis
+        var axisHtml = $('<div class="axes"></div>').appendTo(devHtml);
+        var axisUl = $('<ul class=""></ul>').appendTo(axisHtml);
+        $.each(dev.axis, function(k, v) {
+            axisUl.append('<li id="' + v + '" class=""><label>' + v + '</label><value>0</value></li>');
+        });
+
+        // Buttons
+        var buttonsHtml = $('<div class="buttons"></div>').appendTo(devHtml);
+        var buttonsUl = $('<ul class=""></ul>').appendTo(buttonsHtml);
+        $.each(dev.buttons, function(k, v) {
+            buttonsUl.append('<li id="' + v + '" class=""><label>' + v + '</label><value>0</value></li>');
+        });
+    }
+    initialized = true;
+}
+
+$(document).ready(function() {
+    beamng.sendGameEngine("sendUIControlConfig();enableUIControlForwarding();");
+});
+
+
+</script>
+
+<button class='cefdev_' onclick="javascript:location.reload();" style="width: 60px; height: 20px;
+    position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;">
+    ReloadUI
+</button>
+
+<input type="button" id="backbutton" href="#" onclick="window.location.href='file:///html/mainmenu.html';" value="Back" /><br/>
+</body>
+</html>
