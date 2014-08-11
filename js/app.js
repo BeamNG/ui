@@ -1046,11 +1046,11 @@ var KeyManager = {
             AppEngine.toggleEditMode();
         }
         if(modifiers.shift){
-            $('body').toggle();
-            if ($('body').is(':visible')){
-            	$('html').css('cursor', 'pointer');
+            $('body').toggleClass('hidden');
+            if($('body').hasClass('hidden')){
+                 document.body.style.cursor = 'none';
             }else{
-				$('html').css('cursor', 'none');
+                document.body.style.cursor = 'default';
             }
         }
     },

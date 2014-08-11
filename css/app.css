@@ -1,8 +1,22 @@
 html, body {position: relative}
 
-a, button, html, body
+html
 {
-    cursor:pointer;
+    cursor: none !important;
+}
+
+body, body *
+{
+    cursor: default;
+}
+
+body.hidden, body.hidden *, body.hidden:hover
+{
+    cursor: none !important;
+}
+
+body.hidden * {
+    display: none;
 }
 
 /* custom jquery ui dialog style */
