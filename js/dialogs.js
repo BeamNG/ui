@@ -113,6 +113,8 @@ var VehicleChooser2 = (function(){
     var colorPicker;
     var lastColor = "rgba(255,0,255,0.6)";
 
+    var isOpen = false;
+
     function init(){
         mainDiv = $("<div id='vehiclechooser2' style='background: #fff; overflow: hidden'></div>").appendTo($("body"));
         mainDiv.dialog({
@@ -140,8 +142,8 @@ var VehicleChooser2 = (function(){
     }
 
     function fillBrandPanel(){
-    	panels[0].body.empty();
-    	var brandButtons = brands.slice();
+        panels[0].body.empty();
+        var brandButtons = brands.slice();
             brandButtons.unshift("All");
             panels[0].main.show();
             $.each(brandButtons, function(index, val) {
@@ -188,34 +190,34 @@ var VehicleChooser2 = (function(){
     function fillColorPanel(){
         panels[3].body.empty();
         colorPicker = $("<input></input>").appendTo(panels[3].body).spectrum({
-        	flat: true,
-        	showAlpha: true,
-    		showButtons: false,
-    		color: lastColor
+            flat: true,
+            showAlpha: true,
+            showButtons: false,
+            color: lastColor
         });
         $(colorPicker).on("dragstop.spectrum", function(e, color) {
-    		console.log(color.toHexString()); // #ff0000
-    		var c = lastColor = color.toRgb();
-    		choosen.color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
-    		console.log(choosen.color);
+            console.log(color.toHexString()); // #ff0000
+            var c = lastColor = color.toRgb();
+            choosen.color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
+            console.log(choosen.color);
 
-		});
-		$("<br>").appendTo(panels[3].body);
-		var metallicCheckbox = $("<input type='checkbox'></input>").appendTo(panels[3].body);
-		metallicCheckbox.change(function(event) {
-			choosen.metallic = (metallicCheckbox.is(":checked") ? 1 : 0);
-		});
-		$("<span> metallic</span>").appendTo(panels[3].body);
+        });
+        $("<br>").appendTo(panels[3].body);
+        var metallicCheckbox = $("<input type='checkbox'></input>").appendTo(panels[3].body);
+        metallicCheckbox.change(function(event) {
+            choosen.metallic = (metallicCheckbox.is(":checked") ? 1 : 0);
+        });
+        $("<span> metallic</span>").appendTo(panels[3].body);
     }
 
     function resetBrand(){
 
-    	panels[0].title.html("Brand");
-    	panels[0].body.slideDown();
+        panels[0].title.html("Brand");
+        panels[0].body.slideDown();
 
         for (var i = 1; i < 5; i++) {
-        	panels[i].main.slideUp();
-        };    	
+            panels[i].main.slideUp();
+        };      
     }
 
     function setBrand(brand){
@@ -229,7 +231,7 @@ var VehicleChooser2 = (function(){
         panels[1].body.slideDown();
 
         for (var i = 2; i < 5; i++) {
-        	panels[i].main.slideUp();
+            panels[i].main.slideUp();
         };
     }
 
@@ -245,7 +247,7 @@ var VehicleChooser2 = (function(){
         panels[2].body.slideDown();
 
         for (var i = 3; i < 4; i++) {
-        	panels[i].main.slideUp();
+            panels[i].main.slideUp();
         }
         panels[4].main.show();
     }
@@ -256,7 +258,7 @@ var VehicleChooser2 = (function(){
 
         fillColorPanel();
 
-		panels[3].main.slideDown();
+        panels[3].main.slideDown();
         panels[3].body.slideDown();
         colorPicker.spectrum("reflow");
         
@@ -264,8 +266,8 @@ var VehicleChooser2 = (function(){
     }
     
     function open(){
-    	mainDiv.empty();
-		$("<img src='images/loading.gif'>").appendTo(mainDiv);
+        mainDiv.empty();
+        $("<img src='images/loading.gif'>").appendTo(mainDiv);
 
         mainDiv.parent().show();
         mainDiv.dialog( "moveToTop" );
@@ -286,46 +288,50 @@ var VehicleChooser2 = (function(){
             }
 
             panels[0].title.click(function(event) {
-        		resetBrand();
+                resetBrand();
             });
             panels[1].title.click(function(event) {
-        		setBrand(choosen.brand);
+                setBrand(choosen.brand);
             });
             panels[2].title.click(function(event) {
-        		setModel(choosen.model,choosen.modelPosition);
+                setModel(choosen.model,choosen.modelPosition);
             });
             panels[4].title.click(function(event) {
-            	//Magic
-            	beamng.sendGameEngine('chooseVehicle( "'+choosen.model+'", "'+choosen.configuration+'", "'+choosen.color+'", '+choosen.metallic+');');
-            	close();
+                //Magic
+                beamng.sendGameEngine('chooseVehicle( "'+choosen.model+'", "'+choosen.configuration+'", "'+choosen.color+'", '+choosen.metallic+');');
+                close();
             });
             
 
             // Fill BrandPanel
             fillBrandPanel();
+            isOpen = true;
             resize();
         });
     }
 
     function close(){
         mainDiv.parent().hide();
+        isOpen = false;
     }
 
     function resize(){
         mainDiv.dialog("option","width",$(window).width()-70);
-        mainDiv.dialog("option","height",$(window).height()-70);
+        mainDiv.dialog("option","height",$(window).height()-70); 
 
+        if(isOpen){
             for (var i = 0; i < 5; i++) {
                 panels[i].body.css('max-height', $(window).height()-200);
             }
+        }
     }
 
     // run init
     $(document).ready(function() {
         init();
         $(window).resize(function(event) {
-        	resize();
-        });
+            resize();
+        }); 
     });
     // public interface
     var VehicleChooser = {
@@ -350,10 +356,10 @@ $.widget("beamNG.bigButton", {
 
         var imageString = "";
         if(this.options.images){
-	        for (var i = 0; i < this.options.images.length; i++) {
-	        	imageString += "url("+this.options.images[i]+"), ";
-	        }
-	    }
+            for (var i = 0; i < this.options.images.length; i++) {
+                imageString += "url("+this.options.images[i]+"), ";
+            }
+        }
         imageString += "url(images/appDefault.png)";
         console.log(imageString);
         this.front.css('background-image', imageString);
