@@ -1077,7 +1077,7 @@ var KeyManager = {
         DebugManager.nextDebug();
     },
     ku32: function(){
-        VehicleChooser2.open();
+        VehicleChooser3.open();
     }
 /*	Removed until we find a way to check if the Application has the focus and
 	prevent alt+tab triggering this

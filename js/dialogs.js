@@ -4,7 +4,7 @@ var VehicleChooser = (function() {
     var mainDiv;
 
     var vehicleChoose;
-    var configurationChoose;
+    var ConfigurationChoose;
 
     var changeButton;
 
@@ -31,7 +31,7 @@ var VehicleChooser = (function() {
             });
 
             cChooseBox = $('<div><label>Choose Configuration</label></div>').appendTo(mainDiv);
-            configurationChoose = $('<select style="width: 100%"></select>').appendTo(cChooseBox);
+            ConfigurationChoose = $('<select style="width: 100%"></select>').appendTo(cChooseBox);
 
             updateConfigurations(0);
 
@@ -57,20 +57,20 @@ var VehicleChooser = (function() {
     }
 
     function updateConfigurations(vehicle){
-        configurationChoose.empty();
+        ConfigurationChoose.empty();
         $.each(vehicles[vehicle][2], function(index, val) {
-            $('<option value="'+index+'">'+val[1]+'</option>').appendTo(configurationChoose);
+            $('<option value="'+index+'">'+val[1]+'</option>').appendTo(ConfigurationChoose);
         });
     }
 
     function changeVehicle(){
         var vehicleID = vehicleChoose.children('option:selected').attr('value');
         var vehicle = vehicles[vehicleID][0];
-        var configurationID = configurationChoose.children('option:selected').attr('value');
-        var configuration = vehicles[vehicleID][2][configurationID][2];
+        var ConfigurationID = ConfigurationChoose.children('option:selected').attr('value');
+        var Configuration = vehicles[vehicleID][2][ConfigurationID][2];
         console.log(vehicle);
-        console.log(configuration);
-        beamng.sendGameEngine('chooseVehicle( "'+vehicle+'", "'+configuration+'", "", 1);');
+        console.log(Configuration);
+        beamng.sendGameEngine('chooseVehicle( "'+vehicle+'", "'+Configuration+'", "", 1);');
         close();
     }
 
@@ -101,10 +101,10 @@ var VehicleChooser2 = (function(){
     var mainDiv;
     var vehicles;
 
-    var brands = ["Gavril","Bruckell","Ibishu","Civetta","Hirochi","Other"]; // We need some way to add/load brands here dynamically
+    var Brands = ["Gavril","Bruckell","Ibishu","Civetta","Hirochi","Other"]; // We need some way to add/load Brands here dynamically
 
-    var states = {"brand": 0, "model": 1, "configuration": 2, "color": 3 };
-    var state = states.brand;
+    var states = {"Brand": 0, "Model": 1, "Configuration": 2, "Color": 3 };
+    var state = states.Brand;
 
     var panels = [{},{},{},{},{}];
 
@@ -133,9 +133,9 @@ var VehicleChooser2 = (function(){
     }
 
     function findBrand(name){
-        for (var i = 0; i < brands.length; i++) {
-            if(name.indexOf(brands[i]) === 0){
-                return brands[i];
+        for (var i = 0; i < Brands.length; i++) {
+            if(name.indexOf(Brands[i]) === 0){
+                return Brands[i];
             }
         }
         return "Other";
@@ -143,10 +143,10 @@ var VehicleChooser2 = (function(){
 
     function fillBrandPanel(){
         panels[0].body.empty();
-        var brandButtons = brands.slice();
-            brandButtons.unshift("All");
+        var BrandButtons = Brands.slice();
+            BrandButtons.unshift("All");
             panels[0].main.show();
-            $.each(brandButtons, function(index, val) {
+            $.each(BrandButtons, function(index, val) {
                  $("<div></div>").appendTo(panels[0].body).bigButton({
                     title:val,
                     clickAction: function(){
@@ -160,7 +160,7 @@ var VehicleChooser2 = (function(){
     function fillModelPanel(){
         panels[1].body.empty();
         $.each(vehicles, function(index, val) {
-            if(val[3] == choosen.brand || choosen.brand == "All"){
+            if(val[3] == choosen.Brand || choosen.Brand == "All"){
                 $("<div></div>").appendTo(panels[1].body).bigButton({
                     title: val[1],
                     clickAction: function(){
@@ -175,7 +175,7 @@ var VehicleChooser2 = (function(){
     function fillConfigurationPanel(){
         panels[2].body.empty();
         console.log(vehicles[2]);
-        $.each(vehicles[choosen.modelPosition][2], function(index, val) {
+        $.each(vehicles[choosen.ModelPosition][2], function(index, val) {
             console.log(val);
             $("<div></div>").appendTo(panels[2].body).bigButton({
                 title: val[1],
@@ -198,8 +198,8 @@ var VehicleChooser2 = (function(){
         $(colorPicker).on("dragstop.spectrum", function(e, color) {
             console.log(color.toHexString()); // #ff0000
             var c = lastColor = color.toRgb();
-            choosen.color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
-            console.log(choosen.color);
+            choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
+            console.log(choosen.Color);
 
         });
     }
@@ -211,11 +211,11 @@ var VehicleChooser2 = (function(){
 
         for (var i = 1; i < 5; i++) {
             panels[i].main.slideUp();
-        };      
+        }     
     }
 
-    function setBrand(brand){
-        choosen.brand = brand;
+    function setBrand(Brand){
+        choosen.Brand = Brand;
         panels[0].body.slideUp();
 
         fillModelPanel();
@@ -226,12 +226,12 @@ var VehicleChooser2 = (function(){
 
         for (var i = 2; i < 5; i++) {
             panels[i].main.slideUp();
-        };
+        }
     }
 
-    function setModel(model,modelPosition){
-        choosen.model = model;
-        choosen.modelPosition = modelPosition;
+    function setModel(Model,ModelPosition){
+        choosen.Model = Model;
+        choosen.ModelPosition = ModelPosition;
         panels[1].body.slideUp();
 
         fillConfigurationPanel();
@@ -247,7 +247,7 @@ var VehicleChooser2 = (function(){
     }
 
     function setConfiguration(config){
-        choosen.configuration = config;
+        choosen.Configuration = config;
         panels[2].body.slideUp();
 
         fillColorPanel();
@@ -260,7 +260,7 @@ var VehicleChooser2 = (function(){
     }
     
     function open(){
-        choosen = {"brand":"","model":"","configuration":"","color":""};
+        choosen = {"Brand":"","Model":"","Configuration":"","Color":""};
         mainDiv.empty();
         $("<img src='images/loading.gif'>").appendTo(mainDiv);
 
@@ -286,14 +286,14 @@ var VehicleChooser2 = (function(){
                 resetBrand();
             });
             panels[1].title.click(function(event) {
-                setBrand(choosen.brand);
+                setBrand(choosen.Brand);
             });
             panels[2].title.click(function(event) {
-                setModel(choosen.model,choosen.modelPosition);
+                setModel(choosen.Model,choosen.ModelPosition);
             });
             panels[4].title.click(function(event) {
                 //Magic
-                beamng.sendGameEngine('chooseVehicle( "'+choosen.model+'", "'+choosen.configuration+'", "'+choosen.color+'");');
+                beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
                 close();
             });
             
@@ -319,6 +319,244 @@ var VehicleChooser2 = (function(){
                 panels[i].body.css('max-height', $(window).height()-200);
             }
         }
+    }
+
+    // run init
+    $(document).ready(function() {
+        init();
+        $(window).resize(function(event) {
+            resize();
+        }); 
+    });
+    // public interface
+    var VehicleChooser = {
+        open: open,
+        close:close
+    };
+    return VehicleChooser;
+}());
+
+var VehicleChooser3 = (function(){
+    'use strict';
+
+    var mainDiv;
+    var breadcrumb, selector, applyButton;
+    var vehicles;
+
+    var states = ["Brand","Model","Configuration","Color"];
+    var state = 0;
+
+    var Brands = ["Gavril","Bruckell","Ibishu","Civetta","Hirochi","Other"]; // We need some way to add/load Brands here dynamically
+
+    var choosen = {};
+    var choosenReadable = {};
+
+    var colorPicker;
+    var lastColor = "rgba(0,0,0,0.6)";
+
+    var isOpen = false;
+
+    function init(){
+        mainDiv = $("<div id='vehiclechooser3' style='background: #fff; overflow: hidden'></div>").appendTo($("body"));
+        mainDiv.dialog({
+            title: "Vehicle Selector",
+            width: $(window).width()-70,
+            height: $(window).height()-70,
+            beforeClose : function(event, ui){
+                close();
+                return false;
+            },
+            resizable: false,
+            draggable: false,
+            closeOnEscape: true
+        });
+        breadcrumb = $("<div>Brand</div>").appendTo(mainDiv).css({
+            'font-size': '90%',
+            margin: 5
+        });
+        selector = $("<div></div>").appendTo(mainDiv);
+        applyButton = $("<a>Apply</a>").appendTo(mainDiv).css({
+            background: 'green',
+            color: 'white',
+            padding: 10,
+            'border-radius': 5,
+            'text-shadow': 'none',
+            position: 'absolute',
+            bottom: 5,
+            right: 5,
+            display: 'none'
+        }).click(function() {
+            beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
+            close();
+        });
+        close();
+    }
+
+    function findBrand(name){
+        for (var i = 0; i < Brands.length; i++) {
+            if(name.indexOf(Brands[i]) === 0){
+                return Brands[i];
+            }
+        }
+        return "Other";
+    }
+
+    function fillBrandPanel(){
+        var BrandButtons = Brands.slice();
+            BrandButtons.unshift("All");
+            $.each(BrandButtons, function(index, val) {
+                 $("<div></div>").appendTo(selector).bigButton({
+                    title:val,
+                    clickAction: function(){
+                        setBrand(val);
+                    } 
+                });
+            });
+    }
+
+    function fillModelPanel(){
+        $.each(vehicles, function(index, val) {
+            if(val[3] == choosen.Brand || choosen.Brand == "All"){
+                $("<div></div>").appendTo(selector).bigButton({
+                    title: val[1],
+                    clickAction: function(){
+                        setModel(val[0],index, val[1]);
+                    } 
+                });
+            }
+        });
+    }
+
+    function fillConfigurationPanel(){
+        console.log(vehicles[2]);
+        $.each(vehicles[choosen.ModelPosition][2], function(index, val) {
+            console.log(val);
+            $("<div></div>").appendTo(selector).bigButton({
+                title: val[1],
+                clickAction: function(){
+                    setConfiguration(val[2],val[1]);
+                } 
+            });            
+        });
+    }
+
+    function fillColorPanel(){
+        colorPicker = $("<input></input>").appendTo(selector).spectrum({
+            flat: true,
+            showAlpha: true,
+            showButtons: false,
+            color: lastColor
+        });
+        $(colorPicker).on("dragstop.spectrum", function(e, color) {
+            console.log(color.toHexString()); // #ff0000
+            var c = lastColor = color.toRgb();
+            choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
+            console.log(choosen.Color);
+
+        });
+    }
+
+    function setBrand(Brand){
+        choosen.Brand = Brand;
+        choosenReadable.Brand = Brand;
+        setState(1);
+    }
+
+    function setModel(Model,ModelPosition,modelName){
+        choosen.Model = Model;
+        choosenReadable.Model = modelName;
+        choosen.ModelPosition = ModelPosition;
+
+        setState(2);
+    }
+
+    function setConfiguration(config,configName){
+        console.log(configName);
+        choosen.Configuration = config;
+        choosenReadable.Configuration = configName;
+
+        setState(3);
+        colorPicker.spectrum("reflow");
+
+    }
+
+    function renderBreadcrumb(){
+        breadcrumb.empty();
+        
+        for (var i = 0; i < state; i++) {
+            renderBreadcrumbState(i);
+            breadcrumb.append(" > ");
+        }
+
+        breadcrumb.append(states[state]);
+    }
+
+    function renderBreadcrumbState(i){
+        var currentLink = $("<a></a>").appendTo(breadcrumb);
+        currentLink.html("<span style='color:grey'>"+states[i]+":</span> "+choosenReadable[states[i]]);
+        currentLink.click(function() {
+            setState(i);
+        });
+    }
+
+    function setState(st){
+        console.log("State: "+st);
+        state = st;
+        renderBreadcrumb();
+        for (var i = state; i < 4; i++) {
+            choosen[states[i]] = "";
+            choosenReadable[states[i]] = "";
+        }
+        selector.empty();
+
+        switch(st){
+            case 0:
+                fillBrandPanel();
+                break;
+            case 1:
+                fillModelPanel();
+                break;
+            case 2:
+                fillConfigurationPanel();
+                break;
+            case 3:
+                fillColorPanel();
+        }
+        if(state > 1){
+            applyButton.show();
+        }else{
+            applyButton.hide();
+        }
+    }
+    
+    function open(){
+
+        breadcrumb.empty();
+        selector.empty();
+
+        mainDiv.parent().show();
+        mainDiv.dialog( "moveToTop" );
+
+        callGameEngineFuncCallback("getVehicleList()", function(res){
+            vehicles = res;
+            $.each(vehicles, function(index, val) {
+                vehicles[index][3] = findBrand(val[1]);
+            });
+
+            isOpen = true;
+            resize();
+            setState(0);
+        });
+    }
+
+    function close(){
+        mainDiv.parent().hide();
+        isOpen = false;
+    }
+
+    function resize(){
+        mainDiv.dialog("option","width",$(window).width()-70);
+        mainDiv.dialog("option","height",$(window).height()-70); 
     }
 
     // run init
