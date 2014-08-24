@@ -347,6 +347,7 @@ var VehicleChooser3 = (function(){
     var state = 0;
 
     var Brands = ["Gavril","Bruckell","Ibishu","Civetta","Hirochi","Other"]; // We need some way to add/load Brands here dynamically
+    var brandCars = {};
 
     var choosen = {};
     var choosenReadable = {};
@@ -408,12 +409,29 @@ var VehicleChooser3 = (function(){
     function fillBrandPanel(){
         var BrandButtons = Brands.slice();
             BrandButtons.unshift("All");
-            $.each(BrandButtons, function(index, val) {
-                 $("<div></div>").appendTo(selector).bigButton({
-                    title:val,
+            $.each(BrandButtons, function(index, brand) {
+                var amount = 0;
+                if(brand == "All"){
+                    $.each(brandCars, function(index, val) {
+                        amount += val.length;
+                    });
+                }else{
+                    amount = brandCars[brand].length;
+                }
+                // generate imagearray
+                var imgArr = ["file:///vehicles/common/brand-"+brand+".png"];
+                if(brandCars[brand]){
+                    $.each(brandCars[brand], function(index, val) {
+                         imgArr.push("file:///vehicles/"+val+"/brand-"+brand+".png");
+                    });
+                }
+                $("<div></div>").appendTo(selector).bigButton({
+                    title:brand,
                     clickAction: function(){
-                        setBrand(val);
-                    } 
+                        setBrand(brand);
+                    },
+                    smallTitle : amount + " Vehicle" + (amount>1 ? "s" : ""),
+                    images : imgArr
                 });
             });
     }
@@ -433,9 +451,7 @@ var VehicleChooser3 = (function(){
     }
 
     function fillConfigurationPanel(){
-        console.log(vehicles[2]);
         $.each(vehicles[choosen.ModelPosition][2], function(index, val) {
-            console.log(val);
             $("<div></div>").appendTo(selector).bigButton({
                 title: val[1],
                 clickAction: function(){
@@ -477,7 +493,6 @@ var VehicleChooser3 = (function(){
     }
 
     function setConfiguration(config,configName){
-        console.log(configName);
         choosen.Configuration = config;
         choosenReadable.Configuration = configName;
 
@@ -506,7 +521,6 @@ var VehicleChooser3 = (function(){
     }
 
     function setState(st){
-        console.log("State: "+st);
         state = st;
         renderBreadcrumb();
         for (var i = state; i < 4; i++) {
@@ -546,7 +560,13 @@ var VehicleChooser3 = (function(){
         callGameEngineFuncCallback("getVehicleList()", function(res){
             vehicles = res;
             $.each(vehicles, function(index, val) {
-                vehicles[index][3] = findBrand(val[1]);
+                var brand = findBrand(val[1]);
+                vehicles[index][3] = brand;
+                if(!brandCars[brand]){
+                    brandCars[brand] = [val[0]];
+                }else{
+                    brandCars[brand].push(val[0]);
+                }
             });
 
             isOpen = true;
@@ -590,7 +610,7 @@ $.widget("beamNG.bigButton", {
         this.front = $("<div class='appButtonImage'></div>").appendTo(this.element);
         this.title = $("<div class='appButtonTitle'>"+this.options.title+"</div>").appendTo(this.element);
         if(this.options.smallTitle){
-            $(" <span class='appButtonSmall'>"+this.options.smallTitle+"</span>").appendTo(this.title);
+            this.title.append(" <span class='appButtonSmall'>"+this.options.smallTitle+"</span>");
         }
         this.detail = $("<div class='appButtonInfo'></div>").appendTo(this.element);
 
@@ -601,7 +621,6 @@ $.widget("beamNG.bigButton", {
             }
         }
         imageString += "url(images/appDefault.png)";
-        console.log(imageString);
         this.front.css('background-image', imageString);
 
         // interactivity
