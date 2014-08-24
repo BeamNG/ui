@@ -369,12 +369,16 @@ var VehicleChooser3 = (function(){
             resizable: false,
             draggable: false,
             closeOnEscape: true
+        }).css({
+            padding: '0'
         });
         breadcrumb = $("<div>Brand</div>").appendTo(mainDiv).css({
             'font-size': '90%',
             margin: 5
         });
-        selector = $("<div></div>").appendTo(mainDiv);
+        selector = $("<div></div>").appendTo(mainDiv).css({
+            overflow: 'auto'
+        });
         applyButton = $("<a>Apply</a>").appendTo(mainDiv).css({
             background: 'green',
             color: 'white',
@@ -555,8 +559,9 @@ var VehicleChooser3 = (function(){
     }
 
     function resize(){
-        mainDiv.dialog("option","width",$(window).width()-70);
-        mainDiv.dialog("option","height",$(window).height()-70); 
+        mainDiv.dialog("option","width",$(window).width()-90);
+        mainDiv.dialog("option","height",$(window).height()-70);
+        selector.height(mainDiv.height()-breadcrumb.height()-30);
     }
 
     // run init
