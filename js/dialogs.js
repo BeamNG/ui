@@ -425,7 +425,8 @@ var VehicleChooser3 = (function(){
                     title: val[1],
                     clickAction: function(){
                         setModel(val[0],index, val[1]);
-                    } 
+                    },
+                    images: ["file:///vehicles/"+val[0]+"/default.png"]
                 });
             }
         });
@@ -439,7 +440,8 @@ var VehicleChooser3 = (function(){
                 title: val[1],
                 clickAction: function(){
                     setConfiguration(val[2],val[1]);
-                } 
+                },
+                images: ["file:///vehicles/"+vehicles[choosen.ModelPosition][0]+"/"+val[0]+".png", "file:///vehicles/"+vehicles[choosen.ModelPosition][0]+"/default.png"]
             });            
         });
     }
