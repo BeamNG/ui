@@ -559,6 +559,7 @@ var VehicleChooser3 = (function(){
 
         callGameEngineFuncCallback("getVehicleList()", function(res){
             vehicles = res;
+            brandCars = {};
             $.each(vehicles, function(index, val) {
                 var brand = findBrand(val[1]);
                 vehicles[index][3] = brand;
