@@ -419,10 +419,10 @@ var VehicleChooser3 = (function(){
                     amount = brandCars[brand].length;
                 }
                 // generate imagearray
-                var imgArr = ["file:///vehicles/common/brand-"+brand+".png"];
+                var imgArr = ["file:///vehicles/common/brand_"+brand+".png"];
                 if(brandCars[brand]){
                     $.each(brandCars[brand], function(index, val) {
-                         imgArr.push("file:///vehicles/"+val+"/brand-"+brand+".png");
+                         imgArr.push("file:///vehicles/"+val+"/brand_"+brand+".png");
                     });
                 }
                 $("<div></div>").appendTo(selector).bigButton({
