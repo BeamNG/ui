@@ -108,10 +108,10 @@ var VehicleChooser2 = (function(){
 
     var panels = [{},{},{},{},{}];
 
-    var choosen = {"brand":null,"model":null,"configuration":null,"color":null, "metallic":0};
+    var choosen = {};
 
     var colorPicker;
-    var lastColor = "rgba(255,0,255,0.6)";
+    var lastColor = "rgba(0,0,0,0.6)";
 
     var isOpen = false;
 
@@ -202,12 +202,6 @@ var VehicleChooser2 = (function(){
             console.log(choosen.color);
 
         });
-        $("<br>").appendTo(panels[3].body);
-        var metallicCheckbox = $("<input type='checkbox'></input>").appendTo(panels[3].body);
-        metallicCheckbox.change(function(event) {
-            choosen.metallic = (metallicCheckbox.is(":checked") ? 1 : 0);
-        });
-        $("<span> metallic</span>").appendTo(panels[3].body);
     }
 
     function resetBrand(){
@@ -266,6 +260,7 @@ var VehicleChooser2 = (function(){
     }
     
     function open(){
+        choosen = {"brand":"","model":"","configuration":"","color":""};
         mainDiv.empty();
         $("<img src='images/loading.gif'>").appendTo(mainDiv);
 
@@ -298,7 +293,7 @@ var VehicleChooser2 = (function(){
             });
             panels[4].title.click(function(event) {
                 //Magic
-                beamng.sendGameEngine('chooseVehicle( "'+choosen.model+'", "'+choosen.configuration+'", "'+choosen.color+'", '+choosen.metallic+');');
+                beamng.sendGameEngine('chooseVehicle( "'+choosen.model+'", "'+choosen.configuration+'", "'+choosen.color+'");');
                 close();
             });
             
