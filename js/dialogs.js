@@ -355,7 +355,7 @@ var VehicleChooser3 = (function(){
     var colorPicker;
     var lastColor = "rgba(0,0,0,0.6)";
 
-    var isOpen = false;
+    var firstRun = true;
 
     function init(){
         mainDiv = $("<div id='vehiclechooser3' style='background: #fff; overflow: hidden'></div>").appendTo($("body"));
@@ -392,6 +392,7 @@ var VehicleChooser3 = (function(){
             display: 'none'
         }).click(function() {
             beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
+            firstRun = false;
             close();
         });
         close();
@@ -451,7 +452,10 @@ var VehicleChooser3 = (function(){
     }
 
     function fillConfigurationPanel(){
+        var configsExist = vehicles[choosen.ModelPosition][2].length > 1;
         $.each(vehicles[choosen.ModelPosition][2], function(index, val) {
+            if(configsExist && val[1] == 'Default')
+                return;
             $("<div></div>").appendTo(selector).bigButton({
                 title: val[1],
                 clickAction: function(){
@@ -473,8 +477,6 @@ var VehicleChooser3 = (function(){
             console.log(color.toHexString()); // #ff0000
             var c = lastColor = color.toRgb();
             choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
-            console.log(choosen.Color);
-
         });
     }
 
@@ -489,7 +491,11 @@ var VehicleChooser3 = (function(){
         choosenReadable.Model = modelName;
         choosen.ModelPosition = ModelPosition;
 
-        setState(2);
+        if(vehicles[choosen.ModelPosition][2].length > 1){
+            setState(2);
+        }else{
+            setConfiguration("","Default");
+        }
     }
 
     function setConfiguration(config,configName){
@@ -549,10 +555,12 @@ var VehicleChooser3 = (function(){
         }
     }
     
-    function open(){
+    function open(reset){
+        if(reset && reset === true){
+            breadcrumb.empty();
+            selector.empty();            
+        }
 
-        breadcrumb.empty();
-        selector.empty();
 
         mainDiv.parent().show();
         mainDiv.dialog( "moveToTop" );
@@ -570,15 +578,17 @@ var VehicleChooser3 = (function(){
                 }
             });
 
-            isOpen = true;
             resize();
-            setState(0);
+            if((reset && reset === true) || firstRun === true){
+                setState(0);
+            }else{
+
+            }
         });
     }
 
     function close(){
         mainDiv.parent().hide();
-        isOpen = false;
     }
 
     function resize(){
