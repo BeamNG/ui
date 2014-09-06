@@ -106,6 +106,25 @@
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     cursor:default;
+    text-align:right;
+}
+
+#menu .steaminfo {
+    position: fixed;
+    bottom: 3em;
+    right:2px;
+    display: block;
+    clear: both;
+    color:rgba(230,230,230,0.7);
+    font-family:Verdana;
+    font-size:12px;
+    font-style:normal;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    cursor:default;
+    text-align:right;
+    background: url("file:///html/images/steamicon.png") no-repeat right top;
+    padding-top:16px; /* for the steam logo */
 }
 
 .icon {

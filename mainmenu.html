@@ -40,6 +40,7 @@
             <a href="#" onclick="window.location.href='file:///html/controller.html';"><svg class="icon icon-wrench" viewBox="0 0 32 32"><use xlink:href="#icon-wrench"></use></svg>&nbsp;&nbsp;Input Test</a>
             
         </nav>
+        <div class="steaminfo" id="steaminfo"></div>
         <div class="version" id="beamngversion"></div>
     </div>
 
@@ -193,11 +194,24 @@
             // update the info text
             $('#infobox').html(currentEntry[1] + '<br/>' + currentEntry[2]);
         }
-		
-		function gotGameVersion(versionStr) {
+        
+        function gotGameVersion(versionStr) {
             $('#beamngversion').html(versionStr);
-		}
-		beamng.requestVersionInfo();
+        }
+        function gotSteamData(data) {
+            //console.log("steam data:");
+            //console.log(data);
+            if(data.working && data.loggedin) {
+                var t = '<b>' + data.playerName + '</b><br/>';
+                if(data.branch != 'public')
+                    t += data.branch + '<br/>';
+                if(data.language != 'english')
+                    t += data.language + '<br/>';
+                $('#steaminfo').html(t);
+            }
+        }
+        beamng.requestVersionInfo();
+        beamng.requestSteamInfo();
     </script>
     <button class='cefdev' onclick="javascript:location.reload();" style="width: 60px; height: 20px;
         position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;">
