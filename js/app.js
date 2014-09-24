@@ -958,7 +958,7 @@ var HelpManager = (function(){
         }
     }
 
-    function onCameraChange(){
+    function onHelpToggle(){
         nextHelp();
     }
 
@@ -968,7 +968,7 @@ var HelpManager = (function(){
     });
     // public interface
     var HelpManager = {
-        onCameraChange: onCameraChange
+        onHelpToggle: onHelpToggle
     };
     // Register Hooks
     HookManager.registerAllHooks(HelpManager);
