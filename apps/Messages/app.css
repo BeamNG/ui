@@ -56,32 +56,32 @@
 }
 
 .controller_mask_0 {
-    -webkit-mask-image: url(file:///html/images/messages/controller_0.png);
+    -webkit-mask-image: url(/html/images/messages/controller_0.png);
     width:64px;
     height:64px;
 }
 
 .controller_mask_1 {
-    -webkit-mask-image: url(file:///html/images/messages/controller_1.png);
+    -webkit-mask-image: url(/html/images/messages/controller_1.png);
     width:64px;
     height:64px;
 }
 
 .controller_mask_2 {
-    -webkit-mask-image: url(file:///html/images/messages/controller_2.png);
+    -webkit-mask-image: url(/html/images/messages/controller_2.png);
     width:64px;
     height:64px;
 }
 
 .controller_mask_3 {
-    -webkit-mask-image: url(file:///html/images/messages/controller_3.png);
+    -webkit-mask-image: url(/html/images/messages/controller_3.png);
     width:64px;
     height:64px;
 }
 
 
 .gamepad_mask {
-    -webkit-mask-image: url(file:///html/images/messages/gamepad.png);
+    -webkit-mask-image: url(/html/images/messages/gamepad.png);
     width:64px;
     height:64px;
 }
@@ -116,25 +116,25 @@
 }
 
 .battery_0_mask {
-    -webkit-mask-image: url(file:///html/images/messages/bat_0.png);
+    -webkit-mask-image: url(/html/images/messages/bat_0.png);
     width:64px;
     height:64px;
 }
 
 .battery_1_mask {
-    -webkit-mask-image: url(file:///html/images/messages/bat_1.png);
+    -webkit-mask-image: url(/html/images/messages/bat_1.png);
     width:64px;
     height:64px;
 }
 
 .battery_2_mask {
-    -webkit-mask-image: url(file:///html/images/messages/bat_2.png);
+    -webkit-mask-image: url(/html/images/messages/bat_2.png);
     width:64px;
     height:64px;
 }
 
 .battery_3_mask {
-    -webkit-mask-image: url(file:///html/images/messages/bat_3.png);
+    -webkit-mask-image: url(/html/images/messages/bat_3.png);
     width:64px;
     height:64px;
 }

@@ -1,8 +1,8 @@
-var VehicleChooser3 = (function(){
+var VehicleChooser = (function(){
     'use strict';
 
     var mainDiv;
-    var breadcrumb, selector, applyButton;
+    var breadcrumb, selector, buttonarea, stepOneButton, stepBackButton, applyButton;
     var vehicles;
 
     var states = ["Brand","Model","Configuration","Color"];
@@ -18,8 +18,10 @@ var VehicleChooser3 = (function(){
 
     var firstRun = true;
 
+    var defaultColor = '0.5 0 0 1.001';
+
     function init(){
-        mainDiv = $("<div id='vehiclechooser3' style='background: #fff; overflow: hidden'></div>").appendTo($("body"));
+        mainDiv = $("<div></div>").appendTo($("body")).attr('id', 'vehiclechooser');
         mainDiv.dialog({
             title: "Vehicle Selector",
             width: $(window).width()-70,
@@ -31,37 +33,45 @@ var VehicleChooser3 = (function(){
             resizable: false,
             draggable: false,
             closeOnEscape: true
-        }).css({
-            padding: '0'
         });
-        breadcrumb = $("<div>Brand</div>").appendTo(mainDiv).css({
-            'font-size': '90%',
-            margin: 5
-        });
-        selector = $("<div></div>").appendTo(mainDiv).css({
-            overflow: 'auto',
-            position: 'absolute',
-            top: 25,
-            bottom: 50,
-            left: 0,
-            right: 0
+        breadcrumb = $("<div>Brand</div>").appendTo(mainDiv).addClass('breadcrumb');
+        selector = $("<div></div>").appendTo(mainDiv).addClass('selector');
+        buttonarea = $("<div></div>").appendTo(mainDiv).addClass('buttonarea').hide();
 
+        stepOneButton = $("<a><<</a>").appendTo(buttonarea).css({
+            background: 'grey'
+        }).addClass('simplebutton').click(function(event) {
+    		setState(0);
         });
-        applyButton = $("<a>Apply</a>").appendTo(mainDiv).css({
+
+        stepBackButton = $("<a><</a>").appendTo(buttonarea).css({
+            background: 'gray'
+        }).addClass('simplebutton').click(function(event) {
+    		setState(state-1);
+        });
+
+        applyButton = $("<a>Apply</a>").appendTo(buttonarea).css({
             background: 'green',
-            color: 'white',
-            padding: 10,
-            'border-radius': 5,
-            'text-shadow': 'none',
-            position: 'absolute',
-            bottom: 5,
-            right: 5,
             display: 'none'
-        }).click(function() {
+        }).addClass('simplebutton').click(function() {
+        	try{
+        		setColor(colorPicker.spectrum("get", 'color'));
+        	}catch(e){}
+        	if(choosen.Color == 'InvisibleBlack' || choosen.Color === ''){
+        		choosen.Color = defaultColor;
+        	}
+        	console.log('spawning: '+JSON.stringify(choosen));
             beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
             firstRun = false;
             close();
         });
+
+        $(window).keyup(function(event) {
+        	if(event.which == 8 && state>0 && mainDiv.is(':visible')){
+        		setState(state-1);
+        	}
+        });
+
         close();
     }
 
@@ -87,10 +97,10 @@ var VehicleChooser3 = (function(){
                     amount = brandCars[brand].length;
                 }
                 // generate imagearray
-                var imgArr = ["file:///vehicles/common/brand_"+brand+".png"];
+                var imgArr = ["/vehicles/common/brand_"+brand+".png"];
                 if(brandCars[brand]){
                     $.each(brandCars[brand], function(index, val) {
-                         imgArr.push("file:///vehicles/"+val+"/brand_"+brand+".png");
+                         imgArr.push("/vehicles/"+val+"/brand_"+brand+".png");
                     });
                 }
                 $("<div></div>").appendTo(selector).bigButton({
@@ -112,7 +122,7 @@ var VehicleChooser3 = (function(){
                     clickAction: function(){
                         setModel(index);
                     },
-                    images: ["file:///vehicles/"+index+"/default.png"]
+                    images: ["/vehicles/"+index+"/default.png"]
                 });
             }
         });
@@ -128,7 +138,7 @@ var VehicleChooser3 = (function(){
                 clickAction: function(){
                     setConfiguration(index);
                 },
-                images: ["file:///vehicles/"+choosen.Model+"/"+index+".png", "file:///vehicles/"+choosen.Model+"/default.png"]
+                images: ["/vehicles/"+choosen.Model+"/"+index+".png", "/vehicles/"+choosen.Model+"/default.png"]
             });            
         });
     }
@@ -138,7 +148,7 @@ var VehicleChooser3 = (function(){
             flat: true,
             showAlpha: true,
             showButtons: false,
-            color: 'rgb(0,0,0)'
+            color: convertColor(defaultColor)
         });
         $(colorPicker).on("dragstop.spectrum", function(e, color) {
             setColor(color);
@@ -163,7 +173,7 @@ var VehicleChooser3 = (function(){
     }
 
     function setConfiguration(config){
-        choosen.Configuration = config;
+        choosen.Configuration = vehicles[choosen.Model].configs[config].file;
         choosenReadable.Configuration = vehicles[choosen.Model].configs[config].name;
 
         setState(3);
@@ -176,6 +186,10 @@ var VehicleChooser3 = (function(){
     	colorPicker.spectrum("set", color);
     	colorPicker.spectrum("reflow");
 		var c = color.toRgb();
+		if(c.a == 1){
+			c.a = 1.001;
+		}
+		c.a = Math.max(c.a,0.004);
         choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
         console.log(choosen.Color);
     }
@@ -232,9 +246,14 @@ var VehicleChooser3 = (function(){
                 fillColorPanel();
         }
         if(state > 1){
-            applyButton.show();
+            applyButton.show(100);
         }else{
-            applyButton.hide();
+            applyButton.hide(100);
+        }
+        if( state > 0){
+        	buttonarea.show(100);
+        }else{
+        	buttonarea.hide(100);
         }
     }
     

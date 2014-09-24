@@ -80,7 +80,7 @@ Messages.prototype.onXIControllerBatteryWarning = function(args) {
     var msgStr = "Controller " + (parseInt(args.ctrlID) + 1) + " Battery " + batStateStr;    
 
     var m = "<div class='imgdiv'>";    
-    m += "<img class='imgover' src='file:///html/images/messages/controllers_bg.png' />";
+    m += "<img class='imgover' src='/html/images/messages/controllers_bg.png' />";
 
     var batClass = 'bat_' + batStateStr;
 
@@ -96,7 +96,7 @@ Messages.prototype.onXIControllerChanged = function(args) {
     var msgStr = "Controller " + (parseInt(args.subjectCtrl) + 1) + " " + args.eventType;
 
     var m = "<div class='imgdiv'>";    
-    m += "<img class='imgover' src='file:///html/images/messages/controllers_bg.png' />";
+    m += "<img class='imgover' src='/html/images/messages/controllers_bg.png' />";
 
     for(var i = 0; i < 4; i++) {
         m += "<div class=' ";

@@ -98,15 +98,19 @@ Tacho.prototype.update = function(streams){
 
     // gear
     var gear;
-    if (this.engineInfo[5] === 0)
-    {
-        gear = "N";
-    }else if(this.engineInfo[5] < 0)
-    {
-        gear = "R";
-    }else
-    {
-        gear = this.engineInfo[5].toString();
+    if(this.engineInfo[13] == "manual"){
+        if (this.engineInfo[5] === 0)
+        {
+            gear = "N";
+        }else if(this.engineInfo[5] < 0)
+        {
+            gear = "R";
+        }else
+        {
+            gear = this.engineInfo[5].toString();
+        }
+    }else{
+        gear = ["P","R","N","D","2","1"][Math.round(streams.electrics.gear_A*5)];
     }
 
     ctx.fillStyle = 'rgb(200,200,200)';

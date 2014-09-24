@@ -16,7 +16,7 @@ body.hidden, body.hidden *, body.hidden:hover
 }
 
 body.hidden * {
-    display: none;
+    display: none !important;
 }
 
 /* custom jquery ui dialog style */

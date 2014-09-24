@@ -1,0 +1,34 @@
+#vehiclechooser{
+	background: #fff;
+	overflow: hidden;
+	padding: 0;
+}
+#vehiclechooser .breadcrumb {
+	font-size: 90%;
+    margin: 5px;
+}
+#vehiclechooser .selector {
+	overflow: auto;
+	position: absolute;
+	top: 25px;
+	bottom: 50px;
+	left: 0;
+	right: 0;
+}
+
+#vehiclechooser .buttonarea{
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+}
+
+.simplebutton{
+	color: white !important;
+	padding: 7px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border-radius: 5px;
+	text-shadow: none;
+	margin-left: 5px;
+	display: inline-block;
+}

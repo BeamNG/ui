@@ -676,26 +676,7 @@ var AppStore = {
         if(!state) {
             this.close();
         }
-    },
-    onHelpToggle: function(enabled) {
-        // placeholder until we have sth better
-        if(! $('#beamnghelp').length) {
-            $("#mainpage").append('<div id="beamnghelp" style="margin:20px;"><img id="beamnghelpimg" src="images/beamnghelp1.png" /></div>');
-            this.helpcounter = 0;
-        }
-        var display = true;
-        this.helpcounter++;
-        if(this.helpcounter > 2) {
-            this.helpcounter = 0;
-            display = false;
-        }
-        if(display)
-            $('#beamnghelpimg').attr('src', 'images/beamnghelp'+this.helpcounter+'.png');
-        $('#beamnghelp').css('display', (display == 1)?'block' : 'none');
-    },
-
-    onCameraChange: function() {
-    },
+    }
 
 };
 
@@ -947,6 +928,53 @@ var Logger = {
     }
 };
 
+var HelpManager = (function(){
+    'use strict';
+    var initialized = false;
+    var helpState = 0;
+    var helpImage;
+
+    function init(){
+        helpImage = $('<img />').hide().css({
+            position: 'static',
+            left: 10,
+            top: 10
+        }).appendTo($('body'));
+        initialized = true;
+    }
+
+    function nextHelp(){
+        if(!initialized){
+            return;
+        }
+        helpState = (helpState+1)%3;
+        if(helpState){
+            helpImage.attr('src', 'images/beamnghelp'+helpState+'.png');
+            if(helpImage.is(':hidden')){
+                helpImage.fadeIn(100);
+            }
+        }else{
+            helpImage.fadeOut(100);
+        }
+    }
+
+    function onCameraChange(){
+        nextHelp();
+    }
+
+    // run init
+    $(document).ready(function() {
+        init();
+    });
+    // public interface
+    var HelpManager = {
+        onCameraChange: onCameraChange
+    };
+    // Register Hooks
+    HookManager.registerAllHooks(HelpManager);
+    return HelpManager;
+})();
+
 var KeyManager = {
     altpressed: false,
     initialize: function(){
@@ -1077,7 +1105,10 @@ var KeyManager = {
         DebugManager.nextDebug();
     },
     ku32: function(){
-        VehicleChooser3.open();
+        VehicleChooser.open();
+    },
+    ku112: function(){
+        HelpManager.nextHelp();
     }
 /*	Removed until we find a way to check if the Application has the focus and
 	prevent alt+tab triggering this
