@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/beamng.css">
     <script src="js/jquery.js"></script>
-    <script src="js/jquery.menu.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/minimal.js"></script>
+    <script src="js/menu.js"></script>
 </head>
 <body>
     <svg display="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1832" height="32" viewBox="0 0 1832 32">
@@ -38,195 +38,43 @@
             <a href="#" onclick="window.location.href='/html/chat.html';"><svg class="icon icon-bubbles2" viewBox="0 0 32 32"><use xlink:href="#icon-bubbles2"></use></svg>&nbsp;&nbsp;Chat</a>
             <a href="#" onclick="beamng.sendGameEngine('quit();')"><svg class="icon icon-exit" viewBox="0 0 32 32"><use xlink:href="#icon-exit"></use></svg>&nbsp;&nbsp;Exit</a>
             <a href="#" onclick="window.location.href='/html/controller.html';"><svg class="icon icon-wrench" viewBox="0 0 32 32"><use xlink:href="#icon-wrench"></use></svg>&nbsp;&nbsp;Input Test</a>
-            
         </nav>
-        <div class="steaminfo" id="steaminfo"></div>
-        <div class="version" id="beamngversion"></div>
+        <div id='infobottom'>
+            <div id='infoseperator'></div>
+            <notice>
+                <div id='infobox' style="border:0"></div>
+                <div id='steaminfo' style='display:none;'>
+                    <table border="0">
+                    <tr>
+                    <td valign="middle"><img src="images/steamicon.png"/></td>
+                    <td id='steaminfotext'></td>
+                    </tr>
+                    </table>
+                </div>
+                <div id='beamngversion'></div>
+
+                </div>
+            </notice>
+        </div>
     </div>
 
     <div id="video-viewport">
         <video preload width="1920" height="1080" id="bgvid"></video>
     </div>
-    <div id='infobox'></div>
+
 
     <div id='blending'></div>
 
-    <!-- <div id='changelog_box'><div id='changelog_inner_bg'><div id='changelog_inner'></div></div></div> -->
+    <div id="bootfader"></div>
 
-    <style type="text/css">
-        body {
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
+    
+    <div id="updates_box">
+        <div id='updates_header'>
+        </div>
+        <div id='updates_inner'>
+        </div>
+    </div>
 
-        #video-viewport {
-            position: absolute;
-            top: 0;
-            overflow: hidden;
-            z-index: -2; /* for accessing the video by click */
-        }
-
-        #blending {
-            position: absolute;
-            background: black;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: -1;
-        }
-
-        #infobox {
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            z-index: -1;
-            padding: 5px;
-            margin: 5px;
-            background-color: rgba(255,255,255,0.6);
-            box-shadow: 0px 0px 20px rgba(255,255,255,0.6);
-            border-radius: 6px;
-            font-size: 0.8em;
-            font-family: verdana;
-        }
-    </style>
-
-    <script type="text/javascript">
-        var videoConfig = [
-            // video, title, description, mission name to load, position/rotation
-            ["images/mainmenu_1.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
-            ["images/mainmenu_2.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
-            ["images/mainmenu_3.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-354.373 170.426 39.4306 0 0 1 208.446"],
-            ["images/mainmenu_4.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 -0.0613498 -0.0460925 0.997052 106.327"],
-            ["images/mainmenu_5.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-242.088 87.4816 39.6549 -0.00772832 -0.036043 0.99932 189.094"],
-            ["images/mainmenu_6.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "16.6853 -395.176 31.446 0 0 1 73.887"],
-            ["images/mainmenu_7.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-172.176 235.843 48.1855 0 0 1 87.774"],
-            ["images/mainmenu_8.webm", "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-450.022 -106.288 63.4009 0 0 -1 4.68703"],
-            ["images/mainmenu_9.webm", "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-703.965 309.649 41.908 0 0 1 152.314"],
-            ["images/mainmenu_10.webm", "Industrial", "Port, rallycross, circuit, offroad track", "dry_rock_island.mis", "216.223 116.715 42.6993 -0.0362537 0.0379904 -0.99862 87.399"],
-        ];
-
-        var min_w = 300; // minimum video width allowed
-        var vid_w_orig;  // original video dimensions
-        var vid_h_orig;
-
-        var videoElement = null;
-
-        var fadeTime = 2; // in seconds
-
-        var randomArray = randomNumbers(videoConfig.length);
-
-        var randomPosition = -1;
-        var currentEntryID = -1;
-        var currentEntry = null;
-
-        function resizeToCover() {
-            // set the video viewport to the window size
-            $('#video-viewport').width($(window).width());
-            $('#video-viewport').height($(window).height());
-
-            // use largest scale factor of horizontal/vertical
-            var scale_h = $(window).width() / vid_w_orig;
-            var scale_v = $(window).height() / vid_h_orig;
-            var scale = scale_h > scale_v ? scale_h : scale_v;
-
-            // don't allow scaled width < minimum video width
-            if (scale * vid_w_orig < min_w) { scale = min_w / vid_w_orig; }
-
-            // now scale the video
-            $('video').width(scale * vid_w_orig);
-            $('video').height(scale * vid_h_orig);
-            // and center it by scrolling the video viewport
-            $('#video-viewport').scrollLeft(($('video').width() - $(window).width()) / 2);
-            $('#video-viewport').scrollTop(($('video').height() - $(window).height()) / 2);
-        }
-
-        $(document).ready(function () {
-            videoElement = document.getElementById('bgvid');
-
-            playNewEntry();
-            $('#blending').fadeOut(fadeTime * 1000);
-
-            $('#bgvid').bind('ended', function (event) {
-                playNewEntry();
-                $('#blending').fadeOut(fadeTime * 1000);
-            });
-
-            // fixes video size
-            vid_w_orig = parseInt($('video').attr('width'));
-            vid_h_orig = parseInt($('video').attr('height'));
-            $(window).resize(function () { resizeToCover(); });
-            $(window).trigger('resize');
-
-            // run blending
-            checkTime();
-        });
-
-        function checkTime() {
-            if (videoElement.duration - videoElement.currentTime < fadeTime + 0.1) {
-                $('#blending').fadeIn(fadeTime * 1000);
-                setTimeout(checkTime, 4000);
-            } else {
-                setTimeout(checkTime, videoElement.duration - videoElement.currentTime - (fadeTime + 0.05) * 1000);
-            }
-        }
-
-        function playNewEntry() {
-            if (videoConfig.length < 1) return;
-
-            randomPosition++;
-            if (randomPosition == videoConfig.length) {
-                randomPosition = 0;
-                while (randomArray[0] == currentEntryID) {
-                    randomArray = randomNumbers(videoConfig.length);
-                }
-            }
-            currentEntryID = randomArray[randomPosition];
-            currentEntry = videoConfig[currentEntryID];
-
-            // play the video
-            $('#bgvid').attr("src", currentEntry[0]);
-            videoElement.play();
-
-            // update the info text
-            $('#infobox').html(currentEntry[1] + '<br/>' + currentEntry[2]);
-        }
-        
-        function gotGameVersion(versionStr) {
-            $('#beamngversion').html(versionStr);
-        }
-        function gotSteamData(data) {
-            //console.log("steam data:");
-            //console.log(data);
-            if(data.working && data.loggedin) {
-                var t = '<b>' + data.playerName + '</b><br/>';
-                if(data.branch != 'public')
-                    t += data.branch + '<br/>';
-                if(data.language != 'english')
-                    t += data.language + '<br/>';
-                $('#steaminfo').html(t);
-            }
-        }
-        function updateChangelog() {
-            $.getJSON('versioninfo.json', function(data) {
-                //console.log(data);
-                $.each(data.log, function(version, d) {
-                    var cle = $("<div class='changelog_entry'></div>").appendTo($('#changelog_inner'));
-                    cle.html(version + ' - ' + d.description);
-                });
-            }).fail(function(jqxhr, textStatus, error) {
-                console.log("error "+error+" : "+textStatus );
-            });
-        }
-
-        beamng.requestVersionInfo();
-        beamng.requestSteamInfo();
-        //updateChangelog();
-    </script>
     <button class='cefdev' onclick="javascript:location.reload();" style="width: 60px; height: 20px;
         position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;">
         ReloadUI

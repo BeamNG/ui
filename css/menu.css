@@ -1,9 +1,51 @@
 ﻿/* menu */
+
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#video-viewport {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    z-index: -2; /* for accessing the video by click */
+}
+
+#blending {
+    position: absolute;
+    background: black;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+
+@font-face {
+    font-family: OpenSansBold;
+    src: url(../fonts/OpenSans-Bold.ttf);
+}
+
+@font-face {
+    font-family: OpenSans-ExtraBold;
+    src: url(../fonts/OpenSans-ExtraBold.ttf);
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url(../fonts/OpenSans.ttf);
+}
+
+
 #menu {
     background: rgba(0,0,0,0.5);
     /*border-left: 3px solid #ee4e1d;*/
     width: 200px;
-    padding: 5px;
     position: fixed;
     z-index: 100000;
 /*
@@ -11,6 +53,7 @@
     -moz-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
     -webkit-box-shadow: 4px 0 10px rgba(0,0,0,0.25);
 */
+    border-left:6px solid rgba(255,255,255,0.3);
 }
 
 #menu {
@@ -53,6 +96,7 @@
 #menu nav {
     position: relative;
     top: 75px;
+    padding-left:5px;
 }
 
 #menu nav a {
@@ -61,7 +105,6 @@
     display: block;
     clear: both;
     /*font: bold 13px/18px 'Open Sans', Helvetica, Arial, sans-serif;*/
-    color: #fff;
     text-decoration: none;
     display:block;
     color:#eee;
@@ -92,39 +135,36 @@
     fill:#66fa66 !important;
 }
 
-
-#menu .version {
-    position: fixed;
-    bottom: 2px;
-    right:2px;
-    display: block;
-    clear: both;
-    color:rgba(230,230,230,0.7);
-    font-family:Verdana;
-    font-size:12px;
-    font-style:normal;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    cursor:default;
-    text-align:right;
+#infobottom {
+    position:absolute;
+    left:0;
+    bottom:0;
 }
 
-#menu .steaminfo {
-    position: fixed;
-    bottom: 3em;
-    right:2px;
-    display: block;
-    clear: both;
-    color:rgba(230,230,230,0.7);
+/* notice area */
+#menu notice {
+
+    /* padding-bottom: 5px; */
+    background-color:rgba(60,60,60,0.8);
+
+    
+    
+    display: flex;
+    flex-direction: column;
+
+    color:#eee;
     font-family:Verdana;
     font-size:12px;
     font-style:normal;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     cursor:default;
-    text-align:right;
-    background: url("/html/images/steamicon.png") no-repeat right top;
-    padding-top:16px; /* for the steam logo */
+    vertical-align: bottom;
+}
+
+#menu notice div {
+    padding:5px;
+    border-top:1px solid rgba(255,255,255,0.3);
 }
 
 .icon {
@@ -135,41 +175,137 @@
     transition: 0.2s;
 }
 
-#changelog_box {
+#infoseperator {
+    border-top:5px solid rgba(255,255,255,0.3);
+}
+
+#updates_box {
+    width:537px;
+    height:562px;
+    overflow:hidden;
     position: fixed;
-    bottom:80px;
-    left:80px;
-    height:10%;
-    width:50%;
-    min-height:300px;
-    min-width:300px;
-    display: block;
-    clear: both;
-    /* color:rgba(10,10,10,0.7); */
-    background:url(/html/images/underconstruction_bg.png) repeat;
-    border-radius: 25px;
-    font-family:Verdana;
+    bottom:55px;
+    left:0;
+    background:url(../images/updates_bg.png) no-repeat;
+    font-family: OpenSansBold;
+    transition: 1.0s;
+    transition-timing-function: ease-in-out;
+}
+
+#updates_box:hover { /*, #menu:focus {*/
+    transition: 0.3s;
+    left: 0 !important; /* Change to right: 0 !important; if you want the panel to display on the right side. */
+}
+
+#updates_inner {
+    margin:4px;
+    padding-top:4px;
+    margin-left:24px;
+    margin-right:34px;
+    color:#eee;
     font-size:12px;
     font-style:normal;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     cursor:default;
-    text-align:left;
-    padding:20px;
+    vertical-align: bottom;
+    max-height:471px;
+    overflow-x:hidden;
+    overflow-y:scroll;
 }
 
-#changelog_inner_bg {
-    position:relative;
-    height:100%;
-    width:100%;
-    background-color:rgba(200,200,200,0.8);
+#updates_inner_scrolling {
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 18px;
+}
+::-webkit-scrollbar-thumb {
+    height: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    background-color: rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+#updates_header {
+    margin-top:11px;
+    margin-left:30px;
+    margin-right:41px;
+    color:#eee;
+    font-style:normal;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    cursor:default;
+    vertical-align: bottom;
+    font-size:1.7em;
+}
+
+.updates_header_sub {
+    font-size: 0.7em;
+    padding-bottom: 5px;
+    color:#aaa;
+}
+
+.updates_versionheader {
+    background: rgba(0,0,0,0.5);
+    padding:5px;
+    font-size:1.5em;
+    margin-bottom:3px;
+}
+
+.updates_versionheader_sub {
+    font-size:0.8em;
+    text-align:right;
+}
+
+.updates_subheader {
+    background: rgba(0,0,0,0.5);
+    padding:5px;
+    font-size:1.1em;
+    width: 50%;
+    padding:0px;
+    margin-left:10px;
+}
+
+.updates_content {
     color:black;
-    border-radius: 16px;
+    font-size:14px;
+    font-style:normal;
+    margin-left:10px;
 }
 
-#changelog_inner {
-    position:relative;
+.updates_content ul {
+    /*list-style-type: none;
+    padding:0px;
+    margin:2px;
+    margin-left:10px;
+    */
+}
+
+.updates_content .ico {
+    vertical-align: text-top;
+}
+
+.updates_spacer {
     padding:20px;
-    height:100%;
-    width:100%;
+}
+
+.bbcode-pre {
+    font-family: monospace;
+}
+
+.updates_contenticon {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }

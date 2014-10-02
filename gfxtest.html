@@ -1,0 +1,36 @@
+<html>
+<head>
+<style type="text/css">
+@-webkit-keyframes anim {
+    0%   { -webkit-transform: rotate(0deg); /* Google Chrome & Webkit Nightlies */}
+    100% { -webkit-transform: rotate(100000deg); /* Google Chrome & Webkit Nightlies */ }
+}
+.ani{
+	position: absolute;
+	background: black;
+	width: 50px;
+	height: 50px;
+	-webkit-animation: anim 1000s linear;
+}
+.left{
+	left: 20px;
+}
+.right{
+	right: 20px;
+}
+.up{
+	top: 20px;
+}
+.down{
+	bottom: 20px;
+}
+</style>
+</head>
+<body>
+	<div class="right up ani"></div>
+	<div class="left up ani"></div>
+	<div class="right down ani"></div>
+	<div class="left down ani"></div>
+	<a href="play.html">Back</a>
+</body>
+</html>

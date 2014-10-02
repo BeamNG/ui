@@ -4,11 +4,24 @@ html,body{
     padding:0px;
     margin:0px;
     overflow: hidden;
-/*    background-color:black; */
-
     background: transparent !important;
     background-image: url('') !important;
+}
 
+#bootfader {
+    background-color:rgb(204,204,204);
+    position:absolute;
+    z-index:100000;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    /*
+    background-image: url('local://local/html/images/startuplogo.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    */
 }
 
 * {

@@ -1,0 +1,92 @@
+{
+    "autohide": true,
+    "title": ["UPDATES","EXPERIMENTAL BUILD"],
+    "current" : "0.3.6.3",
+    "content" : [
+        {
+            "title" : "0.3.6.3",
+            "timestamp" : 1412005730,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixed camera rotation not working (issue [url=http://redmine.beamng.com/issues/175] [ico=bug_link]175[/url])",
+                    "Fixed CTD (Crash To Desktop) on GUI editor (F10) when exiting the game",
+                    "Split Lua subsystem into a sync and async part to speed up the game"
+                ]},
+                "Content" : {"icon":"car", "list":[
+                    "Added Cannon"
+                ]},
+                "Features" : {"icon":"cog", "list":[
+                    "Added Bootup logo and fading"
+                ]}
+            }
+        },
+        {
+            "title" : "News",
+            "content" : "[i]Hey, welcome to this news box! [ico=emoticon_smile][/i]\nWe will keep you informed about things in here from now on."
+        },
+        {
+            "title" : "0.3.6.2",
+            "timestamp" : 1411865859,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "General performance improvements",
+                    "[b]User Interface performance improvements[/b]: fixed several bugs in combination with new CEF version and using GPU accelerated drawing now",
+                    "Tacho will now display either Auto or manual depending on current shift mode",
+                    "Fix for issue [url=http://redmine.beamng.com/issues/159] [ico=bug_link]159[/url]: D15 small trailer 0 size beams",
+                    "Fixed CTD (Crash to Desktop) on missing background fallback image",
+                    "[b]Improved Speed of the water reflection[/b]: only updating once per frame now.",
+                    "Removed Lua performance tracking to improve performance",
+                    "Removed banabench for now until we fixed the filesystem up again"
+                ]},
+                "Content" : {"icon":"car", "list":[
+                    "[b]Revised Main menu[/b]: Improved notification area and added updates info box",
+                    "[b]East Coast[/b]: mostly minor fixes (improved water objects visuals)",
+                    "[b]Hirochi Raceway[/b]: more vegetation placed, some areas cleaned up (better road blending etc), updated signs",
+                    "[b]Fixed strange wind issues[/b] on some trees on official maps (community maps will need to be fixed by their authors)",
+                    "[b]Fixed collision mesh[/b] of ramp 2 on gridmap",
+                    "[b]Now shipping temporary files within the levels[/b] for faster loading"
+                ]}
+            }
+        },
+        {
+            "title" : "0.3.6.1",
+            "timestamp" : 1411690398,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Collisions with heavy objects are a lot more stable now",
+                    "Rebalanced friction calculations, slightly differently now",
+                    "Cull individual forest item for improved performance of render shadow pass (saves some ms per frame)",
+                    "Fixed vibrations when changing simulation speed to slow motion",
+                    "Fixed UI hiding: should hide properly now",
+                    "Fixed lua split() discarding string parts (be sure to check if your lua script now behaves differently)",
+                    "Fixed file system notifiers taking too much time: faster startup",
+                    "Increased precision on ui update rate"
+                ]},
+                "Content" : {"icon":"car", "list":[
+                    "Hirochi raceway has collision again",
+                    "More work on Hirochy raceway: barriers, forest, added undergrowth, road and vegetation work, updated signs, texture work",
+                    "Sunburst: improvements on the suspension, added simple traction control, improved fuel tank and windshield wipers, cvt ratios, increased turbo power, tuning the driving characteristics",
+                    "Tire stabilization improvements on some vehicles",
+                    "Fixed hamster wheel ramp and large tilt base having no collision",
+                    "Reduced shakiness of large crusher (also removed duplicate example crusher)",
+                    "T75: fixes on the engine and the radiator, improving stability a lot when crashing the front",
+                    "Less torsional frame rigidity for pickup and van",
+                    "Tuned shift points for some vehicles",
+                    "Added cubemap to smallgrid (vehicles now have reflections)",
+                    "Added vehicle thumbnails for new vehicle selector (press Space)",
+                    "Parkingbrake hydros added to h45 cargo box",
+                    "Improved collision mesh for the industrial bridges to prevent tire catching when breaking or sliding",
+                    "Corrected some path issues for the rock material on gridmap",
+                    "Bolide collision fixes"
+                ]},
+                "Features" : {"icon":"cog", "list":[
+                    "LuaSocket is now completely integrated and always enabled. It has a security sandbox and can only connect to localhost and private IPv4 addresses (the previous command line switch is now obsolete)",
+                    "The ingame UI now uses local:// instead of file://. That enables it to use the virtual filesystem and i.e. load preview images from inside zips. There might be some stuttering in the main menu which we are working on. (This was a huge undertaking to get working well)"
+                ]}
+            }
+        }
+    ]
+}

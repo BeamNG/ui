@@ -3,6 +3,11 @@
     src: url(../fonts/Roboto-Bold.ttf);
 }
 
+@font-face {
+    font-family: OpenSansBold;
+    src: url(../fonts/OpenSans-Bold.ttf);
+}
+
 body {
   background: #222222;
   color: white;
