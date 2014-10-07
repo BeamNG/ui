@@ -1,4 +1,4 @@
-var VehicleChooser = (function(){
+var VehicleChooserOld = (function(){
     'use strict';
 
     var mainDiv;
@@ -301,6 +301,355 @@ var VehicleChooser = (function(){
     function openFinalize(){
         mainDiv.parent().show();
         mainDiv.dialog( "moveToTop" );
+    }
+
+    function close(){
+        mainDiv.parent().hide();
+    }
+
+    // run init
+    $(document).ready(function() {
+        init();
+    });
+    // public interface
+    var VehicleChooser = {
+        open: open,
+        close:close
+    };
+    return VehicleChooser;
+}());
+
+var VehicleChooser = (function(){
+    'use strict';
+
+    var mainDiv;
+    var selector, buttonarea, stepBackButton, applyButton;
+
+    var filterPanel, vehiclePanel;
+
+    var vehicles;
+
+    var vehicleinfo = {};
+    var infoLoaderChain = [];
+    var searchtree = {};
+
+    var appliedFilters = {};
+
+    var choosen = {};
+
+    var colorPicker;
+
+    var firstRun = true;
+
+    var defaultColor = '0.5 0 0 1.001';
+
+    function init(){
+        mainDiv = $("<div></div>").appendTo($("body")).attr('id', 'vehiclechooser');
+        mainDiv.dialog({
+            title: "Vehicle Selector",
+            width: $(window).width()-70,
+            height: $(window).height()-70,
+            beforeClose : function(event, ui){
+                close();
+                return false;
+            },
+            resizable: false,
+            draggable: false,
+            closeOnEscape: true
+        });
+        selector = $("<div></div>").appendTo(mainDiv).addClass('selector');
+        buttonarea = $("<div></div>").appendTo(mainDiv).addClass('buttonarea').hide();
+
+        stepBackButton = $("<a><</a>").appendTo(buttonarea).css({
+            background: 'gray'
+        }).addClass('simplebutton').click(function(event) {
+            setState(0);
+        });
+
+        applyButton = $("<a>Apply</a>").appendTo(buttonarea).css({
+            background: 'green'
+        }).addClass('simplebutton').click(function() {
+            try{
+                setColor(colorPicker.spectrum("get", 'color'));
+            }catch(e){}
+            if(choosen.Color == 'InvisibleBlack' || choosen.Color === ''){
+                choosen.Color = defaultColor;
+            }
+            console.log('spawning: '+JSON.stringify(choosen));
+            beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
+            firstRun = false;
+            close();
+        });
+
+        $(window).keyup(function(event) {
+            if(event.which == 8 && state>0 && mainDiv.is(':visible')){
+                setState(0);
+            }
+        });
+
+        close();
+    }
+
+    function dataProgress(){
+        if(infoLoaderChain.length == 0){
+            console.log(vehicleinfo);
+            // Everything loaded, now enrich the configs with the info provided by the vehicle
+            $.each(vehicleinfo, function(name, data) {
+                if(name.indexOf('\\')==-1){ // we only want to iterate over the configs
+                    return;
+                }
+                var nameParts = name.split('\\');
+                var enrichedData = _.clone(vehicleinfo[nameParts[0]]); // Get the data from the vehicle
+                $.each(data, function(index, val) { // and overwrite the basevalues with the confic specific ones
+                    enrichedData[index] = val;
+                });
+                vehicleinfo[name] = enrichedData;
+            });
+            console.log(vehicleinfo);
+
+            // Now the other way round: a vehicle needs all attributes from its configs
+            // First convert the vehicles
+            $.each(vehicleinfo, function(name, data) {
+                if(name.indexOf('\\')!=-1){ // we only want to iterate over the basevehicles
+                    return;
+                }
+                $.each(vehicleinfo[name], function(key, val) {
+                    vehicleinfo[name][key] = [val];
+                });
+            });
+            // Now fill the basevehicle with all the stats from its various configs
+            $.each(vehicleinfo, function(name, data) {
+                if(name.indexOf('\\')==-1){ // we only want to iterate over the configs
+                    return;
+                }
+                var basename = name.split('\\')[0]
+                $.each(vehicleinfo[name], function(key, val) {
+                    if(!(key in vehicleinfo[basename])){
+                        vehicleinfo[basename][key] = [];
+                    }
+                    if(!(_.contains(vehicleinfo[basename][key],val))){
+                        vehicleinfo[basename][key].push(val);
+                    }
+                });
+            });
+            console.log(vehicleinfo);
+
+            // Now build the searchtree
+
+            $.each(vehicleinfo, function(vehicle, data) {
+                $.each(data, function(key, val) {
+                    if(!(key in searchtree)){
+                        searchtree[key] = {};
+                    }
+                    if(typeof val == "string"){ // only a single value
+                        if(!(val in searchtree[key])){
+                            searchtree[key][val] = [];
+                        }
+                        if(!(vehicle in searchtree[key][val])){
+                            searchtree[key][val].push(vehicle);
+                        }
+                    }else{ // multiple values
+                        $.each(val, function(index, v) {
+                            if(!(v in searchtree[key])){
+                                searchtree[key][v] = [];
+                            }
+                            if(!(vehicle in searchtree[key][v])){
+                                searchtree[key][v].push(vehicle);
+                            }
+                        });
+                    }
+                });
+            });
+            console.log(searchtree);
+
+            // All done, show the dialog now
+//            if((reset && reset === true) || firstRun === true){
+                openFinalize();
+/*            }else{
+                callGameEngineFuncCallback("getVehicle()", function(res){
+                    console.log(res);
+                    openFinalize();
+                });
+            }*/
+
+        }
+    }
+
+    function getVehicleData(vehicle){
+        infoLoaderChain.push(vehicle);
+        $.getJSON("/vehicles/"+vehicle+"/info.json", function(data) {
+            vehicleinfo[vehicle] = data;
+        }).fail(function(){
+            vehicleinfo[vehicle] = {Name: vehicles[vehicle].name, Brand: "Unknown"}
+        }).always(function(){
+            infoLoaderChain.splice(infoLoaderChain.indexOf(vehicle),1);
+            dataProgress();
+        });
+    }
+
+    function getConfigData(vehicle, config){
+        if(config === ''){
+            return;
+        }
+        infoLoaderChain.push(vehicle+"\\"+config);
+        $.getJSON("/vehicles/"+vehicle+"/info_"+config+".json", function(data) {
+            vehicleinfo[vehicle+"\\"+config] = data;
+        }).fail(function(){
+            vehicleinfo[vehicle+"\\"+config] = {Configuration: vehicles[vehicle].configs[config].name}
+        }).always(function(){
+            infoLoaderChain.splice(infoLoaderChain.indexOf(vehicle+"\\"+config),1);
+            dataProgress();
+        });
+    }
+
+    function getData(){
+        $.each(vehicles, function(vehicle, vehicleData) {
+            getVehicleData(vehicle);
+            $.each(vehicleData.configs, function(config, configData) {
+                getConfigData(vehicle, config);
+            });
+        });
+    }
+
+    function renderFilterCriterias(){
+        $.each(searchtree, function(key, values) {
+            if(_.contains(['default_pc','Name','Configuration'], key)){ // We want specific not to show
+                return;
+            }
+            var filter = $('<div class="filterbox"></div>').appendTo(filterPanel);
+            $('<div class="filtername">'+key+'</div>').appendTo(filter);
+            $.each(values, function(value) {
+                console.log(value);
+                $('<input type="checkbox" />').appendTo(filter).change(function(event) {
+                    if($(this).is(':checked')){
+                        addFilter(key,value);
+                    }else{
+                        removeFilter(key, value);
+                    }
+                });
+                filter.append(value+"<br/>");
+            });
+        });
+    }
+
+    function fillModelPanel(){
+        selector.empty();
+        filterPanel = $('<div class="filterPanel"></div>').appendTo(selector);
+        vehiclePanel = $('<div class="vehiclePanel"></div>').appendTo(selector);
+        renderFilterCriterias();
+        renderModels();
+    }
+
+    function renderModels(){
+        console.log(appliedFilters);
+        var models = [];
+        var resulttree = {};
+        if(_.size(appliedFilters) > 0){ // We need to filter
+            console.log(appliedFilters);
+            $.each(appliedFilters, function(key, values) {
+                resulttree[key] = [];
+                $.each(values, function(i, value) {
+                    resulttree[key].push(searchtree[key][value]);
+                });
+                // merge the array
+                resulttree[key] = _.union.apply(_,resulttree[key]);
+            });
+            var keyresults = [];
+            $.each(resulttree, function(index, val) {
+                keyresults.push(val);
+            });
+            console.log(keyresults); // this is the list of results for the unique key, now just merge them so only the ones appearing in all subresults are in the final list
+            models = _.intersection.apply(_, keyresults); // <3 underscore.js
+            // for the moment we only want vehicles to be displayed, not the individual configurations
+            models = _.filter(models,function(name){return name.indexOf('\\') == -1;});
+
+        }else{ // We don't need to filter, just get all the vehicles
+            models = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') == -1;});
+        }
+
+        // Now render
+        vehiclePanel.empty();
+        $.each(models, function(i,e) {
+            var model = vehicleinfo[e];
+            var name = model.Name;
+            if(model.Brand && model.Brand != "Unknown"){
+                name = model.Brand + " " + name;
+            }
+            if(e.indexOf('\\') != -1){
+                name = name + " " + model.Configuration;
+            }
+            $("<div></div>").appendTo(vehiclePanel).bigButton({
+                title: name,
+                clickAction: function(){
+                    alert('Now do something here');
+                    choosen.Model = 'pickup';
+                    fillConfigurationPanel();
+                },
+                images: ["/vehicles/"+e+"/default.png"]
+            });
+        });
+    }
+
+    function addFilter(key, value){
+        if(!(key in appliedFilters)){
+            appliedFilters[key] = [];
+        }
+        appliedFilters[key].push(value);
+        renderModels();
+    }
+
+    function removeFilter(key, value){
+        appliedFilters[key].splice(appliedFilters[key].indexOf(value),1)
+        if(appliedFilters[key].length == 0){
+            delete appliedFilters[key];
+        }
+        renderModels();
+    }
+
+    function setColor(color){
+        console.log(color);
+        colorPicker.spectrum("set", color);
+        colorPicker.spectrum("reflow");
+        var c = color.toRgb();
+        if(c.a == 1){
+            c.a = 1.001;
+        }
+        c.a = Math.max(c.a,0.004);
+        choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
+        console.log(choosen.Color);
+    }
+
+    function convertColor(torqueColor){
+        console.log('converting color: '+torqueColor);
+        if(torqueColor == 'InvisibleBlack'){
+            torqueColor = "0 0 0 0";
+        }
+        var components = torqueColor.split(' ');
+        console.log(components);
+        return tinycolor("rgba ("+(components[0]*255 |0)+", "+(components[1]*255 |0)+", "+(components[2]*255 |0)+", "+(components[3]*0.5)+")");
+    }
+    
+    function open(reset){
+
+        // reset the variables
+        vehicleinfo = {};
+        infoLoaderChain = [];
+        searchtree = {};
+        appliedFilters = {};
+        choosen = {};
+
+        selector.empty();
+
+        callGameEngineFuncCallback("getVehicleList()", function(res){
+            vehicles = res;
+            getData();
+        });
+    }
+
+    function openFinalize(){
+        mainDiv.parent().show();
+        mainDiv.dialog( "moveToTop" );
+        fillModelPanel();
     }
 
     function close(){

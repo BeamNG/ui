@@ -22,6 +22,28 @@
 	right: 5px;
 }
 
+#vehiclechooser .filterPanel{
+	float: left;
+	width: 150px;
+	padding: 10px;
+}
+
+#vehiclechooser .vehiclePanel{
+	margin-left: 170px;
+}
+
+#vehiclechooser .filterbox{
+	border: 3px solid #bbb;
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+
+#vehiclechooser .filtername{
+	background: #bbb;
+	padding: 2px;
+}
+
+
 .simplebutton{
 	color: white !important;
 	padding: 7px;
