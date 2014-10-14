@@ -6,6 +6,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/minimal.js"></script>
+    <script src="js/controller_ids.js"></script>
 </head>
 <body>
 
@@ -34,25 +35,56 @@
 </div>
 
 <script type="text/javascript">
+var ctrlState = {};
 var initialized = false;
+var wizardStep = 0;
+
 function controllerUpdateValue(devName, objectName, value) {
     if(!initialized) return;
     var dev = $('#'+devName);
     var field = dev.find('#'+objectName);
     field.css('opacity', Math.abs(value)+0.3);
     field.find('value').html(parseFloat(value));
+
+    if(!ctrlState[devName]) ctrlState[devName] = {};
+    if(!ctrlState[devName][objectName]) ctrlState[devName][objectName] = {};
+    ctrlState[devName][objectName] = value;
 }
 
-function setControllerConfig(cfg) {
-    console.log("setControllerConfig");
+var wizardFilter = '';
+
+function inputWizard(vidpid) {
+    console.log('inputWizard: ' + vidpid);
+    wizardStep = 1;
+    wizardFilter = vidpid;
+
+    inputWizardStep();
+}
+
+function inputWizardStep() {
+    var t = '';
+    if(wizardStep == 1) {
+        t = 'Hello world!';
+        
+    }
+
+    $('#msgtext').html(t);
+}
+
+function sendInputHardwareInfo(cfg) {
+    console.log("sendInputHardwareInfo");
     console.log(cfg);
+    /*
     var root = $('#devices');
     root.html('');
 
     for(var d = 0; d < cfg.length; d++) {
         var dev = cfg[d];
         var productName = dev.productName || "";
-        var devHtml = $('<div id="' + dev.name + '"><h2 class="active"><span class="icon">'+dev.name+'</span> <span>'+productName+'</span></h2></div>').appendTo(root);
+        if(controller_ids[dev.vidpid]) {
+            productName += " (" + controller_ids[dev.vidpid] + ")";
+        }
+        var devHtml = $('<div id="' + dev.name + '"><h2 class="active"><span class="icon">'+dev.name+'</span> - <span>'+productName+'</span></h2></div>').appendTo(root);
 
         // Axis
         var axisHtml = $('<div class="axes"></div>').appendTo(devHtml);
@@ -67,22 +99,32 @@ function setControllerConfig(cfg) {
         $.each(dev.buttons, function(k, v) {
             buttonsUl.append('<li id="' + v + '" class=""><label>' + v + '</label><value>0</value></li>');
         });
+
+        $('<input type="button" href="#" onclick="inputWizard(\'' + dev.vidpid + '\')" value="Configure" />').appendTo(devHtml);
     }
     initialized = true;
+    */
 }
 
+    
+
+
 $(document).ready(function() {
-    beamng.sendGameEngine("sendUIControlConfig();enableUIControlForwarding();");
+    beamng.sendGameEngine("sendJavaScriptInputHardwareInfo();enableUIControlForwarding();");
 });
 
 
 </script>
+
+<div id="msgtext"></div>
 
 <button class='cefdev_' onclick="javascript:location.reload();" style="width: 60px; height: 20px;
     position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;">
     ReloadUI
 </button>
 
-<input type="button" id="backbutton" href="#" onclick="window.location.href='/html/mainmenu.html';" value="Back" /><br/>
+<input type="button" id="backbutton" href="#" onclick="window.location.href='/html/mainmenu.html';" value="Back" />
+
+<!-- <input type="button" href="#" onclick="beamng.sendGameEngine('reloadInputMaps();');" value="Reload Input maps" /><br/> ->
 </body>
 </html>

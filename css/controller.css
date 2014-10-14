@@ -108,3 +108,16 @@ value {
 .buttons li {
   width: 50px;
 }
+
+#msgtext {
+  position:absolute;
+  bottom:0px;
+  left:0px;
+  right:0px;
+  font-size:2em;
+  font-family:Verdana;
+  padding:5px;
+  background-color:#333333;
+  color:#fefefe;
+  text-align:center;
+}

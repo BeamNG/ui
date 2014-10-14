@@ -15,10 +15,13 @@ var VehicleChooserOld = (function(){
     var choosenReadable = {};
 
     var colorPicker;
+    var lastUsedColors;
 
     var firstRun = true;
 
     var defaultColor = '0.5 0 0 1.001';
+
+    var vehiclePanelData;
 
     function init(){
         mainDiv = $("<div></div>").appendTo($("body")).attr('id', 'vehiclechooser');
@@ -338,8 +341,12 @@ var VehicleChooser = (function(){
     var choosen = {};
 
     var colorPicker;
+    var colorVisualizer;
+    var lastUsedColors;
 
     var firstRun = true;
+
+    var showVehicles = true;
 
     var defaultColor = '0.5 0 0 1.001';
 
@@ -369,14 +376,28 @@ var VehicleChooser = (function(){
         applyButton = $("<a>Apply</a>").appendTo(buttonarea).css({
             background: 'green'
         }).addClass('simplebutton').click(function() {
+            // get the used color
             try{
                 setColor(colorPicker.spectrum("get", 'color'));
             }catch(e){}
-            if(choosen.Color == 'InvisibleBlack' || choosen.Color === ''){
+            if(!choosen.Color || choosen.Color == 'InvisibleBlack' || choosen.Color === ''){
                 choosen.Color = defaultColor;
             }
+            // update the "last used colors"-list
+            lastUsedColors.unshift(choosen.Color);
+            console.log("ARRRRRRRRRRRRRRRRRRRRRAY");
+            console.log(lastUsedColors);
+            lastUsedColors = _.first(_.uniq(lastUsedColors),10);
+            console.log(lastUsedColors);
+            localStorage.bngVehicleSelectorColors = JSON.stringify(lastUsedColors);
+
+            // get configfilename
+            var configfile = "";
+            if(choosen.Configuration !== ""){
+                configfile = vehicles[choosen.Model].configs[choosen.Configuration].file;
+            }
             console.log('spawning: '+JSON.stringify(choosen));
-            beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
+            beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+configfile+'", "'+choosen.Color+'");');
             firstRun = false;
             close();
         });
@@ -388,6 +409,16 @@ var VehicleChooser = (function(){
         });
 
         close();
+    }
+
+    function setState(state){
+        if(state == 1){
+            buttonarea.show(100);
+            fillVehiclePanel();
+        }else if(state == 0){
+            buttonarea.hide(100);
+            fillModelPanel();
+        }
     }
 
     function dataProgress(){
@@ -422,7 +453,7 @@ var VehicleChooser = (function(){
                 if(name.indexOf('\\')==-1){ // we only want to iterate over the configs
                     return;
                 }
-                var basename = name.split('\\')[0]
+                var basename = name.split('\\')[0];
                 $.each(vehicleinfo[name], function(key, val) {
                     if(!(key in vehicleinfo[basename])){
                         vehicleinfo[basename][key] = [];
@@ -480,7 +511,7 @@ var VehicleChooser = (function(){
         $.getJSON("/vehicles/"+vehicle+"/info.json", function(data) {
             vehicleinfo[vehicle] = data;
         }).fail(function(){
-            vehicleinfo[vehicle] = {Name: vehicles[vehicle].name, Brand: "Unknown"}
+            vehicleinfo[vehicle] = {Name: vehicles[vehicle].name, Brand: "Unknown"};
         }).always(function(){
             infoLoaderChain.splice(infoLoaderChain.indexOf(vehicle),1);
             dataProgress();
@@ -492,10 +523,11 @@ var VehicleChooser = (function(){
             return;
         }
         infoLoaderChain.push(vehicle+"\\"+config);
+
         $.getJSON("/vehicles/"+vehicle+"/info_"+config+".json", function(data) {
             vehicleinfo[vehicle+"\\"+config] = data;
         }).fail(function(){
-            vehicleinfo[vehicle+"\\"+config] = {Configuration: vehicles[vehicle].configs[config].name}
+            vehicleinfo[vehicle+"\\"+config] = {Configuration: vehicles[vehicle].configs[config].name};
         }).always(function(){
             infoLoaderChain.splice(infoLoaderChain.indexOf(vehicle+"\\"+config),1);
             dataProgress();
@@ -505,7 +537,7 @@ var VehicleChooser = (function(){
     function getData(){
         $.each(vehicles, function(vehicle, vehicleData) {
             getVehicleData(vehicle);
-            $.each(vehicleData.configs, function(config, configData) {
+            $.each(vehicleData.configs, function(config) {
                 getConfigData(vehicle, config);
             });
         });
@@ -513,23 +545,123 @@ var VehicleChooser = (function(){
 
     function renderFilterCriterias(){
         $.each(searchtree, function(key, values) {
-            if(_.contains(['default_pc','Name','Configuration'], key)){ // We want specific not to show
+            if(_.contains(['default_color','colors','default_pc','Name','Configuration'], key)){ // We want specific tags not to show
                 return;
             }
             var filter = $('<div class="filterbox"></div>').appendTo(filterPanel);
             $('<div class="filtername">'+key+'</div>').appendTo(filter);
             $.each(values, function(value) {
-                console.log(value);
-                $('<input type="checkbox" />').appendTo(filter).change(function(event) {
+                var checked ='';
+                if(appliedFilters[key] && _.contains(appliedFilters[key],value)){
+                    checked = ' checked ';
+                }
+                var valueContainer = $('<div class="filterValueContainer"></div>').appendTo(filter);
+                $('<input type="checkbox" '+checked+'/>').appendTo(valueContainer).change(function() {
                     if($(this).is(':checked')){
                         addFilter(key,value);
+                        $(this).parent().addClass("selected");
                     }else{
                         removeFilter(key, value);
+                        $(this).parent().removeClass("selected");
                     }
                 });
-                filter.append(value+"<br/>");
+                if(checked !== ''){
+                    valueContainer.addClass("selected");
+                }
+                valueContainer.append(value);
             });
         });
+        $('<div class="filterbox filtername">Remove filters</div>').appendTo(filterPanel).click(function(){
+            // empty the filters and rerender
+            appliedFilters = {};
+            fillModelPanel();
+        });
+    }
+
+    function fillVehiclePanel(){
+        selector.empty();
+        var heading = $("<h1>"+getVehicleName(choosen.Vehicle)+"</h1>").appendTo(selector);
+
+        var configsExist = _.size(vehicles[choosen.Model].configs) > 1;
+
+        if(configsExist){
+            selector.append("<h2>Configurations</h2>");
+            $.each(vehicles[choosen.Model].configs, function(index, val) {
+                if(configsExist && val.name == 'Default')
+                    return;
+                $("<div></div>").appendTo(selector).bigButton({
+                    title: val.name,
+                    clickAction: function(element){
+                        selector.find('.appButton').each(function(index, el) {
+                            $(el).removeClass('selected');
+                        });
+                        element.addClass('selected');
+                        choosen.Configuration = index;
+                        console.log(choosen);
+                        heading.text(getVehicleName(choosen.Model+'\\'+choosen.Configuration));
+                        console.log(index);
+                    },
+                    images: ["/vehicles/"+choosen.Model+"/"+index+".png", "/vehicles/"+choosen.Model+"/default.png"]
+                });
+            });
+        }
+        // Colorpart
+        selector.append("<h2>Color</h2>");
+        colorPicker = $("<input></input>").appendTo(selector).spectrum({
+            flat: true,
+            showAlpha: true,
+            showButtons: false,
+            color: convertColor(defaultColor)
+        });
+        $(colorPicker).on("dragstop.spectrum", function(e, color) {
+            setColor(color);
+        });
+        colorVisualizer = $("<div></div>").colorWidget({color:"red",size:200}).appendTo(selector);
+        // now get the last used colors
+        if(localStorage.bngVehicleSelectorColors && localStorage.bngVehicleSelectorColors.length > 0){
+            lastUsedColors = JSON.parse(localStorage.bngVehicleSelectorColors);
+            selector.append("<h3>Last used colors</h3>");
+        }else{
+            lastUsedColors = [];
+        }
+        
+        $.each(lastUsedColors, function(index, color) {
+            console.log(color);
+            addColor(convertColor(color));
+        });
+        // now get the vehicle specific colors
+        if(vehicleinfo[choosen.Model].colors){
+            selector.append("<h3>Factorycolors</h3>");
+            $.each(vehicleinfo[choosen.Model].colors[0], function(name, color) {
+                addColor(convertColor(color),name);
+            });
+        }
+    }
+
+    function addColor(color, name){
+        $("<div></div>").appendTo(selector).colorButton({
+            name:name,
+            color:color,
+            clickAction: function(element){
+                selector.find('.colorButton').each(function(index, el) {
+                    $(el).removeClass('selected');
+                });
+                element.addClass('selected');
+                setColor(color);
+            }
+        });
+    }
+
+    function getVehicleName(e){
+        var model = vehicleinfo[e];
+        var name = model.Name;
+        if(model.Brand && model.Brand != "Unknown"){
+            name = model.Brand + " " + name;
+        }
+        if(e.indexOf('\\') != -1){
+            name = name + " " + model.Configuration;
+        }
+        return name;      
     }
 
     function fillModelPanel(){
@@ -538,14 +670,13 @@ var VehicleChooser = (function(){
         vehiclePanel = $('<div class="vehiclePanel"></div>').appendTo(selector);
         renderFilterCriterias();
         renderModels();
+
     }
 
     function renderModels(){
-        console.log(appliedFilters);
         var models = [];
         var resulttree = {};
         if(_.size(appliedFilters) > 0){ // We need to filter
-            console.log(appliedFilters);
             $.each(appliedFilters, function(key, values) {
                 resulttree[key] = [];
                 $.each(values, function(i, value) {
@@ -558,32 +689,41 @@ var VehicleChooser = (function(){
             $.each(resulttree, function(index, val) {
                 keyresults.push(val);
             });
-            console.log(keyresults); // this is the list of results for the unique key, now just merge them so only the ones appearing in all subresults are in the final list
+            // keyresults is the list of results for the unique key, now just merge them so only the ones appearing in all subresults are in the final list
             models = _.intersection.apply(_, keyresults); // <3 underscore.js
             // for the moment we only want vehicles to be displayed, not the individual configurations
-            models = _.filter(models,function(name){return name.indexOf('\\') == -1;});
+            if(showVehicles){
+                models = _.filter(models,function(name){return name.indexOf('\\') == -1;});
+            }else{
+                models = _.filter(models,function(name){return name.indexOf('\\') != -1;});
+            }
+            
 
         }else{ // We don't need to filter, just get all the vehicles
-            models = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') == -1;});
+            if(showVehicles){
+                models = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') == -1;});
+            }else{
+                models = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') != -1;});
+            }
+            
         }
 
         // Now render
         vehiclePanel.empty();
         $.each(models, function(i,e) {
-            var model = vehicleinfo[e];
-            var name = model.Name;
-            if(model.Brand && model.Brand != "Unknown"){
-                name = model.Brand + " " + name;
-            }
-            if(e.indexOf('\\') != -1){
-                name = name + " " + model.Configuration;
-            }
             $("<div></div>").appendTo(vehiclePanel).bigButton({
-                title: name,
+                title: getVehicleName(e),
                 clickAction: function(){
-                    alert('Now do something here');
-                    choosen.Model = 'pickup';
-                    fillConfigurationPanel();
+                    choosen.Vehicle = e;
+                    var parts = choosen.Vehicle.split('\\');
+                    if(parts.length > 1){
+                        choosen.Model = parts[0];
+                        choosen.Configuration = parts[1];
+                    }else{
+                        choosen.Model = choosen.Vehicle;
+                        choosen.Configuration = "";
+                    }
+                    setState(1);
                 },
                 images: ["/vehicles/"+e+"/default.png"]
             });
@@ -599,8 +739,8 @@ var VehicleChooser = (function(){
     }
 
     function removeFilter(key, value){
-        appliedFilters[key].splice(appliedFilters[key].indexOf(value),1)
-        if(appliedFilters[key].length == 0){
+        appliedFilters[key].splice(appliedFilters[key].indexOf(value),1);
+        if(appliedFilters[key].length === 0){
             delete appliedFilters[key];
         }
         renderModels();
@@ -608,9 +748,10 @@ var VehicleChooser = (function(){
 
     function setColor(color){
         console.log(color);
+        colorVisualizer.colorWidget("color",color);
         colorPicker.spectrum("set", color);
         colorPicker.spectrum("reflow");
-        var c = color.toRgb();
+        var c = tinycolor(color).toRgb();
         if(c.a == 1){
             c.a = 1.001;
         }
@@ -618,7 +759,7 @@ var VehicleChooser = (function(){
         choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
         console.log(choosen.Color);
     }
-
+    
     function convertColor(torqueColor){
         console.log('converting color: '+torqueColor);
         if(torqueColor == 'InvisibleBlack'){
@@ -635,7 +776,7 @@ var VehicleChooser = (function(){
         vehicleinfo = {};
         infoLoaderChain = [];
         searchtree = {};
-        appliedFilters = {};
+        //appliedFilters = {};
         choosen = {};
 
         selector.empty();
@@ -647,9 +788,9 @@ var VehicleChooser = (function(){
     }
 
     function openFinalize(){
+        setState(0);
         mainDiv.parent().show();
         mainDiv.dialog( "moveToTop" );
-        fillModelPanel();
     }
 
     function close(){
@@ -703,10 +844,69 @@ $.widget("beamNG.bigButton", {
         }
         if(this.options.clickAction){
             var act = this.options.clickAction;
+            var element = this.element;
             this.element.click(function() {
-                act();
+                act(element);
             });
         }
+    }
+});
 
+$.widget("beamNG.colorButton", {
+    _create : function(){
+
+        // creating the widget
+        this.element.addClass('colorButton');
+
+        this.colorDiv = $("<div></div>").colorWidget({color: this.options.color}).appendTo(this.element).addClass('colorButtonColor');
+        if(this.options.name){
+            this.nameDiv  = $("<span class='colorButtonName'>"+this.options.name+"</span>").appendTo(this.element);
+        }
+
+        if(this.options.clickAction){
+            var act = this.options.clickAction;
+            var element = this.element;
+            this.element.click(function() {
+                act(element);
+            });
+        }
+    }
+});
+
+$.widget("beamNG.colorWidget", {
+    _create : function(){
+
+        // creating the widget
+        this.element.addClass('colorWidgetContainer');
+
+        this.element.append('<div class="colorWidgetColor"></div><div class="colorWidgetChrome"></div><div class="colorWidgetShadow"></div>');
+
+        this.colorDiv = this.element.find('.colorWidgetColor');
+        this.transparencyDiv = this.element.find('.colorWidgetChrome');
+
+        if(this.options.color){
+            this.color(this.options.color);
+        }
+
+        if(this.options.size){
+            this.element.css({
+                width: this.options.size,
+                height: this.options.size
+            });
+        }
+    },
+    _setOption: function( key, value ) {
+        if(key == "color"){
+            this.color(value);
+            
+        }else{
+            this._super(key, value);
+        }
+    },
+    color: function(color){
+        this.options.color = color;
+        color = tinycolor(color).toRgb();
+        this.colorDiv.css('background-color', "rgb("+color.r+","+color.g+","+color.b+")");
+        this.transparencyDiv.css('opacity', 1-color.a);
     }
 });

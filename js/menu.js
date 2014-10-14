@@ -1,15 +1,15 @@
 ﻿var videoConfig = [
     // video, title, description, mission name to load, position/rotation
-    ["images/mainmenu_1.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
-    ["images/mainmenu_2.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
-    ["images/mainmenu_3.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-354.373 170.426 39.4306 0 0 1 208.446"],
-    ["images/mainmenu_4.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 -0.0613498 -0.0460925 0.997052 106.327"],
-    ["images/mainmenu_5.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-242.088 87.4816 39.6549 -0.00772832 -0.036043 0.99932 189.094"],
-    ["images/mainmenu_6.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "16.6853 -395.176 31.446 0 0 1 73.887"],
-    ["images/mainmenu_7.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-172.176 235.843 48.1855 0 0 1 87.774"],
-    ["images/mainmenu_8.webm", "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-450.022 -106.288 63.4009 0 0 -1 4.68703"],
-    ["images/mainmenu_9.webm", "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-703.965 309.649 41.908 0 0 1 152.314"],
-    ["images/mainmenu_10.webm", "Industrial", "Port, rallycross, circuit, offroad track", "dry_rock_island.mis", "216.223 116.715 42.6993 -0.0362537 0.0379904 -0.99862 87.399"],
+    ["images/mainmenu_1_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
+    ["images/mainmenu_2_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 0 0 81.476"],
+    ["images/mainmenu_3_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-354.373 170.426 39.4306 0 0 1 208.446"],
+    ["images/mainmenu_4_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "111.252 -375.783 30.0412 -0.0613498 -0.0460925 0.997052 106.327"],
+    ["images/mainmenu_5_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-242.088 87.4816 39.6549 -0.00772832 -0.036043 0.99932 189.094"],
+    ["images/mainmenu_6_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "16.6853 -395.176 31.446 0 0 1 73.887"],
+    ["images/mainmenu_7_720p.webm", "Small Island", "High speed asphalt and some technical dirt roads", "small_island.mis", "-172.176 235.843 48.1855 0 0 1 87.774"],
+    ["images/mainmenu_8_720p.webm", "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-450.022 -106.288 63.4009 0 0 -1 4.68703"],
+    ["images/mainmenu_9_720p.webm", "Dry Rock Island", "A long abandoned industrial island", "dry_rock_island.mis", "-703.965 309.649 41.908 0 0 1 152.314"],
+    ["images/mainmenu_10_720p.webm", "Industrial", "Port, rallycross, circuit, offroad track", "dry_rock_island.mis", "216.223 116.715 42.6993 -0.0362537 0.0379904 -0.99862 87.399"],
 ];
 
 var min_w = 300; // minimum video width allowed
@@ -128,11 +128,18 @@ function parseBBCode(text) {
     text = text.replace(/\[url\]http:\/\/(.*(?=\[\/url\]))\[\/b\]/g, '<a href="http-external://$1">$1</a>');
     text = text.replace(/\[ico=([^\s\]]+)\s*\](.*(?=\[\/ico\]))\[\/ico\]/g, '<img src="images/icons/$1.png">$2</a>');
     text = text.replace(/\[b\](.*(?=\[\/b\]))\[\/b\]/g, '<span style="font-family:OpenSans-ExtraBold">$1</span>');
+    text = text.replace(/\[h1\](.*(?=\[\/h1\]))\[\/h1\]/g, '<h1>$1</h1>');
+    text = text.replace(/\[list\]/g, '<ul>');
+    text = text.replace(/\[\/list\]/g, '</ul>');
+    text = text.replace(/\[olist\]/g, '<ol>');
+    text = text.replace(/\[\/olist\]/g, '</ol>');
+    text = text.replace(/\[\*\](.*(?=\n))\n/g, '<li>$1</li>');
     text = text.replace(/\[u\](.*(?=\[\/u\]))\[\/u\]/g, '<u>$1</u>');
     text = text.replace(/\[s\](.*(?=\[\/s\]))\[\/s\]/g, '<s>$1</s>');
+    text = text.replace(/\[strike\](.*(?=\[\/strike\]))\[\/strike\]/g, '<s>$1</s>');
     text = text.replace(/\[i\](.*(?=\[\/i\]))\[\/i\]/g, '<i>$1</i>');
     text = text.replace(/\[ico=([^\s\]]+)\s*\]/g, '<img class="ico" src="images/icons/$1.png"/>');
-    text = text.replace(/\[pre\](.*(?=\[\/pre\]))\[\/pre\]/g, '<span class="bbcode-pre">$1</span>');
+    text = text.replace(/\[code\](.*(?=\[\/code\]))\[\/code\]/g, '<span class="bbcode-pre">$1</span>');
     text = text.replace(/\n/g, '<br/>');
     return text
 }

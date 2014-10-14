@@ -139,6 +139,10 @@ body.hidden * {
     padding: 0;
 }
 
+.appButton.selected{
+    border: 3px solid #96BB8C;
+}
+
 .appButton:hover
 {
     box-shadow: 0 0 10px #000;
@@ -173,6 +177,11 @@ body.hidden * {
     padding-top: 5px;
     padding-left: 10px;
     background: #bbb;
+}
+
+
+.selected .appButtonTitle{
+        background: #96BB8C;
 }
 
 .appButtonInfo

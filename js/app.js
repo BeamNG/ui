@@ -1,3 +1,4 @@
+var nan = NaN;
 $.widget( "beamNG.app", $.ui.dialog, {
     options: {
         app: null,
@@ -325,9 +326,9 @@ $.widget("beamNG.appButton", {
 });
 
 $(document).ready(function() {
-    console.log('getting Applist from Backend:');
+//    console.log('getting Applist from Backend:');
     callGameEngineFuncCallback("getAppList()", function(res){
-        console.log('got: '+JSON.stringify(res));
+//        console.log('got: '+JSON.stringify(res));
         AppLoader.installedApps = res;
         AppLoader.initialize();
     });
@@ -348,7 +349,7 @@ var AppEngine = {
     cameraMode: -1,
 
     initialize : function() {
-        this.log("initializing AppEngine");
+//        this.log("initializing AppEngine");
         // adding blendingdiv for editingmode
         this.backgroundblending = $("<div class='appengine-blending'></div>").hide().appendTo('body');
 
@@ -462,7 +463,7 @@ var AppEngine = {
                     return;
                 }
                 var appInstance = new window[app]();
-                this.log("Adding App "+app+" to Screen");
+//                this.log("Adding App "+app+" to Screen");
                 var appElement = $('<div></div>').appendTo($('body'));
                 appElement.app({ app: appInstance, "persistance" : persistance, appendTo : this.presetPanel[this.preset] });
                 if(position !== undefined){
@@ -530,7 +531,7 @@ var AppEngine = {
                     height: "100%"
                 });
 
-                this.log("loading preset '"+preset+"'");
+//                this.log("loading preset '"+preset+"'");
 //                this.log("loading "+this.persistance.presets[preset].apps.length+" Apps:");
                 $.each(this.persistance.presets[preset].apps, function(index, app) {
                     AppEngine.loadApp(app.name, app.position, app.size, app.persistance);
@@ -552,7 +553,7 @@ var AppEngine = {
     savePreset : function(){
         // empty Preset
         this.persistance.presets[this.preset].apps = [];
-        this.log("Saving Preset "+this.preset);
+//        this.log("Saving Preset "+this.preset);
         $.each(this.runningApps[this.preset], function(index, app) {
 
             var appData = {};
@@ -566,14 +567,14 @@ var AppEngine = {
                 appData.size = undefined;
             }
 
-            AppEngine.log("   -  "+JSON.stringify(appData));
+//            AppEngine.log("   -  "+JSON.stringify(appData));
 
             AppEngine.persistance.presets[AppEngine.preset].apps.push(appData);
         });
 
         this._savePersistance();
 
-        this.log("done.");
+//        this.log("done.");
     },
 
     _loadPersistance : function(){
@@ -629,7 +630,7 @@ var AppEngine = {
 var AppStore = {
     opened: false,
     initialize: function(){
-        Logger.log("AppStore","initializing AppStore");
+//        Logger.log("AppStore","initializing AppStore");
         this.mainDiv = $("<div id='AppStore'></div>").appendTo("body");
         this.mainDiv.dialog({
             title: "Add User Interface App",
@@ -691,7 +692,7 @@ var AppLoader = {
     },
 
     initialize: function(){
-        this.log("initializing Apploader");
+//        this.log("initializing Apploader");
         this.loadApps();
         this.loadInitialized = true;
         this._checkProgress();
@@ -766,13 +767,13 @@ var AppLoader = {
         //this.log("Progress ["+new Date().toLocaleTimeString()+"]: Status [LOADING/ERROR/DONE]: "+loading+"/"+error+"/"+done+" "+allLoaded);
 
         if(this.loadInitialized && allLoaded){
-            this.log("Loading done");
+//            this.log("Loading done");
             $.each(this.loadstates, function(appindex, app) {
                 if(app.js == AppLoader.LOADSTATE.DONE && app.json == AppLoader.LOADSTATE.DONE ){ // && app['data'] != AppLoader.LOADSTATE.LOADING
                     AppEngine.loadedApps.push(appindex);
                 }
             });
-            this.log("loadedApps: "+JSON.stringify(AppEngine.loadedApps));
+//            this.log("loadedApps: "+JSON.stringify(AppEngine.loadedApps));
             AppEngine.initialize();
         }
     },
