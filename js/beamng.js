@@ -36,7 +36,7 @@ if(typeof(beamng) === 'undefined') {
 
 function sendObjectState()
 {
-    cmd = "guiUpdate(" + serializeToLua(state) + ")";
+    var cmd = "guiUpdate(" + serializeToLua(state) + ")";
     //console.log(cmd);
     if(typeof beamng === 'object') {
         beamng.sendActiveObjectLua(cmd);
@@ -52,7 +52,7 @@ function sendObjectState()
 function sendCompleteObjectState()
 {
     // if we want to send the full state, put everything into the changelist :)
-    $.each(state, function(k, v) {
+    $.each(state, function(k) {
         if(k != 'changes')
             state.changes.push(k);
     });
@@ -61,6 +61,7 @@ function sendCompleteObjectState()
 
 function serializeToLua(obj)
 {
+    var tmp;
     if(obj === undefined) return ''; //nil';
     switch(obj.constructor) {
         case String:
@@ -70,7 +71,7 @@ function serializeToLua(obj)
         case Boolean:
             return obj ? 'true' : 'false';
         case Array:
-            var tmp = [];
+            tmp = [];
             for(var i = 0; i < obj.length; i++)
             {
                 tmp.push(serializeToLua(obj[i]));
@@ -79,7 +80,7 @@ function serializeToLua(obj)
         default:
             if(typeof obj == "object")
             {
-                var tmp = [];
+                tmp = [];
                 for(var attr in obj)
                 {
                     if(typeof obj[attr] != "function")
@@ -125,19 +126,19 @@ function collapsibleStreamEventHandler(name, streamName)
     var dataRole = $("#" + name).attr('data-role');
     if(dataRole == 'collapsible') {
         $("#" + name).collapsible({
-            collapse: function( event, ui ) {
+            collapse: function() {
                 streamRemove(streamName);
             },
-            expand: function( event, ui ) {
+            expand: function() {
                 streamAdd(streamName);
             }
         });
     } else if(dataRole == 'panel') {
         $("#" + name).panel({
-            open: function( event, ui ) {
+            open: function() {
                 streamAdd(streamName);
             },
-            close: function( event, ui ) {
+            close: function() {
                 streamRemove(streamName);
             }
         });
