@@ -327,6 +327,8 @@ var VehicleChooserOld = (function(){
 var VehicleChooser = (function(){
     'use strict';
 
+    var state = 0;
+
     var mainDiv;
     var selector, buttonarea, stepBackButton, applyButton;
 
@@ -413,7 +415,8 @@ var VehicleChooser = (function(){
         close();
     }
 
-    function setState(state){
+    function setState(s){
+        state = s;
         if(state == 1){
             buttonarea.show(100);
             fillVehiclePanel();
@@ -576,8 +579,17 @@ var VehicleChooser = (function(){
         $('<div class="filterbox filtername">Remove filters</div>').appendTo(filterPanel).click(function(){
             // empty the filters and rerender
             appliedFilters = {};
-            fillModelPanel();
+            updateResults();
         });
+    }
+
+    function updateResults(){
+        console.log(state);
+        if(state == 1){
+            updateConfigs();
+        }else if(state === 0){
+            renderModels();
+        }
     }
 
     function fillVehiclePanel(){
@@ -590,19 +602,24 @@ var VehicleChooser = (function(){
     }
 
     function renderVehicles(){
-        vehiclePanel.empty();
-        heading = $("<h1>"+getVehicleName(choosen.Vehicle)+"</h1>").appendTo(vehiclePanel);
-
         var configsExist = _.size(vehicles[choosen.Model].configs) > 1;
+        var root = vehiclePanel;
+        if(!configsExist){
+            root = selector;
+        }
+        root.empty();
+        heading = $("<h1>"+getVehicleName(choosen.Vehicle)+"</h1>").appendTo(root);
+
 
         if(configsExist){
-            configurationsPanel = $("<div></div>").appendTo(vehiclePanel);
+            configurationsPanel = $("<div></div>").appendTo(root);
             configurationsPanel.append("<h2>Configurations</h2>");
             renderConfigs();
+            updateConfigs();
         }
         // Colorpart
-        vehiclePanel.append("<h2>Color</h2>");
-        var colorContainer = $('<div></div>').appendTo(vehiclePanel).css({
+        root.append("<h2>Color</h2>");
+        var colorContainer = $('<div></div>').appendTo(root).css({
             float: "left",
             margin: "2px"
         });
@@ -619,7 +636,7 @@ var VehicleChooser = (function(){
         // now get the last used colors
         if(localStorage.bngVehicleSelectorColors && localStorage.bngVehicleSelectorColors.length > 0){
             lastUsedColors = JSON.parse(localStorage.bngVehicleSelectorColors);
-            vehiclePanel.append("<h3>Last used colors</h3>");
+            root.append("<h3>Last used colors</h3>");
         }else{
             lastUsedColors = [];
         }
@@ -630,7 +647,7 @@ var VehicleChooser = (function(){
         });
         // now get the vehicle specific colors
         if(vehicleinfo[choosen.Model].colors){
-            vehiclePanel.append("<h3>Factorycolors</h3>");
+            root.append("<h3>Factorycolors</h3>");
             $.each(vehicleinfo[choosen.Model].colors[0], function(name, color) {
                 addColor(convertColor(color),name);
             });
@@ -639,7 +656,7 @@ var VehicleChooser = (function(){
 
     function renderConfigs(){
         var configsExist = _.size(vehicles[choosen.Model].configs) > 1;
-        $.each(vehicles[choosen.Model].configs, function(index, val) {
+        $.each(vehicles[choosen.Model].configs, function(config, val) {
             if(configsExist && val.name == 'Default')
                 return;
             $("<div></div>").appendTo(configurationsPanel).bigButton({
@@ -649,13 +666,23 @@ var VehicleChooser = (function(){
                         $(el).removeClass('selected');
                     });
                     element.addClass('selected');
-                    choosen.Configuration = index;
+                    choosen.Configuration = config;
                     console.log(choosen);
                     heading.text(getVehicleName(choosen.Model+'\\'+choosen.Configuration));
-                    console.log(index);
+                    console.log(config);
                 },
-                images: ["/vehicles/"+choosen.Model+"/"+index+".png", "/vehicles/"+choosen.Model+"/default.png"]
-            });
+                images: ["/vehicles/"+choosen.Model+"/"+config+".png", "/vehicles/"+choosen.Model+"/default.png"]
+            }).data('config',choosen.Model+'\\'+config);
+        });
+    }
+
+    function updateConfigs(){
+        console.log(configurationsPanel);
+        var results = getResults(true);
+        configurationsPanel.find("div.appButton").each(function(){
+            var config = $(this).data('config');
+            var opacity = _.contains(results, config) ? 1 : 0.5;
+            $(this).css('opacity',opacity);
         });
     }
 
@@ -694,40 +721,42 @@ var VehicleChooser = (function(){
 
     }
 
-    function renderModels(){
-        var models = [];
+function getResults(configurations){
+    var result = [];
+    if(_.size(appliedFilters) > 0){ // We need to filter
         var resulttree = {};
-        if(_.size(appliedFilters) > 0){ // We need to filter
-            $.each(appliedFilters, function(key, values) {
-                resulttree[key] = [];
-                $.each(values, function(i, value) {
-                    resulttree[key].push(searchtree[key][value]);
-                });
-                // merge the array
-                resulttree[key] = _.union.apply(_,resulttree[key]);
+        $.each(appliedFilters, function(key, values) {
+            resulttree[key] = [];
+            $.each(values, function(i, value) {
+                resulttree[key].push(searchtree[key][value]);
             });
-            var keyresults = [];
-            $.each(resulttree, function(index, val) {
-                keyresults.push(val);
-            });
-            // keyresults is the list of results for the unique key, now just merge them so only the ones appearing in all subresults are in the final list
-            models = _.intersection.apply(_, keyresults); // <3 underscore.js
-            // for the moment we only want vehicles to be displayed, not the individual configurations
-            if(showVehicles){
-                models = _.filter(models,function(name){return name.indexOf('\\') == -1;});
-            }else{
-                models = _.filter(models,function(name){return name.indexOf('\\') != -1;});
-            }
-            
-
-        }else{ // We don't need to filter, just get all the vehicles
-            if(showVehicles){
-                models = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') == -1;});
-            }else{
-                models = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') != -1;});
-            }
-            
+            // merge the array
+            resulttree[key] = _.union.apply(_,resulttree[key]);
+        });
+        var keyresults = [];
+        $.each(resulttree, function(index, val) {
+            keyresults.push(val);
+        });
+        // keyresults is the list of results for the unique key, now just merge them so only the ones appearing in all subresults are in the final list
+        result = _.intersection.apply(_, keyresults); // <3 underscore.js
+        // for the moment we only want vehicles to be displayed, not the individual configurations
+        if(!configurations){
+            result = _.filter(result,function(name){return name.indexOf('\\') == -1;});
+        }else{
+            result = _.filter(result,function(name){return name.indexOf('\\') != -1;});
         }
+    }else{ // We don't need to filter, just get all the vehicles
+        if(!configurations){
+            result = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') == -1;});
+        }else{
+            result = _.filter(_.keys(vehicleinfo),function(name){return name.indexOf('\\') != -1;});
+        } 
+    }
+    return result;
+}
+
+    function renderModels(){
+        var models = getResults(false);
 
         // Now render
         vehiclePanel.empty();
@@ -752,11 +781,12 @@ var VehicleChooser = (function(){
     }
 
     function addFilter(key, value){
+        console.log("FILTER ADDDDDDDDDDDDDDDDDDDDDDDDED");
         if(!(key in appliedFilters)){
             appliedFilters[key] = [];
         }
         appliedFilters[key].push(value);
-        renderModels();
+        updateResults();
     }
 
     function removeFilter(key, value){
@@ -764,7 +794,7 @@ var VehicleChooser = (function(){
         if(appliedFilters[key].length === 0){
             delete appliedFilters[key];
         }
-        renderModels();
+        updateResults();
     }
 
     function setColor(color){
