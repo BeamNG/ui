@@ -32,6 +32,11 @@
     <script src="js/utils.js"></script>
     <script src="js/dialogs.js"></script>
 
+    <script src="js/propertygrid.js"></script>
+    <script src="js/options.js"></script>
+    <link rel="stylesheet" href="css/propertygrid.css">
+
+
     <script src="js/minimal.js"></script>
 
     <!-- polymer elements -->
@@ -69,8 +74,10 @@
 </div>
 
 <div class="menu-content">
+<input type="button" data-rel="close" value="Options" data-mini="true" onclick="initOptions('#pg_wrapper_play');">
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
     <h3>Vehicles</h3>
+
 <form>
     <input type="button" value="Spawn new" data-mini="true" onclick="executeGameEngineCode('spawnVehicle();');">
     <input type="button" value="Reset all" data-mini="true" onclick="callSystemLuaFunction('objectBroadcast(\'obj:requestReset(RESET_PHYSICS)\')');">
@@ -236,12 +243,15 @@ function changeBullettime(v) {
 
 </div>
 
-
 </div><!-- /page -->
+
+<div id="pg_wrapper_play" class="pg_wrapper_play">   
+</div>
 
 <div class="physics-disabled"></div>
 </body>
 
 <script src="js/beamng.js"></script>
 <script src="js/beamng-play.js"></script>
+
 </html>

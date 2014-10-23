@@ -1,0 +1,549 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Da",
+				"Datapoints	(?)"
+			],
+			[
+				"Data",
+				"DataPointLabel	{}"
+			],
+			[
+				"da",
+				"Datapoints"
+			],
+			[
+				"ea",
+				"each(collection, callback)"
+			],
+			[
+				"change",
+				"changeDatapoints"
+			],
+			[
+				"pr",
+				"prototype	{}"
+			],
+			[
+				"Force",
+				"ForceFeedbackGraph()"
+			],
+			[
+				"bottm",
+				"bottomContainer	{}"
+			],
+			[
+				"plot",
+				"plotContainer	{}"
+			],
+			[
+				"ffB",
+				"ffbData	[]"
+			],
+			[
+				"ff",
+				"ffbData	[]"
+			],
+			[
+				"set",
+				"setupGrid()"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"error",
+				"errormessage"
+			],
+			[
+				"render",
+				"renderError"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"mysqli",
+				"mysqli_execute"
+			],
+			[
+				"image",
+				"imageString"
+			],
+			[
+				"c",
+				"css	.css() - multiple"
+			],
+			[
+				"css",
+				"css	.css() - single"
+			],
+			[
+				"res",
+				"resize	.resize"
+			],
+			[
+				"colo",
+				"colorPicker"
+			],
+			[
+				"last",
+				"lastColor"
+			],
+			[
+				"metal",
+				"metallicCheckbox"
+			],
+			[
+				"mod",
+				"model"
+			],
+			[
+				"CHOOSE",
+				"choosen"
+			],
+			[
+				"slide",
+				"slideDown	.slideDown()"
+			],
+			[
+				"click",
+				"click	click"
+			],
+			[
+				"reset",
+				"resetBrand"
+			],
+			[
+				"model",
+				"modelPosition"
+			],
+			[
+				"fillC",
+				"fillConfigurationPanel"
+			],
+			[
+				"clic",
+				"click	click"
+			],
+			[
+				"appen",
+				"appendTo	.appendTo()"
+			],
+			[
+				"main",
+				"mainDiv"
+			],
+			[
+				"conf",
+				"config"
+			],
+			[
+				"cho",
+				"choosen"
+			],
+			[
+				"each",
+				"each	$.each()"
+			],
+			[
+				"appe",
+				"appendTo	.appendTo()"
+			],
+			[
+				"find",
+				"findBrand"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"whee",
+				"wheelRows"
+			],
+			[
+				"whe",
+				"wheelRows"
+			],
+			[
+				"wheel",
+				"wheelRows"
+			],
+			[
+				"rea",
+				"ready	$(document).ready"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "function gForcesList() {}\n\ngForcesList.prototype.initialize = function(){\n    this.labelDiv = $('<div></div>').appendTo(this.rootElement).addClass('labelDiv');\n    this.gDiv = $('<div class=\"gdiv\"></div>').appendTo(this.rootElement).addClass('gDiv');\n    this.tableG = $('<table><thead><tr><th> <b>G-Forces | Time</b> </th></tr></thead><tbody id=\"gtable\"><tr></tr></tbody></table>').appendTo(this.rootElement).addClass('gTable');\n	this.setup();\n	};\n\ngForcesList.prototype.setup = function(){\n	var pRevious = 1;\n};	\nfunction appendToTableG (gdata) {\n    $('#gtable tr:first').before('<tr style=\"text-align:right;\"> <td style=\"text-align:center;\"> ' + gdata[0] + ' </td> <td> ' + gdata[1] + ' </td></tr> ');\n};\n	\ngForcesList.prototype.update = function (streams) {\n    //convert to G\n    var gForces = {};\n    $.each(streams.sensors, function(index, val) {\n        gForces[index] = val / 9.81;\n    });\n	var gForcesFull = ((gForces.gx+gForces.gy+gForces.gz));\n	var gForcesRound = ((gForcesFull.toFixed(2)));\n	this.labelDiv.html(\"G-Forces\");\n    this.gDiv.html(rSet(Math.abs(gForcesRound), 6, \"0\"));\n\n    if ( pRevious > gForcesRound ) {appendToTableG([(Math.abs(gForcesRound).toFixed(2)), \"0\"])	};\n	\n\n	var pRevious = (Math.abs(gForcesRound));\n};\n",
+			"file": "/C/Users/mick/AppData/Local/Temp/Temp1_gForcesList.zip/gForcesList/app.js",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 1243,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/mick/Desktop/SS-Backup/Messages/Messages_20141020_022346.vmg",
+			"settings":
+			{
+				"buffer_size": 2096114,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 58.0,
+		"selected_items":
+		[
+			[
+				"ssjso",
+				"Set Syntax: JSON"
+			],
+			[
+				"pcip",
+				"Package Control: Install Package"
+			],
+			[
+				"pcr",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/beamng-svn/game/html",
+		"/C/beamng-svn/game/html/css"
+	],
+	"file_history":
+	[
+		"/C/Users/mick/Desktop/SS-Backup/Messages/Messages_20141020_023458.vmg",
+		"/C/Python34/Lib/http/server.py",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_Assignment.zip/MajorAssignment/collections.txt",
+		"/C/Python34/Lib/datetime.py",
+		"/C/beamng-svn/game/html/css/dialogs.css",
+		"/C/beamng-svn/game/html/js/dialogs.js",
+		"/C/beamng-svn/game/lua/guistreams.lua",
+		"/C/beamng-svn/game/html/apps/gForcesDebug/app.js",
+		"/C/beamng-svn/game/html/bbcode_ref.png",
+		"/C/beamng-svn/game/html/apps/TorqueCurve/app.js",
+		"/C/beamng-svn/game/html/apps/ForceFeedbackGraph/app.json",
+		"/C/beamng-svn/game/html/apps/ForceFeedbackGraph/app.js",
+		"/C/beamng-svn/game/html/mainmenu.html",
+		"/C/beamNG/colortest/test.html",
+		"/C/beamng-svn/game/html/js/propertygrid.js",
+		"/C/beamng-svn/game/html/options.html",
+		"/C/beamng-svn/game/scripts/client/beamng_cef.cs",
+		"/C/beamng-svn/game/html/apps/SimpleSteering/app.js",
+		"/C/beamng-svn/game/html/apps/ForceFeedback/app.js",
+		"/C/Users/mick/AppData/Local/Temp/scp51076/delete_account.php",
+		"/C/Users/mick/AppData/Local/Temp/scp06427/5435783458735add_acc.php",
+		"/C/Users/mick/Desktop/youknowwhatsinthere/celeb-downloader.py",
+		"/C/Users/mick/Dropbox/trololo/passwordgrabber/delete_account.php",
+		"/C/Users/mick/Dropbox/trololo/passwordgrabber/5435783458735add_acc.php",
+		"/C/Users/mick/Dropbox/trololo/passwordgrabber/5435783458735add_usr.php",
+		"/C/Users/mick/Dropbox/trololo/Neues Textdokument.txt",
+		"/C/Users/mick/Sync/privat/dokumente/beamng/flowgraph/js/flow.js",
+		"/C/beamng-svn/game/html/js/app.js",
+		"/C/Users/mick/Sync/beamNG/Vasilis' Stuff/u_suk_fag.txt",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_bgrins-spectrum-1.4.1-0-gb95811d.zip/bgrins-spectrum-b95811d/themes/sp-dark.css",
+		"/C/Users/mick/Dropbox/Public/vehiclechooser/chooser.html",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_bgrins-spectrum-1.4.1-0-gb95811d.zip/bgrins-spectrum-b95811d/spectrum.css",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_bgrins-spectrum-1.4.1-0-gb95811d.zip/bgrins-spectrum-b95811d/spectrum.jquery.json",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_bgrins-spectrum-1.4.1-0-gb95811d.zip/bgrins-spectrum-b95811d/spectrum.js",
+		"/C/beamng-svn/game/html/play.html",
+		"/C/Users/mick/Documents/beamng/drive/game/torque3d.log",
+		"/C/Program Files (x86)/Steam/SteamApps/common/BeamNG.drive/html/js/dialogs.js",
+		"/C/Users/mick/Documents/beamñg/drive/game/torque3d.log",
+		"/C/Users/mick/Documents/beamng/drive/game/torque3d-input.log",
+		"/C/beamng-svn/game/torque3d.log",
+		"/C/beamng-svn/game/shaders/procedural/3a6a92566df007a5_P.hlsl",
+		"/C/Program Files (x86)/Steam/SteamApps/common/Sacred 2 Gold/Readme.txt",
+		"/C/beamng-svn/game/html/apps/Messages/app.js",
+		"/C/beamng-svn/game/html/loading.html",
+		"/C/beamng-svn/game/html/js/beamng.js",
+		"/C/beamng-svn/game/html/apps/WheelsDebug/app.js",
+		"/C/beamng-svn/game/html/apps/WeightDistribution/app.js",
+		"/C/Users/mick/Documents/phildouche.txt",
+		"/C/Users/mick/AppData/Local/Temp/data.json.txt",
+		"/C/Users/mick/Dropbox/MIrcoTimo/ameisen-ohne balken/Anzeigefeld$GrafikobjektStellvertreter.class",
+		"/C/beamng-svn/game/html/css/app.css",
+		"/C/Users/mick/Dropbox/rgl/untitled.txt",
+		"/C/Users/mick/Dropbox/beamng + other shit.txt",
+		"/C/Users/mick/Dropbox/beamng.gui/progressreports/Gui Progressreport current.txt",
+		"/C/Users/mick/Dropbox/beamng.gui/progressreports/Gui Progressreport.txt",
+		"/C/Users/mick/Downloads/OneclickrecoveryV0.4.2/NOTE ABOUT TWRP.txt",
+		"/C/Users/mick/Downloads/OneclickrecoveryV0.4.2/Readme.txt",
+		"/C/Users/mick/Sync/privat/pw.txt",
+		"/C/beamng-svn/game/lua/vehicle/input.lua",
+		"/C/SpiderBasic/SDK/DocMaker/Readme.txt",
+		"/C/Users/mick/Sync/checkerordner/lsg.txt",
+		"/C/Users/mick/Sync/checkerordner/jo.txt",
+		"/C/Users/mick/AppData/Local/Temp/Temp2_AnalogGaugePack.zip/html/apps/NeedleTachometer/app.js",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_SkinSelector_v0.1.zip/SkinSelector/app.js",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_AnalogGaugePack.zip/html/apps/NeedleFuel/app.js",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_AnalogGaugePack.zip/html/apps/NeedleTachometer/app.js",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_AnalogGaugePack.zip/html/apps/NeedleTachometer/app.css",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_hudmap_1.2.zip/html/apps/hudmap/app.js",
+		"/C/beamng-svn/game/html/js/messages.js",
+		"/C/Users/mick/AppData/Local/Temp/scp19920/home/pi/ets2mppicture.py",
+		"/C/Users/mick/AppData/Local/Temp/scp11981/home/pi/test.sh",
+		"/C/beamNG/ui/.git/hooks/commit-msg.sample",
+		"/C/Spiele/beamng/iota/readme.txt",
+		"/C/Users/mick/Documents/commits_by_month.dat",
+		"/C/Spiele/BeamNG/update.log",
+		"/C/Spiele/serial.txt",
+		"/C/Spiele/BeamNG/html/js/beamng-play.js",
+		"/C/Spiele/BeamNG/html/js/beamng.js",
+		"/C/Spiele/BeamNG/html/css/app.css",
+		"/C/beamng-svn/game/html/apps/DebugApp/app.js",
+		"/C/beamng-svn/game/levels/menu/menu_438eec03.ml",
+		"/C/Spiele/BeamNG/html/apps/gForcesDebug/app.js",
+		"/C/Users/mick/Desktop/hotline.txt",
+		"/C/Spiele/BeamNG/html/apps/Debug/app.css",
+		"/C/Spiele/BeamNG/html/apps/Debug/app.js",
+		"/C/Spiele/BeamNG/html/apps/Debug/app.json",
+		"/C/Spiele/BeamNG/html/css/beamng.css",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_noty-2.2.4.zip/noty-2.2.4/js/noty/jquery.noty.js",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_noty-2.2.4.zip/noty-2.2.4/js/noty/packaged/jquery.noty.packaged.js",
+		"/C/Users/mick/AppData/Local/Temp/Temp1_noty-2.2.4.zip/noty-2.2.4/js/noty/packaged/jquery.noty.packaged.min.js",
+		"/C/Users/mick/Dropbox/beamng.gui/progressreports/Gui Progressreport 15.05.txt",
+		"/C/Spiele/BeamNG/vehicles/barrels/barrels.jbeam",
+		"/C/Spiele/BeamNG/html/js/app.js",
+		"/C/Users/mick/Downloads/NodeBeamEditor_026/arguments/beams/steering.txt",
+		"/C/Users/mick/Downloads/NodeBeamEditor_026/debug.log",
+		"/C/Spiele/BeamNG/vehicles/test/test.jbeam",
+		"/C/Spiele/BeamNG/html/streams.txt",
+		"/C/Spiele/BeamNG/html/js/jquery.flot.js",
+		"/C/Spiele/BeamNG/html/apps/EngineDebug/app.js",
+		"/C/Users/mick/workspace/Bruchrechner/src/test/Tester.java"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"PHOTO;ENCODING=BASE64;.*",
+			"PHOTO;ENCODING=BASE64;",
+			"this.ffbDatapoints",
+			"this.data",
+			"AppStore",
+			"fillMode",
+			"setBrand",
+			"fillC",
+			"hide()",
+			"hide",
+			".css",
+			"();\n",
+			"val",
+			"style",
+			"key",
+			"refpoint"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"this.Datapoints",
+			"this.ffbData"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/mick/AppData/Local/Temp/Temp1_gForcesList.zip/gForcesList/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1243,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1239,
+								1198
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/mick/Desktop/SS-Backup/Messages/Messages_20141020_022346.vmg",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2096114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								609,
+								609
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "ui-project.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"app.js",
+				"C:\\Spiele\\BeamNG\\html\\js\\app.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 222.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,28 +1,10 @@
-.propertyGridContainer
-{
-    width: 100%;
-    font-size: 11px;
-    font-family: arial;
-    border-collapse:collapse;
-    border-spacing:0px;
-}
 
-.propertyGridContainer td {
-    vertical-align:middle;
-    padding:0px;
-    margin:0px;
-}
-.propertyGridContainer tr {
-    vertical-align:middle;
-    padding:0px;
-    margin:0px;
-}
 .pgGroupItem
 {
     width: auto;
     height: 20px;
     padding: 0px 0px 0px 7px;
-    border-left: 17px solid lightgray;
+    border-left: 17px solid rgba(211,211,211, 0.9);     /* lightgray */
     border-bottom: 1px solid #EAEBED;
     border-width: 0px;
 }
@@ -32,27 +14,33 @@
     padding:2px !important;
     font-weight: bold;
     vertical-align: middle;
+    border-top:1px solid #999;
+    min-width: 100px;
+    background-color: rgba(221,221,221, 0.9);     /* whitesmoke */
 }
 
 .pgInputHolder
 {
-    background-color: whitesmoke;
+    background-color: rgba(245,245,245, 0.9);     /* whitesmoke */
     width: 100px;
     border-left:1px solid #eaebed;
+    border-top:1px solid #999;
+    text-align:right;
 }
 
 .pgGroup
 {
     width: auto;
 }
+
 .pgGroupTitle {
     border-bottom: 1px solid #EAEBED;
-    background-color: #C1D2EE;
+    background-color: rgba(192,210,238, 0.9);     /* #C1D2EE */
     cursor: pointer;
 
     font-weight: bold;
     padding: 2px 0px 0px 5px;
-    font-size: 1.2em;
+    /*font-size: 1.2em;*/
 }
 
 .pgPlus
@@ -74,7 +62,7 @@
 
 .pgSpacer
 {
-    background-color:lightgray;
+    background-color:rgba(211,211,211, 0.9);     /* lightgray */
     width:16px;
     min-width:16px;
     max-width:16px;
@@ -96,10 +84,10 @@
 
 .pgInputHolder select
 {
-    /* width: 100px; */
+    width: 100%;
     border-width: 0px;
     height: 20px;
-    background-color: whitesmoke;
+    background-color: rgba(245,245,245, 0.9);     /* whitesmoke */
     padding: 2px 0px 0px 2px;
     outline: none;
     border: none;
@@ -108,7 +96,7 @@
 
 .regular-checkbox {
     -webkit-appearance: none;
-    background-color: #fafafa;
+    background-color: rgba(250,250,250,0.9);     /* #fafafa */
     border: 1px solid #cacece;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
     padding: 6px;
@@ -122,14 +110,14 @@
 }
 
 .regular-checkbox:checked {
-    background-color: #e9ecee;
+    background-color: rgba(233,236,238,0.9);     /* #e9ecee */
     border: 1px solid #adb8c0;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
     color: #99a1a7;
 }
 .regular-checkbox:checked:after {
     content: '\2714';
-    font-size: 10px;
+    /*font-size: 10px;*/
     position: absolute;
     top: 0px;
     left: 3px;
@@ -137,9 +125,15 @@
 }
 /********************************************/
 
-#pg1
+.pg
 {
-    overflow: auto;
+    /* width:100%; BUG with 1px border invisible on the right :/ */ 
+    width:100%;
+    background-color:rgba(221,221,221,0.9);     /* #ddd */
+    border:1px solid #555;
+    padding:0;
+    margin:0;
+    font-size:8pt !important;
 }
 
 
@@ -155,7 +149,7 @@
 .pgSubGroup
 {
     width: auto;
-    background-color: #EAEBED;
+    background-color: rgba(234,235,237, 0.9);     /* #EAEBED */
     height: 20px;
     padding: 0px;
     cursor: pointer;
@@ -172,7 +166,7 @@
     width:100%;
     font-weight: bold;
     padding: 2px 0px 0px 5px;
-    font-size: 11px;
+    /* font-size: 11px; */
     vertical-align: middle;
 }
 
@@ -199,7 +193,7 @@
     width: 79px;
     border-width: 0px;
     height: 18px;
-    background-color: whitesmoke;
+    background-color: rgba(245,245,245, 0.9);     /* whitesmoke */
     padding: 2px 0px 0px 2px;
 }
 
@@ -208,7 +202,7 @@
     width: 100px;
     border-width: 0px;
     height: 18px;
-    background-color: whitesmoke;
+    background-color: rgba(245,245,245, 0.9);     /* whitesmoke */
     padding: 2px 0px 0px 2px;
 }
 .pgBtnColor
@@ -221,4 +215,92 @@
     background-image: url('../images/bkCpicker.png');
     background-repeat: no-repeat;
     cursor: pointer;
+}
+
+.pg input[type=range]{
+    -webkit-appearance: none;
+    width:100%;
+    min-width: 100px;
+}
+
+.pg input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+
+.pg input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 13px;
+    width: 6px;
+    background: #555;
+    border:1px solid #222;
+    margin-top:-4px;
+}
+
+.pg input[type=range]:focus {
+    outline: none;
+}
+
+.pg input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+.pg_wrapper {
+    width:100%;
+    background-color:rgba(221,221,221,0.9);     /* #ddd */
+    padding:30px;
+}
+
+.pg_wrapper_play {
+    width:350px;
+    position: fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    display:none;
+    margin:0;
+
+    z-index:5100; /* make sure its before all the UI dashboard apps */
+}
+
+.pg td {
+    vertical-align:middle;
+    padding:0px;
+    margin:0px;
+}
+.pg tr {
+    vertical-align:middle;
+    padding:0px;
+    margin:0px;
+}
+
+.pg label {
+    font-size:10pt;
+    display:inline;
+}
+
+.propertyGridContainer
+{
+    width: 100%;
+    font-size: 11px;
+    font-family: arial;
+    border-collapse:collapse;
+    border-spacing:0px;
+}
+
+.propertyGridContainer td {
+    vertical-align:middle;
+    padding:0px;
+    margin:0px;
+}
+.propertyGridContainer tr {
+    vertical-align:middle;
+    padding:0px;
+    margin:0px;
 }
