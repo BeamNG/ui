@@ -607,7 +607,11 @@ var VehicleChooser = (function(){
         }
         // Colorpart
         selector.append("<h2>Color</h2>");
-        colorPicker = $("<input></input>").appendTo(selector).spectrum({
+        var colorContainer = $('<div></div>').appendTo(selector).css({
+            float: "left",
+            margin: "2px"
+        });
+        colorPicker = $("<input></input>").appendTo(colorContainer).spectrum({
             flat: true,
             showAlpha: true,
             showButtons: false,
@@ -616,7 +620,7 @@ var VehicleChooser = (function(){
         $(colorPicker).on("dragstop.spectrum", function(e, color) {
             setColor(color);
         });
-        colorVisualizer = $("<div></div>").colorWidget({color:"red",size:200}).appendTo(selector);
+        colorVisualizer = $("<div></div>").colorWidget({color:"red",size:200}).appendTo(colorContainer);
         // now get the last used colors
         if(localStorage.bngVehicleSelectorColors && localStorage.bngVehicleSelectorColors.length > 0){
             lastUsedColors = JSON.parse(localStorage.bngVehicleSelectorColors);
@@ -761,12 +765,10 @@ var VehicleChooser = (function(){
     }
     
     function convertColor(torqueColor){
-        console.log('converting color: '+torqueColor);
         if(torqueColor == 'InvisibleBlack'){
             torqueColor = "0 0 0 0";
         }
         var components = torqueColor.split(' ');
-        console.log(components);
         return tinycolor("rgba ("+(components[0]*255 |0)+", "+(components[1]*255 |0)+", "+(components[2]*255 |0)+", "+(components[3]*0.5)+")");
     }
     
