@@ -75,6 +75,15 @@
 
 <div class="menu-content">
 <input type="button" data-rel="close" value="Options" data-mini="true" onclick="initOptions('#pg_wrapper_play');">
+
+<script>
+function btnPartConfigTest() {
+    callLuaFuncCallback('partmgmt.getConfig()', function(res) { console.log("lua result: "); console.log(res); });
+}
+</script>
+<input type="button" value="Part Config (WIP)" data-mini="true" onclick="btnPartConfigTest(); return false;" style="z-index:5555;">
+
+
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
     <h3>Vehicles</h3>
 

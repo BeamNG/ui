@@ -15,14 +15,16 @@
     <script src="js/options.js"></script>
     <link rel="stylesheet" href="css/propertygrid.css">
 
+    <link rel="stylesheet" href="css/spectrum.css">
+    <script src="js/spectrum.js"></script>
 
 </head>
-<body style="overflow-y:scroll">
+<body style="overflow-y:scroll;background-color:#ddd !important;">
 
 <button class="cefdev" onclick="javascript:location.reload();" style="width:60px;height:20px;position:absolute;right:0px;bottom:0px;margin:0;padding:0;">ReloadUI</button>
 <button class="cefdev" onclick="sendTestData();" style="width:60px;height:20px;position:absolute;right:60px;bottom:0px;margin:0;padding:0;">TEST</button>
 
-<div id="pg_wrapper" class="pg_wrapper">
+<div id="pg_wrapper_fullscreen" class="pg_wrapper_fullscreen">
     
 </div>
 
@@ -30,7 +32,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    initOptions('#pg_wrapper');
+    initOptions('#pg_wrapper_fullscreen');
 });
 </script>
 

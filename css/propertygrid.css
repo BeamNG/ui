@@ -249,22 +249,24 @@
     background: #ccc;
 }
 
-.pg_wrapper {
-    width:100%;
-    background-color:rgba(221,221,221,0.9);     /* #ddd */
+.pg_wrapper_fullscreen {
+    width:50%;
     padding:30px;
+    overflow-y:auto;
+    overflow-x:hidden;
 }
 
 .pg_wrapper_play {
     width:350px;
     position: fixed;
-    top:0;
-    left:0;
-    bottom:0;
+    top:10px;
+    left:10px;
+    bottom:50px;
     overflow-y:auto;
     overflow-x:hidden;
     display:none;
     margin:0;
+    padding-right: 2px;
 
     z-index:5100; /* make sure its before all the UI dashboard apps */
 }

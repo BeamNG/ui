@@ -327,12 +327,20 @@ $.widget("beamNG.appButton", {
 
 $(document).ready(function() {
 //    console.log('getting Applist from Backend:');
+    AppengineStartup();
+});
+
+function AppengineStartup(){
+    if (cefcontext == -1){
+        setTimeout("AppengineStartup()",50);
+        return;
+    }
     callGameEngineFuncCallback("getAppList()", function(res){
 //        console.log('got: '+JSON.stringify(res));
         AppLoader.installedApps = res;
         AppLoader.initialize();
     });
-});
+}
 
 
 // Appengine ------------------------------------------------------

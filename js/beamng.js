@@ -194,7 +194,7 @@ function callGameEngineFuncCallback(func, callback)
 {
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+', \'" @ strreplace('+func+',"\'","\\\\\'") @ "\')", 0);';
+    var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+',\'" @ strreplace('+func+',"\'","\\\\\'") @ "\')",'+cefcontext+');';
     beamng.sendGameEngine(commandString);
 }
 
@@ -203,7 +203,7 @@ function callLuaFuncCallback(func, callback)
 {
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+", ' .. encodeJson("+func+") ..')')";
+    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..')',"+cefcontext+")";
     beamng.sendActiveObjectLua(commandString);
 }
 
@@ -211,7 +211,7 @@ function callSystemLuaFuncCallback(func, callback)
 {
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+", ' .. encodeJson("+func+") ..')')";
+    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..')',"+cefcontext+")";
     beamng.sendSystemLua(commandString);
 }
 

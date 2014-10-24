@@ -12,6 +12,7 @@ function BeamNGPropertyGrid(givenData) {
 
     BeamNGPropertyGrid.prototype.init = function () {
         instance.work();
+        $('.pgPlus').next('tr').toggle();
 
         $('.propertyGridContainer .pgGroupTitle').on("click", function() {
             $(this).children('td').toggleClass('pgPlus pgMinus');
@@ -111,6 +112,13 @@ function BeamNGPropertyGrid(givenData) {
             PGBool.prototype.set    = function(v)   { $(this.selector).prop('checked', v); };
             PGBool.prototype.create = function()    { return '<input type="checkbox" name="' + d.path + '" id="' + d.path + '">'; }; // class="regular-checkbox"
         },
+        'color' : function PGColor(d) {
+            this.selector = '#' + escapeJQuerySelector(d.path);
+            PGColor.prototype.get    = function()    { return $(this.selector).val(); };
+            PGColor.prototype.set    = function(v)   { $(this.selector).val(v); };
+            PGColor.prototype.create = function()    { return '<input type="text" name="' + d.path + '" id="' + d.path + '">'; };
+            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({showInput: true, allowEmpty:false, showAlpha:true}); };
+        },
         'enable' : function PGEnable (d) {
             this.selector = '#' + escapeJQuerySelector(d.path);
             PGEnable.prototype.get    = function()    { return $(this.selector).prop('checked'); };
@@ -152,7 +160,7 @@ function BeamNGPropertyGrid(givenData) {
         },
         'button' : function PGButton (d) {
             this.selector ='#' + escapeJQuerySelector(d.path);
-            this.has_commands = true
+            this.has_commands = true;
             PGButton.prototype.create = function()  { return '<input type="button" id="' + d.path + '" value="' + d.name + '">';};
         }
     };
@@ -199,7 +207,14 @@ function BeamNGPropertyGrid(givenData) {
             if(d.name) {
                 var title = buildSingleOptionLines(d, "top");
                 usageElements[d.path] = d;
-               res += '</table><table border="0" class="propertyGridContainer"><tr class="pgGroupTitle"><td colspan="3" class="pgMinus" id="' + d.path + '">' + d.name + title + '</td></tr><tr>'+spacetd+'<td colspan="2"><table border="0" class="propertyGridContainer">\n';
+                res += '</table><table border="0" class="propertyGridContainer"><tr class="pgGroupTitle"><td colspan="3"' 
+                if(typeof data.collapsed != "undefined" && !data.collapsed) {
+                    res += 'class="pgMinus"';
+                } else {
+                    res += 'class="pgPlus"';
+                    console.log("test");
+                }
+                res += 'id="' + d.path + '">' + d.name + title + '</td></tr><tr>'+spacetd+'<td colspan="2"><table border="0" class="propertyGridContainer">\n';
             }
             for(var k in d.childs) {
                 d.childs[k].id = k; // always assign the id
@@ -236,13 +251,17 @@ function BeamNGPropertyGrid(givenData) {
         }
 
         if(level == 0)
-            res += '</table>';
+            res += '</table><input type="button" value="Close" style="position:fixed" onClick="'+data.rootElement.html("")+'" />';
 
         return res;
     };
 
     BeamNGPropertyGrid.prototype.setDefaultValuesAndListeners = function() {
         $.each(optionsElements, function(key, d) {
+
+            if(typeof d.ctrl.init == "function") {
+                d.ctrl.init();
+            }
             d.ctrl.set(d.valOrig);
 
             if(d.type == "slider") {
@@ -251,7 +270,7 @@ function BeamNGPropertyGrid(givenData) {
                     onValueChanged(d.ctrl, d);
                     // this seems to work surprisingly well, even if no label is defined:
                     document.getElementById(d.path + '.label').textContent = parseFloat(this.value).toFixed(1); // TODO: find out if we need 2 places behind the comma
-             };
+                };
             } else {
                 // onInput function seems not to affect checkboxes and selects
                 $(d.ctrl.selector)[0].onchange = function() { 
@@ -320,14 +339,4 @@ function BeamNGPropertyGrid(givenData) {
         });
         */
     };
-/*
-    //From here on it's debugging purpose
-    BeamNGPropertyGrid.prototype.getCtrl = function() {
-        return optionsElements;
-    };
-
-    BeamNGPropertyGrid.prototype.getData = function() {
-        return data;
-    };
-*/
 }
