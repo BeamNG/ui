@@ -1114,11 +1114,7 @@ var KeyManager = {
         DebugManager.nextDebug();
     },
     ku32: function(modifiers){
-        if(modifiers.ctrl){
-            VehicleChooser.open();
-        }else{
-            VehicleChooserOld.open();
-        }
+        VehicleChooser.open();
         
     },
     ku112: function(){

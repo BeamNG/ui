@@ -1,329 +1,3 @@
-var VehicleChooserOld = (function(){
-    'use strict';
-
-    var mainDiv;
-    var breadcrumb, selector, buttonarea, stepOneButton, stepBackButton, applyButton;
-    var vehicles;
-
-    var states = ["Brand","Model","Configuration","Color"];
-    var state = 0;
-
-    var Brands = ["Gavril","Bruckell","Ibishu","Civetta","Hirochi","Other"]; // We need some way to add/load Brands here dynamically
-    var brandCars = {};
-
-    var choosen = {};
-    var choosenReadable = {};
-
-    var colorPicker;
-    var lastUsedColors;
-
-    var firstRun = true;
-
-    var defaultColor = '0.5 0 0 1.001';
-
-    var vehiclePanelData;
-    var configurationsPanel;
-
-
-    function init(){
-        mainDiv = $("<div></div>").appendTo($("body")).attr('id', 'vehiclechooser');
-        mainDiv.dialog({
-            title: "Vehicle Selector",
-            width: $(window).width()-70,
-            height: $(window).height()-70,
-            beforeClose : function(event, ui){
-                close();
-                return false;
-            },
-            resizable: false,
-            draggable: false,
-            closeOnEscape: true
-        });
-        breadcrumb = $("<div>Brand</div>").appendTo(mainDiv).addClass('breadcrumb');
-        selector = $("<div></div>").appendTo(mainDiv).addClass('selector');
-        buttonarea = $("<div></div>").appendTo(mainDiv).addClass('buttonarea').hide();
-
-        stepOneButton = $("<a><<</a>").appendTo(buttonarea).css({
-            background: 'grey'
-        }).addClass('simplebutton').click(function(event) {
-    		setState(0);
-        });
-
-        stepBackButton = $("<a><</a>").appendTo(buttonarea).css({
-            background: 'gray'
-        }).addClass('simplebutton').click(function(event) {
-    		setState(state-1);
-        });
-
-        applyButton = $("<a>Apply</a>").appendTo(buttonarea).css({
-            background: 'green',
-            display: 'none'
-        }).addClass('simplebutton').click(function() {
-        	try{
-        		setColor(colorPicker.spectrum("get", 'color'));
-        	}catch(e){}
-        	if(choosen.Color == 'InvisibleBlack' || choosen.Color === ''){
-        		choosen.Color = defaultColor;
-        	}
-        	console.log('spawning: '+JSON.stringify(choosen));
-            beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+choosen.Configuration+'", "'+choosen.Color+'");');
-            firstRun = false;
-            close();
-        });
-
-        $(window).keyup(function(event) {
-        	if(event.which == 8 && state>0 && mainDiv.is(':visible')){
-        		setState(state-1);
-        	}
-        });
-
-        close();
-    }
-
-    function findBrand(name){
-        for (var i = 0; i < Brands.length; i++) {
-            if(name.indexOf(Brands[i]) === 0){
-                return Brands[i];
-            }
-        }
-        return "Other";
-    }
-
-    function fillBrandPanel(){
-        var BrandButtons = Brands.slice();
-            BrandButtons.unshift("All");
-            $.each(BrandButtons, function(index, brand) {
-                var amount = 0;
-                if(brand == "All"){
-                    $.each(brandCars, function(index, val) {
-                        amount += val.length;
-                    });
-                }else{
-                    amount = brandCars[brand].length;
-                }
-                // generate imagearray
-                var imgArr = ["/vehicles/common/brand_"+brand+".png"];
-                if(brandCars[brand]){
-                    $.each(brandCars[brand], function(index, val) {
-                         imgArr.push("/vehicles/"+val+"/brand_"+brand+".png");
-                    });
-                }
-                $("<div></div>").appendTo(selector).bigButton({
-                    title:brand,
-                    clickAction: function(){
-                        setBrand(brand);
-                    },
-                    smallTitle : amount + " Vehicle" + (amount>1 ? "s" : ""),
-                    images : imgArr
-                });
-            });
-    }
-
-    function fillModelPanel(){
-        $.each(vehicles, function(index, val) {
-            if(val.brand == choosen.Brand || choosen.Brand == "All"){
-                $("<div></div>").appendTo(selector).bigButton({
-                    title: val.name,
-                    clickAction: function(){
-                        setModel(index);
-                    },
-                    images: ["/vehicles/"+index+"/default.png"]
-                });
-            }
-        });
-    }
-
-    function fillConfigurationPanel(){
-        var configsExist = _.size(vehicles[choosen.Model].configs) > 1;
-        $.each(vehicles[choosen.Model].configs, function(index, val) {
-            if(configsExist && val.name == 'Default')
-                return;
-            $("<div></div>").appendTo(selector).bigButton({
-                title: val.name,
-                clickAction: function(){
-                    setConfiguration(index);
-                },
-                images: ["/vehicles/"+choosen.Model+"/"+index+".png", "/vehicles/"+choosen.Model+"/default.png"]
-            });            
-        });
-    }
-
-    function fillColorPanel(){
-        colorPicker = $("<input></input>").appendTo(selector).spectrum({
-            flat: true,
-            showAlpha: true,
-            showButtons: false,
-            color: convertColor(defaultColor)
-        });
-        $(colorPicker).on("dragstop.spectrum", function(e, color) {
-            setColor(color);
-        });
-    }
-
-    function setBrand(Brand){
-        choosen.Brand = Brand;
-        choosenReadable.Brand = Brand;
-        setState(1);
-    }
-
-    function setModel(Model){
-        choosen.Model = Model;
-        choosenReadable.Model = vehicles[Model].name;
-
-        if(_.size(vehicles[Model].configs) > 1){
-            setState(2);
-        }else{
-            setConfiguration("");
-        }
-    }
-
-    function setConfiguration(config){
-        choosen.Configuration = vehicles[choosen.Model].configs[config].file;
-        choosenReadable.Configuration = vehicles[choosen.Model].configs[config].name;
-
-        setState(3);
-        colorPicker.spectrum("reflow");
-
-    }
-
-    function setColor(color){
-    	console.log(color);
-    	colorPicker.spectrum("set", color);
-    	colorPicker.spectrum("reflow");
-		var c = color.toRgb();
-		if(c.a == 1){
-			c.a = 1.001;
-		}
-		c.a = Math.max(c.a,0.004);
-        choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
-        console.log(choosen.Color);
-    }
-
-    function convertColor(torqueColor){
-    	console.log('converting color: '+torqueColor);
-    	if(torqueColor == 'InvisibleBlack'){
-    		torqueColor = "0 0 0 0";
-    	}
-    	var components = torqueColor.split(' ');
-    	console.log(components);
-    	return tinycolor("rgba ("+(components[0]*255 |0)+", "+(components[1]*255 |0)+", "+(components[2]*255 |0)+", "+(components[3]*0.5)+")");
-    }
-
-    function renderBreadcrumb(){
-        breadcrumb.empty();
-        
-        for (var i = 0; i < state; i++) {
-            renderBreadcrumbState(i);
-            breadcrumb.append(" > ");
-        }
-
-        breadcrumb.append(states[state]);
-    }
-
-    function renderBreadcrumbState(i){
-        var currentLink = $("<a></a>").appendTo(breadcrumb);
-        currentLink.html("<span style='color:grey'>"+states[i]+":</span> "+choosenReadable[states[i]]);
-        currentLink.click(function() {
-            setState(i);
-        });
-    }
-
-    function setState(st){
-        state = st;
-        renderBreadcrumb();
-        for (var i = state; i < 4; i++) {
-            choosen[states[i]] = "";
-            choosenReadable[states[i]] = "";
-        }
-        selector.empty();
-
-        switch(st){
-            case 0:
-                fillBrandPanel();
-                break;
-            case 1:
-                fillModelPanel();
-                break;
-            case 2:
-                fillConfigurationPanel();
-                break;
-            case 3:
-                fillColorPanel();
-        }
-        if(state > 1){
-            applyButton.show(100);
-        }else{
-            applyButton.hide(100);
-        }
-        if( state > 0){
-        	buttonarea.show(100);
-        }else{
-        	buttonarea.hide(100);
-        }
-    }
-    
-    function open(reset){
-        breadcrumb.empty();
-        selector.empty();
-
-        callGameEngineFuncCallback("getVehicleList()", function(res){
-            vehicles = res;
-            console.log(vehicles);
-            brandCars = {};
-            $.each(vehicles, function(index, val) {
-                var brand = findBrand(val.name);
-                vehicles[index].brand = brand;
-                if(!brandCars[brand]){
-                    brandCars[brand] = [index];
-                }else{
-                    brandCars[brand].push(index);
-                }
-            });
-
-            if((reset && reset === true) || firstRun === true){
-                setState(0);
-                openFinalize();
-            }else{
-            	callGameEngineFuncCallback("getVehicle()", function(res){
-            		console.log(res);
-            		setBrand(vehicles[res.model].brand);
-            		setModel(res.model);
-            		var config = "";
-            		$.each(vehicles[res.model].configs, function(index, val) {
-            			if(val.file == res.configuration){
-            				config = index;
-            				return;
-            			}
-            		});
-            		setConfiguration(config);
-            		openFinalize();
-            		setColor(convertColor(res.color));
-            	});
-            }
-        });
-    }
-
-    function openFinalize(){
-        mainDiv.parent().show();
-        mainDiv.dialog( "moveToTop" );
-    }
-
-    function close(){
-        mainDiv.parent().hide();
-    }
-
-    // run init
-    $(document).ready(function() {
-        init();
-    });
-    // public interface
-    var VehicleChooser = {
-        open: open,
-        close:close
-    };
-    return VehicleChooser;
-}());
-
 var VehicleChooser = (function(){
     'use strict';
 
@@ -343,6 +17,7 @@ var VehicleChooser = (function(){
     var appliedFilters = {};
 
     var choosen = {};
+    var current;
 
     var colorPicker;
     var colorVisualizer;
@@ -350,11 +25,11 @@ var VehicleChooser = (function(){
 
     var firstRun = true;
 
-    var showVehicles = true;
-
     var defaultColor = '0.5 0 0 1.001';
 
     var heading;
+
+    var startupTimer = new Timer('Startup');
 
     function init(){
         mainDiv = $("<div></div>").appendTo($("body")).attr('id', 'vehiclechooser');
@@ -386,22 +61,22 @@ var VehicleChooser = (function(){
             try{
                 setColor(colorPicker.spectrum("get", 'color'));
             }catch(e){}
-            if(!choosen.Color || choosen.Color == 'InvisibleBlack' || choosen.Color === ''){
-                choosen.Color = defaultColor;
+            if(!choosen.color || choosen.color == 'InvisibleBlack' || choosen.color === ''){
+                choosen.color = defaultColor;
             }
             // update the "last used colors"-list
-            lastUsedColors.unshift(choosen.Color);
+            lastUsedColors.unshift(choosen.color);
             lastUsedColors = _.first(_.uniq(lastUsedColors),10);
             console.log(lastUsedColors);
             localStorage.bngVehicleSelectorColors = JSON.stringify(lastUsedColors);
 
             // get configfilename
             var configfile = "";
-            if(choosen.Configuration !== ""){
-                configfile = vehicles[choosen.Model].configs[choosen.Configuration].file;
+            if(choosen.configuration !== ""){
+                configfile = vehicles[choosen.model].configs[choosen.configuration].file;
             }
             console.log('spawning: '+JSON.stringify(choosen));
-            beamng.sendGameEngine('chooseVehicle( "'+choosen.Model+'", "'+configfile+'", "'+choosen.Color+'");');
+            beamng.sendGameEngine('chooseVehicle( "'+choosen.model+'", "'+configfile+'", "'+choosen.color+'");');
             firstRun = false;
             close();
         });
@@ -428,6 +103,7 @@ var VehicleChooser = (function(){
 
     function dataProgress(){
         if(infoLoaderChain.length == 0){
+            startupTimer.point("json loading");
             console.log(vehicleinfo);
             // Everything loaded, now enrich the configs with the info provided by the vehicle
             $.each(vehicleinfo, function(name, data) {
@@ -469,7 +145,7 @@ var VehicleChooser = (function(){
                 });
             });
             console.log(vehicleinfo);
-
+            startupTimer.point('enrich Data');
             // Now build the searchtree
 
             $.each(vehicleinfo, function(vehicle, data) {
@@ -496,6 +172,7 @@ var VehicleChooser = (function(){
                     }
                 });
             });
+            startupTimer.point('build searchtree');
             console.log(searchtree);
 
             // All done, show the dialog now
@@ -549,6 +226,7 @@ var VehicleChooser = (function(){
     }
 
     function renderFilterCriterias(){
+        $('<div class="filterbox filtername">Search:<br><input type="text" /></div>').appendTo(filterPanel);
         $.each(searchtree, function(key, values) {
             if(_.contains(['default_color','colors','default_pc','Name','Configuration'], key)){ // We want specific tags not to show
                 return;
@@ -602,13 +280,13 @@ var VehicleChooser = (function(){
     }
 
     function renderVehicles(){
-        var configsExist = _.size(vehicles[choosen.Model].configs) > 1;
+        var configsExist = _.size(vehicles[choosen.model].configs) > 1;
         var root = vehiclePanel;
         if(!configsExist){
             root = selector;
         }
         root.empty();
-        heading = $("<h1>"+getVehicleName(choosen.Vehicle)+"</h1>").appendTo(root);
+        heading = $("<h1>"+getVehicleName(choosen.vehicle)+"</h1>").appendTo(root);
 
 
         if(configsExist){
@@ -618,21 +296,26 @@ var VehicleChooser = (function(){
             updateConfigs();
         }
         // Colorpart
+        var startColor = defaultColor;
+        if(choosen.color){
+            startColor = choosen.color;
+        }
         root.append("<h2>Color</h2>");
         var colorContainer = $('<div></div>').appendTo(root).css({
             float: "left",
             margin: "2px"
         });
+        colorVisualizer = $("<div></div>").colorWidget({color:convertColor(startColor),size:200}).appendTo(colorContainer);
+        colorContainer.append("<br />");
         colorPicker = $("<input></input>").appendTo(colorContainer).spectrum({
             flat: true,
             showAlpha: true,
             showButtons: false,
-            color: convertColor(defaultColor)
+            color: convertColor(startColor)
         });
         $(colorPicker).on("dragstop.spectrum", function(e, color) {
             setColor(color);
         });
-        colorVisualizer = $("<div></div>").colorWidget({color:"red",size:200}).appendTo(colorContainer);
         // now get the last used colors
         if(localStorage.bngVehicleSelectorColors && localStorage.bngVehicleSelectorColors.length > 0){
             lastUsedColors = JSON.parse(localStorage.bngVehicleSelectorColors);
@@ -642,21 +325,20 @@ var VehicleChooser = (function(){
         }
         
         $.each(lastUsedColors, function(index, color) {
-            console.log(color);
             addColor(convertColor(color));
         });
         // now get the vehicle specific colors
-        if(vehicleinfo[choosen.Model].colors){
+        if(vehicleinfo[choosen.model].colors){
             root.append("<h3>Factorycolors</h3>");
-            $.each(vehicleinfo[choosen.Model].colors[0], function(name, color) {
+            $.each(vehicleinfo[choosen.model].colors[0], function(name, color) {
                 addColor(convertColor(color),name);
             });
         }
     }
 
     function renderConfigs(){
-        var configsExist = _.size(vehicles[choosen.Model].configs) > 1;
-        $.each(vehicles[choosen.Model].configs, function(config, val) {
+        var configsExist = _.size(vehicles[choosen.model].configs) > 1;
+        $.each(vehicles[choosen.model].configs, function(config, val) {
             if(configsExist && val.name == 'Default')
                 return;
             $("<div></div>").appendTo(configurationsPanel).bigButton({
@@ -666,13 +348,13 @@ var VehicleChooser = (function(){
                         $(el).removeClass('selected');
                     });
                     element.addClass('selected');
-                    choosen.Configuration = config;
+                    choosen.configuration = config;
                     console.log(choosen);
-                    heading.text(getVehicleName(choosen.Model+'\\'+choosen.Configuration));
+                    heading.text(getVehicleName(choosen.model+'\\'+choosen.configuration));
                     console.log(config);
                 },
-                images: ["/vehicles/"+choosen.Model+"/"+config+".png", "/vehicles/"+choosen.Model+"/default.png"]
-            }).data('config',choosen.Model+'\\'+config);
+                images: ["/vehicles/"+choosen.model+"/"+config+".png", "/vehicles/"+choosen.model+"/default.png"]
+            }).data('config',choosen.model+'\\'+config);
         });
     }
 
@@ -687,7 +369,7 @@ var VehicleChooser = (function(){
     }
 
     function addColor(color, name){
-        $("<div></div>").appendTo(vehiclePanel).colorButton({
+        var button = $("<div></div>").appendTo(vehiclePanel).colorButton({
             name:name,
             color:color,
             clickAction: function(element){
@@ -698,6 +380,9 @@ var VehicleChooser = (function(){
                 setColor(color);
             }
         });
+        if(name && name == choosen.colorName){
+            button.addClass('selected');
+        }
     }
 
     function getVehicleName(e){
@@ -760,18 +445,37 @@ function getResults(configurations){
 
         // Now render
         vehiclePanel.empty();
+        $("<div></div>").appendTo(vehiclePanel).bigButton({
+                title: "Current Vehicle",
+                clickAction: function(){
+                    choosen = current;
+                    choosen.vehicle = choosen.model
+                    if(choosen.configuration != ""){
+                        choosen.vehicle += "\\" + choosen.configuration;
+                    }
+                    setState(1);
+                },
+                images: ["/vehicles/"+current.model+"/"+current.configuration+".png", "/vehicles/"+current.model+"/default.png"]
+            });
         $.each(models, function(i,e) {
             $("<div></div>").appendTo(vehiclePanel).bigButton({
                 title: getVehicleName(e),
                 clickAction: function(){
-                    choosen.Vehicle = e;
-                    var parts = choosen.Vehicle.split('\\');
+                    choosen.vehicle = e;
+                    var parts = choosen.vehicle.split('\\');
                     if(parts.length > 1){
-                        choosen.Model = parts[0];
-                        choosen.Configuration = parts[1];
+                        choosen.model = parts[0];
+                        choosen.configuration = parts[1];
                     }else{
-                        choosen.Model = choosen.Vehicle;
-                        choosen.Configuration = "";
+                        choosen.model = choosen.vehicle;
+                        choosen.configuration = "";
+                        if(vehicleinfo[e].default_pc && vehicleinfo[choosen.model+"\\"+vehicleinfo[e].default_pc[0]]){
+                            choosen.configuration = vehicleinfo[e].default_pc[0];
+                        }
+                    }
+                    if(vehicleinfo[e].default_color && vehicleinfo[e].colors[0][vehicleinfo[e].default_color[0]]){
+                        choosen.color = vehicleinfo[e].colors[0][vehicleinfo[e].default_color[0]];
+                        choosen.colorName = vehicleinfo[e].default_color[0];
                     }
                     setState(1);
                 },
@@ -781,7 +485,6 @@ function getResults(configurations){
     }
 
     function addFilter(key, value){
-        console.log("FILTER ADDDDDDDDDDDDDDDDDDDDDDDDED");
         if(!(key in appliedFilters)){
             appliedFilters[key] = [];
         }
@@ -807,8 +510,8 @@ function getResults(configurations){
             c.a = 1.001;
         }
         c.a = Math.max(c.a,0.004);
-        choosen.Color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
-        console.log(choosen.Color);
+        choosen.color = (c.r/255)+" "+(c.g/255)+" "+(c.b/255)+" "+(c.a*2);
+        console.log(choosen.color);
     }
     
     function convertColor(torqueColor){
@@ -820,7 +523,7 @@ function getResults(configurations){
     }
     
     function open(reset){
-
+        startupTimer.start();
         // reset the variables
         vehicleinfo = {};
         infoLoaderChain = [];
@@ -831,15 +534,25 @@ function getResults(configurations){
         selector.empty();
 
         callGameEngineFuncCallback("getVehicleList()", function(res){
+            startupTimer.point("VehicleList");
             vehicles = res;
             getData();
+        });
+
+        callGameEngineFuncCallback("getVehicle()", function(res){
+            current = res;
+            var configparts = current.configuration.split('/');
+            current.configuration = configparts[configparts.length-1].split('.')[0];
         });
     }
 
     function openFinalize(){
         setState(0);
+        startupTimer.point("build GUI");
         mainDiv.parent().show();
         mainDiv.dialog( "moveToTop" );
+        startupTimer.point("show GUI");
+        startupTimer.print();
     }
 
     function close(){

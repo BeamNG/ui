@@ -12,7 +12,8 @@ SimpleGears.prototype.initialize = function () {
 };
 
 SimpleGears.prototype.update = function (streams) {
-
+    if(jQuery.isEmptyObject(streams.engineInfo)) // no engine?
+        return;
     //Get the values to work with, do rounding and stuff as needed
     var aGear = Math.round(streams.electrics.gear_A*5);
     var mGear = streams.engineInfo[5];

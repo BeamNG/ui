@@ -1,0 +1,19 @@
+{
+    "info": {
+        "name" : "FFB Graph",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "This app shows a graphical representation of the FFB-Forces"
+    },
+
+    "appearance": {
+        "background" : "opaque-simple",
+        "size" : {
+            "initial" : [500,200]
+        }
+    },
+
+    "data": {
+        "streams" : ["sensors","electrics"]
+    }
+}

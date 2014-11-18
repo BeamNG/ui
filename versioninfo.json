@@ -1,8 +1,85 @@
 {
     "autohide": true,
     "title": ["UPDATES","EXPERIMENTAL BUILD"],
-    "current" : "0.3.6.3",
+    "current" : "0.3.6.7",
     "content" : [
+        {
+            "title" : "0.3.6.7",
+            "timestamp" : 1415703600,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixed electrics not working.",
+                    "Improved Force Feedback\n(disabled by default, not ready yet)",
+                    "fixed simple gearbox app crashing the UI when no engine was installed in the vehicle"
+                ]}
+            }
+        },
+        {
+            "title" : "0.3.6.6",
+            "timestamp" : 1415658201,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixed user interface randomly not working."
+                ]}
+            }
+        },
+        {
+            "title" : "0.3.6.5",
+            "timestamp" : 1415540775,
+            "type" : "experimental",
+            "content" : {
+                "Blogpost" : {"icon":"application_home", "text": "You can also read this update as blogpost in our blog:[br][ico=page_world] [url=http://www.beamng.com/entries/105-Progress-report]Progress-report[/url]"},
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixed 360 controller zoom buttons sticking",
+                    "Fixed occlusion handler for the headlights shining through under certain conditions",
+                    "Fixed several memory issues with the game",
+                    "Fixed combo box render bug within the UI, renders correctly now",
+                    "Fixed laggy main menu: reverted to older CEF version to use the software-only rendering which is a lot faster and easier on the CPU/GPU",
+                    "Fixed filesystem file change notifications: working recursively now, removing the need for empty directories inside the cache folder.",
+                    "Fixed 'Parts Configuration' dialog from always popping up when hitting ctrl+r",
+                    "Removed BeamNG watermark logo from the bottom left corner finally",
+                    "re-encoded mainmenu videos to 720p for increased performance",
+                    "Fixed bad video mode bug where the game's res could end up bigger than the current screen's resolution."
+                ]},
+                "Vehicle Content" : {"icon":"car", "list":[
+                    "Fixed stretching parts on T75 when certain parts fell off",
+                    "Textured D15 flatbed trailer",
+                    "Lots of changes and fixes for T75 deformation",
+                    "Other minor vehicle tweaks and fixes",
+                    "Hamster wheel now detachable"
+                ]},
+                "Terrain Content" : {"icon":"world", "list":[
+                    "Added tents and stadium lights to Hirochi Raceway",
+                    "Added parking lot to HR",
+                    "Added corner distance signs to HR",
+                    "Improved roadside visuals for HR by adding in lined edging to suggest maintenance + road materials",
+                    "Improved road barriers and rumble strips on HR (rumbles aren't so high anymore)",
+                    "Improved the lighting on HR and ECA (the distance is more blue now, slight ambient changes as well)",
+                    "Improved terrain and grass colors for HR",
+                    "More work on the details of HR (more forest, decals, etc), improvements and texture additions",
+                    "Minor adjustments and additions to ECA",
+                    "Fixed a heightmap issue on ECA (there was a sharp pyramid sticking out of the road)",
+                    "Removed duplicate car on Small Island (it was sitting in the ocean)"
+                ]},
+                "Features" : {"icon":"cog", "list":[
+                    "new startup screen",
+                    "Force Feedback basics, not working out of the box yet, might damage your hardware, [ico=exclamation][b]try on your own risk[/b]. FF is currently always on for the first wheel and it might be inverted depending on your hardware.",
+                    "Asynchronous shader compilation: reducing lag/halts when playing, funky material loading at startup now but reducing the loading times significantly",
+                    "FPS limiter: Max FPS is currently hardcoded to 60 to allow a smoother gameplay experience, will be set-able later on.",
+                    "Improve speed of generation for grass and other small objects when camera are moving: this fixes the microlag that occurs when driving fast.",
+                    "New HTML GUI for options/settings (supports live changes) (WIP)",
+                    "New CTRL + Space vehicle selector with filters and factory colors",
+                    "Force Feedback Debug app: we wrote some helper applications that display the steering wheel position vs the applied force feedback",
+                    "Lua integration into Torque3D for simpler controller binding workflow (just started with it, WIP)"
+                ]},
+                "Known Problems" : {"icon":"exclamation", "list":[
+                    "Parts Chooser is completely broken as we are in the transition phase from the old version that uses the legacy T3D GUI towards the new HTML version.",
+                    "Input Tester is broken"
+                ]}
+            }
+        },
         {
             "title" : "0.3.6.3",
             "timestamp" : 1412005730,

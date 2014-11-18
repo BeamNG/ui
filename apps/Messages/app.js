@@ -31,7 +31,7 @@ Messages.prototype.update = function(streams) {
 };
 
 Messages.prototype.onMessage = function(args) {
-    console.log(args);
+    //console.log(args);
     var time = args.ttl !== undefined ? args.ttl : 5;
     var category = args.category !== undefined ? args.category : 'default';
     var css = args.css !== undefined ? args.css : '';
@@ -88,7 +88,7 @@ Messages.prototype.onXIControllerBatteryWarning = function(args) {
     m += "<div class='imgover blink " + batClass + " battery_" + args.batLevel + "_mask'></div>";
     m += "</div>";
     m += "<div style='line-height:64px;'>" + msgStr + "</div>";
-    console.log(m);
+    //console.log(m);
     this.onMessage({msg:m, ttl:5, category:'controllers'});
 };
 

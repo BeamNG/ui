@@ -1,0 +1,20 @@
+{
+    "info": {
+        "name" : "FFB Visualizer",
+        "author": "beamng.ui Team",
+        "version": "0.1",
+        "description": "This app shows a graphical representation of the FFB-Forces"
+    },
+
+    "appearance": {
+        "background" : "transparent",
+        "resize" : false,
+        "size" : {
+            "initial" : [300,50]
+        }
+    },
+
+    "data": {
+        "streams" : ["sensors"]
+    }
+}

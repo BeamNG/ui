@@ -15,17 +15,32 @@
     font-weight: bold;
     vertical-align: middle;
     border-top:1px solid #999;
-    min-width: 100px;
+    min-width: 75px;
     background-color: rgba(221,221,221, 0.9);     /* whitesmoke */
 }
 
 .pgInputHolder
 {
     background-color: rgba(245,245,245, 0.9);     /* whitesmoke */
-    width: 100px;
+    width: 150px;
     border-left:1px solid #eaebed;
     border-top:1px solid #999;
-    text-align:right;
+}
+
+.pgHeaderInput
+{
+    width: 150px;
+}
+
+.pgHeaderInput>select, .pgHeaderInput>input
+{
+    background-color: transparent;
+    border: none;
+}
+
+.pgHeaderInput>select
+{
+    width: 100%;
 }
 
 .pgGroup
@@ -60,12 +75,15 @@
     padding-left:16px !important;
 }
 
-.pgSpacer
-{
+.pgSpacer {
     background-color:rgba(211,211,211, 0.9);     /* lightgray */
     width:16px;
     min-width:16px;
     max-width:16px;
+}
+
+.pgSpacerOdd {
+    background-color:rgba(169,169,169, 0.9);     /* darkgray */
 }
 
 .pgItemRow
@@ -256,12 +274,12 @@
     overflow-x:hidden;
 }
 
-.pg_wrapper_play {
-    width:350px;
+.pg_wrapper_options, .pg_wrapper_partmgmt {
+    width:375px;
     position: fixed;
     top:10px;
     left:10px;
-    bottom:50px;
+    max-height: 95%;
     overflow-y:auto;
     overflow-x:hidden;
     display:none;

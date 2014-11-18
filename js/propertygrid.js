@@ -3,7 +3,6 @@ function BeamNGPropertyGrid(givenData) {
     var html = "";
     var optionsElements = {};
     var usageElements = {};
-    var changedInputs = {};
 
     var instance = this;
 
@@ -12,98 +11,86 @@ function BeamNGPropertyGrid(givenData) {
 
     BeamNGPropertyGrid.prototype.init = function () {
         instance.work();
-        $('.pgPlus').next('tr').toggle();
+        $('.pgPlus').parent().next("tr").toggle();
 
-        $('.propertyGridContainer .pgGroupTitle').on("click", function() {
-            $(this).children('td').toggleClass('pgPlus pgMinus');
-            $(this).next('tr').toggle();
+        $('.pgPlus, .pgMinus').on("click", function() {
+            $(this).toggleClass('pgPlus pgMinus');
+            $(this).parent().next('tr').toggle();
         });
 
-        //$( document ).tooltip();
+       // $( document ).tooltip();
     };
 
     function escapeJQuerySelector(str)
     {
         if (str)
-            return str.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
+            return str.replace(/([ #;?%&,\.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
         return str;
     }
 
-    function onValueChanged(element, info) {
-        var path = info.path.split(".");
-        var id = path[0];
+    function buildInputLine(d, usage) {
 
-        // always update the current value so we can use it in the changed list
-        info.val = element.get()
-        var changed = info.valOrig != info.val;
-        if(typeof info.onChange == "function") {
-            var res = info.onChange(info);
-            // TODO: if res == true, then reset highlighting, as it was applied directly
-            if(res) {
-                return;
+        /*
+        +-----------------+
+        | key   | value   |
+        +-----------------+
+        */
+
+        // decision variables
+        var has_name   = (d.name);
+        var has_value  = (d.type in controls);
+        var has_childs = (typeof d.childs == 'object' && Object.keys(d.childs).length !== 0);
+
+
+        var tr_classes = '';
+        if(has_childs) tr_classes += ' pgGroupTitle ';
+        
+        // row start
+        var res = '<tr class="' + tr_classes + '"';
+        if(d.description)
+            res += ' title="' + d.description + '" ';
+        res += '>'; // row tr end
+
+        // left key label
+        var td_classes = '';
+        if(has_childs) {
+            if(typeof d.collapsed == "boolean" && !d.collapsed) {
+                td_classes += ' pgMinus ';
+            } else {
+                td_classes += ' pgPlus ';
             }
         }
+        if(has_childs) td_classes += ' pgGroupTitle ';
 
-        for (var i = 0; i < path.length; i++) {
-            var color = changed ? '#ffdddd' : info.orgColor;
-            id += "."+path[i];
-
-            if(typeof changedInputs[id] == "undefined") {
-                changedInputs[id] = 0;
-            }
-            //TODO: Decide as what to use changedInputs
-            //1. As a counter for all fields how many changed inputs rely on it
-            //2. An object, containing all informations? Or what was the plan with the following line?
-            changedInputs[id] = info;
-
-            if(changedInputs[id] == 0) {
-                color = "";
-            } else if( changedInputs[id] < 0) {
-                console.log("ERROR: There should not be two Elements to select, where the value is the same");
-            }
-
-            var c = colorElement(escapeJQuerySelector(id), "", color);
-            if(changed) {
-                info.orgColor = c;
-            }
-
-
-            if(i == path.length-1) {
-                colorElement(escapeJQuerySelector(id), info.type, color);
-            }
+        if(has_name) {
+            res += '<td id="' + d.path + '.description" class="pgGroupItemText' /*when changing class name change as well in partmgmt.js*/+ td_classes + '"' + (has_value ? '' : ' colspan="2"') + ')><label for="' + d.path + '">' + d.name + '</label></td>';
         }
+
+
+        // right value
+        if(has_value) {
+            res += '<td id="' + d.path + '.valuetd" class="pgInputHolder"' + (has_name ? '' : ' colspan="2" ') + '>'; // if no name, use the whole table for value
+            res += buildInput(d, usage);
+            res += '</td>'; // closes pgInputHolder
+        }
+
+
+        // row end
+        res += '</tr>'; // closes row
+        return res;
+    }
+    
+    function buildInput(d, usage) {
+        var inputHtml = "";
+        if(d.type in controls) {
+            d.valOrig = d.val;
+            d.ctrl = new controls[d.type](d);
+            usage ? usageElements[d.path] = d : optionsElements[d.path] = d;
+            inputHtml += " "+d.ctrl.create();
+        }
+        return inputHtml;
     }
 
-    function colorElement(selector, type, color) {
-        var element;
-        if(type == "slider") {
-            element = $("#"+selector).closest("table");
-        } else if(type == "combo") {
-            element = $("#"+selector).closest("td");
-            $("#"+selector).css("background-color", color);
-        } else {
-            element = $("#"+selector).closest("td");
-        }
-        var oldColor = element.css("background-color");
-        element.css("background-color", color);
-        return oldColor;
-    }
-
-  function buildSingleOptionLines (d, topBottom) {
-        var options = "";
-        if(d[topBottom]) {
-            $.each(d[topBottom], function (key, value) {
-                if(value.type in controls) {
-                    value.path = d.path+"."+key;
-                    value.valOrig = value.val;
-                    d.ctrl = new controls[value.type](value);
-                    usageElements[value.path] = d;
-                    options += " "+d.ctrl.create();
-                }
-            });
-        }
-        return options;
-    }
 
      controls = {
         'bool' : function PGBool(d) {
@@ -112,18 +99,24 @@ function BeamNGPropertyGrid(givenData) {
             PGBool.prototype.set    = function(v)   { $(this.selector).prop('checked', v); };
             PGBool.prototype.create = function()    { return '<input type="checkbox" name="' + d.path + '" id="' + d.path + '">'; }; // class="regular-checkbox"
         },
+        'file' : function PGFile(d) {
+            this.selector = '#' + escapeJQuerySelector(d.path);
+            PGFile.prototype.get    = function()    { return $(this.selector).val(); };
+            PGFile.prototype.set    = function(v)   { $(this.selector).val(v); };
+            PGFile.prototype.create = function()    { return '<input type="file" name="' + d.path + '" id="' + d.path + '">'; };
+        },
         'color' : function PGColor(d) {
             this.selector = '#' + escapeJQuerySelector(d.path);
             PGColor.prototype.get    = function()    { return $(this.selector).val(); };
             PGColor.prototype.set    = function(v)   { $(this.selector).val(v); };
             PGColor.prototype.create = function()    { return '<input type="text" name="' + d.path + '" id="' + d.path + '">'; };
-            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({showInput: true, allowEmpty:false, showAlpha:true}); };
+            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true}); };
         },
         'enable' : function PGEnable (d) {
             this.selector = '#' + escapeJQuerySelector(d.path);
             PGEnable.prototype.get    = function()    { return $(this.selector).prop('checked'); };
             PGEnable.prototype.set    = function(v)   { $(this.selector).prop('checked', v); };
-            PGEnable.prototype.create = function()    { return '<input type="checkbox" name="' + d.path + '" id="' + d.path + '"><label for="' +d.path+ '">' + d.name + '</label>'; };
+            PGEnable.prototype.create = function()    { return '<input type="checkbox" name="' + d.path + '" id="' + d.path + '"><label id="' + d.path + '.valuelabel" for="' +d.path+ '">Enabled</label>'; };
         },
         'combo' : function PGCombo(d) {
             this.selector ='#' + escapeJQuerySelector(d.path);
@@ -152,8 +145,8 @@ function BeamNGPropertyGrid(givenData) {
         'slider' : function PGIntSlider (d) {
             this.selector ='#' + escapeJQuerySelector(d.path);
             PGIntSlider.prototype.get    = function()   { return $(this.selector).val(); };
-            PGIntSlider.prototype.set    = function(v)  { $(this.selector).val(v); };
-            PGIntSlider.prototype.create = function()   { return '<table width="100%"><tr><td width="100%"><input type="range" name="' + d.path + '" id="' + d.path + '" min="' +d.min+ '" max="' +d.max+ '" step="' + d.step + '"></td><td><label id="' + d.path + '.label">' + d.val.toFixed(1) + '</label></td></tr></table>'; };
+            PGIntSlider.prototype.set    = function(v)  { $(this.selector).val(v); $(this.selector+'.label').find("label").text(v.toFixed(1))};
+            PGIntSlider.prototype.create = function()   { return '<table width="100%"><tr><td width="100%"><input type="range" name="' + d.path + '" id="' + d.path + '" min="' +d.min+ '" max="' +d.max+ '" step="' + d.step + '"></td><td><label id="' + d.path + '.valuelabel">' + d.val.toFixed(1) + '</label></td></tr></table>'; };
             //Two input posibillities:
             //instead of value do textContent in onchange()
             //<input type="number" id="label.' + d.path + '" value="' + d.val + '" min="' +d.min+ '" max="' +d.max+ '" step="' + d.step + '" onChange="document.getElementById(\'' + d.path + '\').value = this.value">
@@ -169,94 +162,151 @@ function BeamNGPropertyGrid(givenData) {
         console.log("ERROR: " + msg);
     };
 
+    function whatTodoWithWindow () {
+        var returnValue = {};
+        returnValue.action = "open";
+        returnValue.element = {};
+
+        $.each($(".pg"), function(k, v) {
+            if(v.id == data.rootElement[0].id && v.style.display == "block") {
+                returnValue.action = "close";
+                returnValue.element = v;
+            } else if (v.id != data.rootElement[0].id && v.style.display == "block") {
+                returnValue.action = "close and open new";
+                returnValue.element = v;
+            }
+        });
+        return returnValue;
+    }
+
     BeamNGPropertyGrid.prototype.work = function() {
         html = this.workRec(data, '', 0); // first level is special
         var container = data.rootElement;
-        container.html(html);
-        this.setDefaultValuesAndListeners();
+        
+        var whatTodo = whatTodoWithWindow();
+        switch(whatTodo.action) {
+            case "close":
+                whatTodo.element.style.display = "none";
+                break;
+            case "close and open new":
+                whatTodo.element.style.display = "none";
+            default :
+                container.html(html);
+                container.css("display", "block");
+                this.setDefaultValuesAndListeners();
+        }
 
         //container.flexigrid();
         //console.log(html);
     };
 
     BeamNGPropertyGrid.prototype.workRec = function(d, path, level) {
-        // this function is called "per value" / "per control" - not for lists of controls
         var res = '';
-        var maxLevel;
-        if(typeof maxLevel == "undefined") { maxLevel = 0 };
 
         // set path correctly
-        d.path = path;
-        if(d.id) {
-            if(d.path != '')
-                d.path +=  '.';
-            d.path += d.id;
+        d.path = path + (d.id ? (path != "" ? ".": "") + d.id : ""); //just because I want to do it this way :-) this is exactly the same as the following 5 lines
+        // d.path = path;
+        // if(d.id) {
+        //     if(d.path != '')
+        //         d.path +=  '.';
+        //     d.path += d.id;
+        // }
+
+        // backup value is done in buildInput()
+        //d.valOrig = d.val;
+
+        /*
+        // table layout
+        +---+------------------------+
+        |   |                        |
+        |   |   +-----------------+  |
+        | S |   | key   | value   |  |
+        | P |   +-----------------+  |
+        | A |   | key   | value   |  |
+        | C |   +-----------------+  |
+        | E |   | key   | value   |  |
+        | R |   +-----------------+  |
+        |   |   | buttons         |  |
+        |   |   +-----------------+  |
+        +---+------------------------+
+        */
+
+        // set up things is done in the constructor
+        // d.selector = "#" + escapeJQuerySelector(d.path);
+
+        // SPACER
+        res += '<table border="0" class="propertyGridContainer"><tr>';
+        
+        if(d.name && level > 1) {
+            res += '<td class="pgSpacer ' + ((level%2 == 0) ? '' : 'pgSpacerOdd') + '">';
+            //res += level; // < good for debugging the levels
+            res += '</td>';
         }
 
-        // backup value
-        d.valOrig = d.val;
 
-        if(level == 0) { res += '<table border="0" class="propertyGridContainer">'; }
+        res += '<td>';
 
-        var spacetd = '<td class="pgSpacer" ';
-        if(level%2 == 0) { spacetd += 'style="background-color:DarkGray"'; }
-        spacetd += '></td>';
+        // inner key value table
+        res += '<table border="0" class="propertyGridContainer">';
+        if(d.type == "enable") {
+            res += buildInputLine(d, true);
+        } else {
+            res += buildInputLine(d, false);
+        }
 
         if(d.childs) {
-            // work off all child data
-            if(d.name) {
-                var title = buildSingleOptionLines(d, "top");
-                usageElements[d.path] = d;
-                res += '</table><table border="0" class="propertyGridContainer"><tr class="pgGroupTitle"><td colspan="3"' 
-                if(typeof data.collapsed != "undefined" && !data.collapsed) {
-                    res += 'class="pgMinus"';
-                } else {
-                    res += 'class="pgPlus"';
-                    console.log("test");
-                }
-                res += 'id="' + d.path + '">' + d.name + title + '</td></tr><tr>'+spacetd+'<td colspan="2"><table border="0" class="propertyGridContainer">\n';
-            }
-            for(var k in d.childs) {
-                d.childs[k].id = k; // always assign the id
-                if(!d.childs[k].name)
-                    d.childs[k].name = d.childs[k].id; // use the id as name if no name was provided
-
-                d.childs[k].id = k; // always assign the id
-                if(maxLevel<level+1) { maxLevel = level+1; }
-                res += this.workRec(d.childs[k], d.path, level + 1) + '\n';
-            }
-
-            // TODO: fix this and refactor in combination with above code
-            //Like this?
-            var footer = buildSingleOptionLines(d, "bottom");
-            res += '</table></td></tr><tr><td colspan="' + maxLevel + '">' + footer + '</td></tr>\n';
-            maxLevel = 0;
-        } else {
-            if(d.type in controls) {
-                d.ctrl = new controls[d.type](d);
-                optionsElements[d.path] = d;
-                res += '<tr class="pgItemRow"';
-                if(d.description)
-                    res += ' title="' + d.description + '" ';
-
-                if(d.type != "button") {
-                    res += '><td class="pgGroupItemText"><label for="'+d.path+'">' + d.name + '</label></td><td class="pgInputHolder">' + d.ctrl.create() + '</td></tr>';
-                } else {
-                     res += '><td class="pgInputHolder" colspan="2">' + d.ctrl.create() + '</td></tr>';
-                }
-            } else {
-                this.errormsg('unknown control type: ' + d.type);
-            }
-
+            res += '<tr class="pgChilds"><td colspan="2">'; // opens child row: holds all childs
+            var self = this;
+            $.each(d.childs, function(k, v) {
+                
+                if(!v.name && v.id) v.name = v.id;
+                v.id = k;
+                
+                res += self.workRec(v, d.path, level + 1) + '\n';
+            });
+            res += '</td></tr>'; // closes child row
+        }
+        if(d.bottom) {
+            res += '<tr class="pgChilds"><td colspan="2">'; // opens bottom row
+            var self = this;
+            $.each(d.bottom, function(k, v) {
+                if(!v.name && v.id) v.name = v.id;
+                v.path = path + (path != "" ? ".": "") + (v.id = k); // see above
+                
+                res += buildInput(v, true);
+            });
+            res += '</td></tr>'; // closes child row
         }
 
-        if(level == 0)
-            res += '</table><input type="button" value="Close" style="position:fixed" onClick="'+data.rootElement.html("")+'" />';
+
+        res += '</table>';
+
+
+        res += '</td></tr></table>'; // closes spacer completely
 
         return res;
     };
 
+    function onDomEvent (d, event) {
+        var addListener = function(d, event) {
+            switch (event) {
+                // case "onMouseenter":
+                //     break;
+                // case "onMouseleave":
+                //     break;
+                case "onChange":
+                    d.valOrig = (d.val = d.ctrl.get());
+                    break;
+            }
+        }
+        if(typeof d[event] == "function") {
+            addListener(d, event);
+            d[event](d);
+        }
+    }
+
     BeamNGPropertyGrid.prototype.setDefaultValuesAndListeners = function() {
+        var self = this; // store 'this'
         $.each(optionsElements, function(key, d) {
 
             if(typeof d.ctrl.init == "function") {
@@ -264,35 +314,41 @@ function BeamNGPropertyGrid(givenData) {
             }
             d.ctrl.set(d.valOrig);
 
+            var changeFunction = {
+                "onChange" : function() {onDomEvent(d, "onChange")},
+                "onMouseenter" : function() {onDomEvent(d, "onMouseenter")},
+                "onMouseleave" : function() {onDomEvent(d, "onMouseleave")}
+            }
+
             if(d.type == "slider") {
                 // change function is not called when the slider is still moving, oninput is
                 $(d.ctrl.selector)[0].oninput = function() {
-                    onValueChanged(d.ctrl, d);
+                    changeFunction["onChange"]();
+                    // additionally, update the text label
                     // this seems to work surprisingly well, even if no label is defined:
-                    document.getElementById(d.path + '.label').textContent = parseFloat(this.value).toFixed(1); // TODO: find out if we need 2 places behind the comma
+                    document.getElementById(this.id + '.valuelabel').textContent = parseFloat(this.value).toFixed(1); // TODO: find out if we need 2 places behind the comma
                 };
             } else {
-                // onInput function seems not to affect checkboxes and selects
-                $(d.ctrl.selector)[0].onchange = function() { 
-                    onValueChanged(d.ctrl, d);
-                };
+                var elem = $(d.ctrl.selector)[0];
+                elem.onchange = changeFunction["onChange"];
+                elem.oninput = changeFunction["onChange"];
+                elem.onmouseenter = changeFunction["onMouseenter"];
+                elem.onmouseleave = changeFunction["onMouseleave"];
             }
         });
 
         $.each(usageElements, function(key, d) {
-            if(d.type == "enabler") { //is it an enabler?
+            if(d.type == "enable") { //is it an enabler?
                 d.ctrl.set(d.valOrig);
-
                 $(d.ctrl.selector).change( function () {
-
-                    $.each($(d.ctrl.selector).closest("table").find("input"), function(k, v) {
+                    $(d.ctrl.selector).next().text( d.ctrl.get() ? "Enabled" : "Disabled");
+                    $.each($(d.ctrl.selector).closest("tr").next().find("input, select"), function(k, v) {
                         if(typeof usageElements[v.id] == "undefined") {
                             v.disabled = !d.ctrl.get();
                         }
                     });
                 });
             } else if(d.type == "button") { //is it a button?
-                
                 $(d.ctrl.selector).click(function() { //set
                     if(typeof d.cmdJs != "undefined") {
                         eval(d.cmdJs); //execute Javascript; should be string with valid js
@@ -306,37 +362,83 @@ function BeamNGPropertyGrid(givenData) {
                             callLuaFunction(lua[i], d.paramLua[i]); //execute lua; schould be list of func in cmdLua and list of paramters as strings in paramLua
                         }
                     }
-                    if(typeof d.clearChanges == "boolean" && d.clearChanges) {
-                        $.each(changedInputs, function (key, value) {
-                            //console.log(key);
-                            //console.log(value);
-                            // TODO: write function that resets the color of the changed things recursively
-                            
-                            /// NOT working: colorElement(escapeJQuerySelector(value.id), '', value.info.orgColor);
-                        });
-                        changedInputs = {}
-                    }
+                    /*if(typeof d.clearChanges == "boolean" && d.clearChanges) {
+                        self.revertChanges(data);   
+                    }*/
                     
                 });
             }
         });
     };
 
-    BeamNGPropertyGrid.prototype.getChangedValues = function() {
-        return changedInputs;
+    /*This should not be important if every value is set on its change
+
+    BeamNGPropertyGrid.prototype.getChangedValues = function(d, changedInputs) {
+        if(changedInputs == "undefined") {
+            changedInputs = {};
+        }
+        if(typeof d.childs != "undefined") {
+            for(var k in d.childs) {
+                this.getChangedValues(d.childs[k], changedInputs);
+            }
+        } else if(d.valOrig != d.val) {
+            changedInputs[d.path] = d;
+        }
     };
 
-    BeamNGPropertyGrid.prototype.revertChanges = function() {
-        // TODO: FIXME
-        // And decide the changedInput question (in onValueChanged)
-        /*
-        $.each(changedInputs, function(key, value) {
-            if(typeof optionsElements[key] != "undefined" && changedInputs[key] > 0) {
-                optionsElements[key][1].set(optionsElements[key][0].valOrig);
-                changedInputs[key] = 0;
-                colorElement(optionsElements[key][0].selector, optionsElements[key][0].type, "");
-            }
+    BeamNGPropertyGrid.prototype.revertChanges = function(data) {
+        var changedInputs = {}
+
+        this.getChangedValues(data, changedInputs);
+
+        $.each(changedInputs, function(path, d) {
+            d.val = d.valOrig;
+            d.ctrl.set(d.val);
         });
-        */
+        colorElements(data);
     };
+
+    function colorElements(d, changeHeader) {
+        // '#ffdddd'
+        // console.log("\n")
+        // console.log(d.name)
+        if(typeof d.childs != "undefined") {
+            var levelBool = false;
+            for(var k in d.childs) {
+                levelBool = (colorElements(d.childs[k], changeHeader) || levelBool);
+            }
+            levelBool ? colorElement(d.ctrl.selector, "header", "#ffdddd") : colorElement(d.ctrl.selector, "header", "")
+            return levelBool;
+        } else if(typeof d.ctrl != "undefined") {
+            if(d.ctrl.get() != d.valOrig) {
+                // console.log("color in")
+                colorElement(d.ctrl.selector, d.type, "#ffdddd")
+                return true;
+            } else {
+                // console.log("reset color")
+                colorElement(d.ctrl.selector, d.type, "")
+                return false;
+            }
+        }
+    }
+
+    
+    function colorElement(selector, type, color) {
+        var element;
+        switch(type) {
+            case "slider":
+                element = $(selector).closest("table");
+                break;
+            case "combo":
+                element = $(selector)
+                break;
+            case "header":
+                element = $(selector).closest("tr");
+                break;
+            default:
+                element = $(selector).closest("td");
+        }
+        element.css("background-color", color);
+    }
+    */
 }

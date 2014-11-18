@@ -129,6 +129,7 @@ function parseBBCode(text) {
     text = text.replace(/\[ico=([^\s\]]+)\s*\](.*(?=\[\/ico\]))\[\/ico\]/g, '<img src="images/icons/$1.png">$2</a>');
     text = text.replace(/\[b\](.*(?=\[\/b\]))\[\/b\]/g, '<span style="font-family:OpenSans-ExtraBold">$1</span>');
     text = text.replace(/\[h1\](.*(?=\[\/h1\]))\[\/h1\]/g, '<h1>$1</h1>');
+    text = text.replace(/\[br\]/g, '</br>');
     text = text.replace(/\[list\]/g, '<ul>');
     text = text.replace(/\[\/list\]/g, '</ul>');
     text = text.replace(/\[olist\]/g, '<ol>');
@@ -162,7 +163,7 @@ function updateChangelog() {
         var versionhtml = ''
         $.each(data.content, function(k, v) {
             versionhtml += "<div class='updates_versionheader'>";
-            versionhtml += "<table border='0' width='100%'><tr><td>" + v.title;
+            versionhtml += "<table border='0' width='100%'><tr><td><img class='ico' src='images/icons/bullet1.png'/> " + v.title;
             if(v.title == data.current) {
                 versionhtml += " (current)";
             }
@@ -181,17 +182,23 @@ function updateChangelog() {
                 //console.log(v.content);
             } else if(typeof v.content === 'string' ) {
                 versionhtml += "<div class='updates_content'>" + parseBBCode(v.content) + "</div>";
-                versionhtml += "<div class='updates_spacer'></div>";
+                //versionhtml += "<div class='updates_spacer'></div>";
             } else if(typeof v.content === "object") {
                 $.each(v.content, function(k2, v2) {
                     versionhtml += "<div class='updates_subheader'><table border='0'><tr><td><img class='updates_contenticon' src='images/icons/" + v2.icon + ".png'/></td><td>" + k2 + "</td></tr></table></div>";
-                    versionhtml += "<div class='updates_content'><ul>";
-                    $.each(v2.list, function(k3, v3) {
-                        versionhtml += "<li>" + parseBBCode(v3) + "</li>";
-                    });
-                    versionhtml += "</ul></div>";
+                    versionhtml += "<div class='updates_content'>";
+                    if(typeof v2.list === "object") {
+                        versionhtml += "<ul>";
+                        $.each(v2.list, function(k3, v3) {
+                            versionhtml += "<li>" + parseBBCode(v3) + "</li>";
+                        });
+                        versionhtml += "</ul>";
+                    } else if(typeof v2.text === "string") {
+                        versionhtml += "<div style='padding:10px;'>" + parseBBCode(v2.text) + "</div>";
+                    }
+                    versionhtml += "</div>";
                 });
-                versionhtml += "<div class='updates_spacer'></div>";
+                //versionhtml += "<div class='updates_spacer'></div>";
             }
             versionhtml += "</div>";
         });
