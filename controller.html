@@ -41,9 +41,12 @@ var wizardStep = 0;
 
 function controllerUpdateValue(devName, objectName, value) {
     if(!initialized) return;
+    //console.log('controllerUpdateValue(' + devname + ', ' + objectName + ', ' + value + ')');
+
     var dev = $('#'+devName);
     var field = dev.find('#'+objectName);
     field.css('opacity', Math.abs(value)+0.3);
+
     field.find('value').html(parseFloat(value));
 
     if(!ctrlState[devName]) ctrlState[devName] = {};
@@ -74,36 +77,45 @@ function inputWizardStep() {
 function sendInputHardwareInfo(cfg) {
     console.log("sendInputHardwareInfo");
     console.log(cfg);
-    /*
+
     var root = $('#devices');
     root.html('');
 
-    for(var d = 0; d < cfg.length; d++) {
-        var dev = cfg[d];
-        var productName = dev.productName || "";
-        if(controller_ids[dev.vidpid]) {
-            productName += " (" + controller_ids[dev.vidpid] + ")";
+    $.each(cfg, function(k, manager) {
+        if(manager)  {
+            $("<h1>" + k + "</h1>").appendTo(root);
+            $.each(manager, function(k, dev) {
+                var productName = dev.productName || "";
+                if(controller_ids[dev.vidpid]) {
+                    productName += " (" + controller_ids[dev.vidpid] + ")";
+                }
+                var devHtml = $('<div id="' + dev.name + '"><h2 class="active"><span class="icon">'+dev.name+'</span> - <span>'+productName+' - ' + dev.vidpid + '</span></h2></div>').appendTo(root);
+
+                $('<input type="button" href="#" onclick="inputWizard(\'' + dev.vidpid + '\')" value="Configure" /> ').appendTo(devHtml);
+
+                // Axis
+                if(dev.axes) {
+                    if(dev.axismode == 'abs') $("<b>Axis are absolute</b>").appendTo(devHtml);
+
+                    var axisHtml = $('<div class="axes"></div>').appendTo(devHtml);
+                    var axisUl = $('<ul class=""></ul>').appendTo(axisHtml);
+                    $.each(dev.axes, function(k, v) {
+                        axisUl.append('<li id="' + v.name + '" class=""><label>' + v.title + ' [' + v.name +']</label><value>0</value></li>');
+                    });
+                }
+
+                // Buttons
+                if(dev.buttons) {
+                    var buttonsHtml = $('<div class="buttons"></div>').appendTo(devHtml);
+                    var buttonsUl = $('<ul class=""></ul>').appendTo(buttonsHtml);
+                    $.each(dev.buttons, function(k, v) {
+                        buttonsUl.append('<li id="' + v.name + '" class=""><label>' + v.title + '</label><value>0</value></li>');
+                    });
+                }
+            });
         }
-        var devHtml = $('<div id="' + dev.name + '"><h2 class="active"><span class="icon">'+dev.name+'</span> - <span>'+productName+'</span></h2></div>').appendTo(root);
-
-        // Axis
-        var axisHtml = $('<div class="axes"></div>').appendTo(devHtml);
-        var axisUl = $('<ul class=""></ul>').appendTo(axisHtml);
-        $.each(dev.axis, function(k, v) {
-            axisUl.append('<li id="' + v + '" class=""><label>' + v + '</label><value>0</value></li>');
-        });
-
-        // Buttons
-        var buttonsHtml = $('<div class="buttons"></div>').appendTo(devHtml);
-        var buttonsUl = $('<ul class=""></ul>').appendTo(buttonsHtml);
-        $.each(dev.buttons, function(k, v) {
-            buttonsUl.append('<li id="' + v + '" class=""><label>' + v + '</label><value>0</value></li>');
-        });
-
-        $('<input type="button" href="#" onclick="inputWizard(\'' + dev.vidpid + '\')" value="Configure" />').appendTo(devHtml);
-    }
+    });
     initialized = true;
-    */
 }
 
     
