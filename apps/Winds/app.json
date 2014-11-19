@@ -1,0 +1,20 @@
+{
+    "info": {
+        "name" : "Wind!",
+        "author": "CarlosAir",
+        "version": "0.1",
+        "description": "Controlling wind has never been easier! Click number to change the unit."
+    },
+
+    "appearance": {
+      "background" : "opaque",
+      "resize" : false,
+      "size" : {
+       "initial" : [245,240]
+      }
+     },
+
+    "data": {
+        "streams" : ["sensors"]
+    }
+}
