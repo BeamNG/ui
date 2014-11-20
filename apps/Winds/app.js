@@ -54,6 +54,7 @@ Winds.prototype.initialize = function () {
 			self.changeWSpeed($(this).val());
 		}
     }).change(function(){
+		self.changeWSpeed($(this).val());
 		this.rangeClick=false;
 	});
 	
@@ -160,6 +161,7 @@ Winds.prototype.toggleUnits = function(){
 			self.changeWSpeed($(this).val());
 		}
     }).change(function(){
+		self.changeWSpeed($(this).val());
 		this.rangeClick=false;
 	});
 	this.rangeWS.css({ 
