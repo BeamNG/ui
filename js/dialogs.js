@@ -14,6 +14,8 @@ var VehicleChooser = (function(){
     var infoLoaderChain = [];
     var searchtree = {};
 
+    var officialVehicles;
+
     var appliedFilters = {};
 
     var choosen = {};
@@ -104,8 +106,19 @@ var VehicleChooser = (function(){
     function dataProgress(){
         if(infoLoaderChain.length == 0){
             startupTimer.point("json loading");
-            console.log(vehicleinfo);
-            // Everything loaded, now enrich the configs with the info provided by the vehicle
+            // everything loaded, now add the Creator tag
+            $.each(vehicleinfo, function(name, data) {
+                if(name.indexOf('\\')!=-1){ // we only want to iterate over vehicles
+                    return;
+                }
+                if(_.contains(officialVehicles,name)){
+                    vehicleinfo[name].Creator = "official";
+                }else{
+                    vehicleinfo[name].Creator = "community";
+                }
+            });            
+
+            // enrich the configs with the info provided by the vehicle
             $.each(vehicleinfo, function(name, data) {
                 if(name.indexOf('\\')==-1){ // we only want to iterate over the configs
                     return;
@@ -173,18 +186,7 @@ var VehicleChooser = (function(){
                 });
             });
             startupTimer.point('build searchtree');
-            console.log(searchtree);
-
-            // All done, show the dialog now
-//            if((reset && reset === true) || firstRun === true){
-                openFinalize();
-/*            }else{
-                callGameEngineFuncCallback("getVehicle()", function(res){
-                    console.log(res);
-                    openFinalize();
-                });
-            }*/
-
+            openFinalize();
         }
     }
 
@@ -223,10 +225,20 @@ var VehicleChooser = (function(){
                 getConfigData(vehicle, config);
             });
         });
+        // load the official vehicles list
+        infoLoaderChain.push('offical');
+        $.getJSON('/html/officialmods.json', function(json, textStatus) {
+            officialVehicles = json
+        }).fail(function(){
+            officialVehicles = [];
+        }).always(function(){
+            infoLoaderChain.splice(infoLoaderChain.indexOf('official'),1);
+            dataProgress();
+        });
     }
 
     function renderFilterCriterias(){
-        $('<div class="filterbox filtername">Search:<br><input type="text" /></div>').appendTo(filterPanel);
+        //$('<div class="filterbox filtername">Search:<br><input type="text" /></div>').appendTo(filterPanel);
         $.each(searchtree, function(key, values) {
             if(_.contains(['default_color','colors','default_pc','Name','Configuration'], key)){ // We want specific tags not to show
                 return;
@@ -456,7 +468,7 @@ function getResults(configurations){
                     setState(1);
                 },
                 images: ["/vehicles/"+current.model+"/"+current.configuration+".png", "/vehicles/"+current.model+"/default.png"]
-            });
+            }).addClass('selected');
         $.each(models, function(i,e) {
             $("<div></div>").appendTo(vehiclePanel).bigButton({
                 title: getVehicleName(e),
