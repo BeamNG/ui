@@ -1,10 +1,16 @@
 function Winds() {}
 
 Winds.prototype.initialize = function () {
-	this.maxSpeed = 250; 
+	this.maxSpeed = 250;
+	this.wSpeedOld = 0;
 	this.wSpeed = 0;
-	this.deg=0;
+
+	this.degOld = 0;
+	this.deg = 0;
+
 	this.units = [['m/s',1,2], ['kts',0.51444,5], ['km/h',0.27778,10], ['mph',0.44704,5]];
+
+	this.updateNeeded = true;
 	
 	if(this.persistance.Unit==null){this.persistance.Unit = 0};
 	
@@ -63,6 +69,10 @@ Winds.prototype.changeWSpeed = function(value){
 			'background-color': "hsla(32, 93%, 50%," + (this.wSpeed*1/this.maxSpeed)+")"
 	});
 	//this.send();
+	if(this.wSpeed != this.wSpeedOld){
+		this.wSpeedOld = this.wSpeed;
+		this.updateNeeded = true;
+	}
 };
 
 Winds.prototype.holdOn = function(){
@@ -94,18 +104,22 @@ Winds.prototype.moving = function(e){
 		
 		this.handler.text( (degT|0) + "º");
 		
-		//this.send();
-			
-	}else{
-		//this.send();
+		if(this.deg != this.degOld){
+			this.degOld = this.deg;
+			this.updateNeeded = true;
+		}
 	}
 	
 };
 
 Winds.prototype.send = function(){
-	this.cx = Math.sin(this.deg*this.PI2)*this.wSpeed;
-	this.cy = Math.cos(this.deg*this.PI2)*this.wSpeed;
-	beamng.sendActiveObjectLua("obj:setWind("+this.cx+", "+this.cy+", 0)");	
+	if(this.updateNeeded){
+		//this.log("Setting Wind");
+		this.cx = Math.sin(this.deg*this.PI2)*this.wSpeed;
+		this.cy = Math.cos(this.deg*this.PI2)*this.wSpeed;
+		beamng.sendActiveObjectLua("obj:setWind("+this.cx+", "+this.cy+", 0)");
+		this.updateNeeded = false;
+	}
 };
 
 Winds.prototype.onEditmode = function(enabled) {
@@ -119,7 +133,9 @@ Winds.prototype.update = function (streams) {
 		this.elPos = {x:this.offs.left+this.rootElement.width()/2-this.rad, y:this.offs.top+Number(this.circle.css('marginTop').replace('px',''))}
 		this.firsttime=false;
 	}
+	
 	this.send();
+
 	var yaw = streams.sensors.yaw;
 	this.arrow.css({ 
 			transform: 'rotate('+(-yaw)+'rad)',
@@ -150,3 +166,7 @@ Winds.prototype.toggleUnits = function(){
 			'background-color': "hsla(32, 93%, 50%," + (this.wSpeed*1/this.maxSpeed)+")"
 	});
 };
+
+Winds.prototype.onVehicleChange = function(){
+	this.updateNeeded = true;
+}
