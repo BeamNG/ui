@@ -1,6 +1,7 @@
 var pgElementPm = null;
 var luaConfig = null;
 var wrapper = null;
+var config = null;
 
 function buildpartPGConfig(slotMap) {
     var res = {};
@@ -64,7 +65,7 @@ function buildPartmanager () {
 
     callLuaFuncCallback('partmgmt.getConfig()', function(res) {
         // console.log("lua result: ");
-         test = res;
+         config = res;
 
         var data = {
             rootElement: pgElementPm,
@@ -83,21 +84,34 @@ function buildPartmanager () {
     });
 }
 
-function setPartInConfig(config, part, newValue) {
+function generateConfig(changedPart, newValue, config, newConfig, following) {
+    if(typeof newConfig == "undefined") var newConfig = {};
+    if(typeof following == "undefined") var following = true;
+    
     for(var partKey in config) {
         var v = config[partKey];
         if(typeof v.name == "string") {
-            console.log(v.name)
-            if(v.name == part) {console.log(v.name); return true}
- 
+            if(following) following = !(v.name == changedPart && newValue == "none");
+            
+            if(!following) v.active = false //should make sure all childs of a slot are set to "none" as well: problem is the parent is no
+            
+            // console.log(v.name)
+            // console.log(v.partName)
+            // console.log(following)
+
+            newConfig[v.partName] = v.active ? v.partName : "none";
+
+            // console.log(newConfig[v.partName])
+            // console.log("")
+
             if(typeof v.parts == "object" && Object.keys(v.parts).length != 0) {
-                setPartInConfig(v.parts, part, newValue)
+                newConfig = generateConfig(changedPart, newValue, v.parts, newConfig, following);
             }
         } else {
-            setPartInConfig(v, part, newValue);
+            newConfig = generateConfig(changedPart, newValue, v, newConfig, following);
         }
-
     }
+    return newConfig;
 }
 
 // function setPartInConfig(config, part, newValue, element) {
@@ -129,9 +143,11 @@ function selectReset() { // onmouseleave
 
 function changePart(element) { // onchange
     if(typeof element == "object") {
-        obj = {} //list of parts like in e.g. i6_rwd.pc
-        parts = "'" + serializeToLua(obj) + "'";
-        callLuaFunction("partmgmt.setConfig", parts + ", true")
+          //list of parts like in e.g. i6_rwd.pc
+        // console.log(serializeToLua(parts))
+        console.log(element)
+        console.log(element.name) //TODO: get right name from lua
+        callLuaFunction("partmgmt.setConfig", serializeToLua(generateConfig(element.name, element.val, config.slotMap))+ ", true")
         // buildPartmanager()
     }
 }
