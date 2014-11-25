@@ -10,6 +10,10 @@ Winds.prototype.initialize = function () {
 
 	this.units = [['m/s',1,2], ['kts',0.51444,5], ['km/h',0.27778,10], ['mph',0.44704,5]];
 
+	this.launch=true;
+	
+	if(this.persistance.firstTime==null){this.persistance.firstTime=false;this.editing=true;};
+	
 	this.updateNeeded = true;
 	
 	if(this.persistance.Unit==null){this.persistance.Unit = 0};
@@ -34,8 +38,6 @@ Winds.prototype.initialize = function () {
 	
 	this.handler.css({left:this.X, top:this.Y});
 	
-	this.firsttime = true;
-	
 	this.mHold = 0,
 	this.PI2 = Math.PI/180;
 	
@@ -49,12 +51,27 @@ Winds.prototype.initialize = function () {
     var self = this;
 	this.rootElement.mousemove(function(e){self.moving(e);});
 	
-	this.rangeWS = $('<input style="position:absolute;width:150px;margin-left:15px;top:5px" type="range" min="0" max="' + this.maxSpeed/this.units[this.persistance.Unit][1] + '" value="' + this.wSpeed +'" step="' + this.units[this.persistance.Unit][2] + '" tabindex="-1" />').appendTo(this.bottomContainer).mousedown(function(){this.rangeClick=true;}).mouseup(function(){this.rangeClick=true;}).mousemove(function(){
+	this.rangeWS = $('<input style="position:absolute;width:150px;margin-left:15px;top:5px" type="range" min="0" max="' + this.maxSpeed/this.units[this.persistance.Unit][1] + '" value="' + this.wSpeed +'" step="' + this.units[this.persistance.Unit][2] + '" tabindex="-1" />').appendTo(this.bottomContainer)
+	
+	//all this is done in order to fix a problem that changed the selected value by a small amount. ie: you selected 15kts, but it changed by itself to 20kts on mouseup .
+	
+	.mousedown(function(){
+		this.rangeMove=false;
+		this.rangeClick=true;
+		
+	})
+	
+	.mousemove(function(){
 		if(this.rangeClick){
 			self.changeWSpeed($(this).val());
 		}
-    }).change(function(){
-		self.changeWSpeed($(this).val());
+		this.rangeMove=true;
+    })
+	
+	.mouseup(function(){
+		if(!this.rangeMove){
+			self.changeWSpeed($(this).val());
+		}
 		this.rangeClick=false;
 	});
 	
@@ -118,7 +135,7 @@ Winds.prototype.send = function(){
 		//this.log("Setting Wind");
 		this.cx = Math.sin(this.deg*this.PI2)*this.wSpeed;
 		this.cy = Math.cos(this.deg*this.PI2)*this.wSpeed;
-		beamng.sendActiveObjectLua("obj:setWind("+this.cx+", "+this.cy+", 0)");
+		callSystemLuaFunction('objectBroadcast(\'obj:setWind('+this.cx+', '+this.cy+', 0)\')');
 		this.updateNeeded = false;
 	}
 };
@@ -129,10 +146,10 @@ Winds.prototype.onEditmode = function(enabled) {
 
 Winds.prototype.update = function (streams) {
 
-	if(this.editing||this.firsttime){
+	if(this.editing||this.launch){
 		this.offs = this.rootElement.offset(),
 		this.elPos = {x:this.offs.left+this.rootElement.width()/2-this.rad, y:this.offs.top+Number(this.circle.css('marginTop').replace('px',''))}
-		this.firsttime=false;
+		this.launch=false;
 	}
 	
 	this.send();
@@ -156,14 +173,28 @@ Winds.prototype.toggleUnits = function(){
 	var newV = this.wSpeed / this.units[this.persistance.Unit][1];
 	this.labelWS.html('<span style="color:#333;font-size:20px;font-weight:bold">' + Math.round(newV) + '</span> ' + this.units[this.persistance.Unit][0]);
 	var self = this;
-	this.rangeWS = $('<input style="position:absolute;width:150px;margin-left:15px;top:5px" type="range" min="0" max="' + this.maxSpeed/this.units[this.persistance.Unit][1] + '" value="' + newV +'" step="' + this.units[this.persistance.Unit][2] + '" tabindex="-1" />').appendTo(this.bottomContainer).mousedown(function(){this.rangeClick=true;}).mouseup(function(){this.rangeClick=true;}).mousemove(function(){
+	this.rangeWS = $('<input style="position:absolute;width:150px;margin-left:15px;top:5px" type="range" min="0" max="' + this.maxSpeed/this.units[this.persistance.Unit][1] + '" value="' + newV +'" step="' + this.units[this.persistance.Unit][2] + '" tabindex="-1" />').appendTo(this.bottomContainer)
+	
+	.mousedown(function(){
+		this.rangeMove=false;
+		this.rangeClick=true;
+		
+	})
+	
+	.mousemove(function(){
 		if(this.rangeClick){
 			self.changeWSpeed($(this).val());
 		}
-    }).change(function(){
-		self.changeWSpeed($(this).val());
+		this.rangeMove=true;
+    })
+	
+	.mouseup(function(){
+		if(!this.rangeMove){
+			self.changeWSpeed($(this).val());
+		}
 		this.rangeClick=false;
 	});
+	
 	this.rangeWS.css({ 
 			'background-color': "hsla(32, 93%, 50%," + (this.wSpeed*1/this.maxSpeed)+")"
 	});
