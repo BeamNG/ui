@@ -23,8 +23,31 @@ WeightDistribution.prototype.initialize = function(){
     this.canvas.click(function(event) {self.toggleUnit();});
 };
 
+function sortedWheelIndices(wheelInfo){ // TODO: duplicated in WheelsDebug app
+    function getWheelNames(wheelInfo){
+        var names=[];
+        for(var i in wheelInfo)
+            names.push(wheelInfo[i][0]);
+        return names;
+    }
+    function wheelNamesToIndices(wheelInfo, wheelNames){
+        var indices=[];
+        for(var i in wheelNames)
+            for(var j in wheelInfo)
+                if (wheelNames[i] == wheelInfo[j][0])
+                    indices.push(j);
+        return indices;
+    }
+    return wheelNamesToIndices(wheelInfo, getWheelNames(wheelInfo).sort()); // alphabetical sort suits our needs: FL < FR < RL < RR
+}
+
 WeightDistribution.prototype.update = function(streams){
     var value = streams.wheelInfo;
+    if (this.sortedWheelIndices !== undefined)
+        if (value.length != this.sortedWheelIndices.length)
+            delete this.sortedWheelIndices //invalidate sorting cache
+    if (this.sortedWheelIndices === undefined)
+        this.sortedWheelIndices = sortedWheelIndices(value);
     var wheelCount = 0;
     /* value format:
     0  wd.name
@@ -50,33 +73,41 @@ WeightDistribution.prototype.update = function(streams){
     var b = 5;
     var x = r + b;
     var y = r + b;
-    var max = 0;
+    var totalDownForce = 0;
+    var nwheels = this.sortedWheelIndices.length;
 
     for(var j in value) {
-        max += value[j][7];
+        totalDownForce += value[j][7];
     }
 
-    for(var i in value) {
+    for(var i in this.sortedWheelIndices) {
         wheelCount++;
-        var w = value[i];
+        var w = value[this.sortedWheelIndices[i]];
         var downForce = w[7];
         // then draw
 
+        if ((downForce/totalDownForce)*nwheels < 1)
+            filledArc(ctx, x, y, r/2, 1, 1, "#aaa"); // regular weight distribution marker
 
-        ctx.fillStyle = '#aaa';
+        var gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
+        gradient.addColorStop(0, 'RGBA(0,255,0,0.5)');
+        gradient.addColorStop(0.4, 'RGBA(0,255,0,0.5)');
+        gradient.addColorStop(0.6, 'RGBA(255,0,0,0.5)');
+        gradient.addColorStop(1, 'RGBA(255,0,0,0.5)');
+        ctx.fillStyle = gradient;
+
         ctx.beginPath();
-        ctx.arc(x,y,(downForce/max)*r,0,Math.PI*2,0);
+        ctx.arc(x, y, (downForce/totalDownForce)*nwheels*(r/2), 0, 2 * Math.PI);
         ctx.fill();
 
         ctx.fillStyle = '#000';
 
-        ctx.fillText(w[0], x, y - (fontSize + 3));
-        filledArc(ctx, x, y, r, 1, 1, '#444444');
+        ctx.fillText(w[0], x, y - ((fontSize + 0)/2));
+        ctx.fillText(Math.round((downForce/totalDownForce)*100 ) + ' %', x, y + ((fontSize + 0)/1));
+        filledArc(ctx, x, y, r, 1, 1, '#444'); // max circle size marker (currently double the regular weight distribution)
 
-        ctx.fillText(Math.round((downForce / 9.81) *this.data.factor[this.persistance.Unit]) + ' ' + this.data.unitname[this.persistance.Unit]    , x, y );
-        ctx.fillText(Math.round(downForce ) + ' N', x, y + (fontSize + 3));
-        ctx.fillText(Math.round((downForce/max)*100 ) + ' %', x, y + 2 * (fontSize + 3));
-
+        ctx.fillText(Math.round((downForce / 9.81) *this.data.factor[this.persistance.Unit]) + ' ' + this.data.unitname[this.persistance.Unit]    , x, y - r + (fontSize*2));
+        ctx.fillText(Math.round(downForce ) + ' N', x, y + r - (fontSize*1));
 
         x += 2 * r +  5;
 
@@ -100,3 +131,7 @@ WeightDistribution.prototype.toggleUnit = function(){
     this.persistance.Unit = this.persistance.Unit === 'imperial' ? 'metric' : 'imperial';
     this.save();
 };
+
+WeightDistribution.prototype.onVehicleChange = function(vehicleDirectory){
+    delete this.sortedWheelIndices //invalidate sorting cache
+}

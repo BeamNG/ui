@@ -167,6 +167,6 @@ Winds.prototype.toggleUnits = function(){
 	});
 };
 
-Winds.prototype.onVehicleChange = function(){
+Winds.prototype.onVehicleReset = function(){
 	this.updateNeeded = true;
 }

@@ -3,7 +3,7 @@ function BeamNGPropertyGrid(givenData) {
     var html = "";
     var optionsElements = {};
     var usageElements = {};
-
+    
     var instance = this;
 
     //$().ready(function () {
@@ -16,6 +16,12 @@ function BeamNGPropertyGrid(givenData) {
         $('.pgPlus, .pgMinus').on("click", function() {
             $(this).toggleClass('pgPlus pgMinus');
             $(this).parent().next('tr').toggle();
+
+            if($(this).hasClass("pgMinus")) {
+                sessionStorage.setItem(this.id, "open")
+            } else {
+                sessionStorage.setItem(this.id, "closed")
+            }
         });
 
        // $( document ).tooltip();
@@ -54,10 +60,17 @@ function BeamNGPropertyGrid(givenData) {
         // left key label
         var td_classes = '';
         if(has_childs) {
-            if(typeof d.collapsed == "boolean" && !d.collapsed) {
+            if(sessionStorage.getItem(d.path + ".description") != null) {
+                var open = sessionStorage.getItem(d.path + ".description") == "open"
+            } else {
+                var open = typeof d.collapsed == "boolean" && !d.collapsed
+            }
+            if(open)  {
                 td_classes += ' pgMinus ';
+                sessionStorage.setItem(d.path + ".description", "open")
             } else {
                 td_classes += ' pgPlus ';
+                sessionStorage.setItem(d.path + ".description", "closed")
             }
         }
         if(has_childs) td_classes += ' pgGroupTitle ';
@@ -162,7 +175,7 @@ function BeamNGPropertyGrid(givenData) {
         console.log("ERROR: " + msg);
     };
 
-    function whatTodoWithWindow () {
+    function whatTodoWithWindow () { //TDODO: add some sort of update function
         var returnValue = {};
         returnValue.action = "open";
         returnValue.element = {};
@@ -180,7 +193,6 @@ function BeamNGPropertyGrid(givenData) {
     }
 
     BeamNGPropertyGrid.prototype.work = function() {
-        html = this.workRec(data, '', 0); // first level is special
         var container = data.rootElement;
         
         var whatTodo = whatTodoWithWindow();
@@ -191,7 +203,7 @@ function BeamNGPropertyGrid(givenData) {
             case "close and open new":
                 whatTodo.element.style.display = "none";
             default :
-                container.html(html);
+                container.html(this.workRec(data, '', 0));  // first level is special
                 container.css("display", "block");
                 this.setDefaultValuesAndListeners();
         }

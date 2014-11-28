@@ -79,7 +79,7 @@ function playNewEntry() {
 }
 
 function gotGameVersion(versionStr) {
-    $('#beamngversion').html('version ' + versionStr);
+    $('#beamngversion').html(i18n.t('common.version', { v: versionStr, defaultValue: 'version ' + versionStr }));
 }
 function gotSteamData(data) {
     //console.log("steam data:");
@@ -87,14 +87,14 @@ function gotSteamData(data) {
     if(data.working && data.loggedin) {
         var t = '<b>' + data.playerName + '</b><br/>';
         if(data.branch != 'public')
-            t += data.branch + '<br/>';
+            t += i18n.t('steambranches.' + data.branch, {defaultValue: data.branch}) + '<br/>';
         if(data.language != 'english')
             t += data.language + '<br/>';
         $('#steaminfotext').html(t);
         $('#steaminfo').css("display","block");
     }
 }
-function timeSinceEpoch(epoch) {
+function timeSinceEpochAgo(epoch) {
     var date = new Date(0); // The 0 there is the key, which sets the date to the epoch
     date.setUTCSeconds(epoch);
 
@@ -103,25 +103,25 @@ function timeSinceEpoch(epoch) {
     var interval = Math.floor(seconds / 31536000);
 
     if (interval > 1) {
-        return interval + " years";
+        return i18n.t('time.years_ago', { t: interval, defaultValue: "__t__ years ago" });
     }
     interval = Math.floor(seconds / 2592000);
     if (interval > 1) {
-        return interval + " months";
+        return i18n.t('time.months_ago', { t: interval, defaultValue: "__t__ months ago" });
     }
     interval = Math.floor(seconds / 86400);
     if (interval > 1) {
-        return interval + " days";
+        return i18n.t('time.days_ago', { t: interval, defaultValue: "__t__ days ago" });
     }
     interval = Math.floor(seconds / 3600);
     if (interval > 1) {
-        return interval + " hours";
+        return i18n.t('time.hours_ago', { t: interval, defaultValue: "__t__ hours ago" });
     }
     interval = Math.floor(seconds / 60);
     if (interval > 1) {
-        return interval + " minutes";
+        return i18n.t('time.minutes_ago', { t: interval, defaultValue: "__t__ minutes ago" });
     }
-    return Math.floor(seconds) + " seconds";
+    return i18n.t('time.seconds_ago', { t: Math.floor(seconds), defaultValue: "__t__ seconds ago" });
 }
 function parseBBCode(text) {
     text = text.replace(/\[url=http:\/\/([^\s\]]+)\s*\](.*(?=\[\/url\]))\[\/url\]/g, '<a href="http-external://$1">$2</a>');
@@ -153,9 +153,9 @@ function updateChangelog() {
             setTimeout(function () { $('#updates_box').css('left', '-514px'); }, 3000);
         }
         
-        var headerhtml = "<table border='0' width='100%'><tr><td>" + data.title[0] + "</td>";
+        var headerhtml = "<table border='0' width='100%'><tr><td>" + i18n.t('newsbox.' + data.title[0], {defaultValue: data.title[0]}) + "</td>";
         if(data.title.length > 1) {
-            headerhtml += "<td align='right' valign='bottom' class='updates_header_sub'>" + data.title[1] + "</td>";
+            headerhtml += "<td align='right' valign='bottom' class='updates_header_sub'>" + i18n.t('newsbox.' + data.title[1], {defaultValue: data.title[1]}) + "</td>";
         }
         headerhtml += "</tr></table>";
         $('#updates_header').html(headerhtml);
@@ -165,15 +165,15 @@ function updateChangelog() {
             versionhtml += "<div class='updates_versionheader'>";
             versionhtml += "<table border='0' width='100%'><tr><td><img class='ico' src='images/icons/bullet1.png'/> " + v.title;
             if(v.title == data.current) {
-                versionhtml += " (current)";
+                versionhtml += ' (' + i18n.t('steambranches.current') + ')';
             }
             if(typeof v.type !== 'undefined') {
-                versionhtml += " (" + v.type + ")";
+                versionhtml += " (" + i18n.t('steambranches.' + v.type, {defaultValue: v.type}) + ")";
             }
             versionhtml += "</td>";
 
             if(typeof v.timestamp !== 'undefined') {
-                versionhtml += "<td class='updates_versionheader_sub'> " + timeSinceEpoch(v.timestamp) + " ago</td>";
+                versionhtml += "<td class='updates_versionheader_sub'> " + timeSinceEpochAgo(v.timestamp) + "</td>";
             }
             versionhtml += "</tr></table></div>";
             versionhtml += "<div class='updates_inner_scrolling'>";
@@ -185,7 +185,7 @@ function updateChangelog() {
                 //versionhtml += "<div class='updates_spacer'></div>";
             } else if(typeof v.content === "object") {
                 $.each(v.content, function(k2, v2) {
-                    versionhtml += "<div class='updates_subheader'><table border='0'><tr><td><img class='updates_contenticon' src='images/icons/" + v2.icon + ".png'/></td><td>" + k2 + "</td></tr></table></div>";
+                    versionhtml += "<div class='updates_subheader'><table border='0'><tr><td><img class='updates_contenticon' src='images/icons/" + v2.icon + ".png'/></td><td>" + i18n.t('newsbox.' + k2, {defaultValue: k2}) + "</td></tr></table></div>";
                     versionhtml += "<div class='updates_content'>";
                     if(typeof v2.list === "object") {
                         versionhtml += "<ul>";

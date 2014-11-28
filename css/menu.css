@@ -45,7 +45,7 @@ body {
 #menu {
     background: rgba(0,0,0,0.5);
     /*border-left: 3px solid #ee4e1d;*/
-    width: 200px;
+    width: 250px;
     position: fixed;
     z-index: 100000;
 /*
@@ -139,6 +139,7 @@ body {
     position:absolute;
     left:0;
     bottom:0;
+    width:100%;
 }
 
 /* notice area */
@@ -173,6 +174,7 @@ body {
     height: 32px;
     fill: #fff;
     transition: 0.2s;
+    vertical-align:middle;
 }
 
 #infoseperator {

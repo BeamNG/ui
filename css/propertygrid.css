@@ -62,7 +62,7 @@
 {
     background-image: url('../images/plusSmall.png');
     background-repeat: no-repeat;
-    background-position: 2px 2px;
+    background-position: 2px 50%;
     cursor: pointer;
     padding-left:16px !important;
 }
@@ -70,7 +70,7 @@
 {
     background-image: url('../images/minusSmall.png');
     background-repeat: no-repeat;
-    background-position: 2px 2px;
+    background-position: 2px 50%;
     cursor: pointer;
     padding-left:16px !important;
 }

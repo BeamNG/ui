@@ -6,7 +6,6 @@
     <script src="js/jquery.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/minimal.js"></script>
-    <script src="js/controller_ids.js"></script>
 </head>
 <body>
 
@@ -86,21 +85,26 @@ function sendInputHardwareInfo(cfg) {
             $("<h1>" + k + "</h1>").appendTo(root);
             $.each(manager, function(k, dev) {
                 var productName = dev.productName || "";
+                /*
                 if(controller_ids[dev.vidpid]) {
                     productName += " (" + controller_ids[dev.vidpid] + ")";
                 }
+                */
                 var devHtml = $('<div id="' + dev.name + '"><h2 class="active"><span class="icon">'+dev.name+'</span> - <span>'+productName+' - ' + dev.vidpid + '</span></h2></div>').appendTo(root);
 
                 $('<input type="button" href="#" onclick="inputWizard(\'' + dev.vidpid + '\')" value="Configure" /> ').appendTo(devHtml);
 
                 // Axis
                 if(dev.axes) {
-                    if(dev.axismode == 'abs') $("<b>Axis are absolute</b>").appendTo(devHtml);
+                    //if(dev.axismode == 'abs') $("<b>Axis are absolute</b>").appendTo(devHtml);
 
                     var axisHtml = $('<div class="axes"></div>').appendTo(devHtml);
                     var axisUl = $('<ul class=""></ul>').appendTo(axisHtml);
                     $.each(dev.axes, function(k, v) {
-                        axisUl.append('<li id="' + v.name + '" class=""><label>' + v.title + ' [' + v.name +']</label><value>0</value></li>');
+                        var t = v.name;
+                        if(v.title)
+                            t = v.title + ' [' + v.name +']';
+                        axisUl.append('<li id="' + v.name + '" class=""><label>' + t + '</label><value>0</value></li>');
                     });
                 }
 
@@ -109,7 +113,10 @@ function sendInputHardwareInfo(cfg) {
                     var buttonsHtml = $('<div class="buttons"></div>').appendTo(devHtml);
                     var buttonsUl = $('<ul class=""></ul>').appendTo(buttonsHtml);
                     $.each(dev.buttons, function(k, v) {
-                        buttonsUl.append('<li id="' + v.name + '" class=""><label>' + v.title + '</label><value>0</value></li>');
+                        var t = v.name;
+                        if(v.title)
+                            t = v.title;
+                        buttonsUl.append('<li id="' + v.name + '" class=""><label>' + t + '</label><value>0</value></li>');
                     });
                 }
             });

@@ -3,6 +3,8 @@
 <head>
     <link rel="stylesheet" href="css/minimal.css">
     <script src="js/jquery.js"></script>
+    <script src="js/i18next-1.7.4.min.js"></script>
+    <script src="js/i18n.js"></script>    
     <script src="js/utils.js"></script>
     <script src="js/minimal.js"></script>
     <meta charset="utf-8">
@@ -33,12 +35,12 @@
 <div id="creditsmask">
 
 <table border="0" id="creditsTable">
-<tr><td class="t">Programmer</td><td class="n">Thomas "<span>tdev</span>" Fischer</td></tr>
-<tr><td class="t">Programmer</td><td class="n">Lefteris "<span>estama</span>" Stamatogiannakis</td></tr>
-<tr><td class="t">Vehicle Artist</td><td class="n">Gabe "<span>gabester</span>" Fink</td></tr>
-<tr><td class="t">Environment Artist</td><td class="n">Sam "<span>LJFHutch</span>" Hutchinson</td></tr>
-<tr><td class="t">Programmer</td><td class="n">Luis "<span>Souga</span>" Anton Rebollo</td></tr>
-<tr><td class="t">Helping Hands</td><td class="n">
+<tr><td class="t" data-i18n="credits.programmer">Programmer</td><td class="n">Thomas "<span>tdev</span>" Fischer</td></tr>
+<tr><td class="t" data-i18n="credits.programmer">Programmer</td><td class="n">Lefteris "<span>estama</span>" Stamatogiannakis</td></tr>
+<tr><td class="t" data-i18n="credits.vehicle_artist">Vehicle Artist</td><td class="n">Gabe "<span>gabester</span>" Fink</td></tr>
+<tr><td class="t" data-i18n="credits.env_artist">Environment Artist</td><td class="n">Sam "<span>LJFHutch</span>" Hutchinson</td></tr>
+<tr><td class="t" data-i18n="credits.programmer">Programmer</td><td class="n">Luis "<span>Souga</span>" Anton Rebollo</td></tr>
+<tr><td class="t" data-i18n="credits.helping_hands">Helping Hands</td><td class="n">
 Mirco "<span>theshark</span>" Weigel<br/>
 Sam "<span>DrowsySam</span>" Millington<br/>
 Saskia Opitz<br/>
@@ -48,7 +50,7 @@ Xiaoyi Wang<br/>
 Rajinder<br/>
 Theodoros Manouilidis<br/>
 </td></tr>
-<tr><td class="t">Our awesome community</td><td class="n">
+<tr><td class="t" data-i18n="credits.community">Our awesome community</td><td class="n">
 Richard "<span>Metalmuncher</span>" Sixsmith<br/>
 Jukka "<span>Miura</span>" Muikkula<br/>
 Tom "<span>Mythbuster</span>" Verhoeve<br/>
@@ -64,10 +66,10 @@ Yannis "<span>JohnV</span>" Vaiopoulos<br/>
 Ananda "<span>Nadeox1</span>" Thathayya<br/>
 <span>Kristian</span> Fagerland<br/>
 </td></tr>
-<tr><td class="t">Special thanks to</td><td class="n">
+<tr><td class="t" data-i18n="credits.special_thanks">Special thanks to</td><td class="n">
 Pierre-Michel "<span>pricorde</span>" Ricordel<br/>
 </td></tr>
-<tr><td class="t">Made possible with</td><td class="n">
+<tr><td class="t" data-i18n="credits.3rdpartysoftware">Made possible with</td><td class="n">
 Torque3D<br/>
 LuaJIT<br/>
 LuaBridge<br/>
@@ -83,7 +85,7 @@ Sublime Text<br/>
 
 </div>
 
-<input type="button" id="backbutton" href="#" onclick="window.location.href='/html/mainmenu.html';" value="Back" /><br/>
+<input type="button" id="backbutton" href="#" onclick="window.location.href='/html/mainmenu.html';" value="Back" data-i18n="[value]common.back"/><br/>
 
 <style type="text/css">
 @font-face {

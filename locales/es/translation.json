@@ -1,0 +1,13 @@
+{
+  "app": {
+    "name": "BeamNG.drive"
+  },
+  "mainmenu": {
+    "play": "Jugar",
+    "theteam": "El equipo",
+    "exit": "Salir",
+    "inputtest": "Probar controles",
+    "options":"Opciones",
+    "chat":"Chat"
+  }
+}

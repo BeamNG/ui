@@ -1,5 +1,6 @@
-var keymappingWindow = (function(deviceToOpen, keyMapsForDevice, devicesThatKeyBindingsExistFor){ //somehow this data or anything similar should be aquierd
+var keymappingWindow = (function(){
     'use strict';
+    
     var device = deviceToOpen;
     var maps = keyMapsForDevice;
     var devices = devicesThatKeyBindingsExistFor;

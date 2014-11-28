@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/beamng.css">
     <script src="js/jquery.js"></script>
+    <script src="js/i18next-1.7.4.min.js"></script>
+    <script src="js/i18n.js"></script>        
     <script src="js/minimal.js"></script>
 </head>
 <body style="margin: 0;height:100%;min-height:100%;background-color:white !important;">
 <div style="background-color:#cccccc;height:25px;vertical-align:middle;width:100%;border-bottom:1px solid black;">
-    <button type="button" onclick="window.location.href='/html/mainmenu.html'" id="back">Main Menu</button>
+    <button type="button" onclick="window.location.href='/html/mainmenu.html'" id="back" data-i18n="common.mainmenu">Main Menu</button>
     <button type="button" class="cefdev" onclick="javascript:location.reload();" id="refresh">ReloadUI</button>
 </div>
 
 <iframe src="http://qwebirc.beamng.com/?channels=beamng" id="iframe" frameborder="0" style="position:fixed;top:26px;bottom:0px;width:100%;background-color:white !important;">
-  <p>Your browser does not support iframes.</p>
 </iframe>
 
 <script type="text/javascript">

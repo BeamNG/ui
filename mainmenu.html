@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/beamng.css">
     <script src="js/jquery.js"></script>
+    <script src="js/i18next-1.7.4.min.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/minimal.js"></script>
     <script src="js/menu.js"></script>
@@ -32,12 +34,12 @@
     <div id="menu">
         <div class="arrow"><</div>
         <nav>
-            <a href="#" onclick="beamng.sendGameEngine('MainMenuGui.onBtnPlay();')"><svg class="icon icon-play2" viewBox="0 0 32 32"><use xlink:href="#icon-play2"></use></svg>&nbsp;&nbsp;Play</a>
-            <a href="#" onclick="window.location.href='/html/options.html'; beamng.sendGameEngine('Canvas.pushDialog(optionsDlg); Canvas.pushDialog(PostFXManager);')"><svg class="icon icon-settings" viewBox="0 0 32 32"><use xlink:href="#icon-settings"></use></svg>&nbsp;&nbsp;Options</a>
-            <a href="#" onclick="window.location.href='/html/credits.html'; beamng.sendGameEngine('MainMenuGui.creditsToggle();')"><svg class="icon icon-users" viewBox="0 0 32 32"><use xlink:href="#icon-users"></use></svg>&nbsp;&nbsp;The team</a>
-            <a href="#" onclick="window.location.href='/html/chat.html';"><svg class="icon icon-bubbles2" viewBox="0 0 32 32"><use xlink:href="#icon-bubbles2"></use></svg>&nbsp;&nbsp;Chat</a>
-            <a href="#" onclick="beamng.sendGameEngine('quit();')"><svg class="icon icon-exit" viewBox="0 0 32 32"><use xlink:href="#icon-exit"></use></svg>&nbsp;&nbsp;Exit</a>
-            <a href="#" onclick="window.location.href='/html/controller.html';"><svg class="icon icon-wrench" viewBox="0 0 32 32"><use xlink:href="#icon-wrench"></use></svg>&nbsp;&nbsp;Input Test</a>
+            <a href="#" onclick="beamng.sendGameEngine('MainMenuGui.onBtnPlay();')"><svg class="icon icon-play2" viewBox="0 0 32 32"><use xlink:href="#icon-play2"></use></svg>&nbsp;&nbsp;<span data-i18n="mainmenu.play">Play</span></a>
+            <a href="#" onclick="window.location.href='/html/options.html'; beamng.sendGameEngine('Canvas.pushDialog(optionsDlg); Canvas.pushDialog(PostFXManager);')"><svg class="icon icon-settings" viewBox="0 0 32 32"><use xlink:href="#icon-settings"></use></svg>&nbsp;&nbsp;<span data-i18n="mainmenu.options">Options</span></a>
+            <a href="#" onclick="window.location.href='/html/credits.html'; beamng.sendGameEngine('MainMenuGui.creditsToggle();')"><svg class="icon icon-users" viewBox="0 0 32 32"><use xlink:href="#icon-users"></use></svg>&nbsp;&nbsp;<span data-i18n="mainmenu.theteam">The team</span></a>
+            <!-- <a href="#" onclick="window.location.href='/html/chat.html';"><svg class="icon icon-bubbles2" viewBox="0 0 32 32"><use xlink:href="#icon-bubbles2"></use></svg>&nbsp;&nbsp;<span data-i18n="mainmenu.chat">Chat</span></a> -->
+            <a href="#" onclick="beamng.sendGameEngine('quit();')"><svg class="icon icon-exit" viewBox="0 0 32 32"><use xlink:href="#icon-exit"></use></svg>&nbsp;&nbsp;<span data-i18n="mainmenu.exit">Exit</span></a>
+            <a href="#" onclick="window.location.href='/html/controller.html';"><svg class="icon icon-wrench" viewBox="0 0 32 32"><use xlink:href="#icon-wrench"></use></svg>&nbsp;&nbsp;<span data-i18n="mainmenu.inputtest">Input Test</span></a>
         </nav>
         <div id='infobottom'>
             <div id='infoseperator'></div>
@@ -75,9 +77,6 @@
         </div>
     </div>
 
-    <button class='cefdev' onclick="javascript:location.reload();" style="width: 60px; height: 20px;
-        position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;">
-        ReloadUI
-    </button>
+    <input type="button" class='cefdev' onclick="javascript:location.reload();" style="height: 20px; position: absolute; left: 0px; top: 0px; margin: 0; padding: 0;" data-i18n="[value]common.reloadui" value="ReloadUI" />
 </body>
 </html>
