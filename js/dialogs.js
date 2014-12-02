@@ -398,7 +398,7 @@ var VehicleChooser = (function(){
     }
 
     function addColor(color, name){
-        var button = $("<div></div>").appendTo(vehiclePanel).colorButton({
+        var button = $("<div></div>").appendTo(colorPanel).colorButton({
             name:name,
             color:color,
             clickAction: function(element){
