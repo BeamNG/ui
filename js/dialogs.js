@@ -6,7 +6,7 @@ var VehicleChooser = (function(){
     var mainDiv;
     var selector, buttonarea, stepBackButton, applyButton;
 
-    var filterPanel, vehiclePanel, configurationsPanel;
+    var filterPanel, vehiclePanel, configurationsPanel,colorPanel;
 
     var vehicles;
 
@@ -130,7 +130,7 @@ var VehicleChooser = (function(){
                 });
                 vehicleinfo[name] = enrichedData;
             });
-            console.log(vehicleinfo);
+            //console.log(vehicleinfo);
 
             // Now the other way round: a vehicle needs all attributes from its configs
             // First convert the vehicles
@@ -157,7 +157,7 @@ var VehicleChooser = (function(){
                     }
                 });
             });
-            console.log(vehicleinfo);
+            //console.log(vehicleinfo);
             startupTimer.point('enrich Data');
             // Now build the searchtree
 
@@ -307,13 +307,21 @@ var VehicleChooser = (function(){
             renderConfigs();
             updateConfigs();
         }
+
+        colorPanel = $("<div></div>").appendTo(root);
+        renderColors();
+
+    }
+
+    function renderColors(){
         // Colorpart
+        colorPanel.empty();
         var startColor = defaultColor;
         if(choosen.color){
             startColor = choosen.color;
         }
-        root.append("<h2>Color</h2>");
-        var colorContainer = $('<div></div>').appendTo(root).css({
+        colorPanel.append("<h2>Color</h2>");
+        var colorContainer = $('<div></div>').appendTo(colorPanel).css({
             float: "left",
             margin: "2px"
         });
@@ -331,7 +339,7 @@ var VehicleChooser = (function(){
         // now get the last used colors
         if(localStorage.bngVehicleSelectorColors && localStorage.bngVehicleSelectorColors.length > 0){
             lastUsedColors = JSON.parse(localStorage.bngVehicleSelectorColors);
-            root.append("<h3>Last used colors</h3>");
+            colorPanel.append("<h3>Last used colors</h3>");
         }else{
             lastUsedColors = [];
         }
@@ -341,7 +349,7 @@ var VehicleChooser = (function(){
         });
         // now get the vehicle specific colors
         if(vehicleinfo[choosen.model].colors){
-            root.append("<h3>Factorycolors</h3>");
+            colorPanel.append("<h3>Factorycolors</h3>");
             $.each(vehicleinfo[choosen.model].colors[0], function(name, color) {
                 addColor(convertColor(color),name);
             });
@@ -353,6 +361,7 @@ var VehicleChooser = (function(){
         $.each(vehicles[choosen.model].configs, function(config, val) {
             if(configsExist && val.name == 'Default')
                 return;
+            console.log(val);
             $("<div></div>").appendTo(configurationsPanel).bigButton({
                 title: val.name,
                 clickAction: function(element){
@@ -361,6 +370,14 @@ var VehicleChooser = (function(){
                     });
                     element.addClass('selected');
                     choosen.configuration = config;
+                    var identifier = choosen.model+'\\'+choosen.configuration;
+
+                    console.log(vehicleinfo[identifier])
+                    if(vehicleinfo[identifier].default_color && vehicleinfo[identifier].colors[vehicleinfo[identifier].default_color]){
+                        choosen.color = vehicleinfo[identifier].colors[vehicleinfo[identifier].default_color];
+                        choosen.colorName = vehicleinfo[identifier].default_color;
+                        renderColors();
+                    }
                     console.log(choosen);
                     heading.text(getVehicleName(choosen.model+'\\'+choosen.configuration));
                     console.log(config);
