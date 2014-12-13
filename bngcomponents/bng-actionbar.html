@@ -1,0 +1,31 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<polymer-element name="bng-actionbar">
+  <template>
+    <link rel="stylesheet" type="text/css" href="panels.css">
+    <style>
+
+    :host {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: transparent;
+    }
+    .actionbar{
+      background-color: rgba(91, 91, 91, 0.908);
+      width: 100px;
+    }
+    </style>
+
+    <div horizontal center-justified layout center>
+      <div class="actionbar">
+        Actionbar
+      </div>
+    </div>   
+  </template>
+  <script>
+  Polymer({});
+  </script>
+</polymer-element>

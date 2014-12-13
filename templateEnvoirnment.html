@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/panel.css">
+
+    <script src="js/jquery.js"></script>
+    </head>
+
+
+    <body>
+        <div id="sidepanel" class="sidepanel">
+            <heading>Environment</heading>
+            <div class="breadcrumb flat">
+                <a href="" data-i18n="template.Dashboard">Dashboard</a>
+                <a href="" data-i18n="template.Environment">Environment</a>
+            </div>
+
+            <div class="picture">
+            </div>
+            <div class="description">
+            </div>
+            <div class="options">
+                <div class="select input">
+                    <p class="optionsHeading">Time of Day</p>
+                    <input type="radio" class="radioImg" value="A" name="weather" checked>
+                    <input type="radio" class="radioImg" value="B" name="weather">
+                    <input type="radio" class="radioImg" value="C" name="weather">
+                    <input type="radio" class="radioImg" value="D" name="weather">
+                    <input type="radio" class="radioImg" value="F" name="weather">
+                    <input type="checkbox" />
+                </div>
+                <div class="range input">
+                    <p class="optionsHeading">Weather</p>
+                    <input type="radio" class="radioImg" value="A" name="weather">
+                    <input type="radio" class="radioImg" value="B" name="weather">
+                    <input type="radio" class="radioImg" value="C" name="weather">
+                    <input type="checkbox" />
+                </div>
+                <div class="range input">
+                    <p class="optionsHeading">Cloud Cover</p>
+                    <input type="range" />
+                    <input type="checkbox" />
+                </div>
+                <div class="range input">
+                    <p class="optionsHeading">Precipitation</p>
+                    <input type="range" />
+                    <input type="checkbox" />
+                </div>
+                <div class="range input">
+                    <p class="optionsHeading">Fog / visibillity</p>
+                    <input type="range" />
+                    <input type="checkbox" />
+                </div>
+                <div class="range input">
+                    <p class="optionsHeading">Wind speed</p>
+                    <input type="range" />
+                    <input type="checkbox" />
+                </div>
+                <div class="range input">
+                    <p class="optionsHeading">Gravity</p>
+                    <!-- for gravity the scale should propably be logarithmic -->
+                    <input type="range" value="-9.8" min="-300" max="10" step="0.1" list="gravityList" id="gravity" oninput="rangeChangeOutput(this)" />
+                    <datalist id="gravityList">
+                        <option label="Sun">-274.0</option>
+                        <option label="Jupiter">-24.9</option>
+                        <option label="Neptune">-11.1</option>
+                        <option label="Earth">-9.8</option>
+                        <option label="Mars">-3.7</option>
+                        <option label="Moon">-1.6</option>
+                        <option label="Zero">0.0</option>
+                        <option label="Negative Earth">9.8</option>
+                    </datalist>
+                    <output id="gravityOutput">Earth</output>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="content">
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        //Init whatever hast to be initalised or alternativly do that in a loaded file
+    </script>
+    <script src="js/template.js"></script>
+</html>

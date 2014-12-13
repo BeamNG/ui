@@ -103,25 +103,26 @@ function timeSinceEpochAgo(epoch) {
     var interval = Math.floor(seconds / 31536000);
 
     if (interval > 1) {
-        return i18n.t('time.years_ago', { t: interval, defaultValue: "__t__ years ago" });
+        return i18n.t('time.years_ago', { t: interval, defaultValue: interval + " years ago" });
     }
     interval = Math.floor(seconds / 2592000);
     if (interval > 1) {
-        return i18n.t('time.months_ago', { t: interval, defaultValue: "__t__ months ago" });
+        return i18n.t('time.months_ago', { t: interval, defaultValue: interval + " months ago" });
     }
     interval = Math.floor(seconds / 86400);
     if (interval > 1) {
-        return i18n.t('time.days_ago', { t: interval, defaultValue: "__t__ days ago" });
+        return i18n.t('time.days_ago', { t: interval, defaultValue: interval + " days ago" });
     }
     interval = Math.floor(seconds / 3600);
     if (interval > 1) {
-        return i18n.t('time.hours_ago', { t: interval, defaultValue: "__t__ hours ago" });
+        return i18n.t('time.hours_ago', { t: interval, defaultValue: interval + " hours ago" });
     }
     interval = Math.floor(seconds / 60);
     if (interval > 1) {
-        return i18n.t('time.minutes_ago', { t: interval, defaultValue: "__t__ minutes ago" });
+        return i18n.t('time.minutes_ago', { t: interval, defaultValue: interval + " minutes ago" });
     }
-    return i18n.t('time.seconds_ago', { t: Math.floor(seconds), defaultValue: "__t__ seconds ago" });
+    interval = Math.floor(seconds);
+    return i18n.t('time.seconds_ago', { t: interval, defaultValue: interval + " seconds ago" });
 }
 function parseBBCode(text) {
     text = text.replace(/\[url=http:\/\/([^\s\]]+)\s*\](.*(?=\[\/url\]))\[\/url\]/g, '<a href="http-external://$1">$2</a>');
@@ -165,7 +166,7 @@ function updateChangelog() {
             versionhtml += "<div class='updates_versionheader'>";
             versionhtml += "<table border='0' width='100%'><tr><td><img class='ico' src='images/icons/bullet1.png'/> " + v.title;
             if(v.title == data.current) {
-                versionhtml += ' (' + i18n.t('steambranches.current') + ')';
+                versionhtml += ' (' + i18n.t('steambranches.current', {defaultValue: 'current'}) + ')';
             }
             if(typeof v.type !== 'undefined') {
                 versionhtml += " (" + i18n.t('steambranches.' + v.type, {defaultValue: v.type}) + ")";
@@ -247,7 +248,7 @@ $(document).ready(function () {
     // run beamng things
     if(typeof beamng !== 'undefined') {
         beamng.requestVersionInfo();
-        beamng.requestSteamInfo();
+        beamng.requestSteamInfo('gotSteamData');
         updateChangelog();
     }
 

@@ -11,7 +11,7 @@
 
 .pgGroupItemText
 {
-    padding:2px !important;
+    padding:3px !important;
     font-weight: bold;
     vertical-align: middle;
     border-top:1px solid #999;
@@ -21,10 +21,10 @@
 
 .pgInputHolder
 {
-    background-color: rgba(245,245,245, 0.9);     /* whitesmoke */
-    width: 150px;
+    background-color: rgba(245,245,245, 0.9);
     border-left:1px solid #eaebed;
     border-top:1px solid #999;
+    width: 150px;
 }
 
 .pgHeaderInput
@@ -49,8 +49,8 @@
 }
 
 .pgGroupTitle {
-    border-bottom: 1px solid #EAEBED;
-    background-color: rgba(192,210,238, 0.9);     /* #C1D2EE */
+    border-bottom: 1px solid #2E333C;
+    background-color: rgba(193, 210, 238, 1);   /* #C1D2EE */
     cursor: pointer;
 
     font-weight: bold;
@@ -91,12 +91,12 @@
     border-bottom:1px solid #eaebed;
 }
 
-/*
+
 .pgItemRow :hover {
     background-color:#2d6db5;
     color:white;
 }
-*/
+
 
 /********************************************/
 
@@ -110,6 +110,7 @@
     outline: none;
     border: none;
     border-color: transparent;
+    background-color: transparent;
 }
 
 .regular-checkbox {
@@ -148,7 +149,7 @@
     /* width:100%; BUG with 1px border invisible on the right :/ */ 
     width:100%;
     background-color:rgba(221,221,221,0.9);     /* #ddd */
-    border:1px solid #555;
+    border:1px solid #555;*/
     padding:0;
     margin:0;
     font-size:8pt !important;
@@ -249,15 +250,7 @@
     border-radius: 3px;
 }
 
-.pg input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 13px;
-    width: 6px;
-    background: #555;
-    border:1px solid #222;
-    margin-top:-4px;
-}
+
 
 .pg input[type=range]:focus {
     outline: none;
@@ -303,6 +296,16 @@
 .pg label {
     font-size:10pt;
     display:inline;
+}
+
+.pg input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+}
+
+.pg input[type="range"]::-webkit-slider-thumb {
+    height: 10px;
+    margin-top: -10px;
 }
 
 .propertyGridContainer

@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "OpenSans";
+    src: url(../fonts/OpenSans-Regular.ttf) format("truetype");
+}
+
+:host{
+    display: block;
+    position: absolute;
+    font-family: 'OpenSans';
+    color:white;
+    background-color: rgba(91, 91, 91, 0.908);
+    padding: 5px;
+}

@@ -1,0 +1,35 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<polymer-element name="bng-steam">
+  <template>
+    <link rel="stylesheet" type="text/css" href="panels.css">
+    <style>
+    :host {
+      bottom: 0;
+      right: 0;
+    }
+    </style>
+    <template if="{{steamData.working && steamData.loggedin}}">
+      <b>{{steamData.playerName}}</b><br/>
+      <template if="{{steamData.branch != 'public'}}">
+        {{steamData.branch}}<br/>
+      </template>
+      <template if="{{steamData.language != 'english'}}"> 
+        {{steamData.language}}
+      </template>
+    </template>
+  </template>
+  <script>
+  Polymer({
+    created: function(){
+      console.log("Created");
+      var self = this;
+      globalDecorator('gotSteamData',function(data){
+        self.steamData = data;
+        console.log(data);
+      });
+      beamng.requestSteamInfo('gotSteamData');
+    }
+  });
+  </script>
+</polymer-element>

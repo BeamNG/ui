@@ -10,9 +10,11 @@ function cefdev(v)
 }
 
 function gotCefContextNumber(v) {
-	cefcontext = v;
+    cefcontext = v;
 }
 
 // immediatelly update variable cefcontext
 // beware, it takes one frame to update
-beamng.getCEFContextNo();
+if(typeof beamng !== 'undefined') {
+    beamng.getCEFContextNo();
+}

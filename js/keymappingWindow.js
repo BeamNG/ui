@@ -7,7 +7,6 @@ var keymappingWindow = (function(){
 
     var selector = "";
 
-    //TODO: ask mirco about the structure of the json
 
 
     function html () {

@@ -1,0 +1,60 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/core-a11y-keys/core-a11y-keys.html">
+
+<link rel="import" href="bng-dashboard-menu.html">
+<link rel="import" href="bng-steam.html">
+<link rel="import" href="bng-timeofday.html">
+<link rel="import" href="bng-actionbar.html">
+
+<polymer-element name="bng-dashboard" attributes="overlay visible">
+  <template>
+    <style>
+    #container {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .static{
+      display: block;
+      background-color: rgba(128,128,128,0.4);      
+    }
+    .overlay{
+      background-color: rgba(128,128,128,0.4); 
+    }
+    </style>
+    <template if="{{visible || !overlay}}">
+      <div id="container" class="{{containerclass}}">
+        <bng-dashboard-menu></bng-dashboard-menu>
+        <bng-steam></bng-steam>
+        <template if="{{overlay}}">
+          <bng-timeofday></bng-timeofday>
+          <bng-actionbar></bng-actionbar>
+        </template>
+      </div>
+    </template>
+
+  </template>
+  <script>
+  Polymer({
+    overlay: false,
+    visible: true,
+    containerclass: 'static',
+    toggleVisibility: function(ev){
+      console.log(ev);
+    },
+    domReady: function(){
+      if(this.overlay){
+        this.containerclass = 'overlay';
+        var self = this;
+        window.addEventListener("keydown", function(evt) {
+          if(evt.keyCode == 27){
+            self.visible = !self.visible;
+          }
+        }, false);
+      }
+    }
+  });
+  </script>
+</polymer-element>

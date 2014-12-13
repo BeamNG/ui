@@ -1,0 +1,44 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<polymer-element name="bng-timeofday">
+  <template>
+    <link rel="stylesheet" type="text/css" href="panels.css">
+    <style>
+    :host {
+      top: 0;
+      right: 0;
+    }
+    </style>
+
+    <div><img src="../images/weather/{{tod.weathercondition}}.jpg"> {{tod.ingame}}</div>
+    <div>{{realtime}}</div>   
+  </template>
+  <script>
+  Polymer({
+    realtime : "12345566785690",
+    tod: {
+      ingame: "15:30",
+      weathercondition: "sunny"
+    },
+    domReady: function(){
+      var self = this;
+      this.realtimeInterval = setInterval(function(){
+        self.updateRealtime();
+      },1000);
+      
+    },
+    detached: function(){
+      clearInterval(this.realtimeInterval);
+    },
+    updateRealtime: function(){
+      var now = new Date();
+      var dateStr = "";
+      dateStr += now.getDay() + "." + (now.getMonth()+1)+ ", ";
+      dateStr += now.getHours() + ":" + now.getMinutes();
+      if(dateStr != this.realtime){
+        this.realtime = dateStr;
+      }
+    }
+  });
+  </script>
+</polymer-element>

@@ -1,8 +1,108 @@
 {
     "autohide": true,
     "title": ["UPDATES","EXPERIMENTAL BUILD"],
-    "current" : "0.3.6.7",
+    "current" : "0.3.7.0",
     "content" : [
+        {
+            "title" : "0.3.7.0",
+            "timestamp" : 1417972809,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixed random CTD on incorrect GPU buffer usage",
+                    "Improved loading times by improving the collada 3d model loading times",
+                    "Fixes unresponsive UI error message when idling in the menus for over 120 seconds",
+                    "Partmanager fixed: gets rebuild when the vehicle is changed",
+                    "When rotating vehicles, the debug mode is preserved now",
+                    "Fixed vehicle colors affecting all other spawned vehicles. It is now possible to spawn two vehicles of the same type with different color."
+                ]},
+                "Vehicle Content" : {"icon":"car", "list":[
+                    "new prop: large spinner",
+                    "Fixed hamster wheel materials",
+                    "Moonhawk pillar deformation improvements"
+                ]},
+                "Terrain Content" : {"icon":"world", "list":[
+                    "Updated IND and GM with the new models from DRI that were recently improved."
+
+                ]},
+                "Features" : {"icon":"cog", "list":[
+                    "Internationalization: Added Polish and French language basics. Should fit to the language you chose in steam. if steam is not running, it defaults to English."
+                ]}
+            }
+        },
+        {
+            "title" : "0.3.6.9",
+            "timestamp" : 1417424648,
+            "type" : "experimental",
+            "content" : {
+                "Blogpost" : {"icon":"application_home", "text": "You can also read this update as blogpost in our blog:[br][ico=page_world] [url=http://www.beamng.com/entries/106-November-2014-Progress-report]November 2014: Progress report[/url]"},
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Sync with latest Torque3D upstream (lots of bugfixes, some minor new features)",
+                    "more bugfixing on the new Scene Octree",
+                    "fixed lots of memory problems, errors and potential crashes, as well as used, uninitialized variables that were found during static code analysis.",
+                    "fixed bug #155 where objects rotation modified its scale: http://redmine.beamng.com/issues/155",
+                    "Changed default decalBias for fix DecalRoads render too high over terrain.",
+                    "3D roads now have collision",
+                    "Fixed crash to desktop bug on async shader compilation",
+                    "Fixed userpath usage: now the file is called 'userpath.ini' and works well with relative paths. (Also added examples to that file)",
+                    "Fixed some bugs on the XInput manager, improved xinput cache file format, added some default known controllers",
+                    "Lua FFB code now knows about the attached devices and can get the config",
+                    "Fixed invalid normals on 3d mesh loading",
+                    "Improved D3D9 fatal error messages: Now they produce a messagebox and show it to the user instead of the game failing in some undetermined way.",
+                    "More work on Force feedback, nearly usable now :)",
+                    "fixed simple gearbox app crashing the UI when no engine was installed",
+                    "Loading screen loads first now, fixing the half-rendered loading screens",
+                    "Fixed the new HTML part chooser",
+                    "Fixed Bug 'Beamng enters infinite loop if .swp file is present in vehicle directory'",
+                    "Fixed Bug #108 (http://redmine.beamng.com/issues/108): Restore driveshaft disabled status after user changes shifterMode.",
+                    "Removed cleanup.bat script. Please delete your cache folder simply if you want to clean the cache.",
+                    "Fixed Bug with red shifting in in grid map near big pipe",
+                    "Fixed console spam when changing focus with FFB enabled",
+                    "Fixed Input Test feature not working",
+                    "Printing command line args to logfile as well for better crash reporting",
+                    "New Vehicle Reset hook for UI apps",
+                    "slighly fixed up main menu links width",
+                    "Drivetrain: Fix for rotators and Optimizations."
+                ]},
+                "Vehicle Content" : {"icon":"car", "list":[
+                    "minor changes to the hamster wheel",
+                    "increased caster and SAI on hatch",
+                    "Fixes to the cannon and angletester lua",
+                    "New ramp prop, useful for loading things on the flatbed",
+                    "Semi fueltanks: fix for improperly mirrored coltris",
+                    "New prop; Metal Box, 100kg each",
+                    "Hatch: work on toe out/in",
+                    "Added a bit more power to stage 1 engine tuning on gavril v8s"
+                ]},
+                "Terrain Content" : {"icon":"world", "list":[
+                    "HR: collisions working + terrain edits, new preview image",
+                    "more textures added to HR + objects",
+                    "Fixed water detail adjust for all maps except DRI",
+                    "Added collision to a lot of the HR buildings + lod, minor improvements",
+                    "Fixed material case names causing errors on GM, HR stuff, etc",
+                    "improved the town base on eca",
+                    "updated UI Winds app",
+                    "Start bridge to HR, new lighting, start positions, checkered finish line, adjusted forest, road work, created checkpoints, terrain texture work, created new roadblock object"
+                ]},
+                "Features" : {"icon":"cog", "list":[
+                    "Vehicle rotation basics working: We can now spawn the vehicles with any rotation. Some minor usability problems are to be fixed in the upcoming days.",
+                    "64 Bit support basics added: We added support for 64 bit for Torque3D and it was quite soem work to get 64 bit support working well with all the libraries and the new Lua integration.",
+                    "Added little launcher that will launch the 32 bits (x86) or 64 bits (x64) version, depending on the operating system. The real binaries are now in separate folders as this is the only possible workaround.",
+                    "Added internationalization basics to the user interface. Not done at all yet, still WIP (needs to use the steam language if available)",
+                    "Lua basics integrated into Torque3D. We slowly replace the integrated scripting language with Lua.",
+                    "FMod re-integration tests (not published, for internal testing only)",
+                    "OpenAL sound backend integrated",
+                    "Joystick absolute axis support for spacemouse 3d support (also input map added for that)",
+                    "Mouse Cursor hiding: It hides itself automatically now if no activity is detected for a certain amount of time. This function is disabled for some special cases (cefdev, mainmenu)",
+                    "Triggers now work with the new T3D Lua",
+                    "new Thrustmaster TX F458 wheel input mapping",
+                    "The console now defaults to T3D Lua, also improved support for the other languages in there.",
+                    "added Fanatec Base v2 input mapping basics",
+                    "T3D Material selector defaulting to 100 materials per page, more materials per page possible now",
+                    "Improved Wheel debug UI App"
+                ]}
+            }
+        },
         {
             "title" : "0.3.6.7",
             "timestamp" : 1415703600,

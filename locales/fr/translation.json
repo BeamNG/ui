@@ -1,0 +1,114 @@
+{
+  "app": {
+    "name": "BeamNG.drive"
+  },
+  "mainmenu": {
+    "play": "Jouer",
+    "theteam": "L'équipe",
+    "exit": "Quitter",
+    "inputtest": "Test des entrées",
+    "options":"Options",
+    "chat":"Chat"
+  },
+  "common":{
+    "mainmenu":"Menu principal",
+    "back": "Revenir",
+    "reloadui": "recharger UI",
+    "version": "version __v__"
+  },
+  "time":{
+    "years_ago":"il y a __t__ années",
+    "months_ago":"il y a __t__ mois",
+    "days_ago":"il y a __t__ jours",
+    "hours_ago":"il y a __t__ heurs",
+    "minutes_ago":"il y a __t__ minutes",
+    "seconds_ago":"il y a __t__ secondes"
+  },
+  "steambranches":{
+    "public":"publique",
+    "experimental":"expérimental",
+    "current":"actuel"
+  },
+  "newsbox":{
+    "UPDATES":"MISE À JOUR",
+    "EXPERIMENTAL BUILD":"COMPILATION EXPÉRIMENTAL"
+  },  
+  "credits":{
+    "programmer":"Programmeur",
+    "vehicle_artist": "Artiste Véhicule",
+    "env_artist": "Artiste environnement",
+    "helping_hands": "Aide gracieuse",
+    "community": "Notre douce communauté",
+    "special_thanks":"Un merci spécial à",
+    "3rdpartysoftware":"Rendu possible grâce"
+  },
+  "options": {
+    "Options" : "Options",
+    "Graphics" : "Graphique",
+    "Audio" : "Audio",
+    "Post FX Manager" : "Gestionnaire FX",
+    "SSAO" : "SSAO",
+    "General" : "Général",
+    "Near" : "Près",
+    "Normal Maps" : "Texture des Normals",
+    "Far" : "Loin",
+    "HDR" : "HDR",
+    "Brightness" : "Luminosité",
+    "Bloom" : "Flou lumineux",
+    "Effects" : "Effets",
+    "Light Rays" : "Rayon lumineux",
+    "DOF" : "DOF",
+    "Auto Focus" : "Auto Focus",
+    "Color Correction": "Correction des couleurs",
+    "Display Drivertype" : "Type de driver d'affichage",
+    "Resolution" : "Résolution",
+    "Fullsreen" : "Plein écran",
+    "Vertical Sync" : "Synchro Vertical",
+    "Refresh Rate" : "Taux de Rafraîchissement",
+    "Mesh Quality" : "Qualité du modèle",
+    "Texture Quality" : "Qualité des Textures",
+    "Lighting Quality" : "Qualité de l'Éclairage",
+    "Anisotropic Filtering" : "Filtrage Anisotrope",
+    "Shader Quality" : "Qualité des Shader",
+    "Gamma" : "Gamma",
+    "Audio Provider" : "Fournisseur Audio",
+    "Audio Device" : "Périphérique Audio",
+    "Master Volume" : "Volume Principal",
+    "Interface Volume" : "Volume de l'Interface",
+    "Effects Volume" : "Volume des Effets",
+    "Music Volume" : "Volume de la Musique",
+    "Enabled" : "Activé",
+    "Quality" : "Qualité",
+    "Overall Strength" : "Force Globale",
+    "Blur (Softness)" : "Flou (Douceur)",
+    "Blur (Normal Maps)" : "Flou (Normal Maps)",
+    "Radius" : "Rayon",
+    "Strength" : "Force",
+    "Depth Min" : "Profondeur Min",
+    "Depth Max" : "Profondeur Max",
+    "Tolerance" : "Tolérance",
+    "Power" : "Puissance",
+    "Tone Mappping Contrast" : "Tone Mapping Contrast",
+    "Key Value" : "Valeur de la touche",
+    "Minimum Luminance" : "Luminance minimum",
+    "White Cutoff" : "Blanc enlevé",
+    "Brightness Adapt Rate" : "Luminosité Adapter le taux de",
+    "Enable Bloom" : "Activer Flou lumineux",
+    "Blur Multiplier" : "Multiplicateur de Flou",
+    "Blur \"Mean\" Value" : "Valeur moyenne du Flou",
+    "Blur \"Std Dev\" Value" : "Valeur \"Std Dev\" du Flou",
+    "Enable Color Shift" : "Activer Couleur Shift",
+    "Color" : "Couleur",
+    "Enable Auto Focus" : "Activer Auto Focus",
+    "Near Blur Max" : "Flou de près Max",
+    "Far Blur Max" : "Flou de loin Max",
+    "Focus Range (Min)" : "Plage de mise au point (Min)",
+    "Focus Range (Max)" : "Plage de mise au point (Max)",
+    "Blur Curve (Far)" : "Courbe du Flou (Loin)"
+  },
+  "template": {
+    "Dashboard" : "Tableau de bord",
+    "Environment" : "Environnement" 
+  }
+
+}

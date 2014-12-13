@@ -1,7 +1,5 @@
-
-i18n.init({ lng: 'de', debug: true }, function(t) {
+i18n.init({ lng: beamng.language, debug: false }, function(t) {
     $(document).ready(function() {
         $("body").i18n();
     });
 });
-

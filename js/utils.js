@@ -141,3 +141,16 @@ function Timer(name){
     this.toString = toString;
     this.print = print;
 }
+
+function globalDecorator(name, func){
+    if(window[name]){
+        var original = window[name];
+        var newF = func;
+        window[name] = function(){
+            func.apply(func,arguments);
+            original.apply(original,arguments);
+        }
+    }else{
+        window[name] = func;
+    }
+}

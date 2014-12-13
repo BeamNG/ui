@@ -150,3 +150,7 @@ function changePart(element) { // onchange
         setTimeout(buildPartmanager, 100) //fix this (having to call it twice) by adding update function in property grid
     }
 }
+
+HookManager.registerAllHooks({
+ onVehicleChange: buildPartmanager
+});

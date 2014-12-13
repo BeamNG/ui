@@ -22,7 +22,7 @@
     "days_ago":"__t__ days ago",
     "hours_ago":"__t__ hours ago",
     "minutes_ago":"__t__ minutes ago",
-    "seconds_ago":"__t__ seconds ago",
+    "seconds_ago":"__t__ seconds ago"
   },
   "steambranches":{
     "public":"public",
@@ -31,7 +31,7 @@
   },
   "newsbox":{
     "UPDATES":"UPDATES",
-    "EXPERIMENTAL BUILD":"EXPERIMENTAL BUILD",
+    "EXPERIMENTAL BUILD":"EXPERIMENTAL BUILD"
   },  
   "credits":{
     "programmer":"Programmer",
@@ -112,7 +112,9 @@
   },
   "template": {
     "Dashboard" : "Dashboard",
-    "Environment" : "Environment" 
+    "Environment" : "Environment",
+    "Options" : "Options",
+    "Partmanagment" : "Partmanagment"
   }
 
 }
