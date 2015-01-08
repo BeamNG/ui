@@ -3,7 +3,7 @@
 <link rel="import" href="../components/core-tooltip/core-tooltip.html">
 <link rel="import" href="../components/paper-ripple/paper-ripple.html">
 
-<polymer-element name="bng-menu-button" attributes="size">
+<polymer-element name="bng-menu-button" attributes="size name img">
   <template>
     <style>
     :host {
@@ -31,11 +31,12 @@
     <core-tooltip position="right">
       <div class="menu-button {{size}}">
         <paper-ripple fit></paper-ripple>
-        <content select="img"></content>
+        <img src="{{img}}">
       </div>
       <div tip>
         <div class="tooltip">
-          <content select="name"></content>
+          <span id="tooltiptext">{{name}}</span>
+          
         </div>
       </div>
     </core-tooltip>
@@ -43,7 +44,10 @@
   </template>
   <script>
   Polymer({
-    size: ""
+    size: "",
+    domReady: function(){
+      this.name = i18n.t(this.name);
+    }
   });
   </script>
 </polymer-element>

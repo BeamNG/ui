@@ -16,9 +16,7 @@
     </style>
 
     <template repeat="{{item, i in menu}}">
-      <bng-menu-button size="{{i>3 ? 'small' : ''}}">
-        <name>{{item.name}}</name>
-        <img src="{{item.image}}" />
+      <bng-menu-button size="{{i>3 ? 'small' : ''}}" name="{{item.name}}" img="{{item.image}}">
       </bng-menu-button>
     </template>
 
@@ -26,7 +24,7 @@
   <script>
   Polymer({
     menu: [
-      {name: "test", image: "test.png"},
+      {name: "mainmenu.play", image: "test.png"},
       {name: "test", image: "test.png"},
       {name: "test", image: "test.png"},
       {name: "test", image: "test.png"},
