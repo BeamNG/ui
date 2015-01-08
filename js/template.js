@@ -1,13 +1,13 @@
 //Some Singleton to create the sidepanel options, later Polymer?
 //TODO: Build Singleton
-var controls = {
-    "range": function () {
+// var controls = {
+//     "range": function () {
 
-    },
-    "select": function () {
+//     },
+//     "select": function () {
 
-    }
-}
+//     }
+// }
 
 
 var currentDescription = "";

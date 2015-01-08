@@ -3,21 +3,28 @@
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="css/dialogs.css">
+
+    <link rel="stylesheet" href="css/beamng.css">
+    <link rel="stylesheet" href="css/app.css">
+
     <link rel="stylesheet" type="text/css" href="css/panel.css">
-    <script src="js/sprintf.min.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/minimal.js"></script>
-
-    <script src="js/i18next-1.7.4.min.js"></script>
-    <script src="js/i18n.js"></script>
-
-    <script src="js/beamng.js"></script>
-    <script src="js/propertygrid.js"></script>
-    <script src="js/partmgmt.js"></script>
     <link rel="stylesheet" href="css/propertygridPanel.css">
 
-    <link rel="stylesheet" href="css/spectrum.css">
-    <script src="js/spectrum.js"></script>
+    <script src="js/minimal.js"></script>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.2.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/utils.js"></script>
+
+    <script src="js/propertygrid.js"></script>
+    <script src="js/partmgmt.js"></script>
+    
+    <script src="js/beamng.js"></script>
     </head>
 
 
@@ -26,8 +33,7 @@
             <heading data-i18n="template.Partmanagment">Partmanagment</heading>
             <br />
             <div class="breadcrumb flat">
-                <a href="" data-i18n="template.Dashboard">Dashboard</a>
-                <a href="" data-i18n="template.Partmanagment">Partmanagment</a>
+                <a href="#" onclick="window.location.href='/html/play.html';" data-i18n="template.Mainmenu">Mainmenu</a>
             </div>
 
             <div class="picture">
@@ -39,13 +45,14 @@
             </div>
         </div>
         <div id="content" class="content">
-            <div>
         </div>
     </body>
-
     <script type="text/javascript">
         //Init whatever hast to be initalised or alternativly do that in a loaded file
-        initPartmanager('.options')
+        $(document).ready(function() {
+            initPartmanager('.options'); //TODO: find out why this does not work
+            setTimeout(initPartmanager, 10, '.options'); //but this does
+        });
     </script>
     <script src="js/template.js"></script>
 </html>

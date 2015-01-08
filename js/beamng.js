@@ -9,8 +9,9 @@ var functionCallbackCounter = 0;
 function oUpdate(v)
 {
     objectData = v;
-
-    AppEngine.update(v);
+    if(typeof(AppEngine) !== 'undefined') {
+        AppEngine.update(v);
+    }
 }
 
 // beamng stub for the browser

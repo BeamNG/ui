@@ -118,6 +118,7 @@ function widgetEventHandler()
     var widgetName = arguments[1];
     var funcArgs = Array.prototype.slice.call(arguments, 2);
     var c = $('#'+widgetName);
+    //if(c.length == 0) return; //important if beamng-play.js is used in other files than play.html
     var tagName = c.prop("tagName");
     if(tagName == 'INPUT') {
         var ctrlType = c.attr('data-type') || c.attr('type');

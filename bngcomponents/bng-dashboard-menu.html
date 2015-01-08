@@ -1,5 +1,7 @@
 <link rel="import" href="../components/polymer/polymer.html">
 
+<link rel="import" href="bng-menu-button.html">
+
 <polymer-element name="bng-dashboard-menu">
   <template>
     <link rel="stylesheet" type="text/css" href="panels.css">
@@ -8,14 +10,31 @@
       top: 0;
       bottom: 0;
       left: 0;
-      width: 120px;
+      width: 170px;
+      background: transparent;
     }
     </style>
 
+    <template repeat="{{item, i in menu}}">
+      <bng-menu-button size="{{i>3 ? 'small' : ''}}">
+        <name>{{item.name}}</name>
+        <img src="{{item.image}}" />
+      </bng-menu-button>
+    </template>
 
-    Left iconmenu   
   </template>
   <script>
-  Polymer({});
+  Polymer({
+    menu: [
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"},
+      {name: "test", image: "test.png"}
+    ]
+  });
   </script>
 </polymer-element>

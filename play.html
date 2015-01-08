@@ -41,8 +41,6 @@
     <script src="js/options.js"></script>
     <script src="js/partmgmt.js"></script>
 
-    <script src="js/keymappingWindow.js"></script>
-
 
     
 
@@ -81,8 +79,8 @@
 </div>
 
 <div class="menu-content">
-<input type="button" data-rel="close" value="Options" data-mini="true" onclick="initOptions('#pg_wrapper_options');">
-<input type="button" data-rel="close" value="Part Config (WIP)" data-mini="true" onclick="initPartmanager('#pg_wrapper_partmgmt');">
+<input type="button" data-rel="close" value="Options" data-mini="true" onclick="window.location.href='/html/templateOptions.html';"> <!-- initOptions('#pg_wrapper_options'); -->
+<input type="button" data-rel="close" value="Part Config (WIP)" data-mini="true" onclick="window.location.href='/html/templatePartmgmt.html';"> <!-- initPartmanager('#pg_wrapper_partmgmt'); -->
 
 <div data-role="collapsible" data-inset="false" data-theme="a" data-mini="true" >
     <h3>Vehicles</h3>

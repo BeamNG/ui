@@ -1,0 +1,49 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<link rel="import" href="../components/core-tooltip/core-tooltip.html">
+<link rel="import" href="../components/paper-ripple/paper-ripple.html">
+
+<polymer-element name="bng-menu-button" attributes="size">
+  <template>
+    <style>
+    :host {
+      display: inline-block;
+    }
+    .menu-button {
+      background: rgba(150,150,150,0.8);
+      border: 5px solid rgba(100,100,100,0.8);
+      border-radius: 10px;
+      width: 154px;
+      height: 154px;
+      margin: 2px;    
+    }
+    .small{
+      width: 70px;
+      height: 70px;
+      border-width: 4px;
+    }
+    .tooltip {
+      font-size: 20pt;
+      padding: 10px;
+    }
+    </style>
+
+    <core-tooltip position="right">
+      <div class="menu-button {{size}}">
+        <paper-ripple fit></paper-ripple>
+        <content select="img"></content>
+      </div>
+      <div tip>
+        <div class="tooltip">
+          <content select="name"></content>
+        </div>
+      </div>
+    </core-tooltip>
+
+  </template>
+  <script>
+  Polymer({
+    size: ""
+  });
+  </script>
+</polymer-element>

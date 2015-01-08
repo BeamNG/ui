@@ -175,7 +175,7 @@ function BeamNGPropertyGrid(givenData) {
         console.log("ERROR: " + msg);
     };
 
-    function whatTodoWithWindow () { //TDODO: add some sort of update function
+    function whatTodoWithWindow () { //TODO: add some sort of update function
         var returnValue = {};
         returnValue.action = "open";
         returnValue.element = {};
@@ -195,18 +195,23 @@ function BeamNGPropertyGrid(givenData) {
     BeamNGPropertyGrid.prototype.work = function() {
         var container = data.rootElement;
         
-        var whatTodo = whatTodoWithWindow();
-        switch(whatTodo.action) {
-            case "close":
-                whatTodo.element.style.display = "none";
-                break;
-            case "close and open new":
-                whatTodo.element.style.display = "none";
-            default :
-                container.html(this.workRec(data, '', 0));  // first level is special
-                container.css("display", "block");
-                this.setDefaultValuesAndListeners();
-        }
+        // This is (and all related) only important in the old idea, the new has own html sites so only a update function is important
+        // var whatTodo = whatTodoWithWindow();
+        // switch(whatTodo.action) {
+        //     case "close":
+        //         whatTodo.element.style.display = "none";
+        //         break;
+        //     case "close and open new":
+        //         whatTodo.element.style.display = "none";
+        //     default :
+        //         container.html(this.workRec(data, '', 0));  // first level is special
+        //         container.css("display", "block");
+        //         this.setDefaultValuesAndListeners();
+        // }
+
+        container.html(this.workRec(data, '', 0));  // first level is special
+        container.css("display", "block");
+        this.setDefaultValuesAndListeners();
 
         //container.flexigrid();
         //console.log(html);

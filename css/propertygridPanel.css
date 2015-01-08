@@ -1,3 +1,8 @@
+select, input, label
+{
+    cursor: pointer;
+}
+
 
 .pgGroupItem
 {
@@ -58,22 +63,32 @@
     /*font-size: 1.2em;*/
 }
 
-.pgPlus
+.pgGroupTitle :hover {
+    background-color: rgba(100, 100, 100, 1);
+}
+
+
+.pgPlus, .pgMinus
 {
-    background-image: url('../images/plusSmall.png');
     background-repeat: no-repeat;
     background-position: 2px 50%;
     cursor: pointer;
-    padding-left:16px !important;
 }
-.pgMinus
-{
-    background-image: url('../images/minusSmall.png');
-    background-repeat: no-repeat;
-    background-position: 2px 50%;
-    cursor: pointer;
-    padding-left:16px !important;
+
+/* Has to be changed because chrome 34 does not handle it properly */
+td.pgPlus::before, td.pgMinus::before {
+    content: '►'; /* TODO: Change to the same as in the dropdowns? */
+    color: white;
+    float: left;
+    -webkit-transition: 0.15s all;
+    padding: 0 5px 0 5px;
 }
+
+td.pgMinus::before {
+    -webkit-transform:rotate(90deg);
+}
+
+
 
 .pgSpacer {
     /*background-color:rgba(211,211,211, 0.9);     /* lightgray */
@@ -286,7 +301,7 @@
     vertical-align:middle;
     padding:0px;
     margin:0px;
-    height: 18px;
+    /*height: 18px;*/
 }
 .pg tr {
     vertical-align:middle;
@@ -352,4 +367,21 @@ input[type="checkbox"] {
 
 .sp-preview {
     width: 80% !important;
+}
+
+
+
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: white;
+    -webkit-border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active  {
+    background: silver;
 }
