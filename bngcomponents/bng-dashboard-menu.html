@@ -16,7 +16,7 @@
     </style>
 
     <template repeat="{{item, i in menu}}">
-      <bng-menu-button size="{{i>3 ? 'small' : ''}}" name="{{item.name}}" img="{{item.image}}">
+      <bng-menu-button size="{{i>3 ? 'small' : ''}}" name="{{item.name}}" img="{{item.image}}" action="{{item.action}}">
       </bng-menu-button>
     </template>
 
@@ -24,8 +24,14 @@
   <script>
   Polymer({
     menu: [
-      {name: "mainmenu.play", image: "test.png"},
-      {name: "test", image: "test.png"},
+      {
+        name: "mainmenu.play", 
+        image: "test.png", 
+        action: function(){ 
+          beamng.sendGameEngine('MainMenuGui.onBtnPlay();')
+        } 
+      },
+      {name: "test", image: "test.png", action: function(){ console.log("This works :)");} },
       {name: "test", image: "test.png"},
       {name: "test", image: "test.png"},
       {name: "test", image: "test.png"},

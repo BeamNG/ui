@@ -3,7 +3,7 @@
 <link rel="import" href="../components/core-tooltip/core-tooltip.html">
 <link rel="import" href="../components/paper-ripple/paper-ripple.html">
 
-<polymer-element name="bng-menu-button" attributes="size name img">
+<polymer-element name="bng-menu-button" attributes="size name img action">
   <template>
     <style>
     :host {
@@ -29,7 +29,7 @@
     </style>
 
     <core-tooltip position="right">
-      <div class="menu-button {{size}}">
+      <div class="menu-button {{size}}" on-click="{{action}}">
         <paper-ripple fit></paper-ripple>
         <img src="{{img}}">
       </div>
