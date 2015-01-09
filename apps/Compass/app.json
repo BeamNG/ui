@@ -1,0 +1,23 @@
+{
+    "info": {
+        "name" : "Compass",
+        "author": "CarlosAir",
+        "version": "0.1",
+        "description": "Shows your current heading in a very easy to understand way."
+    },
+
+    "appearance": {
+        "background" : "transparent",
+        "resize" : "aspectRatio",
+        "size" : {
+            "initial" : [150,150],
+            "minimal" : [100,100],
+            "maximal" : [500,500]
+        }
+
+    },
+
+    "data": {
+        "streams" : ["sensors"]
+    }
+}

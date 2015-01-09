@@ -1,0 +1,20 @@
+{
+    "info": {
+        "name" : "Precision Compass",
+        "author": "CarlosAir",
+        "version": "0.1",
+        "description": "Shows your current heading in a more precise way."
+    },
+
+     "appearance": {
+      "background" : "opaque-simple",
+      "resize" : true,
+      "size" : {
+       "initial" : [280,56]
+      }
+     },
+
+    "data": {
+        "streams" : ["sensors"]
+    }
+}
