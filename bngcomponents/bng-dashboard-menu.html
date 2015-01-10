@@ -31,13 +31,29 @@
           beamng.sendGameEngine('MainMenuGui.onBtnPlay();')
         } 
       },
-      {name: "test", image: "test.png", action: function(){ console.log("This works :)");} },
-      {name: "test", image: "test.png"},
-      {name: "test", image: "test.png"},
-      {name: "test", image: "test.png"},
-      {name: "test", image: "test.png"},
-      {name: "test", image: "test.png"},
-      {name: "test", image: "test.png"}
+      {
+        name: "mainmenu.options", 
+        image: "test.png", 
+        action: function(){ 
+          window.location.href='/html/options.html'; 
+          beamng.sendGameEngine('Canvas.pushDialog(optionsDlg); Canvas.pushDialog(PostFXManager);')
+        } 
+      },
+      {
+        name: "mainmenu.theteam", 
+        image: "test.png", 
+        action: function(){ 
+          window.location.href='/html/credits.html'; 
+          beamng.sendGameEngine('MainMenuGui.creditsToggle();');
+        } 
+      },
+      {
+        name: "mainmenu.exit", 
+        image: "test.png", 
+        action: function(){ 
+          beamng.sendGameEngine('quit();');
+        } 
+      }
     ]
   });
   </script>

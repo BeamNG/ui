@@ -3,6 +3,12 @@ select, input, label
     cursor: pointer;
 }
 
+select
+{
+    -webkit-appearance: none;
+    background: url("../images/triangle.png") no-repeat right;
+    padding-right: 20px !important;
+}
 
 .pgGroupItem
 {
