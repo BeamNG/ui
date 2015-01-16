@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/panel.css">
+    <script src="js/sprintf.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/minimal.js"></script>
+
+    <script src="js/i18next-1.7.4.min.js"></script>
+    <script src="js/i18n.js"></script>
+
+    <script src="js/beamng.js"></script>
+    <script src="js/propertygrid.js"></script>
+    <script src="js/options.js"></script>
+    <link rel="stylesheet" href="css/propertygridPanel.css">
+
+    <link rel="stylesheet" href="css/spectrum.css">
+    <script src="js/spectrum.js"></script>
+</head>
+
+<body>
+<div id="sidepanel" class="sidepanel">
+    <heading>Levels</heading>
+    <br/>
+
+    <div class="breadcrumb flat">
+        <a href="#" onclick="window.location.href='/html/mainmenu.html'; " data-i18n="template.Dashboard">Dashboard</a>
+        <a href="#" data-i18n="template.Levels">Levels</a>
+    </div>
+
+    <div class="picture">
+        <img src="images/AppDefault.png" width="320" height="154">
+    </div>
+    <div class="title">
+    </div>
+    <div class="description">
+    </div>
+    <div class="options" style="opacity: 0.3">
+        <div class="select input">
+            <p class="optionsHeading">Time of Day</p>
+            <input type="radio" class="radioImg" value="A" name="time">
+            <input type="radio" class="radioImg" value="B" name="time" checked>
+            <input type="radio" class="radioImg" value="c" name="time">
+            <input type="radio" class="radioImg" value="D" name="time">
+            <input type="radio" class="radioImg" value="E" name="time">
+            <input type="checkbox"/>
+        </div>
+        <div class="select input">
+            <p class="optionsHeading">Weather</p>
+            <input type="radio" class="radioImg" value="A" name="weather" checked>
+            <input type="radio" class="radioImg" value="B" name="weather">
+            <input type="radio" class="radioImg" value="B" name="weather">
+            <input type="checkbox"/>
+        </div>
+    </div>
+    <button type="button" class="go" data-i18n="template.Start" id="startLevel">START</button>
+</div>
+<div id="content" class="content">
+</div>
+</body>
+
+<script type="text/javascript">
+    var levelList = [],
+        selectedIndex = null;
+
+    function listColoring(name) {
+        var newIndex = null;
+
+        var list = document.getElementsByName(name);
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].checked) {
+                list[i].parentNode.style.backgroundColor = "rgb(253, 141, 0)";
+                newIndex = i;
+            } else {
+                list[i].parentNode.style.backgroundColor = "white";
+            }
+        }
+
+        selectedIndex = newIndex;
+
+        return newIndex;
+    }
+
+    function createOptionsList(list, name, indexPrechecked) {
+        var html = "";
+        for (var i = 0; i < list.length; i++) {
+            html += '<div class="listElement hoverDes" title="' + list[i].description + '">';
+            html += '<input type="radio" id="' + name + list[i].value + '" value="' + list[i].value + '" name="' + name + '" ' +
+            (i == indexPrechecked ? "checked " : "") + '>';
+            html += '<label for="' + name + list[i].value + '">';
+            html += '<img src="' + list[i].img + '" width="250" height="120">';
+            html += '<p>' + list[i].name + '</p>';
+            html += '</label>';
+            html += '</div>';
+        }
+        return html;
+    }
+
+    function initOptionsList(wrapperId, list, name, indexPrechecked) {
+        document.getElementById(wrapperId).innerHTML = createOptionsList(list, name, indexPrechecked);
+
+        listColoring(name);
+
+        changeDescription(levelList[indexPrechecked].description, levelImgPath(indexPrechecked), levelList[indexPrechecked].name);
+
+        $("input[name=" + name + "]").click(function () {
+            var idx = listColoring(this.name);
+
+            changeDescription(levelList[idx].description, levelImgPath(idx), levelList[idx].name);
+        });
+
+        $("#startLevel").click(startLevel.bind(this));
+    }
+
+    function levelImgPath(idx) {
+        return "../levels/" + levelList[idx].baseName + "/" + levelList[idx].baseName + "_preview.png";
+    };
+
+    function startLevel() {
+        $("body").hide();
+
+        setTimeout(function() {
+            beamng.sendGameEngine('startLevel("levels/' + levelList[selectedIndex].baseName + '/' + levelList[selectedIndex].baseName + '.mis");')
+        }, 50);
+    };
+
+    $(document).ready(function () {
+        // temporary
+        $(".options *").attr("disabled", "disabled").off('click');
+
+        setTimeout(function () {
+            callGameEngineFuncCallback("getLevelList()", function (res) {
+                for (var i = 0; i < res.length; i++) {
+                    levelList.push({
+                        name: res[i][1],
+                        baseName: res[i][0],
+                        value: i,
+                        img: "../levels/" + res[i][0] + "/" + res[i][0] + "_preview.png",
+                        description: res[i][2]
+                    });
+                }
+                ;
+
+                initOptionsList("content", levelList, "level", 0);
+            });
+        }.bind(this), 50);
+    });
+</script>
+<script src="js/template.js"></script>
+</html>

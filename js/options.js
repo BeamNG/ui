@@ -21,7 +21,7 @@ function initOptions(wrapper_div) {
         childs: {
             options: {
                 name: to("Options"),
-                    //close:{name:"close"),type:'button', cmdJs:'$(usageElements[this.id].ctrl.selector).closest(".pg_wrapper_play").css("display"), "none")'}
+                //close:{name:"close"),type:'button', cmdJs:'$(usageElements[this.id].ctrl.selector).closest(".pg_wrapper_play").css("display"), "none")'}
                 // type:'enable',
                 // val:true,
                 collapsed: false,
@@ -61,15 +61,9 @@ function initOptions(wrapper_div) {
                         },
                     }
                 },
-                // bottom:{
-                //     auto_detect_quality:{name: to("Auto Detect Quality"),type:'button',cmdJs:'',cmdTs:'',cmdLua:[], paramLua:[]}
-                // }
             },
             postFxManager: {
                 name: to("Post FX Manager"),
-                // type:'combo',
-                // options:["test"), "test2"],
-                // val: "test"),
                 collapsed: false,
                 childs: {
                     ssao : {
@@ -123,7 +117,6 @@ function initOptions(wrapper_div) {
                     },
                     hdr : {
                         name: to("HDR"),
-                        // collapsed: false,
                         childs: {
                             brightness: {
                                 name: to("Brightness"),
@@ -148,7 +141,6 @@ function initOptions(wrapper_div) {
                             },
                             effects: {
                                 name: to("Effects"),
-                                // collapsed: false,
                                 childs: {
                                     enable_color_shift:{name: to("Enable Color Shift"),type:'bool',val:false, onChange:onTSChangeDirect, tsCb:'Settings_PostFX_HDR_Effects_enable_color_shift' },
                                     color:{name: to("Color"),type:'color',val:'255 0 0', onChange:onTSChangeDirect, tsCb:"Settings_PostFX_HDR_Effects_color_shift"},
@@ -194,13 +186,7 @@ function initOptions(wrapper_div) {
                             // @TODO some file picker
                         }
                     }
-                },
-                // bottom: {
-                //     load_preset:{name: to("Load Preset..."),type:'button',cmdJs:'',cmdTs:'',cmdLua:[], paramLua:[]},
-                //     save_preset:{name: to("Save Preset..."),type:'button',cmdJs:'',cmdTs:'',cmdLua:[], paramLua:[]},
-                //     revert:{name: to("Revert"),type:'button',clearChanges: true,cmdJs:'',cmdTs:'',cmdLua:[], paramLua:[]},
-                //     save:{name: to("Save"),type:'button',cmdJs:'alert("test")',cmdTs:'cmdTs',cmdLua:['cmdLua'], paramLua:['param']}
-                // }
+                }
             }
         }
     };
@@ -267,8 +253,7 @@ function onUpdateOptionValue( path, value, options ) {
 }
 
 function initPG() {
-    //console.log(data);
-    //For debugging normaly with var
-    pg = new BeamNGPropertyGrid(data);
+    // console.log(data);
+    var pg = new BeamNGPropertyGrid(data);
     pg.init();
 }

@@ -22,8 +22,16 @@ function rangeChangeOutput (elem) {
     document.getElementById(elem.id + "Output").value = value;
 }
 
-function changeDescription (text) {
+function changeDescription (text, img, title) {
     document.getElementsByClassName("description")[0].innerHTML = text;
+
+    if( img !== undefined ) {
+        document.querySelector(".picture img").src = img;
+    }
+
+    if( title !== undefined ) {
+        document.getElementsByClassName("title")[0].innerHTML = title;
+    }
 }
 
 

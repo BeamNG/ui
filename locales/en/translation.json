@@ -114,7 +114,8 @@
     "Dashboard" : "Dashboard",
     "Environment" : "Environment",
     "Options" : "Options",
-    "Partmanagment" : "Partmanagment"
+    "Partmanagment" : "Partmanagment",
+    "Start": "START"
   }
 
 }

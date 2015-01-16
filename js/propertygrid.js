@@ -76,7 +76,7 @@ function BeamNGPropertyGrid(givenData) {
         if(has_childs) td_classes += ' pgGroupTitle ';
 
         if(has_name) {
-            res += '<td id="' + d.path + '.description" class="pgGroupItemText' /*when changing class name change as well in partmgmt.js*/+ td_classes + '"' + (has_value ? '' : ' colspan="2"') + ')><label for="' + d.path + '">' + d.name + '</label></td>';
+            res += '<td id="' + d.path + '.description" class="pgGroupItemText' /*when changing class name change as well in partmgmt.js*/+ td_classes + '"' + (has_value ? '' : ' colspan="2"') + '><label for="' + d.path + '">' + d.name + '</label></td>';
         }
 
 
@@ -121,9 +121,9 @@ function BeamNGPropertyGrid(givenData) {
         'color' : function PGColor(d) {
             this.selector = '#' + escapeJQuerySelector(d.path);
             PGColor.prototype.get    = function()    { return $(this.selector).val(); };
-            PGColor.prototype.set    = function(v)   { $(this.selector).val(v); };
+            PGColor.prototype.set    = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true, showButtons: false, color:v});};
             PGColor.prototype.create = function()    { return '<input type="text" name="' + d.path + '" id="' + d.path + '">'; };
-            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true}); };
+            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true, showButtons: false, color:d.val}); console.log(d.val)};
         },
         'enable' : function PGEnable (d) {
             this.selector = '#' + escapeJQuerySelector(d.path);
@@ -175,39 +175,8 @@ function BeamNGPropertyGrid(givenData) {
         console.log("ERROR: " + msg);
     };
 
-    function whatTodoWithWindow () { //TODO: add some sort of update function
-        var returnValue = {};
-        returnValue.action = "open";
-        returnValue.element = {};
-
-        $.each($(".pg"), function(k, v) {
-            if(v.id == data.rootElement[0].id && v.style.display == "block") {
-                returnValue.action = "close";
-                returnValue.element = v;
-            } else if (v.id != data.rootElement[0].id && v.style.display == "block") {
-                returnValue.action = "close and open new";
-                returnValue.element = v;
-            }
-        });
-        return returnValue;
-    }
-
     BeamNGPropertyGrid.prototype.work = function() {
         var container = data.rootElement;
-        
-        // This is (and all related) only important in the old idea, the new has own html sites so only a update function is important
-        // var whatTodo = whatTodoWithWindow();
-        // switch(whatTodo.action) {
-        //     case "close":
-        //         whatTodo.element.style.display = "none";
-        //         break;
-        //     case "close and open new":
-        //         whatTodo.element.style.display = "none";
-        //     default :
-        //         container.html(this.workRec(data, '', 0));  // first level is special
-        //         container.css("display", "block");
-        //         this.setDefaultValuesAndListeners();
-        // }
 
         container.html(this.workRec(data, '', 0));  // first level is special
         container.css("display", "block");
@@ -387,75 +356,4 @@ function BeamNGPropertyGrid(givenData) {
             }
         });
     };
-
-    /*This should not be important if every value is set on its change
-
-    BeamNGPropertyGrid.prototype.getChangedValues = function(d, changedInputs) {
-        if(changedInputs == "undefined") {
-            changedInputs = {};
-        }
-        if(typeof d.childs != "undefined") {
-            for(var k in d.childs) {
-                this.getChangedValues(d.childs[k], changedInputs);
-            }
-        } else if(d.valOrig != d.val) {
-            changedInputs[d.path] = d;
-        }
-    };
-
-    BeamNGPropertyGrid.prototype.revertChanges = function(data) {
-        var changedInputs = {}
-
-        this.getChangedValues(data, changedInputs);
-
-        $.each(changedInputs, function(path, d) {
-            d.val = d.valOrig;
-            d.ctrl.set(d.val);
-        });
-        colorElements(data);
-    };
-
-    function colorElements(d, changeHeader) {
-        // '#ffdddd'
-        // console.log("\n")
-        // console.log(d.name)
-        if(typeof d.childs != "undefined") {
-            var levelBool = false;
-            for(var k in d.childs) {
-                levelBool = (colorElements(d.childs[k], changeHeader) || levelBool);
-            }
-            levelBool ? colorElement(d.ctrl.selector, "header", "#ffdddd") : colorElement(d.ctrl.selector, "header", "")
-            return levelBool;
-        } else if(typeof d.ctrl != "undefined") {
-            if(d.ctrl.get() != d.valOrig) {
-                // console.log("color in")
-                colorElement(d.ctrl.selector, d.type, "#ffdddd")
-                return true;
-            } else {
-                // console.log("reset color")
-                colorElement(d.ctrl.selector, d.type, "")
-                return false;
-            }
-        }
-    }
-
-    
-    function colorElement(selector, type, color) {
-        var element;
-        switch(type) {
-            case "slider":
-                element = $(selector).closest("table");
-                break;
-            case "combo":
-                element = $(selector)
-                break;
-            case "header":
-                element = $(selector).closest("tr");
-                break;
-            default:
-                element = $(selector).closest("td");
-        }
-        element.css("background-color", color);
-    }
-    */
 }

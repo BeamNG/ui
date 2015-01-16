@@ -8,6 +8,7 @@ select
     -webkit-appearance: none;
     background: url("../images/triangle.png") no-repeat right;
     padding-right: 20px !important;
+    background-position: right 5px center;
 }
 
 .pgGroupItem
@@ -74,24 +75,19 @@ select
 }
 
 
-.pgPlus, .pgMinus
-{
-    background-repeat: no-repeat;
-    background-position: 2px 50%;
-    cursor: pointer;
-}
 
-/* Has to be changed because chrome 34 does not handle it properly */
+
+/*Could be changed to fit the refresh rate of the gui ingame*/
 td.pgPlus::before, td.pgMinus::before {
-    content: '►'; /* TODO: Change to the same as in the dropdowns? */
+    content: url("../images/triangle.png");
     color: white;
-    float: left;
+    display: inline-block;
     -webkit-transition: 0.15s all;
     padding: 0 5px 0 5px;
 }
 
-td.pgMinus::before {
-    -webkit-transform:rotate(90deg);
+td.pgPlus::before {
+    -webkit-transform:rotate(-90deg);
 }
 
 

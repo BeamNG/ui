@@ -85,8 +85,15 @@ option {
     width: 100%;
 }
 
+.sidepanel > .title {
+    font-size: 1.7em;
+    font-family: 'OpenSansBold';
+    margin-bottom: 10px;
+    height: 40px;
+}
+
 .sidepanel > .description {
-    /*height: 100px;*/
+    height: 100px;
     width: 100%;
     margin-bottom: 20px;
 }
@@ -155,8 +162,20 @@ option {
     background-color: white;
 }
 
+.sidepanel > .options input[type="checkbox"]:checked:after {
+    content: '';
+    position: absolute; /*TODO: is ther a better way to do this?*/
+    right: 10px;
+    width: 14px;
+    height: 9px;
+    -webkit-transform: scale(0.707) rotate(135deg);
+    z-index: 1;
+    border-top: 5px solid rgba(126, 126, 126, 1);
+    border-right: 5px solid rgba(126, 126, 126, 1);
+}
+
 .sidepanel > .options input[type="radio"] {
-    -webkit-appearance: none;
+        -webkit-appearance: none;
 }
 
 .sidepanel > .options .radioImg {
@@ -308,7 +327,8 @@ option {
 
 .content {
     position: absolute;
-    height: 100%;
+    bottom: 0;
+    top: 0;
     left: 345px;
     right: 0;
     padding: 10px;

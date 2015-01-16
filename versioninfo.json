@@ -1,32 +1,43 @@
 {
     "autohide": true,
     "title": ["UPDATES","EXPERIMENTAL BUILD"],
-    "current" : "0.3.7.0",
+    "current" : "0.3.7.1",
     "content" : [
         {
-            "title" : "0.3.7.0",
-            "timestamp" : 1417972809,
+            "title" : "0.3.7.1",
+            "timestamp" : 1421112581,
             "type" : "experimental",
             "content" : {
                 "Bugfixes" : {"icon":"bug", "list":[
-                    "Fixed random CTD on incorrect GPU buffer usage",
-                    "Improved loading times by improving the collada 3d model loading times",
-                    "Fixes unresponsive UI error message when idling in the menus for over 120 seconds",
-                    "Partmanager fixed: gets rebuild when the vehicle is changed",
-                    "When rotating vehicles, the debug mode is preserved now",
-                    "Fixed vehicle colors affecting all other spawned vehicles. It is now possible to spawn two vehicles of the same type with different color."
+                    "Fixed a crash when exiting the level editor",
+					"Fixed a crash when clicking OK on a parts selector dialog",
+					"Shading issue that was affecting most vehicles",
+					"Console spam when changing focus with FFB enabled",
+					"Electrics not working if the vehicle has no engine",
+					"Vehicle color affects others of the same type",
+					"Water camera effect happening outside of water",
+					"Pedals UI app having a heavy impact on FPS",
+					"Derby having no boundaries",
+					"Tree lod bug on East Coast"
                 ]},
                 "Vehicle Content" : {"icon":"car", "list":[
-                    "new prop: large spinner",
-                    "Fixed hamster wheel materials",
-                    "Moonhawk pillar deformation improvements"
+                    "New prop: Large Spinner",
+					"New prop: Street Light",
+                    "Sunburst model, texture and deformation tweaks",
+                    "Tuned pillar deformation on all cars to be more realistic",
+					"Added more power to the stage 1 engine tuning on the Gavril V8 engines"		
                 ]},
                 "Terrain Content" : {"icon":"world", "list":[
-                    "Updated IND and GM with the new models from DRI that were recently improved."
-
+					"East Coast performance improvements",
+					"Improved Hirochi Raceway collisions",
+					"Improved lighting on East Coast, USA",		
+					"Industrial, Gridmap and Dry Rock Island model improvements",
+					"Improved East Coast grass textures"					
                 ]},
                 "Features" : {"icon":"cog", "list":[
-                    "Internationalization: Added Polish and French language basics. Should fit to the language you chose in steam. if steam is not running, it defaults to English."
+                    "New level selector (WIP)",
+					"New options menu (WIP)",
+					"New parts configuration menu (WIP)"
                 ]}
             }
         },
