@@ -65,7 +65,7 @@
     replaceInput = [
         "<div class='sp-replacer'>",
             "<div class='sp-preview'><div class='sp-preview-inner'></div></div>",
-            "<div class='sp-dd'>&#9660;</div>",
+            "<div class='sp-dd'></div>",
         "</div>"
     ].join(''),
     markup = (function () {

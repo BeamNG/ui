@@ -1,43 +1,81 @@
 {
-    "autohide": true,
+    "autohide": false,
     "title": ["UPDATES","EXPERIMENTAL BUILD"],
-    "current" : "0.3.7.1",
+    "current" : "0.3.7.3",
     "content" : [
         {
+            "title" : "0.3.7.3",
+            "timestamp" : 1421891613,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixed crash to desktop on ALT+TAB (specifically on loosing the device while locking a vertex buffer)",
+                    "Improved D3D crash messages",
+                    "Fixed crash to desktop in async shader generation"
+                ]},
+                "Vehicle Content" : {"icon":"car", "list":[
+                    "Minor work on Sunburst fenders",
+                    "Tweaked driver cam on sunburst",
+                    "More work on Sunburst interior",
+                    "revised light softness and shadow res on all cars",
+                    "WIP cab textures added to T75",
+                    "Minor bugfixes on the sunburst",
+                    "Fixed Sunburst 2.0 Sport trim engine bug"
+                ]},
+                "Terrain Content" : {"icon":"world", "list":[
+                    "Fixed Industrial, loads correctly now"
+                ]}
+            }
+        },
+        {
+            "title" : "0.3.7.2",
+            "timestamp" : 1421799687,
+            "type" : "experimental",
+            "content" : {
+                "Bugfixes" : {"icon":"bug", "list":[
+                    "Fixes problems with custom levels using doublequotes as part of the description",
+                    "Fixed buffer overflow causing multiple crashes"
+                ]},
+                "Vehicle Content" : {"icon":"car", "list":[
+                    "Improved textureformat of normalmaps: less noisy"
+                ]}
+            }
+        },
+        {
             "title" : "0.3.7.1",
-            "timestamp" : 1421112581,
+            "timestamp" : 1421772106,
             "type" : "experimental",
             "content" : {
                 "Bugfixes" : {"icon":"bug", "list":[
                     "Fixed a crash when exiting the level editor",
-					"Fixed a crash when clicking OK on a parts selector dialog",
-					"Shading issue that was affecting most vehicles",
-					"Console spam when changing focus with FFB enabled",
-					"Electrics not working if the vehicle has no engine",
-					"Vehicle color affects others of the same type",
-					"Water camera effect happening outside of water",
-					"Pedals UI app having a heavy impact on FPS",
-					"Derby having no boundaries",
-					"Tree lod bug on East Coast"
+                    "Fixed a crash when clicking OK on a parts selector dialog",
+                    "Shading issue that was affecting most vehicles",
+                    "Console spam when changing focus with FFB enabled",
+                    "Electrics not working if the vehicle has no engine",
+                    "Vehicle color affects others of the same type",
+                    "Water camera effect happening outside of water",
+                    "Pedals UI app having a heavy impact on FPS",
+                    "Derby having no boundaries",
+                    "Tree lod bug on East Coast"
                 ]},
                 "Vehicle Content" : {"icon":"car", "list":[
                     "New prop: Large Spinner",
-					"New prop: Street Light",
+                    "New prop: Street Light",
                     "Sunburst model, texture and deformation tweaks",
                     "Tuned pillar deformation on all cars to be more realistic",
-					"Added more power to the stage 1 engine tuning on the Gavril V8 engines"		
+                    "Added more power to the stage 1 engine tuning on the Gavril V8 engines"        
                 ]},
                 "Terrain Content" : {"icon":"world", "list":[
-					"East Coast performance improvements",
-					"Improved Hirochi Raceway collisions",
-					"Improved lighting on East Coast, USA",		
-					"Industrial, Gridmap and Dry Rock Island model improvements",
-					"Improved East Coast grass textures"					
+                    "East Coast performance improvements",
+                    "Improved Hirochi Raceway collisions",
+                    "Improved lighting on East Coast, USA",        
+                    "Industrial, Gridmap and Dry Rock Island model improvements",
+                    "Improved East Coast grass textures"                    
                 ]},
                 "Features" : {"icon":"cog", "list":[
                     "New level selector (WIP)",
-					"New options menu (WIP)",
-					"New parts configuration menu (WIP)"
+                    "New options menu (WIP)",
+                    "New parts configuration menu (WIP)"
                 ]}
             }
         },

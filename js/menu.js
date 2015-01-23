@@ -78,8 +78,16 @@ function playNewEntry() {
     $('#infobox').html(currentEntry[1] + '<br/>' + currentEntry[2]);
 }
 
-function gotGameVersion(versionStr) {
+function gotGameVersion(versionStr, buildInfoStr) {
     $('#beamngversion').html(i18n.t('common.version', { v: versionStr, defaultValue: 'version ' + versionStr }));
+    $('#beamngbuildinfo').html(buildInfoStr);
+    
+    $('#beamngversion').click(function() {
+        $('#beamngbuildinfo').slideToggle('fast', function() {
+            // Animation complete.
+        });
+    });
+
 }
 function gotSteamData(data) {
     //console.log("steam data:");

@@ -110,6 +110,11 @@
 
             changeDescription(levelList[idx].description, levelImgPath(idx), levelList[idx].name);
         });
+        $("input[name=" + name + "]").dblclick(function () {
+            var idx = listColoring(this.name);
+            changeDescription(levelList[idx].description, levelImgPath(idx), levelList[idx].name);
+			startLevel();
+		});
 
         $("#startLevel").click(startLevel.bind(this));
     }

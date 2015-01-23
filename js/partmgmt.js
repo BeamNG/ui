@@ -37,7 +37,7 @@ function buildpartPGConfig(slotMap, description, prefix) {
             name: description[k].replace(prefix, ""),
             id: k,
             type: 'combo',
-            collapsed: true,
+            collapsed: true, //to who ever changed this: do you think this is a good idea if you open everything allways and are confrontet with about 40 Parts at once instead of only the several groups? Feel free to set it to false again if you think so, I wont change it again 
             options: options,
             val: selection,
             childs: childParts,

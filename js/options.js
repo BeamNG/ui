@@ -8,6 +8,7 @@ function initOptions(wrapper_div) {
 
     // this function updates TS values when they are changed, removing the need of the apply button
     function onTSChangeDirect(info) {
+        //console.log("setSettingsValue( \"" + info.id + "\",  \"" +  info.tsCb + "\", \"" + info.val + "\" );")
         beamng.sendGameEngine("setSettingsValue( \"" + info.id + "\",  \"" +  info.tsCb + "\", \"" + info.val + "\" );");
         return true;
     }
@@ -32,9 +33,9 @@ function initOptions(wrapper_div) {
                         // type:'combo', 
                         // options:["test"), "test2"],
                         childs:{
-                            display_driver:{name: to("Display Drivertype"),type:'combo',tsCb:'Settings_Graphic_display_driver'},
+                            display_driver:{name: to("Display Driver"),type:'combo',tsCb:'Settings_Graphic_display_driver'},
                             resolutions:{name: to("Resolution"),type:'combo', onChange:onTSChangeDirect, tsCb:'Settings_Graphic_resolutions' },
-                            fullscreen:{name: to("Fullsreen"),type:'bool', val:true, onChange:onTSChangeDirect, tsCb:'Settings_Graphic_fullscreen'},
+                            fullscreen:{name: to("Fullscreen"),type:'bool', val:true, onChange:onTSChangeDirect, tsCb:'Settings_Graphic_fullscreen'},
                             //borderless:{name: to("Borderless"),type:'bool', onChange:onTSChangeDirect, tsCb:'Settings_Graphic_borderless'},
                             sync:{name: to("Vertical Sync"),type:'bool', val:false, onChange:onTSChangeDirect, tsCb:'Settings_Graphic_Sync'},
                             refresh_rate:{name: to("Refresh Rate"),type:'combo', onChange:onTSChangeDirect, tsCb:'Settings_refresh_rate'},
@@ -206,7 +207,7 @@ function updateOptionsData()
 
 function updateOptionNodeValue( path, node )
 {    
-    if( typeof node.tsCb !== 'undefined' ) {        
+    if( typeof node.tsCb !== 'undefined' ) {      
          var cmd = "getSettingsValue( \"" + path + "\",  \"" +  node.tsCb + "\" ); ";
          //console.log( cmd );
          beamng.sendGameEngine( cmd );
