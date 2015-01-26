@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="css/dialogs.css">
     <link rel="stylesheet" href="css/propertygrid.css">
 
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="css/actionmenu.css">
+
     <!--<script src="components/polymer/platform/platform.js"></script> -->
     <script src="js/minimal.js"></script>
 
@@ -34,17 +37,15 @@
     <script src="js/app.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/dialogs.js"></script>
-
-    <script src="js/i18next-1.7.4.min.js"></script>
-    <script src="js/i18n.js"></script>
     
     <script src="js/propertygrid.js"></script>
     <script src="js/options.js"></script>
     <script src="js/partmgmt.js"></script>
 
+    <script src="js/dashboard.js"></script>
+    <script src="js/dashboard/freeroam.js"></script>
 
-    
-
+    <script src="js/actionmenu.js"></script>
     <!-- polymer elements -->
     <!-- <link rel="import" href="components/beamng/bng-vehicle-chooser/bng-vehicle-chooser.html">-->
 </head>
@@ -262,4 +263,44 @@ function changeBullettime(v) {
 <script src="js/beamng.js"></script>
 <script src="js/beamng-play.js"></script>
 
+<script src="js/i18next-1.7.4.min.js"></script>
+<script src="js/i18n.js"></script>
+<script>
+var dashboard = new Freeroam();
+var actionmenu = new ActionMenu([
+    {
+        title: "repair vehicle", onclick: function () {
+        alert("repair vehicle");
+    }
+    }, {
+        title: "attach trailer", onclick: function () {
+            alert("attach trailer");
+        }
+    }, {
+        title: "detach trailer", onclick: function () {
+            alert("detach trailer");
+        }
+    }, {
+        title: "add/remove hitch", onclick: function () {
+            alert("add/remove hitch");
+        }
+    }, {
+        title: "respawn", onclick: function () {
+            alert("respawn");
+        }
+    }, {
+        title: "switch gear mode", onclick: function () {
+            alert("switch gear mode");
+        }
+    }, {
+        title: "switch 4wd mode", onclick: function () {
+            alert("switch 4wd mode");
+        }
+    }, {
+        title: "turn engine on/off", onclick: function () {
+            alert("turn engine on/off");
+        }
+    }
+]);
+</script>
 </html>

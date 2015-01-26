@@ -1,0 +1,411 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    font-family: 'OpenSans';
+    color: white;
+    background-size: cover;
+    -webkit-user-select: none;
+    cursor: default;
+	/*background: url(../images/background.png);*/
+}
+
+a {
+    color: dimgray;
+}
+
+#actionmenu {
+    width: 500px;
+    height: 260px;
+    position: absolute;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -130px;
+    top: 50%;
+    display: none;
+}
+
+#centerwheel {
+    width: 76px;
+    height: 76px;
+    border: 2px solid #323131;
+    border-radius: 42px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -38px 0 0 -38px;
+    z-index: 10;
+    background: #323131;
+    -webkit-transform: rotate(0deg);
+}
+
+#centerwheel .innerwheel {
+    width: 10px;
+    height: 10px;
+    margin: 5px 0 0 33px;
+    background: #FAFAFF;
+    border-radius: 5px;
+}
+
+#actionmenu .items {
+
+}
+
+#actionmenu .items div.option {
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#actionmenu .items div.option.selected {
+    opacity: 0.9;
+}
+
+#actionmenu .items div.option.clicked {
+    opacity: 1;
+}
+
+#actionmenu .items div.option:after {
+    content: "";
+    position: absolute;
+}
+
+#actionmenu .items div.option span {
+    color: #FDFDFD;
+    position: absolute;
+    z-index: 10;
+    text-transform: uppercase;
+    font-family: Verdana;
+    font-size: 16px;
+    width: 240px;
+    height: 48px;
+    line-height: 50px;
+    text-align: center;
+}
+
+#actionmenu .items div.option.selected span {
+    color: #FFF;
+}
+
+#actionmenu .items div.option.clicked span {
+    color: #1e1e1e;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#actionmenu .items div.option:nth-child(1) span {
+}
+
+#actionmenu .items div.option:nth-child(2) span {
+    width: 195px;
+}
+
+#actionmenu .items div.option:nth-child(3) span {
+    width: 195px;
+    margin-left: -8px;
+}
+
+#actionmenu .items div.option:nth-child(4) span {
+    width: 204px;
+}
+
+#actionmenu .items div.option:nth-child(5) span {
+    width: 204px;
+    margin-left: 11px;
+}
+
+#actionmenu .items div.option:nth-child(6) span {
+    top: -50px;
+    width: 197px;
+}
+
+#actionmenu .items div.option:nth-child(7) span {
+    top: -50px;
+    width: 197px;
+    margin-left: -10px;
+}
+
+#actionmenu .items div.option:nth-child(8) span {
+    top: -50px;
+}
+
+#actionmenu .items div.option:nth-child(1) {
+    top: 12px;
+    left: 238px;
+    margin-left: -148px;
+    border-bottom: 50px solid #323131;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    height: 0;
+    width: 240px;
+    z-index: 3;
+}
+
+#actionmenu .items div.option:nth-child(1):after {
+    top: 2px;
+    left: 112px;
+    margin-left: -148px;
+    border-bottom: 46px solid #4F4F4F;
+    border-left: 37px solid transparent;
+    border-right: 37px solid transparent;
+    height: 0;
+    width: 238px;
+    z-index: 4;
+}
+
+#actionmenu .items div.option.selected:nth-child(1):after {
+    border-bottom: 46px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(1):after {
+    border-bottom: 46px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(1) .triangle {
+    top: 48px;
+    left: 190px;
+    position: absolute;
+    margin-left: -125px;
+    border-left: 57px solid transparent;
+    border-right: 57px solid transparent;
+    border-top: 65px solid #323131;
+}
+
+#actionmenu .items div.option:nth-child(1) .triangle:after {
+    content: "";
+    top: -65px;
+    left: 71px;
+    position: absolute;
+    margin-left: -125px;
+    border-left: 54px solid transparent;
+    border-right: 54px solid transparent;
+    border-top: 62px solid #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(1) .triangle:after {
+    border-top: 62px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(1) .triangle:after {
+    border-top: 62px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(2) {
+    top: 60px;
+    left: 9px;
+    width: 189px;
+    z-index: 2;
+    border-right: 44px solid transparent;
+    border-bottom: 50px solid #323131;
+}
+
+#actionmenu .items div.option:nth-child(2):after {
+    top: 2px;
+    left: 2px;
+    width: 186px;
+    z-index: 2;
+    border-right: 40px solid transparent;
+    border-bottom: 46px solid #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(2):after {
+    border-bottom: 46px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(2):after {
+    border-bottom: 46px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(3) {
+    top: 60px;
+    left: 262px;
+    width: 189px;
+    z-index: 2;
+    border-left: 44px solid transparent;
+    border-bottom: 50px solid #323131;
+}
+
+#actionmenu .items div.option:nth-child(3):after {
+    top: 2px;
+    left: -39px;
+    width: 186px;
+    z-index: 2;
+    border-left: 40px solid transparent;
+    border-bottom: 46px solid #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(3):after {
+    border-bottom: 46px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(3):after {
+ border-bottom: 46px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(4) {
+    top: 108px;
+    left: 9px;
+    width: 215px;
+    height: 50px;
+    z-index: 2;
+    background: #323131;
+}
+
+#actionmenu .items div.option:nth-child(4):after {
+    top: 2px;
+    left: 2px;
+    width: 211px;
+    height: 46px;
+    z-index: 2;
+    background: #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(4):after {
+    background: #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(4):after {
+    background: #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(5) {
+    top: 108px;
+    left: 280px;
+    width: 215px;
+    height: 50px;
+    z-index: 2;
+    background: #323131;
+}
+
+#actionmenu .items div.option:nth-child(5):after {
+    top: 2px;
+    left: 2px;
+    width: 211px;
+    height: 46px;
+    z-index: 2;
+    background: #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(5):after {
+    background: #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(5):after {
+    background: #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(6) {
+    top: 156px;
+    left: 9px;
+    width: 189px;
+    z-index: 2;
+    border-right: 44px solid transparent;
+    border-top: 50px solid #323131;
+}
+
+#actionmenu .items div.option:nth-child(6):after {
+    top: -48px;
+    left: 2px;
+    width: 186px;
+    z-index: 2;
+    border-right: 40px solid transparent;
+    border-top: 46px solid #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(6):after {
+    border-top: 46px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(6):after {
+    border-top: 46px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(7) {
+    top: 156px;
+    left: 262px;
+    width: 189px;
+    z-index: 2;
+    border-left: 44px solid transparent;
+    border-top: 50px solid #323131;
+}
+
+#actionmenu .items div.option:nth-child(7):after {
+    top: -48px;
+    left: -39px;
+    width: 186px;
+    z-index: 2;
+    border-left: 40px solid transparent;
+    border-top: 46px solid #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(7):after {
+    border-top: 46px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(7):after {
+    border-top: 46px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(8) {
+    top: 204px;
+    left: 238px;
+    margin-left: -148px;
+    border-top: 50px solid #323131;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    height: 0;
+    width: 240px;
+    z-index: 3;
+}
+
+#actionmenu .items div.option:nth-child(8):after {
+    top: -48px;
+    left: 112px;
+    margin-left: -148px;
+    border-top: 46px solid #4F4F4F;
+    border-left: 37px solid transparent;
+    border-right: 37px solid transparent;
+    height: 0;
+    width: 238px;
+    z-index: 4;
+}
+
+#actionmenu .items div.option.selected:nth-child(8):after {
+    border-top: 46px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(8):after {
+    border-top: 46px solid #C4C9CD;
+}
+
+#actionmenu .items div.option:nth-child(8) .triangle {
+    top: -113px;
+    left: 190px;
+    position: absolute;
+    margin-left: -125px;
+    border-left: 57px solid transparent;
+    border-right: 57px solid transparent;
+    border-bottom: 65px solid #323131;
+}
+
+#actionmenu .items div.option:nth-child(8) .triangle:after {
+    content: "";
+    top: 3px;
+    left: 71px;
+    position: absolute;
+    margin-left: -125px;
+    border-left: 54px solid transparent;
+    border-right: 54px solid transparent;
+    border-bottom: 62px solid #4F4F4F;
+}
+
+#actionmenu .items div.option.selected:nth-child(8) .triangle:after {
+    border-bottom: 62px solid #6F6F6F;
+}
+
+#actionmenu .items div.option.clicked:nth-child(8) .triangle:after {
+    border-bottom: 62px solid #C4C9CD;
+}

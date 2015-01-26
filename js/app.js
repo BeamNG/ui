@@ -882,10 +882,10 @@ var HelpManager = (function(){
         if(helpState){
             helpImage.attr('src', 'images/beamnghelp'+helpState+'.png');
             if(helpImage.is(':hidden')){
-                helpImage.fadeIn(100);
+                helpImage.fadeIn(250);
             }
         }else{
-            helpImage.fadeOut(100);
+            helpImage.fadeOut(250);
         }
     }
 
@@ -911,7 +911,6 @@ var KeyManager = {
     initialize: function(){
         $(document).keyup(function(event) {
 //            console.log("KEY: "+JSON.stringify(event.keyCode));
-            
             var func = "ku"+event.keyCode;
             if(typeof(KeyManager[func]) == 'function'){
                 KeyManager[func]({ctrl: event.ctrlKey, alt: event.altKey, shift: event.shiftKey});
@@ -1036,11 +1035,27 @@ var KeyManager = {
         DebugManager.nextDebug();
     },
     ku32: function(modifiers){
-        VehicleChooser.open();
-        
+        if (!actionmenu.isShown()) {
+            actionmenu.show();
+        } else {
+            actionmenu.hide();
+        }
     },
-    ku112: function(){
-        HelpManager.nextHelp();
+    ku27: function(modifiers){
+        if (actionmenu.isShown()) {
+            actionmenu.hide();
+        } else {
+            if (!dashboard.isShown()) {
+                dashboard.showPanel();
+            } else {
+                if (!dashboard.restore()) {
+                    dashboard.hidePanel();
+                }
+            }
+        }
+    },
+    kd112: function(){
+        HookManager.trigger('HelpToggle');
     }
 /*	Removed until we find a way to check if the Application has the focus and
 	prevent alt+tab triggering this

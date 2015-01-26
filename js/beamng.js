@@ -191,41 +191,73 @@ function executeGameEngineCode(cmd)
 /*
 * WARNING: only works with primitive datatypes as returnvalues OR with functions that return json. Never try to call a function which return a list/object/...
 */
+
 function callGameEngineFuncCallback(func, callback)
 {
+    var isInIframe = window.self !== window.top,
+        cfcntxt = isInIframe ? parent.cefcontext : cefcontext;
+
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+',\'" @ strreplace('+func+',"\'","\\\\\'") @ "\')",'+cefcontext+');';
+    var commandString = 'beamNGExecuteJS("_fCallback('+functionCallbackCounter+',\'" @ strreplace('+func+',"\'","\\\\\'") @ "\',' + isInIframe + ')",'+cfcntxt+');';
+
     beamng.sendGameEngine(commandString);
 }
 
 
 function callLuaFuncCallback(func, callback)
 {
+    var isInIframe = window.self !== window.top,
+        cfcntxt = isInIframe ? parent.cefcontext : cefcontext;
+
+
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..')',"+cefcontext+")";
+    var commandString = "be:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..'," + isInIframe + ")',"+cefcontext+")";
     beamng.sendActiveObjectLua(commandString);
 }
 
 function callSystemLuaFuncCallback(func, callback)
 {
+    var isInIframe = window.self !== window.top,
+        cfcntxt = isInIframe ? parent.cefcontext : cefcontext;
+
+
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..')',"+cefcontext+")";
+    var commandString = "gameEngine:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..'," + isInIframe + ")',"+cefcontext+")";
     beamng.sendSystemLua(commandString);
 }
 
-function _fCallback(number, result)
+function callEngineLuaFuncCallback(func, callback)
 {
+    var isInIframe = window.self !== window.top,
+        cfcntxt = isInIframe ? parent.cefcontext : cefcontext;
+
+
+    functionCallbackCounter++;
+    functionCallbacks[functionCallbackCounter] = callback;
+    var commandString = "be:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..'," + isInIframe + ")',"+cefcontext+")";
+    beamng.sendEngineLua(commandString);
+}
+
+function _fCallback(number, result, isInIframe)
+{
+
 	var res;
 	try{
 		res = JSON.parse(result);
 	}catch(e){
 		res = result;
 	}
-    functionCallbacks[number](res);
-    functionCallbacks[number] = undefined;
+
+    if( !isInIframe ) {
+        functionCallbacks[number](res);
+        functionCallbacks[number] = undefined;
+    } else {
+        document.getElementById("content").contentWindow.functionCallbacks[number](res);
+        document.getElementById("content").contentWindow.functionCallbacks[number] = undefined;
+    }
 }
 
 function callLuaFunction(func, v)
@@ -240,6 +272,13 @@ function callSystemLuaFunction(func, v)
     var cmd = func + '(' + v + ')';
     //console.log('callLuaFunction: ' + cmd);
     beamng.sendSystemLua(cmd);
+}
+
+function callEngineLuaFunction(func, v)
+{
+    var cmd = func + '(' + v + ')';
+    //console.log('callLuaFunction: ' + cmd);
+    beamng.sendEngineLua(cmd);
 }
 
 function cefdev(v)

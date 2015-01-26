@@ -50,14 +50,15 @@ option {
 
 .sidepanel {
     position: absolute;
-    width: 320px;
-    background-color: rgba(91, 91, 91, 0.908);
+    width: 323px;
+    background-color: rgba(61, 74, 94, 0.908);
     top: 0;
     bottom: 0;
     left: 0;
     padding: 10px;
-    border-right:5px solid rgba(126, 126, 126, 1);
     overflow-y: auto;
+    border-right: 2px solid rgba(43, 57, 103, 1);
+    border-top: 2px solid rgba(43, 57, 103, 1);
  }
 
  .sidepanel > heading {
@@ -93,7 +94,7 @@ option {
 }
 
 .sidepanel > .description {
-    height: 100px;
+    height: 80px;
     width: 100%;
     margin-bottom: 20px;
 }
@@ -109,18 +110,29 @@ option {
     bottom: 5px;
     right: 5px;
     width: 110px;
-
-    background-color: rgba(65, 65, 65, 1);
+    background-color: rgba(39, 39, 39, 1);
     border: solid rgba(121, 121, 121, 1);
     color: white;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
-
     font-family: 'OpenSansBold';
     font-size: 1.5em;
-
     outline: none;
     cursor: pointer;
+}
 
+.sidepanel > .back {
+    position: absolute;
+    bottom: 5px;
+    left: 12px;
+    width: 110px;
+    background-color: rgba(39, 39, 39, 1);
+    border: solid rgba(121, 121, 121, 1);
+    color: white;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+    font-family: 'OpenSansBold';
+    font-size: 1.5em;
+    outline: none;
+    cursor: pointer;
 }
 
 .sidepanel .input {
@@ -313,6 +325,11 @@ option {
     color: rgba(90,90,90,1);
 }
 
+.sidepanel > .back:hover {
+    background-color: #9EEB62;
+    color: rgba(90,90,90,1);
+}
+
 
 
 
@@ -334,6 +351,7 @@ option {
     padding: 10px;
     padding-right: 20px;
     overflow-y: auto;
+    border-top:2px solid rgba(43, 57, 103, 1);
 }
 
 .content .listElement input[type="radio"] {
