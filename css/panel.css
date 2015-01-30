@@ -32,7 +32,6 @@ a {
 }
 
 input {
-    outline: none;
     cursor: pointer;
 }
 
@@ -145,10 +144,10 @@ option {
 
 .sidepanel > .options input[type="range"] {
     -webkit-appearance: none;
-    width: 85%;
+    width: 95%;
     height: 7px;
-    margin: 9px 0 9px 15px;
-    background-color: rgba(155, 155, 155, 1);
+    margin: 9px 0 9px 5px;
+    background-color: transparent;
 }
 
 .sidepanel > .options input[type="range"]::-webkit-slider-thumb {
@@ -177,7 +176,7 @@ option {
 .sidepanel > .options input[type="checkbox"]:checked:after {
     content: '';
     position: absolute; /*TODO: is ther a better way to do this?*/
-    right: 10px;
+    right: 11px;
     width: 14px;
     height: 9px;
     -webkit-transform: scale(0.707) rotate(135deg);

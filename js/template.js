@@ -36,6 +36,8 @@ function changeDescription (text, img, title) {
 
 
 $(document).ready(function() {
+    $("input").attr("tabindex", "-1")
+
     currentDescription = document.getElementsByClassName("description")[0].innerHTML
 
     //To every element the class hoverDes can be applied with the combination of a title,

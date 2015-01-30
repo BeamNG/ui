@@ -267,15 +267,26 @@ td.pgPlus::before {
     border-radius: 3px;
 }
 
-
-
-.pg input[type=range]:focus {
+/*The following focus things are not working in chrome 34 because the focus event is partly broken
+input:focus {
     outline: none;
+    border: rgb(253, 141, 0) solid;
 }
 
-.pg input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ccc;
+select:focus {
+    border: rgb(253, 141, 0) solid;
 }
+
+input[type=range]:focus {
+    border: none;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    border-color: rgb(253, 141, 0) !important;
+}*/
+
+
+
 
 .pg_wrapper_fullscreen {
     width:50%;
@@ -383,7 +394,6 @@ input[type="checkbox"] {
     -webkit-border-radius: 2px;
 }
 
-::-webkit-scrollbar-thumb:hover,
-::-webkit-scrollbar-thumb:active  {
+::-webkit-scrollbar-thumb:hover  {
     background: silver;
 }

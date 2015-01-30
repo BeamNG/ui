@@ -84,8 +84,7 @@ function getPrefix(des) {//works if the substring is the same everywhere, also h
 function buildPartmanager () {
     var pg = null;
 
-    callLuaFuncCallback('partmgmt.getConfig()', function(res) {
-        // console.log("lua result: ");
+    callLuaFuncCallback("partmgmt.getConfig()", function(res) {
         config = res;
         prefix = getPrefix(res.slotDescriptions);
 
@@ -93,7 +92,6 @@ function buildPartmanager () {
             rootElement: pgElementPm,
             childs: buildpartPGConfig(res.slotMap, res.slotDescriptions, prefix)
         }
-
         // console.log("tree data: ");
         // console.log(data.childs);
 

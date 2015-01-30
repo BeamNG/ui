@@ -213,7 +213,7 @@ function callLuaFuncCallback(func, callback)
 
     functionCallbackCounter++;
     functionCallbacks[functionCallbackCounter] = callback;
-    var commandString = "be:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..'," + isInIframe + ")',"+cefcontext+")";
+    var commandString = "obj:executeJS('_fCallback("+functionCallbackCounter+",' .. encodeJson("+func+") ..'," + isInIframe + ")',"+cefcontext+")";
     beamng.sendActiveObjectLua(commandString);
 }
 
@@ -243,7 +243,6 @@ function callEngineLuaFuncCallback(func, callback)
 
 function _fCallback(number, result, isInIframe)
 {
-
 	var res;
 	try{
 		res = JSON.parse(result);

@@ -123,7 +123,7 @@ function BeamNGPropertyGrid(givenData) {
             PGColor.prototype.get    = function()    { return $(this.selector).val(); };
             PGColor.prototype.set    = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true, showButtons: false, color:v});};
             PGColor.prototype.create = function()    { return '<input type="text" name="' + d.path + '" id="' + d.path + '">'; };
-            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true, showButtons: false, color:d.val}); console.log(d.val)};
+            PGColor.prototype.init   = function(v)   { $(this.selector).spectrum({preferredFormat: "rgb", showInput: true, allowEmpty:false, showAlpha:true, showButtons: false, color:d.val});};
         },
         'enable' : function PGEnable (d) {
             this.selector = '#' + escapeJQuerySelector(d.path);
