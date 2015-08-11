@@ -2,6 +2,11 @@
   width: 400px;
 }
 
+.contentNavVehicleconfig md-select {
+  padding: 0;
+  
+}
+
 .contentNavVehicleconfig .inputName {
   font-size:95%;
 }

@@ -1,6 +1,6 @@
 angular.module('beamng.stuff', ['ngAnimate']);
 
-angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps'])  
+angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps', 'vAccordion'])  
   
 .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider', 
   function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {

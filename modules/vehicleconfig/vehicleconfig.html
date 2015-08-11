@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="modules/vehicleconfig/vehicleconfig.css">
+
 <!--seperate the accordion from the non parts slot and seperate the highlighting from the fact if a slot has parts or not-->
 <script type="text/ng-template" id="content">
     <div ng-mouseenter="selectPart(entry.val)" ng-mouseleave="selectReset()">
@@ -8,6 +10,17 @@
 
 <!--The representation of a slot with parts-->
 <script type="text/ng-template" id="accordion">
+    <!--<v-pane expanded>
+    <v-pane-header>
+      Pane header #1
+    </v-pane-header>
+
+    <v-pane-content>
+      Pane content #1
+    </v-pane-content>
+    </v-pane>-->
+
+
     <md-divider></md-divider>
     <div layout="row" layout-align="space-between center" class="accordionHeader" class="height32">
         <div flex class="accordionText md-primary md-subheader md-default-theme" ng-click="toggleOpen(entry.slot)">
@@ -38,7 +51,7 @@
     </div>
 </script>
 
-<md-content style="width:400px; height: 100%" layout="column">
+<md-content style="width:400px; height: 100%" layout="column" class="contentNavVehicleconfig">
   <md-toolbar class="md-primary">
     <h1 class="md-toolbar-tools">
       <span flex>Vehicle Customization</span>
@@ -53,12 +66,6 @@
     </md-tab>
     <md-tab label="Color">
         <md-content class="md-padding md-default-theme" ng-init="file='some Path'">
-            <!-- Change User Path:
-            <ng-file path="file" flex></ng-file>
-            <br>
-            <br>
-            <br>
-            <md-divider></md-divider> -->
             <ng-color ng-model="color" presets-editable="true" show-preview="false" ng-change="updateColor(color)"></ng-color>
         </md-content>
     </md-tab>
