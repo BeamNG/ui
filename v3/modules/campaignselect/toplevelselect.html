@@ -1,0 +1,33 @@
+<style>
+  .top-level-thing ng-md-icon.bng-grid-icon > svg { padding: 10px; }
+  .top-level-thing md-grid-tile-footer figcaption { width: 100%; }
+  .top-level-thing md-grid-tile-footer figcaption h2 { width: 100%; text-align: center; }
+  .top-level-thing md-grid-tile { cursor: pointer; }
+  .top-level-thing md-grid-tile { background: rgba(255, 102, 0, 0.9); }
+  .top-level-thing md-grid-tile:hover { background-color: rgba(255, 102, 0, 1.0);  }
+  .top-level-thing.opaque { background-color: white; }
+  .top-level-thing .disabled { background-color: rgba(255, 102, 0, 0.3); cursor: not-allowed !important; }
+  .top-level-thing .disabled:hover { background-color: rgba(255, 102, 0, 0.3) !important; }
+</style>
+
+<div class="top-level-thing" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" layout="row" layout-align="space-around center"
+     ng-class="{opaque: top.gameState == 'menu'}">
+  <div flex="60">
+    <md-grid-list st md-cols="2" md-cols-gt-lg="4"
+                  md-row-height="1:1"
+                  md-gutter="12px">
+      <md-grid-tile ng-repeat="card in ::top.cards" ng-click="top.goTo(card.href, card.disabled)" ng-class="{disabled: card.disabled}"> <!-- md-ink-ripple removed for now, re-add as soon as not steam release in 30mins-->
+        <ng-md-icon class="bng-grid-icon" icon="{{ ::card.icon }}" size="60" style="fill: white;  stroke: 0.2 black;"></ng-md-icon>
+        <md-grid-tile-footer>
+          <h2 style="margin: 0" ng-if="!card.disabled">{{ ::card.title }}</h2>
+          <div ng-if="card.disabled" style="margin: 5px;">
+            <span>{{::card.title}}</span>
+            <br />
+            <span><b>Coming soon</b></span>
+          </div>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+
+    </md-grid-list>
+  </div>
+</div>

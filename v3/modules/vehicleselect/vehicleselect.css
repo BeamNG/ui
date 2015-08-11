@@ -1,0 +1,54 @@
+
+/* These should be exposed to other modules, to allow some consistency! */
+
+.bng-vehicleselect-clickable {
+  cursor: pointer;
+}
+
+.bng-vehicleselect-details-table td {
+  padding: 20px 10px;
+}
+
+.bng-vehicleselect-details-table th {
+  text-align: left;
+}
+
+.VehicleSelect .bng-grid-tile
+{
+width: 20vw;
+height: 10vw;
+min-width: 200px;
+min-height:100px;
+max-width: 40vh;
+max-height:20vh;
+position: relative;
+}
+
+.VehicleSelect .bng-grid-tile .bng-grid-tile-footer
+{
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+height: 48px;
+background-color: rgba(0, 0, 0, 0.4);
+overflow: hidden;
+}
+
+.VehicleSelect .bng-grid-tile .bng-grid-tile-footer .bng-grid-tile-secondary
+{
+position: absolute;
+right: 0;
+width: 40px;
+top: 0;
+bottom: 0;
+}
+
+.VehicleSelect .bng-grid-tile-footer p
+{
+margin-left: 16px;
+margin-right: 48px;
+font-size: 14px;
+color: white;
+text-shadow: 1px 1px black;
+}

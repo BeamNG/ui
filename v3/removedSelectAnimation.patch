@@ -1,0 +1,42 @@
+Index: bower_components/angular-material/angular-material.css
+===================================================================
+--- bower_components/angular-material/angular-material.css	(revision 5518)
++++ bower_components/angular-material/angular-material.css	(working copy)
+@@ -5520,19 +5520,10 @@
+     margin: 24px auto !important; }
+   .md-select-menu-container.md-active {
+     opacity: 1; }
+-    .md-select-menu-container.md-active md-select-menu {
+-      transition: -webkit-transform all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+-      transition: transform all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+-      transition-duration: 200ms; }
+       .md-select-menu-container.md-active md-select-menu > * {
+-        opacity: 1;
+-        transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+-        transition-duration: 200ms;
+-        transition-delay: 100ms; }
++        opacity: 1; }
+   .md-select-menu-container.md-leave {
+-    opacity: 0;
+-    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+-    transition-duration: 250ms; }
++    opacity: 0; }
+ 
+ md-select {
+   display: inline-block;
+Index: bower_components/angular-material/modules/closure/select/select.js
+===================================================================
+--- bower_components/angular-material/modules/closure/select/select.js	(revision 5518)
++++ bower_components/angular-material/modules/closure/select/select.js	(working copy)
+@@ -858,10 +858,7 @@
+       containerNode.style.top = clamp(bounds.top, top, bounds.bottom - containerRect.height) + 'px';
+       selectNode.style[$mdConstant.CSS.TRANSFORM_ORIGIN] = transformOrigin;
+ 
+-      selectNode.style[$mdConstant.CSS.TRANSFORM] = 'scale(' +
+-        Math.min(targetRect.width / selectMenuRect.width, 1.0) + ',' +
+-        Math.min(targetRect.height / selectMenuRect.height, 1.0) +
+-      ')';
++      selectNode.style[$mdConstant.CSS.TRANSFORM] = 'scale(1, 1)';
+ 
+       $$rAF(function() {
+         element.addClass('md-active');

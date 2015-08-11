@@ -1,0 +1,40 @@
+.contentNavLoading {
+  width:100%;
+  background-color: #eee;
+}
+
+.contentNavLoading #loadingBox {
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    background: url(local://local/html/v3/modules/loading/mainmenu_loading_01.jpg) no-repeat center center fixed;
+    background-size: cover;
+    position:absolute;
+    z-index: 1;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.contentNavLoading #loadingBox #infobox {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 10px;
+    width: 248px;
+}
+
+.contentNavLoading #loadingBox #help {
+    position: absolute;
+    bottom: 41px;
+    padding: 10px;
+    border-bottom: 1px solid white;
+}
+
+.contentNavLoading #loadingBox #help span{
+    margin: 5px;
+}

@@ -1,0 +1,89 @@
+<md-toolbar class="md-hue-1" style="max-height:50px;min-height:50px;height:50px;">
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button md-default" aria-label="Back" ng-click="scenarios.backToCampaigns()">
+      <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
+    </md-button>
+    <span flex>Scenarios (new)</span>
+    
+    <ng-md-icon icon="search"></ng-md-icon>
+    <md-input-container flex>
+      <label>&nbsp;</label>
+      <input ng-model="query">
+    </md-input-container>
+  </div> 
+</md-toolbar>
+
+<section id="mainRightSection" class="Scenarioselect" style="position:absolute;left:0;right:0;top:50px;bottom:0;" layout="row">
+  
+  <md-content flex=80 style="overflow-y:auto;">
+    <md-grid-list
+          md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3"
+          md-row-height-gt-md="16:9" md-row-height="16:9"
+          md-gutter="4px" md-gutter-gt-sm="4px" 
+          >
+      <md-grid-tile ng-repeat="s in scenarios.list | filter:query"
+                    ng-click="scenarios.viewDetails(s);" 
+                    style="background-image: url(local://local/campaigns/{{ s.campaignId }}/{{ s.previews[0] }}),
+                                             url( {{ ::scenarios.fallbackImgSrc }} ); 
+                           background-size: cover">
+        <ng-md-icon icon="lock" ng-if="s.locked" size="48" style="stroke:white"></ng-md-icon>
+        <md-grid-tile-footer><h3>{{ s.name }}</h3></md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
+  </md-content>
+
+  <md-content flex class="md-whiteframe-z3" ng-if="!scenarios.selected" layout="column" layout-align="center center" style="height:100%">
+    <h3 style="color:grey">No Scenario Selected</h3>  
+  </md-content>
+
+  <md-content flex class="md-whiteframe-z3" ng-if="scenarios.selected" layout="column">
+    <div id="itemPreview" style="padding:10px;position:absolute;left:0;top:0;right:0;bottom:47px;overflow-y:auto;">
+      
+        <img style="width: 100%;" 
+             ng-src="local://local/campaigns/{{ scenarios.selected.campaignId }}/{{ scenarios.selected.previews[0] }}"
+             err-src="{{ ::scenarios.fallbackImgSrc }}">
+      <h2>{{ scenarios.selected.name }}</h2>
+
+      <md-content>
+        {{ scenarios.selected.description }}
+      </md-content>
+
+      <md-divider style="margin:20px"></md-divider>
+
+      <table class="detailTable">
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="settings_overscan"></ng-md-icon></td>
+          <td>Name:</td>
+          <td>{{ scenarios.selected.name }}</td>
+        </tr>
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="directions_car"></ng-md-icon></td>
+          <td>Type:</td>
+          <td>{{ scenarios.selected.type }}</td>
+        </tr>
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="flag"></ng-md-icon></td>
+          <td>Difficulty:</td>
+          <td>{{ scenarios.selected.difficulty }}</td>
+        </tr>
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="people"></ng-md-icon></td>
+          <td>Author(s):</td>
+          <td>{{ scenarios.selected.authors }}</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="bottomButtons md-whiteframe-z1">
+      <section layout="row" layout-sm="column">
+        <md-button flex ng-if="!scenarios.selected.locked" class="md-primary md-raised" ng-click="scenarios.launch()" id="btnStep">
+          Select
+        </md-button>
+        
+        <md-button flex ng-if="scenarios.selected.locked" ng-disabled="true" class="md-raised md-warn" id="btnStep">
+          Locked
+        </md-button>
+      </section>
+    </div>
+  </md-content>
+</section>

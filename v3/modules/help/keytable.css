@@ -1,0 +1,42 @@
+.contentNavHelp .keytable, .contentNavHelp .vertKeytable {
+    width: 100%;
+    line-height: 150%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.contentNavHelp .keytable tr:nth-child(even) {
+    background-color: rgba(158,158,158,0.1);
+}
+
+.contentNavHelp .vertKeytable tr:nth-child(odd) {
+    background-color: rgba(158,158,158,0.1);
+}
+
+.contentNavHelp .keytable th, .contentNavHelp .vertKeytable th {
+    background-color: rgba(158,158,158,0.4);
+}
+
+.contentNavHelp .keytable td {
+    padding: 5px;
+    vertical-align: top;
+    border: none;
+}
+.contentNavHelp .vertKeytable td {
+    padding: 5px;
+    border-left: 1px solid rgba(158,158,158,0.1);
+    vertical-align: top;
+    text-align: center;
+}
+
+.contentNavHelp .keytable .td1 {
+    width: 200px;
+}
+
+.contentNavHelp .keytable .td2 {
+    width: 150px;
+}
+
+.contentNavHelp .keytable .td3 {
+    min-width: 100%;
+}

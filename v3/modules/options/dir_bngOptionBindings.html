@@ -1,0 +1,252 @@
+<link rel="stylesheet" href="keys.css" type="text/css" />
+<md-whiteframe class="md-whiteframe-z5" style="position:fixed; left: 564px; width: 500px; top: 92.5%; height: 5%; border: 1px solid grey; overflow: hidden" ng-show="detecteddevname && !ffb">
+    <md-content flex layout layout-align="space-between center" style="padding: 4px; height: 100%; width: 100%;">
+        <b>Last detected action</b>
+        <span flex style="padding-left: 10px; padding-right: 5px; cursor:pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" ng-click="editbinding(detecteddevname, detectedbinding)">{{ actions[detectedbinding.action].title }}</span>
+        <span>
+            <kbd style="cursor:pointer;" ng-click="editbinding(detecteddevname, detectedbinding)">
+                <span ng-show="detecteddevname.indexOf('mouse') == 0"><ng-md-icon size="14px" style="fill:white" icon="mouse"/></span>
+                <span ng-show="detecteddevname.indexOf('gamepad') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+                <span ng-show="detecteddevname.indexOf('xinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+                <span ng-show="detecteddevname.indexOf('wheel') == 0"><ng-md-icon size="14px" style="fill:white" icon="radio_button_on"/></span>
+                <span ng-show="detecteddevname.indexOf('keyboard') == 0"><ng-md-icon size="14px" style="fill:white" icon="keyboard"/></span>
+                <span ng-show="detecteddevname.indexOf('vinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="phone_android"/></span>
+                <span>{{detectedbinding.control | uppercase}}</span>
+            </kbd>
+        </span>
+    </md-content>
+</md-whiteframe>
+
+<md-whiteframe class="md-whiteframe-z5" style="position:fixed; background-color: white; left: 564px; top: 10%; width: 500px; max-height: 80%; " ng-show="editingbinding != null;" layout="column">
+    <md-toolbar class="md-primary">
+      <h1 class="md-toolbar-tools">
+          {{actions[editingbinding.action].title}}
+          <span flex></span>
+          <md-button ng-hide="ffb" class="md-icon-button" type=button ng-click="editbinding(null,null)" aria-label="red">
+                  <ng-md-icon style="fill:white" icon="close"/></ng-md-icon>
+                  <!-- breaks on position:fixed panel :-(
+                  <md-tooltip md-direction="down" md-delay="100">Close without saving</md-tooltip>
+                  -->
+          </md-button>
+      </h1>
+    </md-toolbar>
+    <md-subheader>
+      <b style="margin-right:20px">Assigned Control</b>
+      
+      
+      <kbd ng-show="choosingControl" class="light" ng-click="chooseControl()">
+        <span ng-show="choosingControl">detecting {{choosingControl.control}}...</span>
+        <md-tooltip md-direction="down" md-delay="0">click to choose control</md-tooltip>   
+      </kbd>
+      <span style="cursor: pointer;" ng-hide="choosingControl">
+        <kbd ng-hide="editingbinding.control" style="cursor: pointer;" class="light" ng-click="chooseControl()">
+            none
+        </kbd>
+        <kbd style="block:inline; cursor: pointer" ng-show="editingbinding.control" ng-click="chooseControl()">
+        <span ng-show="editingdevname.indexOf('mouse') == 0"><ng-md-icon size="14px" style="fill:white" icon="mouse"/></span>
+        <span ng-show="editingdevname.indexOf('gamepad') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+        <span ng-show="editingdevname.indexOf('xinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+        <span ng-show="editingdevname.indexOf('wheel') == 0"><ng-md-icon size="14px" style="fill:white" icon="radio_button_on"/></span>
+        <span ng-show="editingdevname.indexOf('keyboard') == 0"><ng-md-icon size="14px" style="fill:white" icon="keyboard"/></span>
+        <span ng-show="editingdevname.indexOf('vinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="phone_android"/></span>
+        {{ editingbinding.control | uppercase}}
+        </kbd>
+      
+
+        <small ng-hide="choosingControl">
+          ({{devices[editingdevname].productName}})
+        </small>
+      </span>
+
+
+    </md-subheader>
+    <md-divider></md-divider>
+    <form style="overflow-y: auto">
+        <md-content flex style="padding: 16px">
+
+            <div>
+          <!--       Assigned control:
+                <kbd ng-show="choosingControl" class="light" ng-click="chooseControl()">
+                    <span ng-show="choosingControl">detecting {{choosingControl.control}}...</span>
+                    <md-tooltip md-direction="down" md-delay="0">click to choose control</md-tooltip>
+                </kbd> -->
+<!--                 <span style="cursor: pointer;" ng-hide="choosingControl">
+                    <kbd ng-hide="editingbinding.control" style="cursor: pointer;" class="light" ng-click="chooseControl()">
+                        none
+                    </kbd>
+                    <kbd style="block:inline; cursor: pointer" ng-show="editingbinding.control" ng-click="chooseControl()">
+                    <span ng-show="editingdevname.indexOf('mouse') == 0"><ng-md-icon size="14px" style="fill:white" icon="mouse"/></span>
+                    <span ng-show="editingdevname.indexOf('gamepad') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+                    <span ng-show="editingdevname.indexOf('xinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+                    <span ng-show="editingdevname.indexOf('wheel') == 0"><ng-md-icon size="14px" style="fill:white" icon="radio_button_on"/></span>
+                    <span ng-show="editingdevname.indexOf('keyboard') == 0"><ng-md-icon size="14px" style="fill:white" icon="keyboard"/></span>
+                    <span ng-show="editingdevname.indexOf('vinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="phone_android"/></span>
+                    {{ editingbinding.control | uppercase}}
+                    </kbd>
+                </span> -->
+<!--                 <small ng-hide="choosingControl">
+                    ({{devices[editingdevname].productName}})
+                </small> -->
+                <div style="background-color: #fdd; margin-top: 8px; padding-top:1px; padding-left: 16px; padding-right: 16px; padding-bottom: 16px;" class="md-whiteframe-z2" ng-show="conflictingBindings | objectLength" ng-repeat="f in bindingFiles | filter:{devname: editingdevname}:true">
+                    <h3><span><ng-md-icon icon="warning"/></span>Control already assigned to:</h3>
+                    <div ng-repeat="b in conflictingBindings = (f.contents.bindings | filter:{control: editingbinding.control}:true | filter:{action: '!'+editingbinding.action}:true)">
+                        <table border="1" class="keytable">
+                            <tr>
+                                <td>
+                                    {{ actions[b.action].title }}
+                                </td>
+                                <td class="controls hidingParent">
+                                    <kbd style="cursor:pointer;" ng-click="editbinding(editingdevname, b)">
+                                        <span>{{b.control | uppercase}}</span>
+                                        <md-tooltip md-direction="down" md-delay="500">edit conflicting binding</md-tooltip>
+                                    </kbd>
+                                    <md-button style="margin-left: 8px" class="md-warn" type=button ng-click="deletebinding(editingdevname, b.control)">Delete</md-button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div layout layout-align="center center">
+                <div flex="30" class="md-body-1">Filtering:</div>
+                <div flex layout layout-align="center center">
+                    <md-select ng-model="editingbinding.filterType">
+                      <md-option value="-1">Automatic</md-option>
+                      <md-option value="0">Key</md-option>
+                      <md-option value="1">Pad</md-option>
+                      <md-option value="2">Direct</md-option>
+                    </md-select>
+                </div>
+            </div>
+            <div ng-show="isEditingAxis()">
+                <md-divider style="margin:10px"></md-divider>
+
+                <div style="margin-bottom: 10px">Axis settings:</div>
+                <md-checkbox style="display: inline" ng-model="editingbinding.isInverted">Inverted</md-checkbox>
+                <md-checkbox style="display: inline" ng-model="editingbinding.isRanged">Ranged</md-checkbox>
+
+
+                <div layout layout-align="center center">
+                    <div flex="30">Linearity:</div>
+                    <md-slider style="padding-right:30px" flex min="0" max="5" step="0.1" ng-model="editingbinding.linearity" aria-label="red" id="red-slider" class></md-slider>
+                    <div style="width:60px;" layout layout-align="end center">
+                        <!-- {{ editingbinding.linearity.toFixed(2) }} -->
+                        <input type="number" step="0.1" ng-model="editingbinding.linearity" aria-label="red" aria-controls="red-slider">
+                    </div>
+                </div>
+                <div layout layout-align="center center">
+                    <div flex="30">Deadzone begin:</div>
+                    <md-slider style="padding-right:30px" flex min="-1" max="1" step="0.05" ng-model="editingbinding.deadzone.begin" aria-label="red" id="red-slider" class></md-slider>
+                    <div style="width:60px;" layout layout-align="end center">
+                        <!-- {{ editingbinding.deadzone.begin.toFixed(2) }} -->
+                        <input type="number" step="0.1" ng-model="editingbinding.deadzone.begin" aria-label="red" aria-controls="red-slider">
+                    </div>
+                </div>
+                <div layout layout-align="center center">
+                    <div flex="30">Deadzone end:</div>
+                    <md-slider style="padding-right:30px" flex min="-1" max="1" step="0.05" ng-model="editingbinding.deadzone.end" aria-label="red" id="red-slider" class></md-slider>
+                    <div style="width:60px;" layout layout-align="end center">
+                        <!-- {{ editingbinding.deadzone.end.toFixed(2) }} -->
+                        <input type="number" step="0.1" ng-model="editingbinding.deadzone.end" aria-label="red" aria-controls="red-slider">
+                        
+                    </div>
+                </div>
+                <div layout layout-align="center center">
+                    <div flex="30">Scale:</div>
+                    <md-slider style="padding-right:30px" flex min="0" max="1" step="0.05" ng-model="editingbinding.scale" aria-label="red" id="red-slider" class></md-slider>
+                    <div style="width:60px;" layout layout-align="end center">
+                        <!-- {{ editingbinding.scale.toFixed(2) }} -->
+                        <input type="number" step="0.1" ng-model="editingbinding.scale" aria-label="red" aria-controls="red-slider">
+                    </div>
+                </div>
+                <div ng-show="editingbinding.action == 'steering'">
+                    <md-divider style="margin:10px"></md-divider>
+                    <md-checkbox                                         ng-model="editingbinding.isForceEnabled" >Force Feedback enabled    </md-checkbox>
+                    <md-checkbox ng-model="editingbinding.isForceInverted">Force Inverted            </md-checkbox>
+                    <div layout>
+                        <div flex="30">Force Coefficient:</div>
+                        <md-slider style="padding-right:30px" flex min="0" max="1000" step="50" ng-model="editingbinding.ffb.forceCoef" aria-label="red" id="red-slider" class></md-slider>
+                        <div style="width:60px;" layout layout-align="center center"><input type="number" ng-model="editingbinding.ffb.forceCoef" aria-label="red" aria-controls="red-slider"></div>
+                    </div>
+                    <div layout>
+                        <div flex="30" class="md-body-1">Force Limit:</div>
+                        <md-slider style="padding-right:30px" flex min="0" max="10" step="0.5" ng-model="editingbinding.ffb.forceLimit" aria-label="red" id="red-slider" class></md-slider>
+                        <div style="width:60px;" layout layout-align="center center"><input type="number" ng-model="editingbinding.ffb.forceLimit" aria-label="red" aria-controls="red-slider"></div>
+                    </div>
+                    <div layout>
+                        <div flex="30" class="md-body-1">Force Smoothing:</div>
+                        <md-slider style="padding-right:30px" flex min="0" max="500" step="25" ng-model="editingbinding.ffb.smoothing" aria-label="red" id="red-slider" class></md-slider>
+                        <div style="width:60px;" layout layout-align="center center"><input type="number" ng-model="editingbinding.ffb.smoothing" aria-label="red" aria-controls="red-slider"></div>
+                    </div>
+                    <div layout>
+                        <div flex="30" class="md-body-1">Force Smoothing High Frequency:</div>
+                        <md-slider style="padding-right:30px" flex min="0" max="250" step="10" ng-model="editingbinding.ffb.smoothingHF" aria-label="red" id="red-slider" class></md-slider>
+                        <div style="width:60px;" layout layout-align="center center"><input type="number" ng-model="editingbinding.ffb.smoothingHF" aria-label="red" aria-controls="red-slider"></div>
+                    </div>
+                </div>
+                <md-divider style="margin:10px"></md-divider>
+            </div>
+        </md-content>
+    </form>
+
+    <div style="padding: 16px" class="md-actions"  layout layout-align="end center">
+        <md-button style="margin-right: 32px" ng-disabled="!editingdevnameoriginal" class="md-raised md-warn" type=button ng-click="deletebinding(editingdevnameoriginal, editingbindingoriginal.control); editbinding(null, null);">Delete</md-button>
+        <md-button ng-disabled="!editingbindingchanged()" style="margin-right: 8px" class="md-raised md-accent" type=button ng-click="editbinding(editingdevnameoriginal, editingbindingoriginal);">Revert</md-button>
+        <md-button class="md-raised md-primary" type="submit" ng-disabled="!editingbindingchanged()" ng-click="savebinding(editingdevnameoriginal, editingbindingoriginal.control, editingdevname, editingbinding)">Apply</md-button>
+    </div>
+
+
+</md-whiteframe>
+
+
+
+
+<div style="padding-left: 16px; padding-right: 16px;">
+    <md-list>
+        <md-list-item ng-hide="ffb" layout="row" layout-align="space-between center">
+            <md-checkbox ng-hide="ffb" ng-model="showAdvancedBindings">Show advanced bindings</md-checkbox>
+            <md-input-container>
+              <label style="align: left">Search all bindings</label><input ng-model="query" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 250, 'blur': 0 } }" required type="text">
+            </md-input-container>
+        </md-list-item>
+    </md-list>
+    <div ng-show="ffb && !ffbFound">
+        <h2><span><ng-md-icon icon="info"/></span>Force Feedback controller not bound</h2>
+    </div>
+    <div style="padding-bottom: 24px;">
+        <md-content>
+            <section ng-show="displayedActions | objectLength" ng-repeat="(categoryname, category) in actionCategories | orderBy:'order'">
+                <md-subheader>
+                    <h2><span><ng-md-icon icon="{{category.icon}}"/></span>{{category.title}}</h2>
+                    <div ng-show="categoryname == 'debug' || categoryname == 'vehicle_debug'">Only available if 'Advanced functions' is enabled in Options &gt; Gameplay</div>
+                </md-subheader>
+                <md-list>
+                    <table border="1" class="keytable">
+                        <tr><td><b>Action</b></td><td><b>Controls</b></td></tr>
+                        <tbody>
+                            <tr action[isBasic] ng-repeat="(actionname, action) in displayedActions = (actions | filterCategory:categoryname | filterObj:query | filterDisplayMode:showAdvancedBindings | orderBy)">
+                                <td>
+                                {{ action.title }} 
+                                  <md-tooltip md-direction="down" md-delay="100">{{action.desc}}</md-tooltip>
+                                </td>
+                                <td class="controls hidingParent">
+                                    <span ng-repeat="f in bindingFiles">
+                                        <bng-option-input ng-click="editbinding(f.devname, b)" ng-repeat="b in f.contents.bindings| filter:{ action: actionname }:true" control="b.control" controltype="b.control_type" bindingaction='actionname' devname="f.devname" name="b.control" value="b.value" binding="b"/>
+                                    </span>
+                                    <!-- only show "+" button when hovering over <td>, except when we're in FFB mode and no binding was found (in that case, show always) -->
+                                    <span ng-class="{'hidingChild': !ffb || (ffb && ffbFound)}" style="float:right; cursor:pointer;">
+                                        <span><ng-md-icon ng-click="newbinding(actionname)" size="18px" icon="add_circle"></ng-md-icon></span>
+                                        <md-tooltip md-direction="down" md-delay="500">assign new control</md-tooltip>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-list>
+            </section>
+        </md-content>
+    </div>
+    <md-button ng-hide="ffb" class="md-raised md-warn" type=button ng-click="defaultBindings(); editbinding(null,null)">Reset
+      <md-tooltip md-direction="down" md-delay="100">Deletes user created bindings</md-tooltip>
+    </md-button>
+</div>

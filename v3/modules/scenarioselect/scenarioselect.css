@@ -1,0 +1,58 @@
+.Scenarioselect md-grid-list {
+  margin: 8px;
+}
+.Scenarioselect md-grid-tile md-grid-tile-footer {
+  background: rgba(0, 0, 0, 0.68);
+  height: 36px;
+}
+
+.Scenarioselect md-grid-tile:hover md-grid-tile-footer {
+  background: rgba(128, 0, 0, 0.68);
+}
+.Scenarioselect md-grid-tile.selectedLevel:hover md-grid-tile-footer {
+  background: rgba(128, 0, 0, 1);
+}
+
+.Scenarioselect md-grid-tile-footer figcaption {
+  width: 100%;
+}
+.Scenarioselect md-grid-tile-footer figcaption h3 {
+  margin: 0px;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+}
+.Scenarioselect .bottomButtons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 16px 8px 16px;
+} 
+
+.Scenarioselect md-grid-tile{
+}
+
+.Scenarioselect .selectedScenario {
+  border:2px solid rgba(128,0,0,1);
+}
+
+.Scenarioselect .unselectedScenario {
+  border:2px solid transparent;
+}
+
+.Scenarioselect .selectedScenario md-grid-tile-footer h3{
+  font-weight: 701;
+}
+
+.Scenarioselect .selectedScenario md-grid-tile-footer{
+  background: rgba(128, 0, 0, 1);
+}
+
+.contentNavScenarioselect {
+  width:100%;
+}
+
+.detailTable td {
+  vertical-align:top;
+}

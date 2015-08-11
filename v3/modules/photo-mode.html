@@ -1,0 +1,28 @@
+<div class="photo-mode-container">
+  <div class="tl" layout layout-align="center center">
+    <md-button md-no-ink class="md-fab" ng-click="ctrl.getScreenshot()">
+      <md-icon class="material-icons">photo_camera</md-icon>
+    </md-button>
+  </div>
+  
+  <div class="tr" layout layout-align="center center">
+    <md-button md-no-ink class="md-fab" ng-click="ctrl.shareScreenshot()">
+      <md-icon class="material-icons">share</md-icon>
+    </md-button>
+  </div>
+
+  <div class="bl" layout layout-align="center center">
+    <md-button md-no-ink class="md-fab" ng-click="ctrl.exit()">
+      <md-icon class="material-icons">cancel</md-icon>
+    </md-button>
+  </div> 
+
+  <div class="br" layout layout-align="center center">
+    <md-button md-no-ink class="md-fab" ng-click="ctrl.toggleAdvanced()">
+      <md-icon class="material-icons">more_vert</md-icon>
+    </md-button>
+  </div>
+  <div ng-if="ctrl.showAdvanced" style="position: absolute; bottom: 30px; right: 150px; width: 400px; height: 100px; border: 1px solid black">
+    
+  </div>
+</div>

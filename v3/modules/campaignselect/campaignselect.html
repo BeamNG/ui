@@ -1,0 +1,106 @@
+<md-toolbar class="md-hue-1" style="max-height:50px;min-height:50px;height:50px;">
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button md-default" aria-label="Back" ng-click="campaigns.toTop()">
+      <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
+    </md-button>
+    
+    <span flex>Campaigns (new)</span>
+    
+    <ng-md-icon icon="search"></ng-md-icon>
+    <md-input-container flex>
+      <label>&nbsp;</label>
+      <input ng-model="query">
+    </md-input-container>
+  </div> 
+</md-toolbar>
+
+<section id="mainRightSection" class="Scenarioselect" style="position:absolute;left:0;right:0;top:50px;bottom:0;" layout="row">
+  
+  <md-content flex=80 style="overflow-y:auto;">
+    <md-grid-list
+          md-cols-sm="2" md-cols-md="2" md-cols-gt-md="4"
+          md-row-height-gt-md="16:9" md-row-height="16:9"
+          md-gutter="4px" md-gutter-gt-sm="4px" 
+          >
+      <md-grid-tile ng-repeat="c in campaigns.list | filter:query"
+                    ng-click="campaigns.viewDetails(c);" 
+                    style="background-image: url(local://local/campaigns/{{ c.campaignId }}/{{ c.previews[0] }}), 
+                                             url( {{ ::campaigns.fallbackImgSrc }} );
+                           background-size: cover">
+        <md-grid-tile-footer><h3>{{ c.name }}</h3></md-grid-tile-footer>
+      </md-grid-tile>
+      
+      
+      <md-grid-tile style="background-image: url( {{ ::campaigns.fallbackImgSrc }} ); background-size: cover"
+                    ng-click="campaigns.freeRoam()">
+        <md-grid-tile-footer><h3>Free Roam</h3></md-grid-tile-footer>
+      </md-grid-tile>
+      
+      
+      
+    </md-grid-list>
+  </md-content>
+
+  <md-content flex class="md-whiteframe-z3" ng-if="!campaigns.selected" layout="column" layout-align="center center" style="height:100%">
+    <h3  style="color:grey">{{ campaigns.canTakeAction ? '' : 'No Campaign Selected' }}</h3>  
+    <div flex class="bottomButtons md-whiteframe-z1">
+      <section layout="row" layout-sm="column">
+        <md-button flex ng-if="campaigns.canTakeAction" class="md-primary md-raised" ng-click="campaigns.toLevels()" id="btnStep">
+          Select Level
+        </md-button>
+      </section>
+    </div>
+    
+    
+    
+  </md-content>
+
+  <md-content flex class="md-whiteframe-z3" ng-if="campaigns.selected" layout="column">
+    <div id="itemPreview" style="padding:10px;position:absolute;left:0;top:0;right:0;bottom:47px;overflow-y:auto;">
+      
+      <div style="max-height:200px;" >
+        <img style="width: 100%;" 
+             ng-src="local://local/campaigns/{{ campaigns.selected.campaignId }}/{{ campaigns.selected.previews[0] || '' }}"
+             err-src="{{ campaigns.fallbackImgSrc }}">
+      </div>
+      <h2>{{ selected.name }}</h2>
+
+      <md-content>
+        {{ campaigns.selected.description }}
+      </md-content>
+
+      <md-divider style="margin:20px"></md-divider>
+
+      <table class="detailTable">
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="settings_overscan"></ng-md-icon></td>
+          <td>Name:</td>
+          <td>{{ campaigns.selected.name }}</td>
+        </tr>
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="directions_car"></ng-md-icon></td>
+          <td>Type:</td>
+          <td>{{ campaigns.selected.type }}</td>
+        </tr>
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="flag"></ng-md-icon></td>
+          <td>Difficulty:</td>
+          <td>{{ campaigns.selected.difficulty }}</td>
+        </tr>
+        <tr>
+          <td><ng-md-icon style="fill:orange" size=20 icon="people"></ng-md-icon></td>
+          <td>Author(s):</td>
+          <td>{{ campaigns.selected.authors }}</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="bottomButtons md-whiteframe-z1">
+      <section layout="row" layout-sm="column">
+        <md-button flex class="md-primary md-raised" ng-click="campaigns.select()" id="btnStep">
+          Select
+        </md-button>
+      </section>
+    </div>
+  </md-content>
+</section>

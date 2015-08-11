@@ -1,0 +1,300 @@
+<style>
+.contentNavHelp .questionAnswer {
+  padding: 10px;
+}
+
+.contentNavHelp .questionAnswer h4 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.contentNavHelp .questionAnswer md-list-item {
+}
+.contentNavHelp .questionAnswer .warning{
+  font-weight:bold;
+  color:rgb(255,152,0);
+}
+.contentNavHelp .questionAnswer .error{
+  font-weight:bold;
+  color:rgb(211,47,47);
+}
+.contentNavHelp .overviewContainer .card {
+  width: 700px;
+  /*min-height:230px;*/
+}
+
+</style>
+
+<section class="overviewContainer" > <!-- layout-align="center start" -->
+  
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">Processor (CPU)</div>
+    <div layout="row" flex layout-align="start start">
+      <div>
+        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.cpu.state == 'ok'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.cpu.state == 'warn'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.cpu.state == 'error'"></ng-md-icon>
+      </div>
+
+      <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
+        <md-list-item layout="row" layout-align="start center" style="font-weight:bold;">
+          {{hwinfo.cpu.name}}
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Minimum</div>
+          <div flex layout="row" layout-align="start center">
+            Desktop Intel i3 
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Recommended</div>
+          <div flex layout="row" layout-align="start center">
+             High-end Intel i5/i7 or High-end AMD 6 Core or better
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-repeat="(i, w) in hwinfo.cpu.warnings">
+          <div ng-if="w[0] == 'warn'" class="warning"><b>Warning</b>: {{w[1]}}</div>
+          <div ng-if="w[0] == 'error'" class="error"><b>Critical</b>: {{w[1]}}</div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-card>
+
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">Physics Benchmark</div>
+    <div layout="column">
+      <div layout="row" flex layout-align="start start">
+        <div>
+          <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="bananabench && bananabench.maxRealtimeVehicles >= 4"></ng-md-icon>
+          <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="bananabench && bananabench.maxRealtimeVehicles >= 2 && bananabench.maxRealtimeVehicles < 4"></ng-md-icon>
+          <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="bananabench && bananabench.maxRealtimeVehicles < 2"></ng-md-icon>
+          <ng-md-icon size=128 icon="event_note" style="fill: rgb(129,138,254)" ng-if="$parent.gameState == 'menu' && !bananabench"></ng-md-icon>
+          <ng-md-icon size=128 icon="event_note" style="fill: rgb(130,130,130)" ng-if="$parent.gameState != 'menu' && !bananabench"></ng-md-icon>
+        </div>
+
+        <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
+          <md-list-item layout="row" layout-align="start center" ng-if="bananabench">
+            <div style="width: 180px;">Score</div>
+            <div flex layout="row" layout-align="start center" style="font-size:1.3em">
+              {{bananabench.maxMbeams | number : 3}} MBeams/s
+            </div>
+          </md-list-item>
+          <md-list-item layout="row" layout-align="start center" ng-if="bananabench">
+            <div style="width: 180px;">Max Realtime vehicles</div>
+            <div flex layout="row" layout-align="start center" style="font-size:1.3em">
+              {{bananabench.maxRealtimeVehicles}}
+            </div>
+          </md-list-item>
+          <md-list-item layout="row" layout-align="start center" ng-show="bananabench && showDetails">
+            <div style="width: 180px;">Test vehicle:</div>
+            <div flex layout="row" layout-align="start center">
+              {{bananabench.testVehicle}}
+            </div>
+          </md-list-item>
+          <md-list-item ng-if="$parent.gameState == 'menu'">
+            <md-button class="md-primary md-raised" ng-click="runPhysicsBenchmark()" ng-if="!bananabenchRunning">Run physics benchmark</md-button>
+            <div ng-if="bananabenchRunning" style="color:#DB5D5D;font-weight:bold;">Please wait: The benchmark is running.<br/>This can take up to a minute.</div>
+          </md-list-item>
+          <md-list-item ng-if="$parent.gameState != 'menu'">
+            <div style="color:#888;font-weight:bold;">The benchmark can only be run from the game start with no level or vehicles loaded.</div>
+          </md-list-item>
+        </md-list>
+      </div>
+      <div flex layout="row" layout-align="start center" ng-show="bananabench && showDetails" style="padding:10px">
+        <table border="0" class="vertKeytable">
+          <tr>
+            <th>Vehicles</th>
+            <td ng-repeat="(i, t) in bananabench.tests">{{t.vehicles}}</td>
+          </tr>
+          <tr>
+            <th>MBeams/s</th>
+            <td ng-repeat="(i, t) in bananabench.tests">{{t.beamspersec | number : 2}}</td>
+          </tr>
+          <tr>
+            <th>% Realtime</th>
+            <td ng-repeat="(i, t) in bananabench.tests">{{t.percentRealtime | number : 0 }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </md-card>
+
+
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">Graphics Card (GPU)</div>
+    <div layout="row" flex layout-align="start start">
+      <div>
+        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.gpu.state == 'ok'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.gpu.state == 'warn'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.gpu.state == 'error'"></ng-md-icon>
+      </div>
+
+      <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
+        <md-list-item layout="column" layout-align="start start" style="font-weight:bold;">
+          {{hwinfo.gpu.name}}, {{hwinfo.gpu.memoryMB}} MB
+          <small>(Memory might be off, this is WIP)</small>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Minimum</div>
+          <div flex layout="row" layout-align="start center">
+            GeForce GTX 550 TI or equivalent (1 GB Video RAM)
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Recommended</div>
+          <div flex layout="row" layout-align="start center">
+            GeForce GTX 780 (>1GB Video RAM)
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-repeat="(i, w) in hwinfo.gpu.warnings">
+          <div ng-if="w[0] == 'warn'" class="warning"><b>Warning</b>: {{w[1]}}</div>
+          <div ng-if="w[0] == 'error'" class="error"><b>Critical</b>: {{w[1]}}</div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-card>
+
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">System Memory (RAM)</div>
+    <div layout="row" flex layout-align="start start">
+      <div>
+        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.mem.state == 'ok'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.mem.state == 'warn'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.mem.state == 'error'"></ng-md-icon>
+      </div>
+
+      <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
+        <md-list-item layout="row" layout-align="start center" style="font-weight:bold;">
+          {{hwinfo.mem.osPhysAvailable | bytes}}
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Minimum</div>
+          <div flex layout="row" layout-align="start center">
+            4GB DDR3
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Recommended</div>
+          <div flex layout="row" layout-align="start center">
+            8GB DDR3
+          </div>
+        </md-list-item>
+        <md-list-item layout="column" layout-align="start start" ng-show="showDetails && hwinfo.mem.processPhysUsedPercent">
+          Physical: {{hwinfo.mem.processPhysUsed | bytes}} / {{hwinfo.mem.osPhysUsed | bytes}} of {{hwinfo.mem.osPhysAvailable | bytes}}<br/>
+          <md-progress-linear class="md-accent" md-mode="buffer" value="{{hwinfo.mem.processPhysUsedPercent * 100}}" md-buffer-value="{{hwinfo.mem.osPhysUsedPercent * 100}}">
+          </md-progress-linear>
+        </md-list-item>
+        <md-list-item layout="column" layout-align="start start" ng-show="showDetails && hwinfo.mem.processPhysUsedPercent">
+          Virtual: {{hwinfo.mem.processVirtUsed | bytes}} / {{hwinfo.mem.osVirtUsed | bytes}} of {{hwinfo.mem.osVirtAvailable | bytes}}<br/>
+          <md-progress-linear class="md-accent" md-mode="buffer" value="{{hwinfo.mem.processVirtUsedPercent * 100}}" md-buffer-value="{{hwinfo.mem.osVirtUsedPercent * 100}}">
+          </md-progress-linear>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-repeat="(i, w) in hwinfo.mem.warnings">
+          <div ng-if="w[0] == 'warn'" class="warning"><b>Warning</b>: {{w[1]}}</div>
+          <div ng-if="w[0] == 'error'" class="error"><b>Critical</b>: {{w[1]}}</div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-card>
+
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">Operating System (OS)</div>
+    <div layout="row" flex layout-align="start start">
+      <div>
+        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.os.state == 'ok'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.os.state == 'warn'"></ng-md-icon>
+        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.os.state == 'error'"></ng-md-icon>
+      </div>
+
+      <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
+        <md-list-item layout="row" layout-align="start center" style="font-weight:bold;">
+          {{hwinfo.os.shortname}}
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Minimum</div>
+          <div flex layout="row" layout-align="start center">
+            Windows 7 32bit
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+          <div class="leftSide">Recommended</div>
+          <div flex layout="row" layout-align="start center">
+            Windows 8.1 (64bit)
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="start center" ng-repeat="(i, w) in hwinfo.os.warnings">
+          <div ng-if="w[0] == 'warn'" class="warning"><b>Warning</b>: {{w[1]}}</div>
+          <div ng-if="w[0] == 'error'" class="error"><b>Critical</b>: {{w[1]}}</div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-card>
+
+
+
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">Basic Performance Improvements</div>
+    <md-list class="questionAnswer">
+      <md-list-item layout="row" ng-if="settings.PostFXSSAOGeneralEnabled">
+        <div flex>Turn off SSAO in 
+          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+        </div>
+      </md-list-item>
+      <md-list-item layout="row" ng-if="settings.GraphicLightingQuality !== '0'">
+        <div flex>Reduce lighting in 
+          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+        </div>
+      </md-list-item>
+      <md-list-item layout="row" ng-if="settings.GraphicTextureQuality !== '0'">
+        <div flex>Reduce texture quality in 
+          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+        </div>
+      </md-list-item>
+      <md-list-item layout="row">
+        <div flex>Lower resolution in 
+          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-card>
+  <md-card class="card">
+    <div class="md-header md-default-theme apply-md questionHeader">Using the dedicated graphics on laptops</div>
+    <md-list class="questionAnswer">
+      <md-list-item layout="row">
+        <div class="leftSideNum">1.</div>
+        <div flex>
+          Go to the NVIDIA Control Panel
+        </div>
+      </md-list-item>
+      <md-list-item layout="row">
+        <div class="leftSideNum">2.</div>
+        <div flex>
+          Go to 'Manage 3D Settings'
+        </div>
+      </md-list-item>
+      <md-list-item layout="row">
+        <div class="leftSideNum">3.</div>
+        <div flex>
+          Customize BeamNG.drive to use 'High-performance NVIDIA processor'
+        </div>
+      </md-list-item>
+      <md-list-item layout="row">
+        <div class="leftSideNum">4.</div>
+        <div flex>
+          For more detailed information or AMD cards please check out our
+          <a href="http-external://wiki.beamng.com/Dedicated_Graphics">Wiki Guide</a> or please contact our 
+          <a href="javascript:void(0)" ng-click="changeView(1)">Support</a>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</section>
+
+<md-checkbox ng-model="showDetails" aria-label="show Details" class="md-warn" style="display: inline;">Show Details</md-checkbox>
+
+<!-- <div ng-if="showDetails">
+<h3>Complete Hardware Information</h3>
+<pre>
+{{hwinfo | json}}
+</pre>
+</div> -->

@@ -1,0 +1,94 @@
+<md-content style="width:1200px; height:100%;" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button md-default" aria-label="Back" ng-click="backToTop()">
+        <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
+      </md-button>
+      
+      <span flex>Scenarios</span>
+
+      <ng-md-icon icon="search"></ng-md-icon>
+      <md-input-container flex>
+        <label>&nbsp;</label>
+        <input ng-model="query" placeholder="">
+      </md-input-container>
+    </div> 
+  </md-toolbar>
+
+  <div flex layout-padding style="overflow-y: auto">
+    <md-grid-list
+          md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3"
+          md-row-height-gt-md="16:9" md-row-height="16:9"
+          md-gutter="4px" md-gutter-gt-sm="4px" 
+          >
+      <md-grid-tile ng-repeat="(i, scenario) in scenarios | filter:query | orderBy: 'difficulty'"
+                      ng-click="clickTile(scenario);"
+                      ng-class="(scenario == selected) ? 'selectedScenario' : 'unselectedScenario'"
+                      >
+        <img ng-src="/{{::scenario.path}}{{::scenario.preview}}" style="width: 100%;"></img>
+        <md-grid-tile-footer><h3>{{::scenario.name}}</h3></md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+</md-content>
+
+<md-content ng-show="selected" layout="column" style="width: 400px; height: 100%">
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <span flex>{{ selected.name }}</span>
+    </div> 
+  </md-toolbar>
+
+  <img ng-src="/{{selected.path}}{{selected.preview}}" style="width: 100%;">
+  <p layout-padding>{{ selected.description }}</p>
+  <md-divider></md-divider>
+
+  <div flex class="md-padding" style="overflow: auto">
+    <md-list>
+      
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="color: black; -webkit-text-stroke: 0px;" md-font-icon="play">play</md-icon>
+        <div class="md-list-item-text">
+          <h3>Type</h3>
+          <p>{{ selected.type }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="color: black; -webkit-text-stroke: 0px;" md-font-icon="play">play</md-icon>
+        <div class="md-list-item-text">
+          <h3>Laps</h3>
+          <p>{{ selected.laps }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="color: black; -webkit-text-stroke: 0px;" md-font-icon="play">play</md-icon>
+        <div class="md-list-item-text">
+          <h3>Length</h3>
+          <p>{{ selected.length }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="color: black; -webkit-text-stroke: 0px;" md-font-icon="play">play</md-icon>
+        <div class="md-list-item-text">
+          <h3>Difficulty</h3>
+          <p>{{ selected.difficulty }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="color: black; -webkit-text-stroke: 0px;" md-font-icon="play">play</md-icon>
+        <div class="md-list-item-text">
+          <h3>Author(s)</h3>
+          <p>{{ selected.authors }}</p>
+        </div>
+      </md-list-item>
+    </md-list>
+  </div>
+
+  <div layout="row" class="md-padding">
+    <button layout-fill class="md-button md-primary md-raised" ng-click="startScenario(selected)"><b>play</b></button>
+  </div>
+</md-content>

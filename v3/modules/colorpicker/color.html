@@ -1,0 +1,50 @@
+<link type="text/css" rel="stylesheet" href="modules/colorpicker/color.css">
+<div class="colorPicker">
+  <div ng-if="showMain">
+    <span ng-if="showText">Color / Saturation:</span>
+    <div id="hslimg" ng-mousemove="hslMousemove($event)" ng-mousedown="hslMousedown()" ng-mouseup="hslMouseupLeave($event)" ng-mouseleave="hslMouseupLeave($event)" style="height: {{height}}px; width:{{width}}px">
+      <div class="hslSFilter">
+          <div style="border: solid 1.5px black;border-radius: 12px;width: 12px;height: 12px;position: relative;left:{{colorDot.x-6}}px;top:{{colorDot.y-6}}px"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sliderContainer" style="width:{{width}}px" layout="column" ng-if="showMain">           
+      <span ng-if="showText">Brightness:</span>
+      <input type="range" min="0" max="1" step="0.001" id="brightSlider" class="colorSlider colorSliderWrapper" ng-model="brightness" ng-change="updateBright(brightness); returnColor()" style="background: linear-gradient(90deg, rgb(0,0,0), hsl({{brightGradientColor()}}), rgb(255,255,255))"/>
+  </div>
+  <div class="sliderContainer" style="width:{{width}}px" layout="column" ng-if="showAlpha">
+      <span ng-if="showText">Chrominess:</span>
+      <div class="transparentIndicatorSquared colorSliderWrapper" style="background-color: white;">
+          <input type="range" min="0" max="2" step="0.001" id="alphaSlider" class="colorSlider colorSliderWrapper" ng-model="color.alpha" ng-change="returnColor()" style="width:{{width}}px; background: linear-gradient(90deg, hsla({{alphaGradientColor()}}, 0), hsla({{alphaGradientColor()}}, 2))"/>
+      </div>
+  </div>
+  <div layout="row" layout-align="center start" style="margin-top: 10px;margin-bottom: 10px; width: {{width}}px">
+    <span ng-if="showText" ng-if="false">{{color.formalRgba()}}</span>
+  </div>
+  <div class="colorWidgetContainer" ng-if="showPreview" style="width: {{width/ 3.5}}px; height: {{width/ 3.5}}px;float: left; margin-right: 5px"><div class="colorWidgetColor" style="background-color: hsl({{alphaGradientColor()}});"></div><div class="colorWidgetChrome" style="opacity: {{1 - (color.alpha / 2)}};"></div><div class="colorWidgetShadow"></div></div>
+  <div ng-if="showPresets" style="float:left; width:{{width - width / 3.5 - 5}}px" layout="column">
+    <span ng-if="showText && !carListEmpty">Vehicle Presets:</span>
+    <div ng-if="!carListEmpty" style="min-height:24px">
+      <div style="background-color: white; width:20px; height:20px; float: left; margin:2px;margin-bottom: 10px; cursor: pointer" ng-repeat="(name, preset) in presets.car track by $index">
+        <div class="transparentIndicatorSquared" style="width:100%; height:100%;">
+          <div style="width:100%; height:100%; background-color: rgba({{toIntVal(preset, false)}});" ng-click="applyPreset(preset)" ng-right-click="removePreset(preset)">
+            <md-tooltip>
+              {{name}}
+            </md-tooltip>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span ng-if="showText && !userListEmpty">User Presets:</span>
+    <div ng-if="!userListEmpty" style="min-height:24px">
+      <div style="background-color: white; width:20px; height:20px; float: left; margin:2px; cursor: pointer;" ng-repeat="preset in presets.user track by $index">
+        <div class="transparentIndicatorSquared" style="width:100%; height:100%;">
+          <div style="width:100%; height:100%; background-color: rgba({{toIntVal(preset)}});" ng-click="applyPreset(preset)" ng-right-click="removePreset(preset)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <md-button ng-if="presetsEditable" ng-click="addPreset()">Add color to Presets</md-button>
+    <div ng-if="showText && presetsEditable" layout="row" layout-align="center start" flex>(Right click on Preset to delete it)</div>
+  </div>
+</div>

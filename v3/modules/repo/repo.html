@@ -1,0 +1,116 @@
+<style>
+  .Repo .repo-details-table td { padding: 20px 10px!important; }
+  .Repo .repo-details-table th { text-align: left!important; }
+  .Repo .repo-dl-button-complete { fill: #16A037; }
+</style>
+
+
+<md-toolbar class="md-hue-1" style="max-height:50px;min-height:50px;height:50px;">
+  <div class="md-toolbar-tools">
+
+    <md-button class="md-icon-button md-default" aria-label="Back" ng-click="repo.backToMenu()">
+      <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
+    </md-button>
+
+    <span flex>Repo</span>
+    
+    <ng-md-icon icon="search"></ng-md-icon>
+    <md-input-container flex>
+      <label>&nbsp;</label>
+      <input ng-model="query">
+    </md-input-container>
+  </div> 
+</md-toolbar>
+
+<section class="Repo" style="position:absolute;left:0;right:0;top:50px;bottom:0;" layout="row">
+<!--
+  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="right" md-is-locked-open="true" >
+     
+    <center>
+      <img ng-src="{{ repo.imagePath(repo.selected.media[0].tag) }}" style="width: 200px;">
+    </center>
+
+    <h2>{{ repo.selected.title }}</h2>
+    <p> {{ repo.selected.description }}</p>
+    
+    <div flex style="overflow-y:scroll">
+      <table class="repo-details-table">
+        <tbody>
+          <tr>
+            <th>Author</th>
+            <td>{{ repo.selected.authorname }}</td>
+          </tr>
+          <md-divider></md-divider>
+          <tr>
+            <th>Date Created</th>
+            <td>{{ repo.selected['date_create'] }}</td>
+          </tr>
+          <tr>
+            <th>Date Updated</th>
+            <td>{{ repo.selected['date_updated'] }}</td>
+          </tr>
+          <tr>
+            <th>Tags</th>
+            <td>
+              <span ng-repeat="tag in repo.selected.tags.split(',')"> {{ ::tag }} </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <md-divider></md-divider>
+      
+      <div layout="row" layout-align="center center" ng-repeat="file in repo.selected.files">
+                <md-button md-no-ink ng-click="repo.downloadFile(file.hash)">
+        <md-button md-no-ink ng-href="https://repo.beamng.com/downloadfile/{{ ::file.hash }}" >
+          <ng-md-icon icon="get_app" ng-class="{'repo-dl-button-complete': repo.downloadState[file.hash].done}"></ng-md-icon>
+        </md-button>
+        <p flex>{{ ::file.filename }}</p>
+        <span style="padding: 10px"> {{ repo.downloadState[file.hash].percent }} </span>
+      </div>
+    </div>
+  </md-sidenav>
+-->
+
+  <md-content flex style="overflow-y:auto; padding: 10px">
+
+      <md-card flex class="card" ng-repeat="project in repo.projects | filter:query"
+                    style="width:600px;float:left;padding:20px;background-color:#eee;"
+                    ng-click = "repo.selectProject($index)"
+                    layout-align="left top"
+                    >
+        <div style="border:0px solid green; padding:0px;height:40px;min-height:40px;max-height:40px;">
+        <b>{{project.title}}</b> by {{project.authorname}} <small>Updated: {{project['date_updated']}}</small>
+        </div>
+        <md-divider></md-divider>
+        <div style="border:0px solid red" ng-bind-html="project.description | markdown">
+        </div>
+
+        <md-divider></md-divider>
+
+        <div style="border:0px solid yellow;padding:10px;" layout-align="left center">
+          <img ng-repeat="(k,img) in project.media | limitTo: 3 " ng-src="{{repo.imagePath(img.tag)}}" style="width: 200px;">
+        </div>
+
+        <md-divider></md-divider>
+
+        <div style="border:0px solid blue;">
+
+          <div layout="row" layout-align="center center" ng-repeat="file in project.files">
+            <md-button ng-show="repo.downloadState[file.hash].done" class="md-no-ink" ng-click="removeFile(file.hash)" >
+              <ng-md-icon icon="remove_circle" ng-class="{'repo-dl-button-complete': repo.downloadState[file.hash].done}"></ng-md-icon>
+            </md-button>
+            <md-button ng-show="!repo.downloadState[file.hash].done" class="md-no-ink" ng-href="https://repo.beamng.com/downloadfile/{{ ::file.hash}}" >
+              <ng-md-icon icon="add_circle" ng-class="{'repo-dl-button-complete': repo.downloadState[file.hash].done}"></ng-md-icon>
+            </md-button>
+            <p flex>{{ ::file.filename }} ({{ ::file.filesize | bytes }}) <small>({{file.hash}})</small></p>
+            <span > {{ repo.downloadState[file.hash].percent }} </span>
+          </div>
+
+        </div>
+        <!-- <md-grid-tile-footer><h3>{{ project.title }}</h3></md-grid-tile-footer> -->
+      </md-card>
+  </md-content>
+
+
+</section>

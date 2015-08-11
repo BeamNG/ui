@@ -1,0 +1,139 @@
+<md-content style="width: 400px; height: 100%" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span flex>Debug</span>
+    </div>
+  </md-toolbar>
+  
+  <div flex layout-padding style="overflow-y: auto">
+    <md-subheader>Vehicle</md-subheader>
+    <md-list>
+      <md-list-item layout layout-wrap>
+        <md-button class="md-raised wide" ng-click="bngApi.sendGameEngine('spawnVehicle();')">Spawn new</md-button>
+        <md-button class="md-raised" ng-click="bngApi.sendGameEngine('beamNGResetAllVehicles();')">Reset all</md-button>
+        <md-button class="md-raised" ng-click="bngApi.sendGameEngine('beamNGReloadAllVehicles();')">Reload all</md-button>
+        <md-button class="md-raised" ng-click="bngApi.sendGameEngine('toggleCamera(1);')">Toggle free camera</md-button>
+      </md-list-item>
+      
+      <md-list-item>
+        <p>Activate Physics</p>
+        <md-checkbox md-no-ink aria-label="Physics enabled" ng-model="state.physicsEnabled"></md-checkbox>
+      </md-list-item>
+
+      <md-list-item layout>
+        <p>Enable Debug</p>
+        <md-checkbox md-no-ink aria-label="Enable Debug" ng-model="state.debugEnabled"></md-checkbox>
+      </md-list-item>
+    </md-list>
+
+    <md-divider></md-divider>
+    <md-subheader>Vehicle Debug</md-subheader>
+
+    <md-list>
+
+      <md-list-item layout>
+        <p flex="50">Beam Visualization</p>
+        <select flex class="md-select-label" ng-model="state.vehicle.beamVis">
+          <label>{{state.vehicle.beamVis}}</label>
+          <option ng-value="val" ng-repeat="val in state.vehicle.beamVis_modes">{{ val }}</option>
+        </select>
+      </md-list-item>
+
+      <md-list-item layout>
+        <p flex="50">Beam Transparency</p>
+        <md-slider flex aria-label="Beam Transparency" min="0" max="1" step="0.01" ng-model="state.vehicle.beamVisAlpha" style="margin: 0 15px"></md-slider>
+      </md-list-item>
+
+      <md-list-item layout>
+        <p flex="50">Node Text</p>
+        <select flex class="md-select-label" aria-label="Node Text" ng-model="state.vehicle.nodeText">
+          <label>{{state.vehicle.nodeText}}</label>
+          <option ng-value="val" ng-repeat="val in state.vehicle.nodeText_modes">{{ val }}</option>
+        </select>
+      </md-list-item>
+
+      <md-list-item layout>
+        <p flex="50">Node Visualization</p>
+        <select flex class="md-select-label" aria-label="Node Visualization" ng-model="state.vehicle.nodeVis">
+          <label>{{state.vehicle.nodeVis}}</label>
+          <option ng-value="val" ng-repeat="val in state.vehicle.nodeVis_modes">{{ val }}</option>
+        </select>
+      </md-list-item>
+
+      <md-list-item layout>
+        <p flex="50">Center of Gravity</p>
+        <select flex class="md-select-label" aria-label="Center of Gravity" ng-model="state.vehicle.cog">
+          <label>{{state.vehicle.cog_modes[state.vehicle.cog - 1]}}</label>
+          <option ng-value="i + 1" ng-repeat="(i, val) in state.vehicle.cog_modes">{{ val }}</option>
+        </select>
+      </md-list-item>
+
+      <md-list-item>
+        <p>Collision Triangle Debug</p>
+        <md-checkbox aria-label="Collision Triangle Debug" ng-model="state.vehicle.collisionTriangle"></md-checkbox>
+      </md-list-item>
+
+    <md-list-item layout>
+      <p flex="40">Mesh Visibility</p>
+      <md-slider flex aria-label="Mesh Visibility" ng-model="state.vehicle.meshVisibility" style="margin: 0 15px"></md-slider>
+      <input type="number" ng-model="state.vehicle.meshVisibility" style="width: 60px" />
+    </md-list-item>
+
+    <md-divider></md-divider>
+    <md-subheader>Terrain</md-subheader>
+    <small class="md-padding">Please enable general debug mode at the top for this to work</small>
+
+    <md-list-item>
+      <p>Static Collision</p>
+      <md-checkbox aria-label="Static Collision" ng-model="state.terrain.staticCollision"></md-checkbox>
+    </md-list-item>
+
+    <md-list-item >
+      <p>Groundmodel Debug</p>
+      <md-checkbox aria-label="Groundmodel Debug" ng-model="state.terrain.groundmodel"></md-checkbox>
+    </md-list-item>
+
+    <md-divider></md-divider>
+    <md-subheader>Renderer</md-subheader>
+
+    <md-list-item>
+      <p>Show FPS</p>
+      <md-checkbox aria-label="Show FPS" ng-model="state.renderer.fps"></md-checkbox>
+    </md-list-item>    
+
+    <md-list-item>
+      <p>Bounding Boxes</p>
+      <md-checkbox aria-label="Bounding Boxes" ng-model="state.renderer.boundingboxes"></md-checkbox>
+    </md-list-item>
+
+    <md-list-item>
+      <p>Disable Shadows</p>
+      <md-checkbox aria-label="Disable Shadows" ng-model="state.renderer.disableShadows"></md-checkbox>
+    </md-list-item>
+
+    <md-list-item>
+      <p>Wireframe Mode</p>
+      <md-checkbox aria-label="Wireframe mode" ng-model="state.renderer.wireframe"></md-checkbox>
+    </md-list-item>
+
+    <md-list-item layout>
+      <p flex="40">Visualization</p>
+      <select flex class="md-select-label" ng-model="state.renderer.visualization">
+        <label>{{state.renderer.visualization}}</label>
+        <option ng-value="val" ng-repeat="val in ['None','Depth','Normal','Light Color','Specular']">{{ val }}</option>
+      </select>
+    </md-list-item>
+
+    <md-divider></md-divider>
+    <md-subheader>Effects</md-subheader>
+    <small class="md-padding">The FOV only works in free camera mode</small>
+
+    <md-list-item layout>
+      <p flex="40">Field of View</p>
+      <md-slider flex aria-label="Field of View" ng-model="state.effect.fov" style="margin: 0 15px"></md-slider>
+      <input  type="number" ng-model="state.effect.fov" style="width: 60px" />
+    </md-list-item>
+
+  </md-list>
+</div>
+</md-content>

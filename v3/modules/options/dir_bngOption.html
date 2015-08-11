@@ -1,0 +1,46 @@
+<div layout="row" style="align-items:center;">
+  <div flex="55" ng-hide="optionData.hideName" style="{{(optionData.id)?'':'color: grey;'}}">
+    {{optionData.name}}
+  </div>
+  <div ng-switch="optionData.type" flex="{{(optionData.hideName)? 100 : 45}}">
+    <div ng-switch-when="combo">
+      <md-select class="md-primary height32" ng-model="optionData.val" ng-change="optionChanged(optionData.id, optionData.val[0])" style="float: right" ng-disabled="{{(optionData.id)?'false':'true'}}">
+        <md-select-label>{{optionData.val[1]}}</md-select-label>
+        <md-option ng-value="[i, opt]" ng-repeat="(i, opt) in optionData.options">{{ opt }}</md-option>
+      </md-select>
+    </div>
+    
+    <div ng-switch-when="bool" style="float: right;">
+      <md-switch class="md-primary height32" ng-model="optionData.val" ng-change="optionChanged(optionData.id, optionData.val)" aria-label="{{optionData.name}}" ng-disabled="{{(optionData.id)?'false':'true'}}"></md-switch>
+    </div>
+    
+    <div ng-switch-when="slider">
+      <md-slider class="md-primary height32" ng-model="optionData.val" min="{{optionData.min}}" max="{{optionData.max}}" step="{{optionData.step}}"  ng-change="optionChanged(optionData.id, optionData.val)" aria-label="{{optionData.name}}" ng-disabled="{{(optionData.id)?'false':'true'}}"></md-slider>
+    </div>
+    
+    <div ng-switch-when="color">
+
+    </div>
+    
+    <div ng-switch-when="file">
+
+    </div>
+    
+    <div ng-switch-when="button" style="float: right">
+      <md-button class="md-raised" ng-click="optionData.action()">{{ (optionData.buttonName) ? optionData.buttonName : optionData.name }}</md-button>
+    </div>
+    
+    <div ng-switch-when="text" style="width: 100%">
+      <span>{{ (optionData.text) ? optionData.text : optionData.name }}</span>
+    </div>    
+    <div ng-switch-when="easyslider">
+      <bng-option-easy-slider data="optionData.val"></bng-option-easy-slider>
+    </div>
+    <div ng-switch-when="controllers">
+      <bng-option-controllers data="optionData"></bng-option-controllers>
+    </div>
+    <div ng-switch-when="bindings">
+      <bng-option-bindings data="optionData"></bng-option-bindings>
+    </div>
+  </div>
+</div>

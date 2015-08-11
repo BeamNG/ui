@@ -1,0 +1,17 @@
+<md-content class="startScreen md-padding">
+  <h1>{{data.name}}</h1>
+
+  <ng-include ng-if="data.startHTML" src="'/' + data.sourcePath + data.startHTML"></ng-include>
+  <div ng-if="!data.startHTML">{{data.description}}</div>
+
+  <br/>
+  <br/>
+  
+  <md-divider></md-divider>
+
+  <center>
+  <md-button class="md-raised md-accent" aria-label="" ng-click="play()" style="padding:0px;margin:30px;width:50%;">
+    <ng-md-icon size=100  icon="play_arrow" style="fill:white;"></ng-md-icon>
+  </md-button>
+  </center>
+</md-content>

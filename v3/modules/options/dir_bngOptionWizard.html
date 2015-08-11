@@ -1,0 +1,57 @@
+<div style="padding: 16px">
+    <div ng-show="currentstep == 1"><h3>Please, choose the controller you want to configure</h3><p>
+        <md-radio-group ng-model="chosen">
+            <md-radio-button ng-value="devname" class="md-primary" ng-repeat="(devname, device) in devices">
+                {{ device.productName}}
+                <span ng-show="devname.indexOf('mouse') == 0"><ng-md-icon icon="mouse"/></span>
+                <span ng-show="devname.indexOf('gamepad') == 0"><ng-md-icon icon="gamepad"/></span>
+                <span ng-show="devname.indexOf('xinput') == 0"><ng-md-icon icon="gamepad"/></span>
+                <span ng-show="devname.indexOf('wheel') == 0"><ng-md-icon icon="radio_button_on"/></span>
+                <span ng-show="devname.indexOf('keyboard') == 0"><ng-md-icon icon="keyboard"/></span>
+                <span ng-show="devname.indexOf('vinput') == 0"><ng-md-icon icon="phone_android"/></span>
+            </md-radio-button>
+        </md-radio-group>
+    </p></div>
+    <div ng-repeat="(n,step) in  wizardSteps">
+        <div ng-show="currentstep == n+2"><h3>{{step.hint}}</h3><p>
+            <kbd style="cursor:pointer;" ng-click="editbinding(detecteddevname, detectedbinding)">
+                <span ng-show="step.control">{{step.control | uppercase}}</span>
+                <span ng-hide="step.control">(detecting)</span>
+            </kbd>
+        </p></div>
+    </div>
+    <div ng-show="currentstep == (2+wizardSteps.length)"><h3>Tweak settings and save</h3><p>
+        Assigned controls:
+        <div ng-repeat="binding in finalBindings">
+            {{actions[binding.action].title}}:
+            <kbd style="cursor:pointer;">
+                <span>{{binding.control | uppercase}}</span>
+            </kbd>
+            <span ng-show="binding.isInverted || binding.isRanged">
+                (
+                <span ng-show="binding.isInverted">inverted</span>
+                &nbsp;
+                <span ng-show="binding.isInverted">ranged</span>
+                )
+            </span>
+            <br>Is inverted: {{binding.isInverted}}
+            <br>Is ranged: {{binding.isRanged}}
+            <br>
+        </div>
+    </p></div>
+    <div style="padding-top: 16px" class="md-actions" flex layout layout-align="center center">
+        <md-button class="md-raised" ng-disabled="currentstep == 1" ng-click="change(currentstep-1);">Back</md-button>
+        &nbsp; &nbsp;
+        <div ng-show="currentstep < laststep">
+            <md-button ng-show="currentstep < laststep" class="md-raised md-primary" ng-disabled="!chosen" ng-click="change(currentstep+1);">Continue</md-button>
+            <span ng-show="currentstep > 1">
+                &nbsp; &nbsp;
+                <span>({{laststep-currentstep}} steps left)</span>
+            </span>
+        </div>
+        <div ng-show="currentstep == laststep">
+            <md-button class="md-raised md-primary" ng-click="change(currentstep+1);">Save</md-button>
+        </div>
+    </div>
+
+</div>

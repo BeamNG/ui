@@ -1,0 +1,18 @@
+<md-list>
+  <md-item ng-repeat="option in optionData" >
+    <md-item-content>
+      <div ng-switch="option.childs != undefined" style="width: 100%;">
+        <div ng-switch-when="true">
+          <h4 style="margin: 0.6em 0">{{option.name}}</h4>
+          <div style="padding-left: 16px; font-size: 95%; width: 100%">
+            <bng-option-list data="option.childs"></bng-option-list>
+          </div>
+        </div>
+        <div ng-switch-when="false" style="width: 100%;">
+          <bng-option data="option"></bng-option>
+        </div>
+      </div>
+    </md-item-content>
+    <md-divider ng-if="!$last"></md-divider>
+  </md-item>
+</md-list>

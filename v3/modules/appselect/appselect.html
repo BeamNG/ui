@@ -1,0 +1,24 @@
+<md-content style="width:1200px; height: 100%" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span flex>Apps</span>
+
+      <md-input-container flex class="md-accent">
+        <label>&nbsp;</label>
+        <input ng-model="query" class="md-accent" style="text-transform: uppercase">
+      </md-input-container>
+    </div> 
+  </md-toolbar>
+
+  <div flex layout-padding style="overflow-y: auto">
+    <md-grid-list flex
+          md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+          md-row-height="25:12"
+          md-gutter="4px" md-gutter-gt-sm="4px" 
+          >
+      <md-grid-tile ng-repeat="app in apps.list | filter:query" style="background-image: url(/{{ ::app.info['preview'] }}); background-size: cover">
+        <md-grid-tile-footer><h3>{{ ::app.info.name }}</h3></md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+</md-content>

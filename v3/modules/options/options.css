@@ -1,0 +1,110 @@
+.contentNavOptions {
+  width:500px;
+  max-width:500px;
+  min-width:500px;
+}
+.contentNavOptions .hidingChild {
+    display: none;
+}
+.contentNavOptions .hidingParent:hover .hidingChild {
+    display: block;
+}
+.contentNavOptions inputelement {
+  display: block;
+  display: inline-block;
+  padding: 0px;
+  margin: 0 20px 0px 0;
+  vertical-align: middle;
+}
+.contentNavOptions label {
+  cursor: pointer;
+  overflow: hidden;
+  text-align:center;
+  display: block;
+  float: left;
+  width: 100%;
+}
+.contentNavOptions device {
+  color: grey;
+  font-size: 10px;
+}
+.contentNavOptions controlname
+{
+  font-size: 12px;
+  vertical-align: middle;
+}
+.contentNavOptions span.axis   { border-radius: 25px; padding: 1px; display: block; }
+.contentNavOptions span.button { border-radius:  4px; padding: 1px; display: block; }
+.contentNavOptions span.key    { border-radius:  1px; padding: 1px; display: block; }
+.contentNavOptions span.wrong  { border-radius:  5px; padding: 1px; display: block; }
+s 
+.contentNavOptions .axis   { width: 120px; }
+.contentNavOptions .button { width:  64px; }
+.contentNavOptions .key    { width: 120px; }
+.contentNavOptions .wrong  { width: 120px; }
+
+.contentNavOptions .axis.raw   { width: 64px; }
+.contentNavOptions .button.raw { width: 32px; }
+.contentNavOptions .key.raw    { width: 64px; }
+.contentNavOptions .wrong.raw  { width: 32px; }
+
+.contentNavOptions span.axis, span.button, span.key {
+    background-color: rgba(0,0,0,0.10);
+}
+.contentNavOptions .wrong {
+    background-color: rgba(0,0,0,0.10);
+}
+.contentNavOptions .axis > value {
+    border-radius: 25px;
+}
+.contentNavOptions .button > value {
+    border-radius: 3px;
+}
+.contentNavOptions .wrong > value {
+    border-radius: 1px;
+}
+.contentNavOptions .key > value {
+    border-radius: 1px;
+}
+.contentNavOptions value
+{
+    background-color: rgb(144, 164, 174);
+    display: block;
+    width: 0%;
+    height: 15px;
+}
+.contentNavOptions .wrong > value {
+    background-color: #701C12;
+    width: 100%;
+}
+.contentNavOptions .removeBinding:hover
+{
+    background: white;
+}
+.contentNavOptions .removeBinding
+{
+    font-weight: bold;
+    color: #F09C82;
+    border-radius: 100%;
+    background: lightgrey;
+    font-weight: bold;
+    float:right;
+}
+
+.contentNavOptions .keytable {
+    line-height: 150%;
+    border-collapse: collapse;
+    border: 1px solid #777;
+}
+
+.contentNavOptions .keytable tr:nth-child(even) {
+    background-color: #ddd;
+}
+.contentNavOptions .keytable td {
+    padding:5px;
+    border: 1px solid #777;
+}
+
+.contentNavOptions .keytable .controls {
+    min-width:200px;
+}

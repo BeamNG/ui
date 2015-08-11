@@ -1,0 +1,90 @@
+<!--seperate the accordion from the non parts slot and seperate the highlighting from the fact if a slot has parts or not-->
+<script type="text/ng-template" id="content">
+    <div ng-mouseenter="selectPart(entry.val)" ng-mouseleave="selectReset()">
+        <div ng-if="entry.parts && entry.val !== 'none'" ng-include="'accordion'"></div>
+        <div ng-if="!entry.parts || entry.val === 'none'" ng-include="'nonAccordion'"></div>
+    </div>
+</script>
+
+<!--The representation of a slot with parts-->
+<script type="text/ng-template" id="accordion">
+    <md-divider></md-divider>
+    <div layout="row" layout-align="space-between center" class="accordionHeader" class="height32">
+        <div flex class="accordionText md-primary md-subheader md-default-theme" ng-click="toggleOpen(entry.slot)">
+            <table><tr><td>
+                <div ng-if="open[entry.slot]"><ng-md-icon icon="keyboard_arrow_down"></div>
+                <div ng-if="!open[entry.slot]"><ng-md-icon icon="keyboard_arrow_right"></div>
+            </td><td>{{entry.name}}</td></tr></table>
+        </div>
+        <md-select flex ng-model="entry.val" ng-change="writeVehicleconfig()" style="width:100%;">
+            <md-select-label style="width:100%">{{lookupName(entry.val, entry.options) | truncate : 18 }}</md-select-label>
+            <md-option ng-value="opt.val" ng-repeat="opt in entry.options">{{opt.name}}</md-option>
+        </md-select>
+    </div>
+    <div ng-show="open[entry.slot]" style="padding-left:30px;">
+        <div ng-repeat="entry in entry.parts" ng-include="'content'"></div>
+    </div>
+    <md-divider></md-divider>
+</script>
+
+<!--The representation of a slot without parts-->
+<script type="text/ng-template" id="nonAccordion">
+    <div layout="row" layout-align="space-between center">
+        <div flex class="inputName">{{entry.name}}</div>
+        <md-select flex ng-model="entry.val" ng-change="writeVehicleconfig()" class="height32" style="width:100%;">
+            <md-select-label style="width:100%">{{lookupName(entry.val, entry.options) | truncate : 18 }}</md-select-label>
+            <md-option ng-value="opt.val" ng-repeat="opt in entry.options">{{opt.name}}</md-option>
+        </md-select>
+    </div>
+</script>
+
+<md-content style="width:400px; height: 100%" layout="column">
+  <md-toolbar class="md-primary">
+    <h1 class="md-toolbar-tools">
+      <span flex>Vehicle Customization</span>
+    </h1>
+  </md-toolbar>
+  <md-tabs flex class="md-primary md-hue-1" md-selected="0"> <!-- md-selected="1" -->
+    <md-tab label="Parts">
+      <md-content class="md-padding md-default-theme">
+        <div ng-repeat="entry in d.data" ng-include="'content'"></div>
+        <div flex layout="row" layout-align="end end" style="margin-top:15px"></div>       
+      </md-content>
+    </md-tab>
+    <md-tab label="Color">
+        <md-content class="md-padding md-default-theme" ng-init="file='some Path'">
+            <!-- Change User Path:
+            <ng-file path="file" flex></ng-file>
+            <br>
+            <br>
+            <br>
+            <md-divider></md-divider> -->
+            <ng-color ng-model="color" presets-editable="true" show-preview="false" ng-change="updateColor(color)"></ng-color>
+        </md-content>
+    </md-tab>
+    <md-tab label="Save & Load">
+        <md-content class="md-padding md-default-theme">
+            <section>
+                <h3>Save</h3>
+                <div layout="row">
+                    <md-input-container flex>
+                          <label>Filename</label>
+                          <input ng-model="savename" ng-change="savenameChange(savename)">
+                    </md-input-container>
+                    <md-button ng-disabled="!savename" ng-click="save(savename)">{{saveBtnLabel}}</md-button>
+                </div>
+                <span style="color: grey; font-size: 0.8em;">(Please keep the mouse over the ui while typing to make sure the keyboard input is directed to it)</span>
+            </section>
+            <md-divider></md-divider>
+            <section>
+                <h3>Load</h3>
+                <md-list layout="column">
+                    <md-item ng-repeat="item in configList">
+                        <md-button ng-click="load(item)">{{item}}</md-button>
+                    </md-item>
+                </md-list>
+            </section>
+        </md-content>
+    </md-tab>
+</md-tabs>
+</md-content>

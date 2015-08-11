@@ -1,0 +1,98 @@
+<md-content style="width:1200px; height: 100%" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button md-default" aria-label="Back" ng-click="backToTop()">
+        <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
+      </md-button>
+      <span flex>Freeroam</span>
+      
+      <md-icon class="material-icons" md-font-icon="play">play</md-icon>
+
+      <md-input-container flex>
+        <label>&nbsp;</label>
+        <input ng-model="query">
+      </md-input-container>
+    </div> 
+  </md-toolbar>
+
+  <div flex layout-padding style="overflow-y: auto">
+    <md-grid-list flex
+          md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3"
+          md-row-height-gt-md="16:9" md-row-height="16:9"
+          md-gutter="4px" md-gutter-gt-sm="4px" 
+          >
+      <md-grid-tile ng-repeat="level in levels.installed.list | filter:query" ng-click="levels.select(level)">
+        <img src="/{{ level.preview }}" style="width: 100%;height: 100%;"></img>
+        <md-grid-tile-footer><h3>{{ level.title }}</h3></md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+</md-content>
+
+<md-content ng-show="levels.selected" layout="column" style="width: 400px; height: 100%;">
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <span flex>{{ levels.selected.title }}</span>
+    </div> 
+  </md-toolbar>
+
+  <img src="{{ levels.selected.preview }}" style="width: 100%">
+  <md-divider></md-divider>
+
+  <div flex layout-padding style="overflow:auto">
+    <md-list>
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="font-size: 2em">settings_overscan</md-icon>
+        <div class="md-list-item-text">
+          <h3>Size</h3>
+          <p>{{ levels.selected.size[0] }} m x {{ levels.selected.size[1] }} m</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="font-size: 2em">local_offer</md-icon>
+        <div class="md-list-item-text">
+          <h3>Biome</h3>
+          <p>{{ levels.selected.biome }}</p>
+        </div>
+      </md-list-item>
+
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="font-size: 2em">play_arrow</md-icon>
+        <div class="md-list-item-text">
+          <h3>Roads</h3>
+          <p>{{ levels.selected.roads }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="font-size: 2em">my_location</md-icon>
+        <div class="md-list-item-text">
+          <h3>Suitable For</h3>
+          <p>{{ levels.selected.suitablefor }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="font-size: 2em">restaurant_menu</md-icon>
+        <div class="md-list-item-text">
+          <h3>Features</h3>
+          <p>{{ levels.selected.features }}</p>
+        </div>
+      </md-list-item>
+
+      <md-list-item class="md-2-line">
+        <md-icon class="material-icons" style="font-size: 2em">group</md-icon>
+        <div class="md-list-item-text">
+          <h3>Author(s)</h3>
+          <p>{{ levels.selected.authors }}</p>
+        </div>
+      </md-list-item>
+    </md-list>
+  </div>
+  
+  <div layout="row" class="md-padding">
+    <button layout-fill class="md-button md-primary md-raised" ng-click="levels.launch()"><b>play</b></button>
+  </div>
+</md-content>

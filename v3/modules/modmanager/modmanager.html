@@ -1,0 +1,51 @@
+<style>
+.contentModManager {
+  width:100%;
+  max-width:none;
+  min-width:none;
+  display:block;
+}
+
+.contentModManager .modActiveEven {
+  background-color: #eeffee !important;
+}
+.contentModManager .modActiveOdd {
+  background-color: #ddffdd !important;
+}
+
+.contentModManager .modInactiveEven {
+  background-color: #ffeeee !important;
+}
+.contentModManager .modInactiveOdd {
+  background-color: #ffdddd !important;
+}
+
+.contentModManager .modUnpackedEven {
+  background-color: #ffffee !important;
+}
+
+.contentModManager .modUnpackedOdd {
+  background-color: #ffffdd !important;
+}
+
+</style>
+<md-toolbar class="md-primary" ng-controller="ModManagerController">
+  <h1 class="md-toolbar-tools">
+    <span flex>Mod Manager</span>
+
+  Mods: {{dataSize}} / active: {{activeMods}} / inactive: {{inactiveMods}} /	
+
+  <md-button class="" ng-click="activateAllMods()">activate all</md-button> /
+  <md-button class="" ng-click="deactivateAllMods()">deactivate all</md-button>
+  </h1>
+
+</md-toolbar>
+
+<section layout="row">
+
+<div ui-grid="gridOptions" style="position:absolute;top:64px;left:0;right:0;bottom:0px;margin:0px;overflow:hidden;" ui-grid-grouping ui-grid-resize-columns></div>
+
+<!-- <div style="position:absolute;height:200px;left:0;right:0;bottom:0;margin:0px;overflow:hidden;">{{vehicles | json}}</div> -->
+
+
+</section>

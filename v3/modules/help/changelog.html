@@ -1,0 +1,9 @@
+<div class="overviewContainer">
+  <md-card class="card" ng-repeat="item in changelog track by $index">
+    <div class="questionHeader md-default-theme apply-md" layout="row">{{item.title}}</div>
+    <div class="questionAnswer">
+      <div><span>{{item.date}}</span> <span>({{item.author}})</span></div>
+      <div ng-bind-html="item.html"></div>
+    </div>
+  </md-card>
+</div>

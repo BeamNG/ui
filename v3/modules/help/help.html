@@ -1,0 +1,10 @@
+<md-toolbar class="md-primary">
+  <h1 class="md-toolbar-tools">
+    <span flex>Help</span>
+  </h1>
+</md-toolbar>
+<md-tabs class="md-primary md-hue-1 helpPages" md-selected="currentView">
+  <md-tab label="{{card.title}}" ng-repeat="card in tabs">
+    <md-content class="md-padding" ng-include="card.html"></md-content>
+  </md-tab>
+</md-tabs>

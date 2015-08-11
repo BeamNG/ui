@@ -1,0 +1,19 @@
+
+.contentNavDebug {
+  width:300px;
+  max-width:300px;
+  min-width:300px;
+}
+
+.contentNavDebug md-list-item{
+  align-items:center;
+}
+
+.contentNavDebug .wide{
+	width: 100%;
+}
+
+.contentNavDebug input {
+  border: solid 1px black;
+  background: transparent;
+}

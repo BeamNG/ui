@@ -1,0 +1,168 @@
+.contentNavMainmenu {
+  width:100%  !important;
+  height: 100%;
+  /* border:10px solid red; */
+
+  max-width:none !important;
+  min-width:none !important;
+
+  margin:0;
+  padding:0;
+  background-color: black;
+  overflow-y:hidden !important;
+  overflow-x:hidden !important;
+  cursor:default;
+}
+
+.contentNavMainmenu #bootfader {
+    background-color:rgb(204,204,204);
+    position:absolute;
+    z-index:100000;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    /*
+    background-image: url('local://local/html/images/startuplogo.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    */
+}
+
+.contentNavMainmenu #video-viewport {
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+}
+
+.contentNavMainmenu #infobox {
+    position: fixed;
+    bottom: 0px;
+    z-index:100;
+    max-width: 700px;
+}
+
+.contentNavMainmenu #infobox p {
+  margin: -3px;
+}
+
+.contentNavMainmenu #infobox a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contentNavMainmenu #steaminfo {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index:100;
+    padding: 5px;
+}
+
+.contentNavMainmenu #versioninfo {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    z-index:100;
+    padding: 5px;
+    cursor:pointer;
+}
+
+.contentNavMainmenu .blendbox {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,1);
+    z-index: 5;
+
+    opacity:0;
+    -webkit-transition: 2s linear all;
+    transition: 2s linear all;
+}
+
+
+
+/**
+ * See: http://www.css-101.org/articles/ken-burns_effect/css-transition.php
+ */
+
+/**
+ * Styling the container (the wrapper)
+ * 
+ * position is used to make this box a containing block (it becomes a reference for its absolutely positioned children). overflow will hide part of the images moving outside of the box.
+ */
+
+#slideshow {
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+/**
+ * Styling the images
+ *
+ * position:absolute is to put all images in a stack. Dimensions are set to increase the size of these images so their edges do not appear in the parent box when we move them inside the said box.
+ * Because the images are now larger than their parent container, we use top, left and margin values to align them in the center of the box.
+ * Finally, we set the transition (property and duration). Note that duration values are different for opacity and transform as we want the "fade-in" effect to be faster than the "panning" effect.
+ */
+
+/*@media all and (orientation:landscape) {*/
+  #slideshow div {
+      position:absolute;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      width:100%;
+      height:100%;
+      opacity:0;
+      -webkit-transition-property: width, opacity, -webkit-transform;
+      -webkit-transition-duration: 15s, 2s, 15s;
+  } 
+/*}*/
+
+/**
+ * We change the point of origin using four corners so images do not move in the same direction. 
+ * This technique allows us to create various paths while applying the same translate() values to all images (see the 'fx' class further below).
+ */
+
+#slideshow div  {
+    -webkit-transform-origin: bottom left;
+}
+
+#slideshow :nth-child(2n+1) {
+    -webkit-transform-origin: top right;
+}
+
+#slideshow :nth-child(3n+1) {
+    -webkit-transform-origin: top left;
+}
+#slideshow :nth-child(4n+1) {
+  -webkit-transform-origin: bottom right;
+}
+
+/**
+ * Because of the stacking context, we need to make sure that the first image (in source) is not hidden by the last one. 
+ * The rule below moves all images past the second one down the stack. 
+ * This is because the second image needs to show on top of the first one when it transitions in.
+ */
+
+#slideshow .fx:first-child + div ~ div  {
+    z-index:-1;
+}
+
+/**
+ * Because images are styled with a different point of origin, the following rule will create different panning effects.
+ */
+
+#slideshow .fx {
+    width: 100.001%;
+    opacity:1;
+    -webkit-transform: scale(1.1);
+}

@@ -1,0 +1,19 @@
+<span ng-show="bindingaction != 'raw'">
+    <kbd style="cursor: pointer;">
+        <span ng-show="devname.indexOf('mouse') == 0"><ng-md-icon size="14px" style="fill:white" icon="mouse"/></span>
+        <span ng-show="devname.indexOf('gamepad') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+        <span ng-show="devname.indexOf('xinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="gamepad"/></span>
+        <span ng-show="devname.indexOf('wheel') == 0"><ng-md-icon size="14px" style="fill:white" icon="radio_button_on"/></span>
+        <span ng-show="devname.indexOf('keyboard') == 0"><ng-md-icon size="14px" style="fill:white" icon="keyboard"/></span>
+        <span ng-show="devname.indexOf('vinput') == 0"><ng-md-icon size="14px" style="fill:white" icon="phone_android"/></span>
+        {{control | uppercase}}
+    </kbd>
+    <md-tooltip md-direction="down" md-delay="250">edit binding</md-tooltip>
+</span>
+<inputelement ng-hide="(bindingaction != 'raw') || (controltype == 'key' && value <= 0.01)" class="{{controltype}} hidingParent" bindingaction="bindingaction" devname="{{devname}}" control="{{name}}" ng-style="bindingaction == 'raw' && {'margin-right': '5px'}" ng-click="selectBinding('{{name}}', '{{devname}}', '{{vehicle}}');">
+    <label>
+        <!--<device ng-show="bindingaction != 'raw'" style="float: left">{{devname}}</device>-->
+        <controlname>{{ name.replace("button", "").replace("axis", "") }}</controlname>
+    </label>
+    <span class="{{controltype}}" ng-style="(bindingaction == 'raw' && controltype == 'axis') && {'width':'64px'} || (bindingaction == 'raw' && controltype != 'axis') && {'width':'32px'}"><value ng-style="{ 'width': (value*100).toString() + '%' };"></value></span>
+</inputelement>

@@ -1,0 +1,300 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url(../fonts/Roboto-Regular.ttf);
+}
+
+html, body {
+  background: none;
+  -webkit-user-select: none;
+  cursor: default;
+  font-family: 'Roboto';
+  height: 100%;
+}
+
+.active md-icon {
+  color: orange!important;
+}
+
+
+app-container {
+  border: solid;
+}
+
+
+
+
+.photo-mode-container .tl {
+  position: absolute; width: 100px; height: 100px;
+  top: 30px;             left: 30px;
+  border-top: 5px solid; border-left: 5px solid;
+}
+
+.photo-mode-container .tr {
+  position: absolute; width: 100px; height: 100px;
+  top: 30px;             right: 30px;
+  border-top: 5px solid; border-right: 5px solid;
+}
+
+.photo-mode-container .bl {
+  position: absolute; width: 100px; height: 100px;
+  bottom: 30px;             left: 30px;
+  border-bottom: 5px solid; border-left: 5px solid;
+}
+
+
+.photo-mode-container .br {
+  position: absolute; width: 100px; height: 100px;
+  bottom: 30px;             right: 30px;
+  border-bottom: 5px solid; border-right: 5px solid;
+}
+
+
+/* ------ material's overrides ------*/
+md-slider .md-focus-ring { 
+  display: none ;
+}
+
+/* --------------------------------- */
+
+
+
+.dashboardBackground {
+  background-image: url(../images/background_example.png);
+}
+
+/* smaller sidebar */
+.smallsidenav  {
+  fill: #737373;
+  /* was 48 */
+  /*
+  min-width: 140px !important;
+  width: 140px !important;
+  max-width: 140px !important;
+  */
+  overflow:hidden;
+
+}
+
+.contentNav {
+  overflow-y:auto;
+  z-index: 1;
+}
+
+/* some heighfixes */
+md-switch.height32{
+	margin: 4px;
+}
+
+
+md-slider.height32{
+	height: 32px;
+}
+
+md-slider.height32 .md-track-container{
+	top: 15px;
+}
+
+md-slider.height32 .md-thumb{
+	top: -3px;
+}
+
+md-slider.height32 .md-focus-ring{
+	top: -8px;
+}
+
+md-slider.height32 .md-focus-thumb{
+	top: -8px;
+}
+
+md-select.height32{
+	margin: 1px;
+}
+
+md-select-label {
+  float: right;
+}
+
+md-select {
+  margin:0.8em;
+}
+
+.physics-disabled {
+  box-shadow: inset 0px 0px 40px black;
+  z-index:-9999;
+  position: absolute;
+  padding:50px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.physics-disabled-infocontainer{
+  position: absolute;
+  top: 80px;
+  right: 0;
+
+  font-size:18pt;
+  color: white;
+  text-shadow: -2px 1px 6px rgba(0,0,0,0.7);
+
+  background: rgba(128,128,128,0.3);
+
+  padding: 15px 30px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+}
+
+.physics-disabled-infocontainer span{
+  margin-right: 15px;
+}
+
+.physics-disabled-infocontainer .icon {
+  -webkit-filter: drop-shadow(-2px 1px 6px rgba(0,0,0,0.5));
+  fill:black;
+  stroke:white;
+  fill-opacity:0.8;
+  stroke-opacity:0.8;
+  stroke-width:0.5;
+
+  background-color:rgba(255,255,255,0.9);
+  -webkit-border-radius:200px;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+}
+
+.gfxSettingsLoading {
+  z-index: 99999;
+  position: absolute;
+  padding:50px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color:rgba(0,0,0,0.4);
+}
+
+.gfxSettingsLoading .icon {
+  -webkit-filter: drop-shadow( 0px 0px 15px white );
+  fill:white;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background: #666666;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #949494;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #949494;
+}
+::-webkit-scrollbar-track {
+  background: #b9b9b9;
+}
+::-webkit-scrollbar-track:hover {
+  background: #b9b9b9;
+}
+::-webkit-scrollbar-track:active {
+  background: #b9b9b9;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.loadingHint {
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dark {
+  color: white;
+}
+
+
+
+/* Material Icons Webfont */
+@font-face {
+  font-family: 'MIs';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+        url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: fancy;
+  src: url(common/Roboto-Black.ttf);
+}
+
+.fancy {
+  font-family: fancy;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(common/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  /*font-feature-settings: 'liga';*/
+}
+
+.md-sidenav-backdrop {
+    display: none !important; 
+}
+
+
+
+
+.my-animation.ng-enter {
+  /* standard transition code */
+  transition: 2s linear all;
+  opacity:0;
+}
+.my-animation.ng-enter-stagger {
+  /* this will have a 100ms delay between each successive leave animation */
+  transition-delay: 3.1s;
+
+  /* in case the stagger doesn't work then the duration value
+   must be set to 0 to avoid an accidental CSS inheritance */
+  transition-duration: 1s;
+}
+.my-animation.ng-enter.ng-enter-active {
+  /* standard transition styles */
+  opacity:1;
+}

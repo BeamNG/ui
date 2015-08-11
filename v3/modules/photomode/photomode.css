@@ -1,0 +1,144 @@
+
+.contentNavPhotoMode {
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden !important;
+  margin: 0;
+  padding: 0;
+}
+
+.contentNavPhotoMode #photoframe {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+.contentNavPhotoMode .pmtext {
+  position: absolute;
+  left: 160px;
+  bottom: 42px;
+  color: #555;
+  font-weight: bold;
+}
+
+.contentNavPhotoMode #pmtl {
+  position: absolute;
+  left: 50px;
+  top: 50px;
+}
+
+.contentNavPhotoMode #pmtr {
+  position: absolute;
+  right: 50px;
+  top: 50px;
+}
+
+.contentNavPhotoMode #pmbl {
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
+}
+
+.contentNavPhotoMode #pmbr {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}
+
+.contentNavPhotoMode .pmbtn {
+  position: absolute;
+  color: white;
+  font: bold;
+  font-weight: bold;
+  fill: white;
+  background-color: rgba(128,128,128,0.5) !important;
+}
+
+.contentNavPhotoMode #pmcamera1 {
+  left: 80px;
+  top: 80px;
+  padding-top: 10px;
+}
+
+.contentNavPhotoMode #pmcamera1: hover {
+  fill: #00ff00;
+}
+
+.contentNavPhotoMode .pmcamera1label {
+  left: 80px;
+  top: 150px;
+  padding: 10px;
+}
+
+.contentNavPhotoMode #pmcamera2 {
+  right: 80px;
+  top: 80px;
+  padding-top: 10px;
+}
+
+.contentNavPhotoMode #pmcamera2: hover {
+  fill: #00ff00;
+}
+
+.contentNavPhotoMode .pmcamera2label {
+  right: 80px;
+  top: 150px;
+  padding: 10px;
+}
+
+.contentNavPhotoMode #pmcamera3 {
+  right: 130px;
+  top: 80px;
+}
+
+.contentNavPhotoMode #pmcamera3: hover {
+  fill: #00ff00;
+}
+
+.contentNavPhotoMode .pmcamera3label {
+  right: 80px;
+  top: 150px;
+}
+
+.contentNavPhotoMode #pmsettings {
+  right: 80px;
+  bottom: 80px;
+  padding-top: 10px;
+}
+
+.contentNavPhotoMode #pmsettings: hover {
+  fill: #00ff00;
+}
+
+.contentNavPhotoMode .pmsettingslabel {
+  right: 80px;
+  bottom: 150px;
+  padding: 10px;
+}
+
+.contentNavPhotoMode #pmback {
+  left: 80px;
+  bottom: 80px;
+  padding-top: 10px;
+}
+
+.contentNavPhotoMode #pmback: hover {
+  fill: #00ff00;
+}
+
+.contentNavPhotoMode .pmbacklabel {
+  bottom: 150px;
+  left: 80px;
+  padding: 10px;
+}
+
+.contentNavPhotoMode #fovbox {
+  width: 320px;
+  height: 113px;
+  right: 160px;
+  bottom: 30px;
+  padding-left: 5px;
+}

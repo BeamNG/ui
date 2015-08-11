@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="keys.css" type="text/css" />
+<link rel="stylesheet" href="modules/help/keytable.css" type="text/css" />
+
+<!-- category level -->
+<md-input-container style="width:350px;">
+  <label>Search for keys:</label>
+  <input ng-model="query">
+</md-input-container>
+
+<div class="overviewContainer">
+  <div ng-repeat="(category, entries) in kbdkeys | filter:query | orderBy:'order'" style="display:flex;">
+
+    <div ng-show="(entries | filter:query).length" style="margin:0 25px 25px 0;display:flex; min-width: 700px;max-width:700px;">
+
+      <md-card style="width:100%;">
+        <div class="md-header md-default-theme apply-md"> 
+          <h2>{{entries.title ? entries.title : category}}</h2>
+        </div>
+
+        <table border="none" class="keytable" ng-if="entries.length > 0">
+        <tr><td><b>Action</b></td><td><b>Keys</b></td><td><b>Description</b></td></tr>
+
+        <tr
+            ng-repeat="(actionkey, action) in entries | filter:query | orderBy: 'order'"
+            ng-show="action.order > 0"
+        >
+          
+          <td class="td1">{{action.title ? action.title : action.action}}</td>
+          <td class="td2">
+            <span ng-repeat="(i, bind) in action.bindings">
+              <span ng-repeat="(ii, key) in bind">
+                <kbd ng-class="{light: $parent.isThemeDark()}">{{key | uppercase}}</kbd>{{$last ? '' : ' + '}}
+              </span>
+              <div ng-if='!$last'> <small>or</small><br /></div>
+            </span> 
+          </td>
+          <td class="td3">{{action.desc}}</td>
+        </tr>
+        </table>
+      </md-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+
+.contentNavEnvironment {
+  width:300px;
+  max-width:300px;
+  min-width:300px;
+}
+.contentNavEnvironment md-list-item{
+  align-items:center;
+}
+
+.contentNavEnvironment md-slider{
+  width:250px;
+  max-width:250px;
+  min-width:250px;
+}
+
+.contentNavEnvironment md-slider#simuSlider{
+  width:170px;
+  max-width:170px;
+  min-width:170px;
+}
+.contentNavEnvironment input{
+  width:50px;
+  max-width:50px;
+  min-width:50px;
+  background: transparent;
+  border: 0;
+}
+
+.contentNavEnvironment md-slider#gravitySlider{
+  width:170px;
+  max-width:170px;
+  min-width:170px;
+}

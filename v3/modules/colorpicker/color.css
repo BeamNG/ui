@@ -1,0 +1,79 @@
+.colorPicker #hslimg {
+  background:-webkit-linear-gradient(left, #F00 0%, #FF0 16.66%, #0F0 33.33%, #0FF 50%, #00F 66.66%, #F0F 83.33%, #F00 100%);
+  cursor: crosshair;
+}
+
+.colorPicker .hslSFilter {
+  background: -webkit-linear-gradient(top, hsla(0, 0%, 0%, 0) 0%, hsl(0, 0%, 50%) 100%);
+  width: 100%;
+  height: 100%;
+}
+
+.colorPicker .sliderContainer {
+  margin-top: 20px;
+}
+
+.colorPicker .colorSliderWrapper {
+  height: 20px;
+}
+
+.colorPicker .colorSlider {
+  cursor: default;
+  -webkit-appearance: none;
+}
+
+.colorPicker .colorSlider::-webkit-slider-runnable-track {
+  height: 20px;
+}
+
+.colorPicker .colorSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  position: relative;
+  top: -5px;
+  width: 2px;
+  height: 30px;
+  background: black;
+}
+
+.colorPicker .transparentIndicatorSquared {
+  background-image:
+      -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, #CCCCCC), color-stop(.25, transparent)), 
+      -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, #CCCCCC), color-stop(.25, transparent)),
+      -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, #CCCCCC)),
+      -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, #CCCCCC));
+  -webkit-background-size: 20px 20px;
+    
+  background-position:0 0, 50px 0, 50px -50px, 0 50px;
+}
+
+
+.colorWidgetChrome, .colorWidgetShadow{
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.colorWidgetContainer div{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 9999px;
+}
+.colorWidgetColor{
+    background-color: rgb(128,128,128);
+    margin: 1px;
+}
+.colorWidgetChrome{
+    background-image: url('color-chrome.png');
+    opacity: 0.5; 
+}
+.colorWidgetShadow{
+    background-image: url('color-shadow.png');    
+}
+.colorWidgetContainer{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    display: inline-block;
+}

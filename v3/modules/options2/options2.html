@@ -1,0 +1,442 @@
+<md-content style="width: 400px; height: 100%;" layout="column">
+  <md-toolbar class="md-primary">
+    <h1 class="md-toolbar-tools" ng-hide="mode=='postfx'">
+      <span flex>OPTIONS</span>
+    </h1>
+  </md-toolbar>
+  <md-tabs flex class="md-primary md-hue-1" style="height:100%" md-selected="currentView">
+
+  <md-tab label="Graphics">
+    <md-content>
+
+
+      
+        <!-- <h4>Display Driver:</h4>
+        <div layout="row" class="height32 optionRow">
+          <div flex>Used Graphics Card</div>
+          <div flex style="float: right;">
+            {{values.GraphicGPU}}
+          </div>
+        </div>  -->
+
+<!--         <div class="apply-md" ng-class="{'md-warn': intelCard(), 'md-default-theme': intelCard()}">
+          <md-select class="optCombo" ng-model="values.GraphicGPU">
+            <md-select-label style="line-height:1.5em;">{{options.GraphicGPU.modes.dict[values.GraphicGPU]}}</md-select-label>
+            <md-option ng-value="opt" ng-repeat="(i, opt) in options.GraphicGPU.modes.keys">{{ options.GraphicGPU.modes.values[i] }}</md-option>
+          </md-select>
+          <div class="md-warn apply-md md-default-theme" style="text-decoration: underline; cursor: pointer" ng-if="intelCard()" ng-click="helpLink()">
+            How to switch to your dedicated graphics card
+          </div>
+        </div> -->
+
+        <md-list-item layout>
+          <p flex="40">Display</p>
+          <select flex class="md-select-label" ng-model="values.GraphicDisplayDriver" >
+            <label>{{options.GraphicDisplayDriver.modes.dict[values.GraphicDisplayDriver]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicDisplayDriver.modes.keys">
+              {{ options.GraphicDisplayDriver.modes.values[i] }}
+            <option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Resolution</p>
+          <select flex class="md-select-label" ng-model="values.GraphicResolutions">
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicResolutions.modes.keys">
+              {{ options.GraphicResolutions.modes.values[i] }}
+            </option>
+          </select>
+        </md-list-item>
+
+
+        <md-divider></md-divider>
+
+        <md-list-item layout>
+          <p>Full Screen</p>
+          <md-checkbox md-no-ink ng-model="values.GraphicFullscreen" ></md-checkbox>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p>Vertical Sync</p>
+          <md-checkbox md-no-ink ng-model="values.GraphicFullscreen" ng-disabled="{{ !values.GraphicFullScreen }}"></md-checkbox>
+        </md-list-item>
+      
+        <md-list-item layout>
+          <p>Borderless</p>
+          <md-checkbox md-no-ink ng-model="values.GraphicBorderless" ng-disabled="{{ values.GraphicFullScreen }}"></md-checkbox>
+        </md-list-item>
+
+        <md-list-item layout class="md-padding" style="padding-top:0; padding-bottom:0">
+          <p flex="20">Gamma</p>
+          <md-slider flex ng-model="values.GraphicGamma" min="0" max="2" step="0.01"></md-slider>
+          <span style="padding:5px">{{ values.GraphicGamma.toFixed(2) }}</span>
+          <md-button flex="5" class="md-icon-button" ng-click="values.GraphicGamma=1">
+            <md-icon class="material-icons">undo</md-icon>
+          </md-button>
+        </md-list-item>
+
+        <md-divider></md-divider>
+
+        <md-list-item layout>
+          <p flex="40">Overall Quality</p>
+          <select flex class="md-select-label" ng-model="overallQuality.value">
+            <label>{{ overallQuality.modes.dict[overallQuality.value] }}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in overallQuality.modes.keys">{{ overallQuality.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <div ng-if="overallQuality.value == 0">
+        <md-list-item layout>
+          <p flex="40">Mesh Quality</p>
+          <select flex class="md-select-label" ng-disabled="overallQuality.value != 0" ng-model="overallQuality.value">
+            <label>{{ overallQuality.modes.values[i] }}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in overallQuality.modes.keys">{{ overallQuality.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+         <md-list-item layout>
+          <p flex="40">Texture Quality</p>
+          <select flex class="md-select-label" ng-disabled="overallQuality.value != 0" ng-model="values.GraphicTextureQuality">
+            <label>{{options.GraphicTextureQuality.modes.dict[values.GraphicTextureQuality]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicTextureQuality.modes.keys">{{ options.GraphicTextureQuality.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Lighting Quality</p>
+          <select flex class="md-primary md-select-label" flex ng-model="values.GraphicLightingQuality" >
+            <label>{{options.GraphicLightingQuality.modes.dict[values.GraphicLightingQuality]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicLightingQuality.modes.keys">{{ options.GraphicLightingQuality.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Shader Quality</p>
+          <select flex class="md-select-label" ng-model="values.GraphicShaderQuality">
+            <label>{{options.GraphicShaderQuality.modes.dict[values.GraphicShaderQuality]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicShaderQuality.modes.keys">{{ options.GraphicShaderQuality.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Post Processing Quality</p>
+          <select flex class="md-select-label" ng-model="values.GraphicPostfxQuality">
+            <label>{{options.GraphicPostfxQuality.modes.dict[values.GraphicPostfxQuality]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicPostfxQuality.modes.keys">{{ options.GraphicPostfxQuality.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Anisotropic filtering</p>
+          <select flex class="md-select-label" ng-model="values.GraphicAnisotropic">
+            <label>{{options.GraphicAnisotropic.modes.dict[values.GraphicAnisotropic]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicAnisotropic.modes.keys">{{ options.GraphicAnisotropic.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Antialiasing</p>
+          <select flex class="md-select-label" ng-model="values.GraphicAntialias" >
+            <label>{{options.GraphicAntialias.modes.dict[values.GraphicAntialias]}}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.GraphicAntialias.modes.keys">{{ options.GraphicAntialias.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+
+        <md-divider></md-divider>
+        </div>
+
+        <md-list-item>
+          <p>SSAO</p>
+          <md-checkbox md-no-ink ng-model="values.PostFXSSAOGeneralEnabled"></md-checkbox>
+        </md-list-item>
+
+        <md-list-item>
+          <p>HDR</p>
+          <md-checkbox md-no-ink ng-model="values.PostFXHDRGeneralEnabled"></md-checkbox>
+        </md-list-item>
+
+        <md-list-item>
+          <p>Light Rays</p>
+          <md-checkbox md-no-ink ng-model="values.PostFXLightRaysEnabled"></md-checkbox>
+        </md-list-item>
+
+        <md-list-item>
+          <p>DoF</p>
+          <md-checkbox md-no-ink  ng-model="values.PostFXDOFGeneralEnabled"></md-checkbox>
+        </md-list-item>
+          
+        <md-divider></md-divider>
+
+
+        <md-list-item>
+          <p>Dynamic Reflection</p>
+          <md-checkbox md-no-ink ng-model="values.GraphicDynReflectionEnabled"></md-checkbox>
+        </md-list-item>
+
+        <section class="section" ng-if="values.GraphicDynReflectionEnabled">
+
+          <md-list-item layout layout-align="center center">
+            <p flex="40">Texture Size</p>
+            <md-slider flex ng-model="values.GraphicDynReflectionTexsize" min="0" max="3" step="1" aria-label=""></md-slider>
+            <span flex="15" style="text-align:right">{{ values.GraphicDynReflectionTexsize }}</span>
+          </md-list-item>
+
+          <md-list-item layout layout-align="center center">
+            <p flex="40">Faces per update</p>
+            <md-slider flex ng-model="values.GraphicDynReflectionFacesPerupdate" min="1" max="6" step="1" aria-label=""></md-slider>
+            <span flex="15" style="text-align:right">{{ values.GraphicDynReflectionFacesPerupdate }}</span>
+          </md-list-item>
+
+          <md-list-item layout layout-align="center center">
+            <p flex="40">Detail</p>
+            <md-slider flex ng-model="values.GraphicDynReflectionDetail" min="0" max="1" step="0.1" aria-label=""></md-slider>
+            <span flex="15" style="text-align:right">{{ values.GraphicDynReflectionDetail }}</span>
+          </md-list-item>
+
+          <md-list-item layout layout-align="end center">
+            <p flex="40">Distance</p>
+            <md-slider flex ng-model="values.GraphicDynReflectionDistance" min="10" max="1000" step="10" aria-label=""></md-slider>
+            <span flex="15" style="text-align:right">{{ values.GraphicDynReflectionDistance }} m</span>
+          </md-list-item>
+        </section>
+
+    </md-content>
+  </md-tab>
+
+
+
+
+  <md-tab label="Gameplay">
+    <md-content class="md-padding">
+
+      <!-- TODO: Think about adding prefix 'game' or 'general' to the ng-models -->      
+<!--
+      <h4>Driving</h4>
+      <section class="section">
+        <div layout="row" class="height32 optionRow">
+          <div flex>Default shifter mode</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="values.gameplayDefaultShifterMode" style="float:right">
+              <md-select-label>{{options.gameplayDefaultShifterMode.modes.dict[values.gameplayDefaultShifterMode]}}</md-select-label>
+              <md-option ng-value="opt" ng-repeat="(i, opt) in options.gameplayDefaultShifterMode.modes.keys">{{ options.gameplayDefaultShifterMode.modes.values[i] }}</md-option>
+            </md-select>
+          </div>
+        </div>
+      </section>
+-->
+      <!--
+
+        <div layout="row" class="height32 optionRow">
+          <div flex>Default differential mode</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="values.driveDefDifferential" style="float:right">
+              <md-select-label>{{values.driveDefDifferentials[values.driveDefDifferential]}}</md-select-label>
+              <md-option ng-value="i" ng-repeat="(i, opt) in values.driveDefDifferentials">{{ opt }}</md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div layout="row" class="height32 optionRow">
+          <md-checkbox class="md-primary inlineCheckbox" ng-model="values.driveArcadeGear" aria-label="">Arcade gearbox</md-checkbox>
+          <md-checkbox class="md-primary inlineCheckbox" ng-model="values.driveDynSteering" aria-label="">Dynamic steering</md-checkbox>
+        </div>
+
+        <md-divider></md-divider>
+
+      </section>
+
+      <h4>Camera</h4>
+      <section class="section">
+        <div layout="row" class="height32 optionRow">
+          <div flex>Default view</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="values.cameraDefView" style="float:right">
+              <md-select-label>{{values.cameraDefViews[values.cameraDefView]}}</md-select-label>
+              <md-option ng-value="i" ng-repeat="(i, opt) in values.cameraDefViews">{{ opt }}</md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div layout="row" class="height32 optionRow">
+          <md-checkbox class="md-primary inlineCheckbox" ng-model="values.cameraInverseRotation" aria-label="">Inverse camera rotation</md-checkbox>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div layout="row" class="height32 optionRow">
+          <div flex>Field of view:</div>
+          <div flex>
+            <md-slider class="md-primary" ng-model="values.cameraFOV" min="" max="" step="" aria-label=""></md-slider>
+          </div>
+        </div>
+      </section>
+-->
+      <h4>User Interface</h4>
+      <section class="section">
+
+        <div layout="row" class="height32 optionRow">
+          <div flex>Unit system</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="values.uiUnits" style="float:right">
+              <md-select-label>{{options.uiUnits.modes.dict[values.uiUnits]}}</md-select-label>
+              <md-option ng-value="opt" ng-repeat="(i, opt) in options.uiUnits.modes.keys">{{ options.uiUnits.modes.values[i] }}</md-option>
+            </md-select>
+          </div>
+        </div>
+        <md-checkbox ng-model="values.devMode">Enable Advanced functions</md-checkbox>
+        <div>This enables functions and bindings for advanced users</div><br/>
+
+
+        <h5>Theme</h5>
+
+        <div layout="row" class="height32 optionRow" style="background-color:{{colorPaletteToRgbStr(uiConfig.primary, 500)}}">
+          <div flex>Primary Palette</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="uiConfig.primary" style="float:right">
+              <md-select-label style="background-color:{{colorPaletteToRgbStr(uiConfig.primary, 500)}}"></md-select-label>
+              <md-option style="background-color:{{colorPaletteToRgbStr(k, 500)}}" ng-repeat="(k,v) in mdColorPalette" ng-value="k"></md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <div layout="row" class="height32 optionRow" style="background-color:{{colorPaletteToRgbStr(uiConfig.accent, 'A100', 300)}}">
+          <div flex>Accent Palette</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="uiConfig.accent" style="float:right">
+              <md-select-label style="background-color:{{colorPaletteToRgbStr(uiConfig.accent, 'A100', 300)}}"></md-select-label>
+              <md-option style="background-color:{{colorPaletteToRgbStr(k, 'A100', 300)}}" ng-repeat="(k,v) in mdColorPalette" ng-value="k"></md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <div layout="row" class="height32 optionRow" style="background-color:{{colorPaletteToRgbStr(uiConfig.warn, 700)}}">
+          <div flex>Warn Palette</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="uiConfig.warn" style="float:right">
+              <md-select-label style="background-color:{{colorPaletteToRgbStr(uiConfig.warn, 700)}}"></md-select-label>
+              <md-option style="background-color:{{colorPaletteToRgbStr(k, 700)}}" ng-repeat="(k,v) in mdColorPalette" ng-value="k"></md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <div layout="row" class="height32 optionRow" style="background-color:{{colorPaletteToRgbStr(uiConfig.background, 'A100', 800)}}">
+          <div flex>Background Palette</div>
+          <div flex style="float: right;">
+            <md-select class="md-primary" ng-model="uiConfig.background" style="float:right">
+              <md-select-label style="background-color:{{colorPaletteToRgbStr(uiConfig.background, 'A100', 800)}}"></md-select-label>
+              <md-option style="background-color:{{colorPaletteToRgbStr(k, 'A100', 800)}}" ng-repeat="(k,v) in mdColorPalette" ng-value="k"></md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <div layout="row" class="height32 optionRow">
+          <md-checkbox class="md-primary inlineCheckbox" ng-model="uiConfig.dark" aria-label="">Dark Theme</md-checkbox>
+          <md-button ng-click="setTheme(uiConfigDefault)" class="md-raised">Reset</md-button>
+        </div>
+        
+<!--
+        <md-checkbox class="md-primary inlineCheckbox" ng-model="values.uiFPS" aria-label="">Show FPS</md-checkbox>
+-->
+      </section>
+
+      <h4>Physics</h4>
+      <section class="section">
+
+        <div layout="column" layout-align="start start">
+          <md-checkbox class="md-primary inlineCheckbox" ng-model="values.disableDynamicCollision" aria-label="">Disable Collision</md-checkbox>
+          <div style="font-weight:bold;color:#dd3333">WARNING: disabling collision will negatively impact gameplay experience:</div>
+          <ul>
+          <li>Vehicles will pass through each other</li>
+          <li>Framerate may increase</li>
+          </ul>
+          Please only use after having followed the optimization tips provided in the Help &gt; Performance menu.
+        </div>
+
+      </section>
+      
+<!--
+      <h4>Other</h4>
+      <section class="section">
+        <md-divider></md-divider>
+
+        <md-checkbox class="md-primary inlineCheckbox" ng-model="values.remoteController" aria-label="">Remote controller: {{values.remoteController ? 'Enabled' : 'Disabled'}}</md-checkbox>
+        <md-checkbox class="md-primary inlineCheckbox" ng-model="values.outgaugeProtocol" aria-label="">Outgauge protocol: {{values.outgaugeProtocol ? 'Enabled' : 'Disabled'}}</md-checkbox>
+        <md-checkbox class="md-primary inlineCheckbox" ng-model="values.ingameIRC" aria-label="">Ingame IRC client: {{values.ingameIRC ? 'Enabled' : 'Disabled'}}</md-checkbox>
+
+        <md-divider></md-divider>
+-->
+      </section>
+  </md-tab>
+
+
+
+
+
+
+
+
+  <md-tab label="Audio">
+    <md-content>
+      <md-subheader>Hardware</md-subheader>
+      <md-list>
+        <md-list-item layout>
+          <p flex="40">Audio Provider</p>
+          <select flex class="md-select-label" ng-model="values.AudioProvider">
+            <label>{{ options.AudioProvider.modes.dict[values.AudioProvider] }}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.AudioProvider.modes.keys">{{ options.AudioProvider.modes.values[i] }}</option>
+          </select>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="40">Audio Device</p>
+          <select flex class="md-select-label" ng-model="values.AudioDevice">
+            <label>{{ options.AudioDevice.modes.dict[values.AudioDevice] | truncate : 35 }}</label>
+            <option ng-value="opt" ng-repeat="(i, opt) in options.AudioDevice.modes.keys">{{ options.AudioDevice.modes.values[i] }}</option>
+          </select>
+        </md-list-item>        
+      </md-list>
+
+      <md-divider></md-divider>
+
+      <md-subheader>Volume</md-subheader>
+
+      <md-list>
+        <md-list-item layout layout-align="center center">
+          <p flex="30">Master vol.</p>
+          <md-slider flex ng-model="values.AudioMasterVol" min="0" max="1" step="0.01" aria-label=""></md-slider>
+          <span flex="20" style="text-align: right">{{ values.AudioMasterVol * 100 | number: 0 }} %</span>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="30">Effects vol.</p>
+          <md-slider flex ng-model="values.AudioEffectsVol" min="0" max="1" step="0.01" aria-label=""></md-slider>
+          <span flex="20" style="text-align: right">{{ values.AudioEffectsVol * 100 | number: 0 }} %</span>
+        </md-list-item>
+
+        <md-list-item layout>
+          <p flex="30">Music vol.</p>
+          <md-slider flex  ng-model="values.AudioMusicVol" min="0" max="1" step="0.01" aria-label=""></md-slider>
+          <span flex="20" style="text-align: right">{{ values.AudioMusicVol * 100 | number: 0 }} %</span>
+        </md-list-item>
+      </md-list>
+
+      <md-divider></md-divider>
+
+      <md-list-item layout>
+        <md-button class="md-raised md-warn" flex ng-click="values.AudioMasterVol = 0">
+          <md-icon class="material-icons">volume_off</md-icon> Mute
+        </md-button>
+        <md-button class="md-raised" flex ng-click="testSound()">
+          <md-icon class="material-icons">check</md-icon> Test
+        </md-button>
+      </md-list-item>
+    </md-content>
+  </md-tab>
+
+</md-tabs>
+</md-content>

@@ -1,0 +1,15 @@
+<div class="overviewContainer">
+  <md-card class="overviewItem" md-ink-ripple ng-repeat="card in cards;" ng-click="changeView($index)">
+    <div layout="row" class="overviewItemHoverPrevent">
+      <div class="imgContainer">
+        <ng-md-icon size=100 icon="{{card.icon}}" style="fill: rgba(158,158,158,0.7)"></ng-md-icon>
+      </div>
+      <div flex>
+        <h3>{{card.title}}</h3>
+        <div>
+          {{card.des}}
+        </div>
+      </div>
+    </div>
+  </md-card>
+</div>

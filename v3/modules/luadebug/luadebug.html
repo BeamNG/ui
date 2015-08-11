@@ -1,0 +1,62 @@
+<md-toolbar class="md-primary">
+  <h1 class="md-toolbar-tools">
+    <span flex>Lua Debug</span>
+  </h1>
+</md-toolbar>
+
+<section layout="row">
+
+<md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z3" md-is-locked-open="true" >
+  <md-content flex class="md-padding md-default-theme">
+  <md-list>
+    <md-list-item layout="row" style="align:left">
+      <md-checkbox class="md-primary" ng-model="enabled" aria-label="Tracing Enabled">Tracing Enabled</md-checkbox> 
+    </md-list-item>
+    <md-list-item layout="row"  style="align:left">
+      <label>Filter:
+        <input ng-model="query" placeholder="filter">
+      </label>
+    </md-list-item>
+    <md-list-item layout="row"  style="align:left">
+      <label>Window:
+        <input type="number" min="0" max="120" ng-model="windowSize" >
+      </label>
+    </md-list-item>
+    <md-list-item layout="row"  style="align:left">
+      <label>Instance:
+        <select ng-model="luaView">
+          <option value="T3D">Torque3D Lua</option>
+          <option value="v0">Vehicle 0</option>
+          <option value="s0">Physics Engine Lua</option>
+        </select>
+      </label>
+    </md-list-item>
+  </md-list>
+  </md-content>
+</md-sidenav>
+
+<md-content flex style="overflow-y:auto" class="md-padding">
+
+  <div ng-show="luaData[luaView]">
+    <table border="1">
+    <tr><td><b>Fct</b></td><td><b>Count</b></td><td><b>Time per frame (ms)</b></td><td><b>Percent</b></td></tr>
+
+    <tr ng-repeat="(k, l) in luaData[luaView].fcts | filter:query | orderBy:'-s'">
+      <td>{{l.f}}</td>
+      <td>{{l.c}}</td>
+      <td>{{l.s / luaData[luaView].frameCount | number: 4}}</td>
+      <td>{{(l.s / luaData[luaView].frameCount / (luaData[luaView].size)) / 10 | number: 2}}</td>
+    </tr>
+    </table>
+    <br/>
+    {{luaData[luaView].frameCount}} Frames in {{luaData[luaView].size}} second(s): {{luaData[luaView].frameCount / luaData[luaView].size}} FPS<br/>
+    Memory usage: {{luaData[luaView].memory}} kB
+
+  </div>
+  <div ng-show="!luaData[luaView]">
+    <h3>No data available</h3>
+  </div>
+
+</md-content>
+
+</section>

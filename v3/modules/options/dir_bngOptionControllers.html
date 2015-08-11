@@ -1,0 +1,18 @@
+<div style="padding: 16px">
+    <h2>{{devices | objectLength}} {{(devices | objectLength) > 1? "controllers" : "controller"}} detected:</h2>
+    <md-list>
+      <md-item ng-repeat="(devname, device) in devices">
+        <h3>
+            <span ng-show="devname.indexOf('mouse') == 0"><ng-md-icon icon="mouse"/></span>
+            <span ng-show="devname.indexOf('gamepad') == 0"><ng-md-icon icon="gamepad"/></span>
+            <span ng-show="devname.indexOf('xinput') == 0"><ng-md-icon icon="gamepad"/></span>
+            <span ng-show="devname.indexOf('wheel') == 0"><ng-md-icon icon="radio_button_on"/></span>
+            <span ng-show="devname.indexOf('keyboard') == 0"><ng-md-icon icon="keyboard"/></span>
+            <span ng-show="devname.indexOf('vinput') == 0"><ng-md-icon icon="phone_android"/></span>
+            <small ng-show="devname.indexOf('mouse') == 0"><span style="color: yellow; background-color:black">(WIP)</span> </small>{{ device.productName}} <small>({{device.vidpid}}/{{devname}})</small>
+        </h3>
+        <bng-option-input ng-repeat="(controlname, control) in device.controls" control="control" controltype="control.control_type" bindingaction='"raw"' devname="devname" name="controlname" value="control.value"></bng-option-input>
+        <md-divider ng-show="!$last" style="margin:10px"></md-divider>
+      </md-item>
+    </md-list>
+</div>

@@ -1,0 +1,86 @@
+
+.contentNavHelp {
+  width:100%;
+  max-width:none;
+  min-width:none;
+  display:block;
+}
+
+.contentNavHelp .overviewContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.contentNavHelp .overviewItem {
+  width: 700px;
+  height: 150px;
+  margin-bottom: 25px;
+}
+
+.contentNavHelp .overviewItem :hover {
+  background-color: rgba(158,158,158,0.2);
+  cursor: pointer;
+}
+
+.contentNavHelp .overviewItemHoverPrevent :hover {
+  background-color: transparent;
+}
+
+.contentNavHelp .imgContainer {
+  height: 150px;
+  width: 150px;
+  padding: 25px; /*so the image should be 100x100px*/
+}
+
+.contentNavHelp .quickstart ng-md-icon {
+  fill: rgba(158,158,158,0.7)
+}
+
+.contentNavHelp .quickstart ng-md-icon :hover {
+  fill: rgba(80,80,80,1)
+}
+
+.contentNavHelp .overviewContainer md-list-item {
+  margin-bottom: 15px;
+}
+
+.contentNavHelp .overviewContainer .leftSide {
+  width: 150px;
+}
+
+.contentNavHelp .overviewContainer .leftSideNum {
+  width: 40px;
+}
+
+
+.contentNavHelp .questionHeader {
+  /*background-color: rgba(158,158,158,0.5);*/
+  padding: 5px;
+  height: 30px;
+}
+
+.contentNavHelp .md-header {
+  max-height: 38px;
+}
+
+.contentNavHelp .md-header h2 {
+  margin: 5px;
+}
+
+.contentNavHelp .quickstart .whatsoeverDecide {
+  border-right: solid 1px rgba(158,158,158,0.7);
+}
+
+.contentNavHelp .quickstart .decideElement {
+  padding: 0 25px 0 25px;
+  margin-top: 5px;
+}
+
+.contentNavHelp .quickstart .fuckThisSpacer {
+  margin-bottom: 40px;
+}
+
+.contentNavHelp .quickstart img {
+  width: 500px;
+}

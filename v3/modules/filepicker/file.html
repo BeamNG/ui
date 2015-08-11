@@ -1,0 +1,8 @@
+<md-input-container flex>
+    <label>Path</label>
+    <input ng-model="path">
+</md-input-container>
+<!-- <md-button ng-if="show" class="md-raised md-primary" ng-click="pathUp()">Back</md-button> -->
+<md-button class="md-raised md-primary" ng-click="path = initPath">Reset input</md-button>
+<md-button class="md-raised md-primary" ng-click="showConfirm($event, false)">Reset Completly</md-button>
+<md-button class="md-raised md-primary" ng-disabled="dirExists()" ng-click="showConfirm($event, true)">Apply</md-button>

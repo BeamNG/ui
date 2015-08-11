@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" ng-app="BeamNG.ui">
+  <head>
+
+  <!-- 3rd party includes -->
+  <script src="lib/angular.min.js"></script>
+  <script src="lib/angular-ui-router.min.js"></script>
+  <script src="lib/angular-animate.min.js"></script>
+  <script src="lib/angular-aria.min.js"></script>
+  <script src="lib/angular-material.min.js"></script>
+  <script src="lib/smoothie.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="lib/angular-material.min.css">
+
+
+  <!-- BeamNG UI -->
+  <script src="main.js"></script> 
+  <script src="beamngApi.js"></script>
+
+  <script src="modules/levelselect/levelselect.js"></script> 
+  <script src="modules/photomode/photomode.js"></script>
+  <script src="modules/environment/environment.js"></script>
+  <script src="modules/scenarioselect/scenarioselect.js"></script> 
+  <script src="modules/vehicleselect/vehicleselect.js"></script>
+  <script src="modules/options2/options2.js"></script>
+  <script src="modules/options/options.js"></script>
+  <script src="modules/debug/debug.js"></script>
+  <script src="modules/feedback/feedback.js"></script>
+  <script src="modules/credits/credits.js"></script>
+  <script src="modules/vehicleconfig/vehicleconfig.js"></script>
+  <script src="modules/loading/loading.js"></script> 
+  <script src="modules/mainmenu/mainmenu.js"></script>
+  <script src="modules/appselect/appselect.js"></script>
+
+
+  <script src="modules/apps/app-container.js"></script>
+  <script src="modules/apps/Tacho2/app.js"></script>
+
+  <script src="modules/apps/ForceFeedbackGraph/app.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="main.css">
+
+
+
+
+
+
+
+
+    <!-- // <script src="modules/helloworld/helloworld.js"></script>  -->
+    <!-- // <script src="modules/scenariocontrol/scenariocontrol.js"></script>  -->
+    <!-- // <script src="modules/colorpicker/color.js"></script> -->
+    <!-- // <script src="modules/filepicker/file.js"></script>   -->    
+    
+    
+    <!-- // <script src="modules/appengine/appengine.js"></script> -->
+    <!-- // <script src="modules/uiedit/uiedit.js"></script> -->
+    <!-- // <script src="modules/help/help.js"></script> -->
+    <!-- // <script src="modules/luadebug/luadebug.js"></script> -->
+    <!-- // <script src="modules/campaignselect/campaignselect.js"></script> -->
+    <!-- // <script src="modules/repo/repo.js"></script> -->
+    <!-- // <script src="modules/repo/markdown.js"></script> -->
+    <!-- // <script src="modules/modmanager/modmanager.js"></script> -->
+    <!-- // <script src="modules/modmanager/ui-grid.js"></script> -->
+    <!-- // <script src="modules/modmanager/moment.js"></script> -->
+
+
+    <!-- // <script src="modules/pause-screen.js"></script> -->
+    <!-- // <script src="modules/progress-update.js"></script> -->
+
+
+    <meta charset="utf-8">
+    <base href="/html/v3/">
+  </head>
+
+  <body ng-controller="AppCtrl as app">
+    <app-container style="border: solid black; box-sizing: border-box">
+        <force-feedback-graph style="border: solid orange; position: absolute; top: 10px; left: 120px"></force-feedback-graph>
+    </app-container>
+    <div style="width: 100%; height: 100%; border: solid white; box-sizing: border-box" ui-view></div>
+  </body>
+  
+</html>

@@ -1,0 +1,18 @@
+.contentNavVehicleconfig {
+  width: 400px;
+}
+
+.contentNavVehicleconfig .inputName {
+  font-size:95%;
+}
+
+.contentNavVehicleconfig .accordionText {
+  background-color:transparent !important;
+  cursor: pointer;
+  padding: 0;
+  margin:0;
+}
+
+.contentNavVehicleconfig .accordionHeader:hover {
+  background-color: rgba(158,158,158,0.2) !important;
+}

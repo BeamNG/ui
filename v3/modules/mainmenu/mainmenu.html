@@ -1,0 +1,87 @@
+<h1 style="color: pink">MAINMENU</h1>
+
+<div ng-controller="MainMenuController" style="width:100%; height:100%">
+
+    <!-- <video preload width="1920" height="1080" id="bgvid"></video> -->
+    <!-- <div class="blendbox" ng-style="blending === true && {'opacity': 1} || blending === false && {'opacity': 0}"></div> -->
+
+    <div style="width:100%; height:100%" id="slideshow">
+      <div style="background-image: url('{{img}}')" ng-repeat="img in images"></div>
+    </div>
+
+    <div id='infobox' class="loadingHint">
+        <div style="border:0;left: {{$parent.menuWidth}}px !important; padding: 0 30px 20px 30px;" layout="column" layout-align="space-around">
+          <h1>Early Access / Alpha version</h1>
+          <p>This is an alpha version of BeamNG.drive</p>
+          <p>Content and Features are subject to change</p>
+          <br/>
+          <p>For support, bug reports and so forth, please use our <a href="http-external://www.beamng.com/sso/">OFFICIAL FORUM</a></p>
+          <p><i>Thanks for supporting us!</i></p>
+        </div>
+        <div style="width:100%; max-height: 400px; overflow-y:auto; border-top:1px solid white; padding: 10px 30px 20px 30px;" ng-if="changelogExists">
+          <h1>Changelog</h1>
+          <div>
+            <div ng-repeat="item in changelog track by $index">
+              <h2 style="margin-bottom: 0">{{item.title}}</h2>
+              <span>{{item.date}}</span> ({{item.author}})
+              <div style="margin-top: 10px" ng-bind-html="item.html">
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div id='steaminfo' class="ng-cloak loadingHint" ng-if="steamData && steamData.working && steamData.loggedin">
+        <table border="0">
+        <tr>
+        <td valign="middle"><img src="modules/mainmenu/steamicon.png"/></td>
+        <td>
+            <b>{{steamData.playerName}}</b><br/>
+            <div ng-if="steamData.branch != 'public'">Branch: {{steamData.branch}}</div>
+            <!-- <div ng-if="steamData.language != 'english'">Language: {{steamData.language}}</div> -->
+        </td>
+        </tr>
+        </table>
+    </div>
+    <div id='versioninfo' ng-show='versionStr' class="loadingHint" ng-click="showBuildInfo=!showBuildInfo">
+        {{versionStr}}
+        <div ng-show='showBuildInfo'>{{buildInfoStr}}</div>
+    </div>
+    <div id='beamngbuildinfo' style="display:none;"></div>
+
+<style>
+.contentNavMainmenu .HWWarning {
+  position: fixed;
+  top: 200px;
+  right: 0;
+  z-index:100;
+  padding: 5px;
+  cursor:pointer;
+  font-size:18pt;
+  color: white;
+  text-shadow: -2px 1px 6px rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
+  vertical-align: middle;
+}
+.contentNavMainmenu .HWWarning span {
+  margin: 3px;
+}
+.contentNavMainmenu .HWWarning .details {
+  font-size:0.6em;
+}
+</style>
+      <div class="HWWarning ng-cloak" ng-if="hwinfo && hwinfo.globalState != 'ok'" ng-click="openPerformance()" layout="row" layout-align="start center">
+        <ng-md-icon size=64 icon="error" style="fill: rgb(255,152,0);" ng-if="hwinfo.globalState == 'warn'"></ng-md-icon>
+        <ng-md-icon size=64 icon="error" style="fill: rgb(211,47,47);stroke-width:0.3;" ng-if="hwinfo.globalState == 'error'"></ng-md-icon>
+        <div layout="column">
+          <span>Problems detected</span>
+          <span class="details">Click here for details</span>
+        </div>
+      </div>
+    </div>
+
+<!--
+<div id="bootfader" ng-if="bool" class="fade"></div>
+-->
+</div>
+

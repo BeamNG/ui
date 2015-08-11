@@ -1,0 +1,226 @@
+<md-content style="width: 400px; height: 100%" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span flex>Environment</span>
+    </div>
+  </md-toolbar>
+
+  <div flex layout-padding style="overflow-y: auto">
+    <md-subheader><b>Time Of Day</b></md-subheader>
+    <md-list>
+      <md-list-item>
+        <p>Play</p>
+        <md-checkbox md-no-ink class="md-secondary" ng-model="environment.state.play" aria-label="time-play"></md-checkbox>
+      </md-list-item>
+
+      <md-list-item layout>
+        <div flex="30">Time</div>
+        <md-slider flex min="0" max="1" step="0.01" ng-model="environment.state.time" aria-label="time"></md-slider>
+      </md-list-item>
+
+      <md-list-item layout >
+        <div flex="30">Day Scale</div>
+        <md-slider flex min="0.01" max="10" step="0.01" ng-model="environment.state.dayScale" ng-disabled="!environment.state.play" aria-label="dayscale"></md-slider>
+      </md-list-item>
+
+      <md-list-item layout >
+        <div flex="30">Night Scale</div>
+        <md-slider flex min="0.01" max="10" step="0.01" ng-model="environment.state.nightScale" ng-disabled="!environment.state.play" aria-label="nightscale"></md-slider>
+      </md-list-item>
+    </md-list>
+
+    <md-divider></md-divider>
+
+    <md-subheader><b>Weather</b></md-subheader>
+    <md-list>
+      <md-list-item layout>
+        <div flex="30">Wind Speed</div>
+        <md-slider flex min="0" max="10" step="0.01" ng-model="environment.state.windSpeed" aria-label="wind speed"></md-slider>
+      </md-list-item>
+
+      <md-list-item layout>
+        <div flex="30">Cloud Cover</div>
+        <md-slider flex min="0" max="5" step="0.01" ng-model="environment.state.cloudCover" aria-label="cloud cover"></md-slider>
+      </md-list-item>
+
+      <md-list-item layout>
+        <div flex="30">Fog Density</div>
+        <md-slider flex min="0" max="0.2" step="0.001" ng-model="environment.state.fogDensity" aria-label="fog density"></md-slider>
+      </md-list-item>
+    </md-list>
+
+    <md-divider></md-divider>
+
+    <md-subheader><b>Gravity</b></md-subheader>
+    <md-list>
+      <md-list-item layout>
+        <md-slider flex min="-280" max="10" ng-model="environment.gravity.value" aria-label="gravity"></md-slider>
+        <span style="text-align: right" flex="20">{{ environment.gravity.value }}</span>
+      </md-list-item>
+
+      <md-list-item layout layout-wrap>
+        <md-button class="md-primary" ng-repeat="preset in ::environment.gravity.presets" ng-click="environment.gravity.value = preset.value">
+          {{ ::preset.title }}
+        </md-button>
+      </md-list-item>
+
+    </md-list>
+    <md-divider></md-divider>
+
+    <md-subheader><b>Simulation Speed</b></md-subheader>
+    <md-list>
+      <md-list-item layout>
+        <md-slider flex min="1" max="100" ng-model="environment.simSpeed.value" aria-label="simulation speed"></md-slider>
+        <span style="text-align: right" flex="20">{{ environment.simSpeed.value }}</span>
+      </md-list-item>
+
+      <md-list-item layout layout-wrap>
+        <md-button class="md-primary" ng-repeat="preset in ::environment.simSpeed.presets" ng-click="environment.simSpeed.value = preset.value">
+          {{ ::preset.title }}
+        </md-button>
+      </md-list-item>
+    </md-list>
+
+
+  </div>
+</md-content>
+
+<!-- 
+
+<section ngShow="bShow">
+  <md-content flex class="md-padding  md-default-theme" ng-show="time != null">
+  <h4>Time of Day</h4>
+    <md-list>
+      <md-list-item layout="row">
+        <div flex>Play</div>
+        <div>
+          <md-checkbox class="md-primary" ng-model="play" aria-label="Play"></md-checkbox>
+        </div>
+      </md-list-item>
+    </md-list>
+    <div>
+      Time <md-slider class="md-primary" ng-model="time" aria-label="Time" min="0" max="1" step="0.01"></md-slider>
+    </div>
+    <div>
+      Time Scale <md-slider class="md-primary" ng-model="timeScale" aria-label="Day Scale" min="0.01" max="10" step="0.01"></md-slider>
+    </div>
+    <h4>Weather</h4>
+    <div>
+      Wind Speed <md-slider class="md-primary" ng-model="windSpeed" aria-label="Wind Speed" min="0" max="1" step="0.01"></md-slider>
+    </div>
+    <div>
+      Cloud Cover <md-slider class="md-primary" ng-model="cloudCover" aria-label="Cloud Cover" min="0" max="5" step="0.01"></md-slider>
+    </div>
+    <div>
+      Fog Density <md-slider class="md-primary" ng-model="fogDensity" aria-label="Fog Density" min="0" max="0.2" step="0.001"></md-slider>
+    </div>
+    <div ng-show="false">
+      Precipitation <md-slider class="md-primary" ng-model="numOfDrops" aria-label="Precipitation" min="1000" max="200000" step="100">
+      </md-slider>
+    </div>
+  </md-content>
+</section>
+<section layout="col" ng-show="!bShow">
+  <md-content layout-padding>There is no environment information in this map. </md-content>
+</section>
+
+<md-divider></md-divider>
+
+<section>
+  <md-content flex class="md-padding  md-default-theme">
+    <h4>Gravity</h4>
+      <md-list>
+        <md-list-item layout="row" layout-align="space-around center">
+          <div>
+            <input readonly ng-model="gravity" style="text-align:center"></input>
+          </div>
+          <div>
+            <md-slider class="md-primary" ng-model="gravity" id="gravitySlider" min="-280" max="10" step="0.1" aria-label="Gravity"></md-slider>
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="space-between center">
+          <div>
+            <md-button ng-click="gravity=0">Zero Gravity</md-button>
+          </div>
+          <div>
+            <md-button ng-click="gravity=-9.8">Earth</md-button>
+          </div>
+          <div>
+            <md-button ng-click="gravity=-1.62">Moon</md-button>
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" layout-align="space-between center">
+          <div>
+            <md-button ng-click="gravity=-3.71">Mars</md-button>
+          </div>
+          <div>
+            <md-button ng-click="gravity=-274">Sun</md-button>
+          </div>
+          <div>
+            <md-button ng-click="gravity=-24.92">Jupiter</md-button>
+          </div>
+        </md-list-item>
+      <md-list-item layout="row" layout-align="space-between center">
+        <div>
+          <md-button ng-click="gravity=-11.15">Neptune</md-button>
+        </div>
+        <div>
+          <md-button ng-click="gravity=-10.44">Saturn</md-button>
+        </div>
+        <div>
+          <md-button ng-click="gravity=-8.87">Uranus</md-button>
+        </div>
+      </md-list-item>
+      <md-list-item layout="row" layout-align="space-between center">
+        <div>
+          <md-button ng-click="gravity=-8.87">Venus</md-button>
+        </div>
+        <div>
+          <md-button ng-click="gravity=-3.7">Mercury</md-button>
+        </div>
+        <div>
+          <md-button ng-click="gravity=-0.58">Pluto</md-button>
+        </div>
+      </md-list-item>
+      <md-list-item layout="row" layout-align="space-between center">
+        <div>
+          <md-button ng-click="gravity=9.8">Negative Earth</md-button>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</section>
+<md-divider></md-divider>
+<section>
+  <md-content flex class="md-padding  md-default-theme">
+    <h4>Simulation Speed</h4>
+    <md-list>
+      <md-list-item layout="row" layout-align="space-around center">
+        <div>
+          <input readonly ng-model="simuSpeed" style="text-align:center"></input>
+        </div>
+        <div>
+          <md-slider class="md-primary" ng-model="simuSpeed" id="simuSlider" min="1" max="100" step="1" aria-label="Simulation Speed"></md-slider>
+        </div>
+      </md-list-item>
+      <md-list-item layout="row" layout-align="space-around center">
+        <div>
+          <md-button ng-click="simuSpeed=1">realtime</md-button>
+        </div>
+        <div>
+          <md-button ng-click="simuSpeed=2">2x</md-button>
+        </div>
+        <div>
+          <md-button ng-click="simuSpeed=4">4x</md-button>
+        </div>
+        <div>
+          <md-button ng-click="simuSpeed=10">10x</md-button>
+        </div>
+        <div>
+          <md-button ng-click="simuSpeed=100">100x</md-button>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</section>
+</md-content> -->
