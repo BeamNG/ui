@@ -21,3 +21,7 @@
 .contentNavVehicleconfig .accordionHeader:hover {
   background-color: rgba(158,158,158,0.2) !important;
 }
+
+.contentNavVehicleconfig .md-button {
+  min-width: 0;
+}

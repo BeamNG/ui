@@ -33,7 +33,7 @@
     <div layout="row" layout-align="space-between center">
         <div flex class="inputName">{{entry.name}}</div>
         <md-select flex ng-model="entry.val" ng-change="writeVehicleconfig()" class="height32" style="width:100%;">
-            <md-select-label style="width:100%">{{lookupName(entry.val, entry.options) | truncate : 18 }}</md-select-label>
+            <md-select-label style="width:100%; justify-content: space-between;">{{lookupName(entry.val, entry.options) | truncate : 15 }}</md-select-label>
             <md-option ng-value="opt.val" ng-repeat="opt in entry.options">{{opt.name}}</md-option>
         </md-select>
     </div>
@@ -47,10 +47,13 @@
   </md-toolbar>
   <md-tabs flex class="md-primary md-hue-1" md-selected="0"> <!-- md-selected="1" -->
     <md-tab label="Parts">
-      <md-content class="md-padding md-default-theme">
-        <div ng-repeat="entry in d.data" ng-include="'content'"></div>
-        <div flex layout="row" layout-align="end end" style="margin-top:15px"></div>       
-      </md-content>
+        <md-content class="md-padding md-default-theme">
+            <!--Starts the recursiv representation of the config-->
+            <div ng-repeat="entry in d.data" ng-include="'content'"></div>
+            <div flex layout="row" layout-align="end end" style="margin-top:15px">
+                <md-button ng-click="resetConfig()">Reset</md-button>
+            </div>
+        </md-content>
     </md-tab>
     <md-tab label="Color">
         <md-content class="md-padding md-default-theme" ng-init="file='some Path'">

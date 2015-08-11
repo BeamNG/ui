@@ -22,7 +22,7 @@ angular.module('beamng.stuff')
       }
       end = end || '...';
 
-      if (text !== undefined && (text.length <= length || text.length - end.length <= length)) {
+      if (text !== undefined && text.length <= length) {
         return text;
       } else {
         return String(text).substring(0, length - end.length) + end;
@@ -62,7 +62,6 @@ angular.module('beamng.stuff')
       $log.debug('[vehicleconfig.js] received VehicleChange:', data);
       loadList();
       $scope.onVehicleChangeColor();
-      currentConfig = $scope.d.data;
     });
 
     $scope.$on('VehicleconfigSaved', function (event, data) {
@@ -138,13 +137,18 @@ angular.module('beamng.stuff')
     $scope.writeVehicleconfig = function() {
       var newConfig = generateConfig($scope.d.data);
       // console.log(newConfig)
-      bngApi.sendEngineLua('BeamNGVehicle_changeActivePartConf( \'' + bngApi.serializeToLua(newConfig) + '\' )');
+
+      bngApi.sendActiveObjectLua('partmgmt.setConfig(' + bngApi.serializeToLua(newConfig) + ')')
     };
 
     $scope.resetConfig = function() {
-      var newConfig = generateConfig(currentConfig);
-      // console.log(newConfig)
-      bngApi.sendEngineLua('BeamNGVehicle_changeActivePartConf( \'' + bngApi.serializeToLua(newConfig) + '\' )');
+      if (currentConfig !== undefined && typeof currentConfig === 'string') {
+        $scope.load(currentConfig);
+      } else {
+        var newConfig = generateConfig(currentConfig);
+        // console.log(newConfig)
+        bngApi.sendActiveObjectLua('partmgmt.setConfig(' + bngApi.serializeToLua(newConfig) + ')')
+      }
     };
 
     // Saves the info which accordions where open for each car to the sessionstorage,
@@ -293,7 +297,7 @@ angular.module('beamng.stuff')
 
     function loadList() {
       bngApi.activeObjectLua('partmgmt.getConfigList()', function(configs) {
-        $scope.configList = configs;
+        $scope.configList = configs.map(function(elem) {return elem.slice(0, elem.length - 3);});
         $scope.$apply();
       });
     }
@@ -301,15 +305,16 @@ angular.module('beamng.stuff')
     loadList();
 
     $scope.savenameChange = function(name) {
-      $scope.saveBtnLabel = $scope.configList.indexOf(name + '.pc') != -1 ? 'Overwrite' : 'Save';
+      $scope.saveBtnLabel = $scope.configList.indexOf(name) != -1 ? 'Overwrite' : 'Save';
     };
 
-    $scope.save = function(name) {
+    $scope.save = function(configFilename) {
       // console.log('save the configuration as: ' + name);
-      bngApi.sendActiveObjectLua('partmgmt.saveCarWithConfig("' + name + '.pc")');
+      bngApi.sendActiveObjectLua('partmgmt.saveLocal("' + configFilename + '.pc")');
     };
-    $scope.load = function(config) {
-      // console.log('load: ' + config);
-      beamng.sendActiveObjectLua('partmgmt.loadCarWithConfig("' + config + '", true);');
+    $scope.load = function(configFilename) {
+      currentConfig = configFilename;
+      // console.log('load: ' + configFilename);
+      bngApi.sendActiveObjectLua('partmgmt.loadLocal("' + configFilename + '")');
     };
   }]);
