@@ -4,7 +4,7 @@
 
 .contentNavVehicleconfig md-select {
   padding: 0;
-  
+  margin: 0; 
 }
 
 .contentNavVehicleconfig .inputName {
