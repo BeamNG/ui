@@ -11,7 +11,7 @@
 <!--The representation of a slot with parts-->
 <script type="text/ng-template" id="accordion">
     <v-accordion class="vAccordion--default" multiple>
-        <v-pane> <!--ng-attr-expanded="{{open[entry.slot] || undefined}}"-->
+        <v-pane ng-attr-expanded="::open[entry.slot] || false" ng-click="toggleOpen(entry.slot)"> 
             <v-pane-header>
                 <div layout="row" layout-align="space-between center">
                     <div flex class="inputName">{{entry.name}}</div>

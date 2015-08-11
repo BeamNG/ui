@@ -91,7 +91,8 @@ angular.module('beamng.stuff')
     // }(10));
 
     $scope.d = {}; //the data container
-    $scope.open = {}; //the object to save open accordions
+    $scope.open = {}; //the object to load open accordions
+    $scope.openRuntime = {}; //the object to save open accordions
 
     $scope.$on('$destroy', function() {
       $scope.selectReset();
@@ -125,10 +126,10 @@ angular.module('beamng.stuff')
 
     // Toggles if an accordion is open or not and saves the info to the sessionstorage
     $scope.toggleOpen = function(section) {
-      if ($scope.open[section]) {
-        $scope.open[section] = !$scope.open[section];
+      if ($scope.openRuntime[section]) {
+        $scope.openRuntime[section] = !$scope.openRuntime[section];
       } else {
-        $scope.open[section] = true;
+        $scope.openRuntime[section] = true;
       }
       saveOpen();
     };
@@ -149,14 +150,14 @@ angular.module('beamng.stuff')
     // Saves the info which accordions where open for each car to the sessionstorage,
     // so that on another load of the page the same accordions are open, but on a relaunch of the game all are closed by default
     function saveOpen () {
-      window.sessionStorage.setItem('vehicleconfigOpenSlots' + prefix, JSON.stringify($scope.open));
+      window.sessionStorage.setItem('vehicleconfigOpenSlots' + prefix, JSON.stringify($scope.openRuntime));
     }
 
     // Tries to load the open object for the current car
     function loadOpen () {
       var open = JSON.parse(window.sessionStorage.getItem('vehicleconfigOpenSlots' + prefix));
       if (open !== null) {
-        $scope.open = open;
+        $scope.openRuntime = ($scope.open = open);
       }
     }
 
