@@ -70,6 +70,10 @@ angular.module('beamng.stuff')
       loadList();
     });
 
+    $scope.stopPropagation = function(event) {
+      event.stopPropagation();
+    };
+
     //Parts:
     var prefix; //the prefix found by the getPrefix function on load of the config
 
@@ -156,16 +160,31 @@ angular.module('beamng.stuff')
       }
     }
 
+    // intended to be invoked on a generated tree
+    // sorts recursively, alphabetically and slots last
+    function sort(a, b) {
+      if (a.parts) {
+        a.parts.sort(sort);
+        if (!b.parts) {
+          return 1;
+        }
+      }
+
+      if (b.parts) {
+        b.parts.sort(sort);
+        if (!a.parts) {
+          return -1;
+        }
+      }
+
+      return a.slot.localeCompare(b.slot); // if both have parts or not, just compare the string
+    }
+
     function onVehicleconfigChange (config) {
       var tree = generateTree(config);
       // sort the tree so the items with parts go last
       // TODO: Think if that's a good idea, because that means things that before had parts and are then set to empty switch places
-      tree.sort(function(a, b) {
-        if (a.parts ? !b.parts : b.parts) { //logical xor
-          return a.parts ? 1 : -1; // if a.parts exists b.parts does not so b comes before a
-        }
-        return a.slot.localeCompare(b.slot); // if both have parts or not, just compare the string
-      });
+      tree.sort(sort);
 
       $timeout(function() {
         $scope.$apply(function() {
