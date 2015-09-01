@@ -15,7 +15,7 @@ angular.module('beamng.stuff')
   // Just a funky way to get shuffled background images to cycle through
   var backgrounds = Array.apply(null, Array(16))
     .map(function (_, i) { return ('0' + (i+1)).slice(-2); })
-    .map(function (x, _) { return 'local://local/html/v3/modules/loading/mainmenu_loading_' + x + '.jpg'; })
+    .map(function (x, _) { return 'local://local/html/modules/loading/mainmenu_loading_' + x + '.jpg'; })
     .sort(function () { return 0.5 - Math.random(); })
 
     , bgIndex = 0
