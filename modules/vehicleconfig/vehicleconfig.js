@@ -315,6 +315,6 @@ angular.module('beamng.stuff')
     $scope.load = function(configFilename) {
       currentConfig = configFilename;
       // console.log('load: ' + configFilename);
-      bngApi.sendActiveObjectLua('partmgmt.loadLocal("' + configFilename + '")');
+      bngApi.sendActiveObjectLua('partmgmt.loadLocal("' + configFilename + '.pc")');
     };
   }]);

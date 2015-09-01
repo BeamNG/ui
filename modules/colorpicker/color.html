@@ -15,7 +15,7 @@
   <div class="sliderContainer" style="width:{{width}}px" layout="column" ng-if="showAlpha">
       <span ng-if="showText">Chrominess:</span>
       <div class="transparentIndicatorSquared colorSliderWrapper" style="background-color: white;">
-          <input type="range" min="0" max="2" step="0.001" id="alphaSlider" class="colorSlider colorSliderWrapper" ng-model="color.alpha" ng-change="returnColor()" style="width:{{width}}px; background: linear-gradient(90deg, hsla({{alphaGradientColor()}}, 0), hsla({{alphaGradientColor()}}, 2))"/>
+          <input type="range" min="0" max="2" step="0.001" id="alphaSlider" class="colorSlider colorSliderWrapper" ng-model="color.alpha" ng-change="returnColor()" style="width:{{width}}px; background: linear-gradient(90deg, hsla({{alphaGradientColor()}}, 0), hsla({{alphaGradientColor()}}, 2)); margin:0"/>
       </div>
   </div>
   <div layout="row" layout-align="center start" style="margin-top: 10px;margin-bottom: 10px; width: {{width}}px">

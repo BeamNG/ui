@@ -1,8 +1,9 @@
-(function() {
-'use strict';
+// (function() {
+// 'use strict';
 
-angular
-.module('color', ['beamngApi'])
+// angular
+// .module('color', ['beamngApi'])
+angular.module('beamng.stuff')
 
 .directive('ngRightClick', ['$parse', function($parse) {
   return function(scope, element, attrs) {
@@ -16,7 +17,7 @@ angular
   };
 }])
 
-.directive('ngColor', ['bngApi', function(bngApi) {
+.directive('ngColor', ['$log', 'bngApi', function($log, bngApi) {
   return {
     restrict: 'E',
     require: 'ngModel',
@@ -34,7 +35,6 @@ angular
     },
     templateUrl: 'modules/colorpicker/color.html',
     link: function($scope, iElement, iAttrs, ngModelController) {
-
       $scope.$watch(
         function(scope) {return scope.initValue;},
         init
@@ -54,37 +54,28 @@ angular
       });
 
       iAttrs.$observe('showText', function() {
-        $scope.showText = JSON.parse($scope.showText);
+        $scope.showText = ($scope.showText !== undefined ? JSON.parse($scope.showText) : true);
       });
 
       iAttrs.$observe('showPresets', function() {
-        $scope.showPresets = JSON.parse($scope.showPresets);
+        $scope.showPresets = ($scope.showPresets !== undefined ? JSON.parse($scope.showPresets) : true);
       });
 
       iAttrs.$observe('presetsEditable', function() {
-        $scope.presetsEditable = JSON.parse($scope.presetsEditable);
+        $scope.presetsEditable = ($scope.presetsEditable !== undefined ? JSON.parse($scope.presetsEditable) : false);
       });
       iAttrs.$observe('showAlpha', function() {
-        $scope.showAlpha = JSON.parse($scope.showAlpha);
+        $scope.showAlpha = ($scope.showAlpha !== undefined ? JSON.parse($scope.showAlpha) : true);
       });
 
       iAttrs.$observe('showMain', function() {
-        $scope.showMain = JSON.parse($scope.showMain);
+        $scope.showMain = ($scope.showMain !== undefined ? JSON.parse($scope.showMain) : true);
       });
 
       iAttrs.$observe('showPreview', function() {
-        $scope.showPreview = JSON.parse($scope.showPreview);
+        $scope.showPreview = ($scope.showPreview !== undefined ? JSON.parse($scope.showPreview) : true);
       });
-
-      $scope.width = $scope.width || 368;
-      $scope.height = ($scope.width ? $scope.width / 1.75 : 200);
-      $scope.showText = ($scope.showText !== undefined ? JSON.parse($scope.showText) : true);
-      $scope.showPresets = ($scope.showPresets !== undefined ? JSON.parse($scope.showPresets) : true);
-      $scope.presetsEditable = ($scope.presetsEditable !== undefined ? JSON.parse($scope.presetsEditable) : false);
-      $scope.showAlpha = ($scope.showAlpha !== undefined ? JSON.parse($scope.showAlpha) : true);
-      $scope.showMain = ($scope.showMain !== undefined ? JSON.parse($scope.showMain) : true);
-      $scope.showPreview = ($scope.showPreview !== undefined ? JSON.parse($scope.showPreview) : true);
-
+      
       $scope.colorDot = {};
       $scope.hslMousedownFlag = false;
 
@@ -242,16 +233,16 @@ angular
         };
       }());
 
-      $scope.presets = {
-        user: [],
-        car: {}
-      };
+        $scope.presets = {
+          user: [],
+          car: {}
+        };
 
-      $scope.carListEmpty = true;
+        $scope.carListEmpty = true;
 
       $scope.$watch(
         function(scope) {return scope.presets.car;},
-        function() {$scope.carListEmpty = Object.keys($scope.presets.car).length <= 0;}
+        function() {$scope.carListEmpty = Object.keys(($scope.presets.car ? $scope.presets.car : $scope.presets.car = {})).length <= 0;}
       );
 
       $scope.userListEmpty = true;
@@ -272,27 +263,22 @@ angular
           }
           $scope.setColorDot();
         }
+        // console.log($scope.showMain);
+        // console.log($scope);
       }
 
-      var hookObj = {
-        onSettingsChanged: function(data) {
-          $scope.$apply(function() {
-            $scope.values = data.values;
-            var help = $scope.values.userColorPresets;
-            if (help !== undefined) {
-              $scope.presets.user = JSON.parse(help.replace(/'/g, '\"'));
-            } else {
-              $scope.presets.user = [];
-            }
-            // console.log(typeof $scope.presets.user, $scope.presets.user);
-          });
-        }
-      };
-
-      HookManager.registerAllHooks(hookObj);
-
-      iElement.on('$destroy', function() {
-        HookManager.unregisterAll(hookObj);
+      $scope.$on('SettingsChanged', function (event, data) {
+        $log.debug('[color.js] received Settings:', data);
+        $scope.$apply(function() {
+          $scope.values = data.values;
+          var help = $scope.values.userColorPresets;
+          if (help !== undefined) {
+            $scope.presets.user = JSON.parse(help.replace(/'/g, '\"'));
+          } else {
+            $scope.presets.user = [];
+          }
+          // console.log(typeof $scope.presets.user, $scope.presets.user);
+        });
       });
 
       bngApi.sendEngineLua('settings.requestState()');
@@ -393,9 +379,10 @@ angular
         $scope.hslMousedownFlag = true;
       };
 
+
       init();
     }
   };
 }]);
 
-})();
+// })();
