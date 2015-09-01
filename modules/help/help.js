@@ -1,22 +1,23 @@
-(function() {
-'use strict';
+// (function() {
+// 'use strict';
 
-angular
-.module('Help', ['ngMaterial', 'MenuServices', 'beamngApi'])
+// angular
+// .module('Help', ['MenuServices', 'beamngApi'])
 
-.config(['$routeProvider', 'dashMenuProvider', function($routeProvider, dashMenuProvider) {
-  $routeProvider
-    .when('/help', {
-      templateUrl: 'modules/help/help.html',
-      controller: 'HelpController'
-    })
-    .when('/help/:pageIndex', {
-      templateUrl: 'modules/help/help.html',
-      controller: 'HelpController'
-    });
-  dashMenuProvider.addMenu({hash: '#/help', title: 'Help', icon: 'help', order: 10});
-  dashMenuProvider.addMenu({divider: true, order: 11});
-}])
+// .config(['$routeProvider', 'dashMenuProvider', function($routeProvider, dashMenuProvider) {
+//   $routeProvider
+//     .when('/help', {
+//       templateUrl: 'modules/help/help.html',
+//       controller: 'HelpController'
+//     })
+//     .when('/help/:pageIndex', {
+//       templateUrl: 'modules/help/help.html',
+//       controller: 'HelpController'
+//     });
+//   dashMenuProvider.addMenu({hash: '#/help', title: 'Help', icon: 'help', order: 10});
+//   dashMenuProvider.addMenu({divider: true, order: 11});
+// }])
+angular.module('beamng.stuff')
 
 .filter('bytes', function() {
   return function(bytes, precision) {
@@ -28,16 +29,13 @@ angular
   };
 })
 
-.controller('HelpController', ['$log', '$scope', '$routeParams', '$timeout', 'bngApi', '$filter', '$http', '$sce',
-  function($log, $scope, $routeParams, $timeout, bngApi, $filter, $http, $sce) {
+.controller('HelpController', ['$log', '$scope', '$stateParams', '$timeout', 'bngApi', '$filter', '$http', '$sce',
+  function($log, $scope, $stateParams, $timeout, bngApi, $filter, $http, $sce) {
   // set up the display
-  $scope.selectedMenu = '#/help';
-  $scope.navClass = 'contentNavHelp';
   $scope.useThemeBackground = true;
-  $scope.$parent.showDashboard = true;
   $scope.tabs = [
     {
-      // since this is only a temporary solution,
+      // since this is only a temporary solution, // or aparently not
       // please keep in mind there are some links inside of help, that use the index of this list
       title: 'Overview',
       html: 'modules/help/overview.html'
@@ -77,7 +75,7 @@ angular
 
   $scope.cards = $scope.tabs.slice(1, $scope.tabs.length);
 
-  $scope.currentView = Number($routeParams.pageIndex) || 0;
+  $scope.currentView = Number($stateParams.pageIndex) || 0;
   $scope.changeView = function(i) {
     $scope.currentView = i + 1;
   };
@@ -107,10 +105,7 @@ angular
 
   $scope.bananabenchRunning = false;
 
-
   $scope.requestHardwareInfo = function() {
-    // just set a blocking timeout (maybe while(true){}) so it looks as if we're doing anything :D
-    //console.log('requestHardwareInfo');
     beamng.sendEngineLua('hardwareinfo.requestInfo()');
   };
 
@@ -187,60 +182,24 @@ angular
     });
   }
 
-  // var hookObj = {
-  //   onSupportPreviewChanged: receivedPreview,
-  //   onSettingsChanged: onSettingsChanged,
-  //   onBananaBenchReady: onBananaBenchReady,
-  //   onActionsChanged: actionsChanged,
-  //   onActionCategoriesChanged: actionCategoriesChanged,
-  //   onBindingsChanged: bindingsChanged,
-  //   onSteamInfo: onSteamInfo,
-  //   onHardwareInfo: onHardwareInfo
-  // };
+  var hookObj = {
+    SupportPreviewChanged: receivedPreview,
+    SettingsChanged: onSettingsChanged,
+    BananaBenchReady: onBananaBenchReady,
+    ActionsChanged: actionsChanged,
+    ActionCategoriesChanged: actionCategoriesChanged,
+    BindingsChanged: bindingsChanged,
+    SteamInfo: onSteamInfo,
+    HardwareInfo: onHardwareInfo
+  };
 
-  // HookManager.registerAllHooks(hookObj);
-
-
-  $scope.$on('SupportPreviewChanged', function  (event, data) {
-    $log.debug('[help.js] received SupportPreviewChanged:', data);
-    receivedPreview(data);
-  });
-
-  $scope.$on('SettingsChanged', function (event, data) {
-    $log.debug('[help.js] received SettingsChanged:', data);
-    onSettingsChanged(data);
-  });
-
-  $scope.$on('BananaBenchReady', function (event, data) {
-    $log.debug('[help.js] received BananaBenchReady:', data);
-    onBananaBenchReady(data);
-  });
-
-  $scope.$on('ActionsChanged', function (event, data) {
-    $log.debug('[help.js] received ActionsChanged:', data);
-    actionsChanged(data);
-  });
-
-  $scope.$on('ActionCategoriesChanged', function (event, data) {
-    $log.debug('[help.js] received ActionCategoriesChanged:', data);
-    actionCategoriesChanged(data);
-  });
-
-  $scope.$on('BindingsChanged', function (event, data) {
-    $log.debug('[help.js] received BindingsChanged:', data);
-    bindingsChanged(data);
-  });
-
-  $scope.$on('SteamInfo', function (event, data) {
-    $log.debug('[help.js] received SteamInfo:', data);
-    onSteamInfo(data);
-  });
-
-  $scope.$on('HardwareInfo', function (event, data) {
-    $log.debug('[help.js] received HardwareInfo', data);
-    onHardwareInfo(data);
-  });
-
+  for (var key in hookObj) {
+    $scope.$on(key, function (event, data) {
+      $log.debug('[help.js] received' + key +' :', data);
+      hookObj[key]();
+    });
+  }
+ 
   bngApi.sendEngineLua('settings.requestState()');
 
   function onSettingsChanged(data) {
@@ -253,6 +212,8 @@ angular
     $scope.cont['info'] = {subject: 'Feedback', email: ''};
   };
 
+/*
+// this broke everything :|
   $scope.$watch(
     function(scope) { return scope.cont;},
     function() {$scope.formChanged();},
@@ -276,12 +237,12 @@ angular
     // console.log(bngApi.serializeToLua($scope.cont), $scope.cont)
     bngApi.sendEngineLua('supportForm.recieve(' +  bngApi.serializeToLua(help) + ')');
   };
-
   $scope.sendForm = function() {
     // Bla, tell lua to send the stuff and the user to make a swoosh sound
     // console.log('send');
     bngApi.sendEngineLua('supportForm.send(' +  bngApi.serializeToLua($scope.cont) + ')');
   };
+*/
 
   $scope.userLogedInSteam = function() {
     return $scope.steamData && $scope.steamData.working && $scope.steamData.loggedin && $scope.steamData.playerName !== undefined;
@@ -292,7 +253,7 @@ angular
   function onSteamInfo(data) {
     // var help = JSON.parse(window.sessionStorage.getItem('helpSupportForm')) || $scope.cont;
     $scope.steamData = data;
-    console.log(data);
+    //console.log(data);
     if (init) {
       init = false;
       $scope.cont.add.steam = $scope.userLogedInSteam();
@@ -408,39 +369,10 @@ angular
     });
   }
 
-  function parseBBCode(text) {
-    text = text.replace(/\[url=http:\/\/([^\s\]]+)\]([^url]*(?=\[\/url\]))\[\/url\]/gi, '<a href="http-external://$1">$2</a>');
-    text = text.replace(/\[forumurl=http:\/\/([^\s\]]+)\s*\]([^forumurl]*(?=\[\/forumurl\]))\[\/forumurl\]/gi, '<a href="http-external://$1">$2</a>');
-    text = text.replace(/\[url\]http:\/\/(.*(?=\[\/url\]))\[\/b\]/gi, '<a href="http-external://$1">$1</a>');
-    text = text.replace(/\[ico=([^\s\]]+)\s*\](.*(?=\[\/ico\]))\[\/ico\]/gi, '<img src="images/icons/$1.png">$2</a>');
-    text = text.replace(/\[h1\](.*(?=\[\/h1\]))\[\/h1\]/gi, '<h4>$1</h4>');
-    text = text.replace(/\[img\](.*(?=\[\/img\]))\[\/img\]/gi, '<img src="$1"></img>');
-    text = text.replace(/\[list\]\r\n/gi, '<ul">');
-    text = text.replace(/\[\/list\]/gi, '</ul>');
-    text = text.replace(/\[olist\]/gi, '<ol>');
-    text = text.replace(/\[\/olist\]/gi, '</ol>');
-    text = text.replace(/\[\*\](.*(?=\r))\r\n/gi, '<li>$1</li>');
-    text = text.replace(/\[b\](.*(?=\[\/b\]))\[\/b\]/gi, '<b>$1</b>');
-    text = text.replace(/\[u\](.*(?=\[\/u\]))\[\/u\]/gi, '<u>$1</u>');
-    text = text.replace(/\[s\](.*(?=\[\/s\]))\[\/s\]/gi, '<s>$1</s>');
-    text = text.replace(/\[i\](.*(?=\[\/i\]))\[\/i\]/gi, '<i>$1</i>');
-    text = text.replace(/\[strike\](.*(?=\[\/strike\]))\[\/strike\]/gi, '<s>$1</s>');
-    text = text.replace(/\[ico=([^\s\]]+)\s*\]/gi, '<img class="ico" src="images/icons/$1.png"/>');
-    text = text.replace(/\[code\](.*(?=\[\/code\]))\[\/code\]/gi, '<span class="bbcode-pre">$1</span>');
-    text = text.replace(/\[br\]/gi, '</br>');
-    text = text.replace(/\n\n/gi, '<br/>');
-    text = text.replace(/\n/gi, '');
-    return text;
-  }
-
-  function convertTimestamp(stamp) {
-    return new Date(stamp * 1000).toDateString();
-  }
-
   $http.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?format=json&appid=284160&feeds=steam_community_announcements').
   success(function(data) {
-    console.log(arguments);
-    console.log(data.appnews.newsitems);
+    // console.log(arguments);
+    // console.log(data.appnews.newsitems);
     $scope.changelogExists = true;
 
     $scope.changelog = data.appnews.newsitems.map(function(elem) {
@@ -452,9 +384,7 @@ angular
   error(function() {
     // console.log(arguments);
     $scope.changelogExists = false;
-
   });
-
 
   // bug: prevent JS console errors
   window.updateActions = function() {};
@@ -466,7 +396,7 @@ angular
     }
     HookManager.unregisterAll(hookObj);
   });
-	
+
 }]);
 
-})();
+// })();

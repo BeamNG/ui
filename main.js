@@ -126,6 +126,12 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
       controller: 'VehicleconfigController'
     })
 
+    .state('menu.help', {
+      url: '/help:pageIndex',
+      templateUrl: 'modules/help/help.html',
+      controller: 'HelpController'
+    })
+
   // Transition to this state is handled by some unknown dark force (Torque?).
   // Until this chanages, keep the url hash to "loading".
   .state('loading', {
@@ -264,7 +270,8 @@ angular.module('beamng.stuff')
       { text: 'Apps',        icon: 'apps',           state: 'menu.apps'       },
       { text: 'Photo Mode',  icon: 'photo_camera',   state: 'photomode'       },
       { text: 'Credits',     icon: 'people',         state: 'credits'         },
-      { text: 'Vehicle Config', icon: 'settings_applications', state: 'menu.vehicleconfig' }
+      { text: 'Vehicle Config', icon: 'settings_applications', state: 'menu.vehicleconfig' },
+      { text: 'Help', icon: 'help', state: 'menu.help' }
       // { text: 'Controls', icon: 'games', state: 'menu.controls' }
     ]
   };
@@ -299,3 +306,32 @@ angular.module('beamng.stuff')
   });
 
 }]);
+
+function parseBBCode(text) {
+    text = text.replace(/\[url=http:\/\/([^\s\]]+)\](.*?(?=\[\/url\]))\[\/url\]/gi, '<a href="http-external://$1">$2</a>');
+    text = text.replace(/\[forumurl=http:\/\/([^\s\]]+)\](\S*?(?=\[\/forumurl\]))\[\/forumurl\]/gi, '<a href="http-external://$1">$2</a>');
+    text = text.replace(/\[url\]http:\/\/(.*?(?=\[\/url\]))\[\/b\]/gi, '<a href="http-external://$1">$1</a>');
+    text = text.replace(/\[ico=([^\s\]]+)\s*\](.*?(?=\[\/ico\]))\[\/ico\]/gi, '<img src="images/icons/$1.png">$2</a>');
+    text = text.replace(/\[h1\](.*?(?=\[\/h1\]))\[\/h1\]/gi, '<h4>$1</h4>');
+    text = text.replace(/\[img\](.*?(?=\[\/img\]))\[\/img\]/gi, '<img src="$1"></img>');
+    text = text.replace(/\[list\]\r\n/gi, '<ul>');
+    text = text.replace(/\[\/list\]/gi, '</ul>');
+    text = text.replace(/\[olist\]/gi, '<ol>');
+    text = text.replace(/\[\/olist\]/gi, '</ol>');
+    text = text.replace(/\[\*\](.*?(?=\r))\r\n/gi, '<li>$1</li>');
+    text = text.replace(/\[b\](.*?(?=\[\/b\]))\[\/b\]/gi, '<b>$1</b>');
+    text = text.replace(/\[u\](.*?(?=\[\/u\]))\[\/u\]/gi, '<u>$1</u>');
+    text = text.replace(/\[s\](.*?(?=\[\/s\]))\[\/s\]/gi, '<s>$1</s>');
+    text = text.replace(/\[i\](.*?(?=\[\/i\]))\[\/i\]/gi, '<i>$1</i>');
+    text = text.replace(/\[strike\](.*?(?=\[\/strike\]))\[\/strike\]/gi, '<s>$1</s>');
+    text = text.replace(/\[ico=([^\s\]]+)\s*\]/gi, '<img class="ico" src="images/icons/$1.png"/>');
+    text = text.replace(/\[code\](.*?(?=\[\/code\]))\[\/code\]/gi, '<span class="bbcode-pre">$1</span>');
+    text = text.replace(/\[br\]/gi, '</br>');
+    text = text.replace(/\n\n/gi, '<br/>');
+    text = text.replace(/\n/gi, '');
+    return text;
+  }
+
+function convertTimestamp(stamp) {
+  return new Date(stamp * 1000).toDateString();
+}
