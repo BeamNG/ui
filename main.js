@@ -1,10 +1,18 @@
 angular.module('beamng.stuff', ['ngAnimate']);
 
-angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps', 'vAccordion'])  
+angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps', 'vAccordion', 'pascalprecht.translate'])  
   
-.config(['$compileProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider', 
-  function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
+.config(['$compileProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '$translateProvider',
+  function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $translateProvider) {
  
+  $translateProvider.useStaticFilesLoader({
+    prefix: 'locales/',
+    suffix: '.json'
+  });
+  $translateProvider.useSanitizeValueStrategy('escaped');
+  $translateProvider.preferredLanguage('en_US');
+  //$translateProvider.preferredLanguage('de_DE');
+
   // ..... User Interface states
   $stateProvider
 
@@ -242,7 +250,7 @@ angular.module('beamng.stuff')
 
 
 
-.controller('AppCtrl', ['$document', '$log', '$scope', '$state', '$mdToast', 'bngApi',  
+.controller('AppCtrl', ['$document', '$log', '$scope', '$state', '$mdToast', 'bngApi', 
   function($document, $log, $scope, $state, $mdToast, bngApi) {  
   var vm = this;
 
@@ -260,19 +268,19 @@ angular.module('beamng.stuff')
   vm.menuEntries = {
     init: [],
     game: [
-      { text: 'Levels',      icon: 'terrain',        state: 'menu.levels'     },
-      { text: 'Environment', icon: 'cloud_queue',    state: 'menu.environment'},
-      { text: 'Scenarios',   icon: 'directions',     state: 'menu.scenarios'  },
-      { text: 'Vehicles',    icon: 'directions_car', state: 'menu.vehicles'   },
-      { text: 'Options',     icon: 'tune',           state: 'menu.options'    },
-      { text: 'Debug',       icon: 'bug_report',     state: 'menu.debug'      },
-      { text: 'Feedback',    icon: 'gesture',        state: 'menu.feedback'   },
-      { text: 'Apps',        icon: 'apps',           state: 'menu.apps'       },
-      { text: 'Photo Mode',  icon: 'photo_camera',   state: 'photomode'       },
-      { text: 'Credits',     icon: 'people',         state: 'credits'         },
-      { text: 'Vehicle Config', icon: 'settings_applications', state: 'menu.vehicleconfig' },
-      { text: 'Help', icon: 'help', state: 'menu.help' }
-      // { text: 'Controls', icon: 'games', state: 'menu.controls' }
+      { translateid: 'dashboard.levels',      icon: 'terrain',        state: 'menu.levels'     },
+      { translateid: 'dashboard.environment', icon: 'cloud_queue',    state: 'menu.environment'},
+      { translateid: 'dashboard.scenarios',   icon: 'directions',     state: 'menu.scenarios'  },
+      { translateid: 'dashboard.vehicles',    icon: 'directions_car', state: 'menu.vehicles'   },
+      { translateid: 'dashboard.options',     icon: 'tune',           state: 'menu.options'    },
+      { translateid: 'dashboard.debug',       icon: 'bug_report',     state: 'menu.debug'      },
+      { translateid: 'dashboard.feedback',    icon: 'gesture',        state: 'menu.feedback'   },
+      { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.apps'       },
+      { translateid: 'dashboard.photomode',   icon: 'photo_camera',   state: 'photomode'       },
+      { translateid: 'dashboard.credits',     icon: 'people',         state: 'credits'         },
+      { translateid: 'dashboard.vehicleconfig', icon: 'settings_applications', state: 'menu.vehicleconfig' },
+      { translateid: 'dashboard.help',        icon: 'help', state: 'menu.help' }
+      // { translateid: 'dashboard.controls', icon: 'games', state: 'menu.controls' }
     ]
   };
 

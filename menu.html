@@ -3,7 +3,7 @@
     <md-item ng-repeat="entry in app.menuEntries.game" class="my-animation">
       <md-button md-no-ink class="md-icon-button" ui-sref="{{ ::entry.state }}" ui-sref-active="active">
         <md-icon class="material-icons" style="color: white" md-font-icon="{{ ::entry.icon }}">{{ ::entry.icon }}</md-icon>
-        <md-tooltip md-direction="right">{{ ::entry.text }}</md-tooltip>
+        <md-tooltip md-direction="right">{{ ::entry.translateid | translate}}</md-tooltip>
       </md-button>
     </md-item>
   </div>

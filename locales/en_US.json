@@ -1,0 +1,27 @@
+{
+    "dashboard": {
+        "levels": "Levels",
+        "environment": "Environment",
+        "scenarios": "Scenarios",
+        "vehicles": "Vehicles",
+        "options": "Options",
+        "debug": "Debug",
+        "eedback": "Feedback",
+        "apps": "Apps",
+        "photomode": "Photo Mode",
+        "credits": "Credits",
+        "vehicleconfif": "Vehicle Config",
+        "help": "Help",
+        "controls": "Controls"
+    },
+    "levelselect": {
+        "title": "Freeroam",
+        "size": "Size",
+        "biome": "Biome",
+        "roads": "Roads",
+        "suitablefor": "Suitable for",
+        "features": "Features",
+        "authors": "Author(s)",
+        "play": "Play"
+    }
+}

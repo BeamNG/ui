@@ -4,7 +4,7 @@
       <md-button class="md-icon-button md-default" aria-label="Back" ng-click="backToTop()">
         <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
       </md-button>
-      <span flex>Freeroam</span>
+      <span flex>{{ 'levelselect.title' | translate }}</span>
       
       <md-icon class="material-icons" md-font-icon="play">play</md-icon>
 
@@ -44,7 +44,7 @@
       <md-list-item class="md-2-line">
         <md-icon class="material-icons" style="font-size: 2em">settings_overscan</md-icon>
         <div class="md-list-item-text">
-          <h3>Size</h3>
+          <h3>{{ 'levelselect.size' | translate }}</h3>
           <p>{{ levels.selected.size[0] }} m x {{ levels.selected.size[1] }} m</p>
         </div>
       </md-list-item>
@@ -52,7 +52,7 @@
       <md-list-item class="md-2-line">
         <md-icon class="material-icons" style="font-size: 2em">local_offer</md-icon>
         <div class="md-list-item-text">
-          <h3>Biome</h3>
+          <h3>{{ 'levelselect.biome' | translate }}</h3>
           <p>{{ levels.selected.biome }}</p>
         </div>
       </md-list-item>
@@ -61,7 +61,7 @@
       <md-list-item class="md-2-line">
         <md-icon class="material-icons" style="font-size: 2em">play_arrow</md-icon>
         <div class="md-list-item-text">
-          <h3>Roads</h3>
+          <h3>{{ 'levelselect.roads' | translate }}</h3>
           <p>{{ levels.selected.roads }}</p>
         </div>
       </md-list-item>
@@ -69,7 +69,7 @@
       <md-list-item class="md-2-line">
         <md-icon class="material-icons" style="font-size: 2em">my_location</md-icon>
         <div class="md-list-item-text">
-          <h3>Suitable For</h3>
+          <h3>{{ 'levelselect.suitablefor' | translate }}</h3>
           <p>{{ levels.selected.suitablefor }}</p>
         </div>
       </md-list-item>
@@ -77,7 +77,7 @@
       <md-list-item class="md-2-line">
         <md-icon class="material-icons" style="font-size: 2em">restaurant_menu</md-icon>
         <div class="md-list-item-text">
-          <h3>Features</h3>
+          <h3>{{ 'levelselect.features' | translate }}</h3>
           <p>{{ levels.selected.features }}</p>
         </div>
       </md-list-item>
@@ -85,7 +85,7 @@
       <md-list-item class="md-2-line">
         <md-icon class="material-icons" style="font-size: 2em">group</md-icon>
         <div class="md-list-item-text">
-          <h3>Author(s)</h3>
+          <h3>{{ 'levelselect.authors' | translate }}</h3>
           <p>{{ levels.selected.authors }}</p>
         </div>
       </md-list-item>
@@ -93,6 +93,6 @@
   </div>
   
   <div layout="row" class="md-padding">
-    <button layout-fill class="md-button md-primary md-raised" ng-click="levels.launch()"><b>play</b></button>
+    <button layout-fill class="md-button md-primary md-raised" ng-click="levels.launch()"><b>{{ 'levelselect.play' | translate }}</b></button>
   </div>
 </md-content>

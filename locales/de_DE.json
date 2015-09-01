@@ -1,0 +1,26 @@
+{
+    "dashboard": {
+        "levels": "Karten",
+        "environment": "Umwelt",
+        "scenarios": "Szenarien",
+        "vehicles": "Fahrzeuge",
+        "options": "Einstellungen",
+        "debug": "Entwickleroptionen",
+        "eedback": "Rückmeldungen",
+        "apps": "Apps",
+        "photomode": "Foto Modus",
+        "credits": "Abspann",
+        "vehicleconfif": "Fahrzeugeinstellungen",
+        "help": "Hilfe"
+    },
+    "levelselect": {
+        "title": "Freier Modus",
+        "size": "Grösse",
+        "biome": "Biom",
+        "roads": "Strassen",
+        "suitablefor": "Passend für",
+        "features": "Merkmale",
+        "authors": "Autor(en)",
+        "play": "Spielen"
+    }
+}
