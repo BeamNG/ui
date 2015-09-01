@@ -11,7 +11,9 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
   });
   $translateProvider.useSanitizeValueStrategy('escaped');
   $translateProvider.preferredLanguage('en_US');
-  //$translateProvider.preferredLanguage('de_DE');
+  $translateProvider.fallbackLanguage('en_US');
+
+  //$translateProvider.use('de_DE');
 
   // ..... User Interface states
   $stateProvider
@@ -245,13 +247,13 @@ angular.module('beamng.stuff')
 
     vm.launch = function() {
       bngApi.sendGameEngine('startLevel("' + vm.selected.misFilePath + '");');
-    };  
+    };
 }])
 
 
 
-.controller('AppCtrl', ['$document', '$log', '$scope', '$state', '$mdToast', 'bngApi', 
-  function($document, $log, $scope, $state, $mdToast, bngApi) {  
+.controller('AppCtrl', ['$document', '$log', '$scope', '$state', '$mdToast', 'bngApi', '$translate',
+  function($document, $log, $scope, $state, $mdToast, bngApi, $translate) {  
   var vm = this;
 
   vm.showMenu = true;
@@ -294,6 +296,21 @@ angular.module('beamng.stuff')
     );
   });
 
+  // **************************************************************************
+  // language switching tests
+  var langid = 0;
+  var lang_available = ['en_US', 'de_DE', 'el'];
+  function toggle_lang_example() {
+    langid++;
+    if(langid >= lang_available.length) langid = 0;
+    console.log(lang_available[langid]);
+    $scope.$apply(function() {
+      $translate.use(lang_available[langid]);
+    });
+    setTimeout(toggle_lang_example, 2000);
+  }
+  setTimeout(toggle_lang_example, 2000);
+  // **************************************************************************
 
   $scope.$on('MenuToggle', function (event, data) {
     $log.debug('[AppCtrl] received MenuToggle', data);
