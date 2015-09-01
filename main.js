@@ -303,13 +303,13 @@ angular.module('beamng.stuff')
   function toggle_lang_example() {
     langid++;
     if(langid >= lang_available.length) langid = 0;
-    console.log(lang_available[langid]);
+    console.log('switched language to: ', lang_available[langid]);
     $scope.$apply(function() {
       $translate.use(lang_available[langid]);
     });
-    setTimeout(toggle_lang_example, 2000);
+    setTimeout(toggle_lang_example, 3000);
   }
-  setTimeout(toggle_lang_example, 2000);
+  toggle_lang_example();
   // **************************************************************************
 
   $scope.$on('MenuToggle', function (event, data) {
