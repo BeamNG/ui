@@ -20,7 +20,9 @@ app-container {
   border: solid;
 }
 
-
+:focus {
+  outline: none;
+}
 
 
 .photo-mode-container .tl {
