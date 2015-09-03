@@ -1,16 +1,18 @@
-(function() {
-'use strict';
+// (function() {
+// 'use strict';
 
-angular
-.module('ModManager', ['beamngApi', 'MenuServices',  'ui.grid', 'ui.grid.grouping', 'ui.grid.resizeColumns'])
-.config(['$routeProvider', 'dashMenuProvider', function($routeProvider, dashMenuProvider) {
-  $routeProvider
-    .when('/modmanager', {
-      templateUrl: 'modules/modmanager/modmanager.html',
-      controller: 'ModManagerController'
-    });
-  dashMenuProvider.addMenu({hash: '#/modmanager', title: 'Mods', icon: 'shop', order: 12});
-}])
+// angular
+// .module('ModManager', ['beamngApi', 'MenuServices',  'ui.grid', 'ui.grid.grouping', 'ui.grid.resizeColumns'])
+// .config(['$routeProvider', 'dashMenuProvider', function($routeProvider, dashMenuProvider) {
+//   $routeProvider
+//     .when('/modmanager', {
+//       templateUrl: 'modules/modmanager/modmanager.html',
+//       controller: 'ModManagerController'
+//     });
+//   dashMenuProvider.addMenu({hash: '#/modmanager', title: 'Mods', icon: 'shop', order: 12});
+// }])
+
+angular.module('beamng.stuff')
 
 .filter('moment', function () {
   return function (timestamp, format) {
@@ -19,23 +21,13 @@ angular
   };
 })
 
-.filter('bytes', function() {
-  return function(bytes, precision) {
-    if(!bytes) return '';
-    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {return '-';}
-    if (typeof precision === 'undefined') {precision = 1;}
-    var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'], number = Math.floor(Math.log(bytes) / Math.log(1024));
-    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
-  };
-})
-
-.controller('ModManagerController', ['$scope', 'bngApi', function($scope, bngApi) {
+.controller('ModManagerController', ['$log', '$scope', 'bngApi', function($log, $scope, bngApi) {
 
   // set up the display
-  $scope.selectedMenu = '#/modmanager';
-  $scope.navClass = 'contentModManager';
-  $scope.useThemeBackground = true;
-  $scope.$parent.showDashboard = true;
+  // $scope.selectedMenu = '#/modmanager';
+  // $scope.navClass = 'contentModManager';
+  // $scope.useThemeBackground = true;
+  // $scope.$parent.showDashboard = true;
   $scope.query = '';
 
   $scope.gridOptions = {
@@ -93,35 +85,35 @@ angular
     triggerLoadingScreen(function() {
       bngApi.sendEngineLua('modmanager.deactivateAllMods()');
     });
-  }
+  };
 
   $scope.activateAllMods = function() {
     triggerLoadingScreen(function() {
       bngApi.sendEngineLua('modmanager.activateAllMods()');
     });
-  }
+  };
 
   $scope.activateMod = function(mod) {
     //console.log('activateMod', mod);
     bngApi.sendEngineLua('modmanager.activateMod("' + mod.fullpath + '")');
-  }
+  };
 
   $scope.deactivateMod = function(mod) {
     //console.log('deactivateMod', mod);
     bngApi.sendEngineLua('modmanager.deactivateMod("' + mod.fullpath + '")');
-  }
+  };
   
   $scope.unpackMod = function(mod) {
     //console.log('unpackMod', mod);
     triggerLoadingScreen(function() {
       bngApi.sendEngineLua('modmanager.unpackMod("' + mod.fullpath + '")');
     });
-  }
+  };
 
   $scope.openInExplorer = function(mod) {
     //console.log('openInExplorer', mod);
     bngApi.sendEngineLua('modmanager.openEntryInExplorer("' + mod.fullpath + '")');
-  }
+  };
 
 
   $scope.packMod = function(mod) {
@@ -129,13 +121,13 @@ angular
     triggerLoadingScreen(function() {
       bngApi.sendEngineLua('modmanager.packMod("' + mod.fullpath + '")');
     });
-  }
+  };
 
   $scope.deleteMod = function(mod) {
     triggerLoadingScreen(function() {
       bngApi.sendEngineLua('modmanager.deleteMod("' + mod.fullpath + '")');
     });
-  }
+  };
 
   function onModManagerVehiclesChanged(data) {
     $scope.$apply(function() {
@@ -192,5 +184,3 @@ angular
 
   bngApi.sendEngineLua('modmanager.requestState()');
 }]);
-
-})();

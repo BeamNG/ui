@@ -6,12 +6,14 @@
         "vehicles": "Fahrzeuge",
         "options": "Einstellungen",
         "debug": "Entwickleroptionen",
-        "eedback": "Rückmeldungen",
+        "fedback": "Rückmeldungen",
         "apps": "Apps",
         "photomode": "Foto Modus",
-        "credits": "Credits",
-        "vehicleconfif": "Fahrzeugeinstellungen",
-        "help": "Hilfe"
+        "credits": "Abspann",
+        "vehicleconfig": "Fahrzeugeinstellungen",
+        "help": "Hilfe",
+        "controls": "Controls",
+        "mods": "Mods"
     },
     "levelselect": {
         "title": "Freier Modus",
@@ -22,5 +24,8 @@
         "features": "Merkmale",
         "authors": "Autor(en)",
         "play": "Spielen"
+    },
+    "modmanager": {
+        "modmanager": "Mod Manager"
     }
 }

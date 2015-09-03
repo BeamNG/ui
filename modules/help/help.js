@@ -19,16 +19,6 @@
 // }])
 angular.module('beamng.stuff')
 
-.filter('bytes', function() {
-  return function(bytes, precision) {
-    if (!bytes) {return '';}
-    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {return '-';}
-    if (typeof precision === 'undefined') {precision = 1;}
-    var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'], number = Math.floor(Math.log(bytes) / Math.log(1024));
-    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
-  };
-})
-
 .controller('HelpController', ['$log', '$scope', '$stateParams', '$timeout', 'bngApi', '$filter', '$http', '$sce',
   function($log, $scope, $stateParams, $timeout, bngApi, $filter, $http, $sce) {
   // set up the display

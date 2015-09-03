@@ -2,6 +2,16 @@ angular.module('beamng.stuff', ['ngAnimate']);
 
 angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps', 'vAccordion', 'pascalprecht.translate'])  
   
+.filter('bytes', function() {
+  return function(bytes, precision) {
+    if(!bytes) return '';
+    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {return '-';}
+    if (typeof precision === 'undefined') {precision = 1;}
+    var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'], number = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+  };
+})
+
 .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '$translateProvider',
   function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $translateProvider) {
  
@@ -139,6 +149,12 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
     .state('menu.help', {
       url: '/help:pageIndex',
       templateUrl: 'modules/help/help.html',
+      controller: 'HelpController'
+    })
+
+    .state('menu.mods', {
+      url: '/modemanager',
+      templateUrl: 'modules/modmanager/modmanager.html',
       controller: 'HelpController'
     })
 
@@ -281,7 +297,8 @@ angular.module('beamng.stuff')
       { translateid: 'dashboard.photomode',   icon: 'photo_camera',   state: 'photomode'       },
       { translateid: 'dashboard.credits',     icon: 'people',         state: 'credits'         },
       { translateid: 'dashboard.vehicleconfig', icon: 'settings_applications', state: 'menu.vehicleconfig' },
-      { translateid: 'dashboard.help',        icon: 'help', state: 'menu.help' }
+      { translateid: 'dashboard.help',        icon: 'help', state: 'menu.help' },
+      { translateid: 'dashboard.mods',        icon: 'help', state: 'menu.mods' }
       // { translateid: 'dashboard.controls', icon: 'games', state: 'menu.controls' }
     ]
   };
@@ -298,18 +315,18 @@ angular.module('beamng.stuff')
 
   // **************************************************************************
   // language switching tests
-  var langid = 0;
-  var lang_available = ['en_US', 'de_DE', 'el'];
-  function toggle_lang_example() {
-    langid++;
-    if(langid >= lang_available.length) langid = 0;
-    console.log('switched language to: ', lang_available[langid]);
-    $scope.$apply(function() {
-      $translate.use(lang_available[langid]);
-    });
-    setTimeout(toggle_lang_example, 3000);
-  }
-  toggle_lang_example();
+  // var langid = 0;
+  // var lang_available = ['en_US', 'de_DE', 'el'];
+  // function toggle_lang_example() {
+  //   langid++;
+  //   if(langid >= lang_available.length) langid = 0;
+  //// console.log('switched language to: ', lang_available[langid]);
+  //   $scope.$apply(function() {
+  //     $translate.use(lang_available[langid]);
+  //   });
+  //   setTimeout(toggle_lang_example, 3000);
+  // }
+  // toggle_lang_example();
   // **************************************************************************
 
   $scope.$on('MenuToggle', function (event, data) {

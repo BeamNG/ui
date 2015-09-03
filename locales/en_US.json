@@ -6,13 +6,14 @@
         "vehicles": "Vehicles",
         "options": "Options",
         "debug": "Debug",
-        "eedback": "Feedback",
+        "feedback": "Feedback",
         "apps": "Apps",
         "photomode": "Photo Mode",
         "credits": "Credits",
-        "vehicleconfif": "Vehicle Config",
+        "vehicleconfig": "Vehicle Config",
         "help": "Help",
-        "controls": "Controls"
+        "controls": "Controls",
+        "mods": "Mods"
     },
     "levelselect": {
         "title": "Freeroam",
@@ -23,5 +24,8 @@
         "features": "Features",
         "authors": "Author(s)",
         "play": "Play"
+    },
+    "modmanager": {
+        "modmanager" : "Mod Manager"
     }
 }
