@@ -119,6 +119,12 @@
         "levelModified": {
             "title": "Level Modified",
             "msg": "Level has been modified in the Editor. Save?"
+        },
+        "editor": {
+            "menu": {
+                "file": "File",
+                "newLevel": "New Level"
+            }
         }
     }
 }
