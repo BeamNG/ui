@@ -321,13 +321,13 @@ angular.module('beamng.stuff')
   });
 
   // **************************************************************************
-  // language switching tests
+  // // language switching tests
   // var langid = 0;
   // var lang_available = ['en_US', 'de_DE', 'el'];
   // function toggle_lang_example() {
   //   langid++;
   //   if(langid >= lang_available.length) langid = 0;
-  //// console.log('switched language to: ', lang_available[langid]);
+  //   // console.log('switched language to: ', lang_available[langid]);
   //   $scope.$apply(function() {
   //     $translate.use(lang_available[langid]);
   //   });

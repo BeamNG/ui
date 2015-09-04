@@ -78,5 +78,14 @@
         "back": "Back",
         "clear": "Clear",
         "submit": "Submit"
+    },
+    "colorpicker": {
+        "color": "Color",
+        "saturation": "Saturation",
+        "brightness": "Brightness",
+        "chrominess": "Chrominess",
+        "userPresets": "User Presets",
+        "colToPre": "Add color to Presets",
+        "rightToDel": "Right click on Preset to delete it"
     }
 }

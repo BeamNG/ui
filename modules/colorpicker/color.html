@@ -1,7 +1,7 @@
 <link type="text/css" rel="stylesheet" href="modules/colorpicker/color.css">
 <div class="colorPicker">
   <div ng-if="showMain">
-    <span ng-if="showText">Color / Saturation:</span>
+    <span ng-if="showText">{{::'colorpicker.color' | translate}} / {{::'colorpicker.saturation' | translate}}:</span>
     <div id="hslimg" ng-mousemove="hslMousemove($event)" ng-mousedown="hslMousedown()" ng-mouseup="hslMouseupLeave($event)" ng-mouseleave="hslMouseupLeave($event)" style="height: {{height}}px; width:{{width}}px">
       <div class="hslSFilter">
           <div style="border: solid 1.5px black;border-radius: 12px;width: 12px;height: 12px;position: relative;left:{{colorDot.x-6}}px;top:{{colorDot.y-6}}px"></div>
@@ -9,11 +9,11 @@
     </div>
   </div>
   <div class="sliderContainer" style="width:{{width}}px" layout="column" ng-if="showMain">           
-      <span ng-if="showText">Brightness:</span>
+      <span ng-if="showText">{{::'colorpicker.brightness' | translate}}:</span>
       <input type="range" min="0" max="1" step="0.001" id="brightSlider" class="colorSlider colorSliderWrapper" ng-model="brightness" ng-change="updateBright(brightness); returnColor()" style="background: linear-gradient(90deg, rgb(0,0,0), hsl({{brightGradientColor()}}), rgb(255,255,255))"/>
   </div>
   <div class="sliderContainer" style="width:{{width}}px" layout="column" ng-if="showAlpha">
-      <span ng-if="showText">Chrominess:</span>
+      <span ng-if="showText">{{::'colorpicker.chrominess' | translate}}:</span>
       <div class="transparentIndicatorSquared colorSliderWrapper" style="background-color: white;">
           <input type="range" min="0" max="2" step="0.001" id="alphaSlider" class="colorSlider colorSliderWrapper" ng-model="color.alpha" ng-change="returnColor()" style="width:{{width}}px; background: linear-gradient(90deg, hsla({{alphaGradientColor()}}, 0), hsla({{alphaGradientColor()}}, 2)); margin:0"/>
       </div>
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <span ng-if="showText && !userListEmpty">User Presets:</span>
+    <span ng-if="showText && !userListEmpty">{{::'colorpicker.userPresets' | translate}}:</span>
     <div ng-if="!userListEmpty" style="min-height:24px">
       <div style="background-color: white; width:20px; height:20px; float: left; margin:2px; cursor: pointer;" ng-repeat="preset in presets.user track by $index">
         <div class="transparentIndicatorSquared" style="width:100%; height:100%;">
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <md-button ng-if="presetsEditable" ng-click="addPreset()">Add color to Presets</md-button>
-    <div ng-if="showText && presetsEditable" layout="row" layout-align="center start" flex>(Right click on Preset to delete it)</div>
+    <md-button ng-if="presetsEditable" ng-click="addPreset()">{{::'colorpicker.colToPre' | translate}}</md-button>
+    <div ng-if="showText && presetsEditable" layout="row" layout-align="center start" flex>({{::'colorpicker.rightToDel' | translate}})</div>
   </div>
 </div>
