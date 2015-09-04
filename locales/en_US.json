@@ -103,6 +103,13 @@
                 "msg": "The UI Process failed to respond in time.\nThis can happen if an Antivirus blocks the BeamNG.drive.ui.exe application.\n\nYou can eventually get more help there:\n\nhttp://wiki.beamng.com/Errors/Unresponsive_UI_Process\n\nDo you want to open that address in your browser now?",
                 "url": "http://wiki.beamng.com/Errors/Unresponsive_UI_Process"
             }
+        },
+        "resourceMissing": "Failed to create resource (is the file missing?): ",
+        "engineFail": "Failed to initialize game, shutting down.",
+        "msgboxErrorTitle": "Error",
+        "invalidUserpath": {
+            "title": "Invalid user path",
+            "msg": "BeamNG.drive cannot access UserPath defined in startup.ini (game folder). Change for a valid path: "
         }
     }
 }
