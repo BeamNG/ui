@@ -1,17 +1,11 @@
 .contentNavMainmenu {
-  width:100%  !important;
+  width:100%;
   height: 100%;
-  /* border:10px solid red; */
 
-  max-width:none !important;
-  min-width:none !important;
-
-  margin:0;
-  padding:0;
   background-color: black;
   overflow-y:hidden !important;
   overflow-x:hidden !important;
-  cursor:default;
+  position: relative;
 }
 
 .contentNavMainmenu #bootfader {
@@ -39,7 +33,7 @@
 }
 
 .contentNavMainmenu #infobox {
-    position: fixed;
+    position: absolute;
     bottom: 0px;
     z-index:100;
     max-width: 700px;
@@ -49,14 +43,23 @@
   margin: -3px;
 }
 
+.contentNavMainmenu #infobox img {
+  max-width: 100%;
+}
+
 .contentNavMainmenu #infobox a {
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
+.contentNavMainmenu #infobox .md-button {
+  color: black;
+}
+
+
 .contentNavMainmenu #steaminfo {
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
     z-index:100;
@@ -64,7 +67,7 @@
 }
 
 .contentNavMainmenu #versioninfo {
-    position: fixed;
+    position: absolute;
     bottom: 0px;
     right: 0px;
     z-index:100;
@@ -73,7 +76,7 @@
 }
 
 .contentNavMainmenu .blendbox {
-    position: fixed;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;

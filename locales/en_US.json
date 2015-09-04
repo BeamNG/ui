@@ -13,7 +13,8 @@
         "vehicleconfig": "Vehicle Config",
         "help": "Help",
         "controls": "Controls",
-        "mods": "Mods"
+        "mods": "Mods",
+        "mainmenu": "Mainmenu"
     },
     "levelselect": {
         "title": "Freeroam",
