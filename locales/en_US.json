@@ -70,9 +70,6 @@
         "specialThanksTo": "Special thanks to",
         "madePossibleWith": "Made possible with"
     },
-    "engine": {
-        "welcome": "Welcome to BeamNG.drive in US English :)"
-    },
     "feedback": {
         "leaveMessage": "Please add a message here",
         "back": "Back",
@@ -97,5 +94,15 @@
         "load": "Load",
         "filename": "Filename",
         "mouseOverUi": "Please keep the mouse over the ui while typing to make sure the keyboard input is directed to it"
+    },
+    "engine": {
+        "welcome": "Welcome to BeamNG.drive in US English :)",
+        "cef": {
+            "subprocessdied": {
+                "title": "Unresponsive UI Process",
+                "msg": "The UI Process failed to respond in time.\nThis can happen if an Antivirus blocks the BeamNG.drive.ui.exe application.\n\nYou can eventually get more help there:\n\nhttp://wiki.beamng.com/Errors/Unresponsive_UI_Process\n\nDo you want to open that address in your browser now?",
+                "url": "http://wiki.beamng.com/Errors/Unresponsive_UI_Process"
+            }
+        }
     }
 }
