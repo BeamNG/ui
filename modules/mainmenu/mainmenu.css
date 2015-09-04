@@ -169,3 +169,24 @@
     opacity:1;
     -webkit-transform: scale(1.1);
 }
+
+
+.contentNavMainmenu .HWWarning {
+  position: absolute;
+  top: 200px;
+  right: 0;
+  z-index:100;
+  padding: 5px;
+  cursor:pointer;
+  font-size:18pt;
+  color: white;
+  text-shadow: -2px 1px 6px rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
+  vertical-align: middle;
+}
+.contentNavMainmenu .HWWarning span {
+  margin: 3px;
+}
+.contentNavMainmenu .HWWarning .details {
+  font-size:0.6em;
+}

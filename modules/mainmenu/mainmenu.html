@@ -49,29 +49,7 @@
         <div ng-show='showBuildInfo'>{{buildInfoStr}}</div>
     </div>
     <div id='beamngbuildinfo' style="display:none;"></div>
-
-<style>
-.contentNavMainmenu .HWWarning {
-  position: fixed;
-  top: 200px;
-  right: 0;
-  z-index:100;
-  padding: 5px;
-  cursor:pointer;
-  font-size:18pt;
-  color: white;
-  text-shadow: -2px 1px 6px rgba(0,0,0,0.7);
-  background: rgba(0, 0, 0, 0.7);
-  vertical-align: middle;
-}
-.contentNavMainmenu .HWWarning span {
-  margin: 3px;
-}
-.contentNavMainmenu .HWWarning .details {
-  font-size:0.6em;
-}
-</style>
-      <div class="HWWarning ng-cloak" ng-if="hwinfo && hwinfo.globalState != 'ok'" ng-click="openPerformance()" layout="row" layout-align="start center">
+      <div class="HWWarning ng-cloak" ng-if="hwinfo && hwinfo.globalState != 'ok'" ui-sref="menu.help({pageIndex:4})" layout="row" layout-align="start center">
         <ng-md-icon size=64 icon="error" style="fill: rgb(255,152,0);" ng-if="hwinfo.globalState == 'warn'"></ng-md-icon>
         <ng-md-icon size=64 icon="error" style="fill: rgb(211,47,47);stroke-width:0.3;" ng-if="hwinfo.globalState == 'error'"></ng-md-icon>
         <div layout="column">

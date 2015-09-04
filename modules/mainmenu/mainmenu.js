@@ -85,16 +85,6 @@ angular.module('beamng.stuff')
     onHardwareInfo(data);
   });
 
-  // $scope.selectedMenu = '#/mainmenu';
-  // $scope.navClass = 'contentNavMainmenu';
-  // $scope.$parent.showDashboard = true;
-  // $scope.initialized = true;
-
-  $scope.openPerformance = function() {
-    window.location.hash = '#/help/4';
-  };
-
-
   beamng.sendEngineLua('hardwareinfo.requestInfo()');
 
   var images = [
