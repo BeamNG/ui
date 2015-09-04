@@ -1,37 +1,57 @@
 
 .contentNavFeedback {
-  width:100%;
-  height: 100%;
   /* special case: do not set it transparent as we still want to have all mouse events */
   background-color: rgba(255,255,255,0.01);
   overflow:hidden !important;
   margin:0;
   padding:0;
+  position:fixed;
+  left: 0; 
+  right: 0;
+  bottom: 0; 
+  top: 0;
+}
+
+#sketch {
+  position: absolute;
+  left: 0; 
+  right: 0;
+  bottom: 0; 
+  top: 0;
+  z-index: 5;
 }
 
 
 #paint {
   position: absolute;
-  left: 0; right: 0;
-  bottom: 0; top: 0;
+  left: 0; 
+  right: 0;
+  bottom: 0; 
+  top: 0;
   cursor: crosshair;
+  z-index: 1000;
 }
 
 
 .feedbackIcon {
-  color:red;
+  color:#d70101; 
+  top: 20px; 
+  left: 20px; 
+  position:absolute
 }
 
 #btnBack {
   position:absolute;
   bottom:10px;
   left:10px;
+  z-index: 40;
 }
 #feedbackText {
   position:absolute;
   bottom:10px;
   left: 130px;
   right: 260px;
+  z-index: 40;
 }
 
 #feedbackText textarea {
@@ -43,10 +63,12 @@
   position:absolute;
   bottom:10px;
   right:130px;
+  z-index: 40;
 }
 
 #btnSubmit {
   position:absolute;
   bottom:10px;
   right:10px;
+  z-index: 40;
 }

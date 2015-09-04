@@ -1,13 +1,19 @@
-<link rel="stylesheet" href="feedback.css">
+<link rel="stylesheet" href="modules/feedback/feedback.css">
 
-<div id="sketch">
-  <canvas id="paint" drawing></canvas>
-</div>
-<div id="feedbackText">
-  <textarea  rows="3" placeholder="Please add a message here"></textarea>
-</div>
-<div id="buttons">
-<md-button id="btnBack" class="md-raised md-warn" ui-sref="menu" aria-label="Back">Back</md-button>
-<md-button id="btnClear" class="md-raised" ng-click="clear()" aria-label="Clear">Clear</md-button>
-<md-button id="btnSubmit" class="md-raised" ng-click="submit()" aria-label="Submit">Submit</md-button>
+<div class="contentNavFeedback">
+
+  <md-icon class="material-icons feedbackIcon" style="font-size:100px; height:100px;">gesture</md-icon>
+
+  <div id="sketch">
+    <canvas id="paint" drawing></canvas>
+  </div>
+  <div id="feedbackText">
+    <textarea  rows="3" placeholder="Please add a message here"></textarea>
+  </div>
+  <div id="buttons">
+    <md-button id="btnBack" class="md-raised md-warn" ui-sref="menu" aria-label="Back">Back</md-button>
+    <md-button id="btnClear" class="md-raised" ng-click="clear()" aria-label="Clear">Clear</md-button>
+    <md-button id="btnSubmit" class="md-raised" ng-click="submit()" aria-label="Submit">Submit</md-button>
+  </div>
+
 </div>

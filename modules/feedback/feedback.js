@@ -27,8 +27,10 @@ angular.module('beamng.stuff')
         var canvas = element[0];
         var ctx = element[0].getContext('2d');
 
+        // var sty = element[0].parentElement.style;
+
         var resizeFct = function() {
-          canvas.width = window.innerWidth;
+          canvas.width = window.innerWidth; // sty.width || window.innerWidth
           canvas.height = window.innerHeight;
           ctx.lineWidth = 5;
           ctx.lineJoin = 'round';
