@@ -1,52 +1,25 @@
-<style>
-.contentNavHelp .questionAnswer {
-  padding: 10px;
-}
-
-.contentNavHelp .questionAnswer h4 {
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
-.contentNavHelp .questionAnswer md-list-item {
-}
-.contentNavHelp .questionAnswer .warning{
-  font-weight:bold;
-  color:rgb(255,152,0);
-}
-.contentNavHelp .questionAnswer .error{
-  font-weight:bold;
-  color:rgb(211,47,47);
-}
-.contentNavHelp .overviewContainer .card {
-  width: 700px;
-  /*min-height:230px;*/
-}
-
-</style>
-
-<section class="overviewContainer" > <!-- layout-align="center start" -->
+<section class="overviewContainer" layout="row" layout-align="space-around start" layout-wrap> <!-- layout-align="center start" -->
   
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">Processor (CPU)</div>
+  <md-card class="card" flex>
+    <div class="md-title md-padding">Processor (CPU)</div>
+    <md-divider></md-divider>
     <div layout="row" flex layout-align="start start">
       <div>
-        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.cpu.state == 'ok'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.cpu.state == 'warn'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.cpu.state == 'error'"></ng-md-icon>
+        <md-icon style="font-size:128px; height:128px; color: rgb(139,195,74)" ng-if="hwinfo.cpu.state == 'ok'">check_circle</md-icon>
+        <md-icon style="font-size:128px; height:128px; color: rgb(255,152,0)" ng-if="hwinfo.cpu.state == 'warn'">error</md-icon>
+        <md-icon style="font-size:128px; height:128px; color: rgb(211,47,47)" ng-if="hwinfo.cpu.state == 'error'">error</md-icon>
       </div>
-
       <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
         <md-list-item layout="row" layout-align="start center" style="font-weight:bold;">
           {{hwinfo.cpu.name}}
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Minimum</div>
           <div flex layout="row" layout-align="start center">
             Desktop Intel i3 
           </div>
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Recommended</div>
           <div flex layout="row" layout-align="start center">
              High-end Intel i5/i7 or High-end AMD 6 Core or better
@@ -60,16 +33,17 @@
     </div>
   </md-card>
 
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">Physics Benchmark</div>
+  <md-card class="card" flex style="min-height: 216px;">
+    <div class="md-title md-padding">Physics Benchmark</div>
+    <md-divider></md-divider>
     <div layout="column">
       <div layout="row" flex layout-align="start start">
         <div>
-          <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="bananabench && bananabench.maxRealtimeVehicles >= 4"></ng-md-icon>
-          <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="bananabench && bananabench.maxRealtimeVehicles >= 2 && bananabench.maxRealtimeVehicles < 4"></ng-md-icon>
-          <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="bananabench && bananabench.maxRealtimeVehicles < 2"></ng-md-icon>
-          <ng-md-icon size=128 icon="event_note" style="fill: rgb(129,138,254)" ng-if="$parent.gameState == 'menu' && !bananabench"></ng-md-icon>
-          <ng-md-icon size=128 icon="event_note" style="fill: rgb(130,130,130)" ng-if="$parent.gameState != 'menu' && !bananabench"></ng-md-icon>
+          <md-icon style="font-size:128px; height:128px; color:rgb(139,195,74)" ng-if="bananabench && bananabench.maxRealtimeVehicles >= 4">check_circle</md-icon>
+          <md-icon style="font-size:128px; height:128px; color:rgb(255,152,0)" ng-if="bananabench && bananabench.maxRealtimeVehicles >= 2 && bananabench.maxRealtimeVehicles < 4">error</md-icon>
+          <md-icon style="font-size:128px; height:128px; color:rgb(211,47,47)" ng-if="bananabench && bananabench.maxRealtimeVehicles < 2">error</md-icon>
+          <md-icon style="font-size:128px; height:128px; color:rgb(129,138,254)" ng-if="$parent.gameState == 'menu' && !bananabench">event_note</md-icon>
+          <md-icon style="font-size:128px; height:128px; color:rgb(130,130,130)" ng-if="$parent.gameState != 'menu' && !bananabench">event_note</md-icon>
         </div>
 
         <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
@@ -120,13 +94,14 @@
   </md-card>
 
 
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">Graphics Card (GPU)</div>
+  <md-card class="card" flex>
+    <div class="md-title md-padding">Graphics Card (GPU)</div>
+    <md-divider></md-divider>
     <div layout="row" flex layout-align="start start">
       <div>
-        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.gpu.state == 'ok'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.gpu.state == 'warn'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.gpu.state == 'error'"></ng-md-icon>
+        <md-icon style="font-size:128px; height:128px; color:rgb(139,195,74)" ng-if="hwinfo.gpu.state == 'ok'">check_circle</md-icon>
+        <md-icon style="font-size:128px; height:128px; color:rgb(255,152,0)" ng-if="hwinfo.gpu.state == 'warn'">error</md-icon>
+        <md-icon style="font-size:128px; height:128px; color:rgb(211,47,47)" ng-if="hwinfo.gpu.state == 'error'">error</md-icon>
       </div>
 
       <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
@@ -134,13 +109,13 @@
           {{hwinfo.gpu.name}}, {{hwinfo.gpu.memoryMB}} MB
           <small>(Memory might be off, this is WIP)</small>
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Minimum</div>
           <div flex layout="row" layout-align="start center">
             GeForce GTX 550 TI or equivalent (1 GB Video RAM)
           </div>
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Recommended</div>
           <div flex layout="row" layout-align="start center">
             GeForce GTX 780 (>1GB Video RAM)
@@ -154,26 +129,27 @@
     </div>
   </md-card>
 
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">System Memory (RAM)</div>
+  <md-card class="card" flex>
+    <div class="md-title md-padding">System Memory (RAM)</div>
+    <md-divider></md-divider>
     <div layout="row" flex layout-align="start start">
       <div>
-        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.mem.state == 'ok'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.mem.state == 'warn'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.mem.state == 'error'"></ng-md-icon>
+        <md-icon style="font-size:128px; height:128px; color:rgb(139,195,74)" ng-if="hwinfo.mem.state == 'ok'">check_circle</md-icon>
+        <md-icon style="font-size:128px; height:128px; color:rgb(255,152,0)" ng-if="hwinfo.mem.state == 'warn'">error</md-icon>
+        <md-icon style="font-size:128px; height:128px; color:rgb(211,47,47)" ng-if="hwinfo.mem.state == 'error'">error</md-icon>
       </div>
 
       <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
         <md-list-item layout="row" layout-align="start center" style="font-weight:bold;">
           {{hwinfo.mem.osPhysAvailable | bytes}}
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Minimum</div>
           <div flex layout="row" layout-align="start center">
             4GB DDR3
           </div>
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Recommended</div>
           <div flex layout="row" layout-align="start center">
             8GB DDR3
@@ -197,26 +173,27 @@
     </div>
   </md-card>
 
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">Operating System (OS)</div>
+  <md-card class="card" flex>
+    <div class="md-title md-padding">Operating System (OS)</div>
+    <md-divider></md-divider>
     <div layout="row" flex layout-align="start start">
       <div>
-        <ng-md-icon size=128 icon="check_circle" style="fill: rgb(139,195,74)" ng-if="hwinfo.os.state == 'ok'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(255,152,0)" ng-if="hwinfo.os.state == 'warn'"></ng-md-icon>
-        <ng-md-icon size=128 icon="error" style="fill: rgb(211,47,47)" ng-if="hwinfo.os.state == 'error'"></ng-md-icon>
+        <md-icon style="font-size:128px; height:128px; color: rgb(139,195,74)" ng-if="hwinfo.os.state == 'ok'">check_circle</md-icon>
+        <md-icon style="font-size:128px; height:128px; color: rgb(255,152,0)" ng-if="hwinfo.os.state == 'warn'">error</md-icon>
+        <md-icon style="font-size:128px; height:128px; color: rgb(211,47,47)" ng-if="hwinfo.os.state == 'error'">error</md-icon>
       </div>
 
       <md-list class="questionAnswer" flex layout="column" layout-align="center start" style="min-height:128px">
         <md-list-item layout="row" layout-align="start center" style="font-weight:bold;">
           {{hwinfo.os.shortname}}
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Minimum</div>
           <div flex layout="row" layout-align="start center">
-            Windows 7 32bit
+            Windows 7 (32bit)
           </div>
         </md-list-item>
-        <md-list-item layout="row" layout-align="start center" ng-show="showDetails" style="font-size:0.8em">
+        <md-list-item layout="row" layout-align="start center" style="font-size:0.8em">
           <div class="leftSide">Recommended</div>
           <div flex layout="row" layout-align="start center">
             Windows 8.1 (64bit)
@@ -232,33 +209,36 @@
 
 
 
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">Basic Performance Improvements</div>
+  <md-card class="card" flex>
+    <div class="md-title md-padding">Basic Performance Improvements</div>
+    <md-divider></md-divider>
     <md-list class="questionAnswer">
       <md-list-item layout="row" ng-if="settings.PostFXSSAOGeneralEnabled">
         <div flex>Turn off SSAO in 
-          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+          <a href="javascript:void(0)" ui-sref="menu.options">graphics options</a>
         </div>
       </md-list-item>
       <md-list-item layout="row" ng-if="settings.GraphicLightingQuality !== '0'">
         <div flex>Reduce lighting in 
-          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+          <a href="javascript:void(0)" ui-sref="menu.options">graphics options</a>
         </div>
       </md-list-item>
       <md-list-item layout="row" ng-if="settings.GraphicTextureQuality !== '0'">
         <div flex>Reduce texture quality in 
-          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+          <a href="javascript:void(0)" ui-sref="menu.options">graphics options</a>
         </div>
       </md-list-item>
       <md-list-item layout="row">
         <div flex>Lower resolution in 
-          <a href="javascript:void(0)" ng-click="linkTo('#/options2')">graphics options</a>
+          <a href="javascript:void(0)" ui-sref="menu.options">graphics options</a>
         </div>
       </md-list-item>
     </md-list>
   </md-card>
-  <md-card class="card">
-    <div class="md-header md-default-theme apply-md questionHeader">Using the dedicated graphics on laptops</div>
+
+  <md-card class="card" flex>
+    <div class="md-title md-padding">Using the dedicated graphics on laptops</div>
+    <md-divider></md-divider>
     <md-list class="questionAnswer">
       <md-list-item layout="row">
         <div class="leftSideNum">1.</div>
@@ -290,9 +270,8 @@
   </md-card>
 </section>
 
-<md-checkbox ng-model="showDetails" aria-label="show Details" class="md-warn" style="display: inline;">Show Details</md-checkbox>
-
-<!-- <div ng-if="showDetails">
+<!-- <md-checkbox ng-model="showDetails" aria-label="show Details" class="md-warn" style="display: inline;">Show Details</md-checkbox>
+<div ng-if="showDetails">
 <h3>Complete Hardware Information</h3>
 <pre>
 {{hwinfo | json}}

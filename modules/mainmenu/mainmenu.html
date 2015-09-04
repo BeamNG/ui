@@ -70,7 +70,8 @@
   font-size:0.6em;
 }
 </style>
-      <div class="HWWarning ng-cloak" ng-if="hwinfo && hwinfo.globalState != 'ok'" ng-click="openPerformance()" layout="row" layout-align="start center">
+  <!-- Remove and use angular material toast -->
+      <!-- <div class="HWWarning ng-cloak" ng-if="hwinfo && hwinfo.globalState != 'ok'" ng-click="openPerformance()" layout="row" layout-align="start center">
         <ng-md-icon size=64 icon="error" style="fill: rgb(255,152,0);" ng-if="hwinfo.globalState == 'warn'"></ng-md-icon>
         <ng-md-icon size=64 icon="error" style="fill: rgb(211,47,47);stroke-width:0.3;" ng-if="hwinfo.globalState == 'error'"></ng-md-icon>
         <div layout="column">
@@ -78,7 +79,7 @@
           <span class="details">Click here for details</span>
         </div>
       </div>
-    </div>
+    </div> -->
 
 <!--
 <div id="bootfader" ng-if="bool" class="fade"></div>

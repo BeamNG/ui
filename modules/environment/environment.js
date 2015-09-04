@@ -16,19 +16,19 @@ angular.module('beamng.stuff')
   vm.gravity = {
     value: -9.8,
     presets: [
-      { title: 'Zero Gravity',   value: 0.0    },
-      { title: 'Earth',          value: -9.8   },
-      { title: 'Moon',           value: -1.62  },
-      { title: 'Mars',           value: -3.71  },
-      { title: 'Sun',            value: -274   },
-      { title: 'Jupiter',        value: -24.92 },
-      { title: 'Neptune',        value: -11.15 },
-      { title: 'Saturn',         value: -10.44 },
-      { title: 'Uranus',         value: -8.87  },
-      { title: 'Venus',          value: -8.87  },
-      { title: 'Mercury',        value: -3.7   },
-      { title: 'Pluto',          value: -0.58  },
-      { title: 'Negative Earth', value: 9.8    }
+      { title: 'zeroGravity',    value: 0.0    },
+      { title: 'earth',          value: -9.8   },
+      { title: 'moon',           value: -1.62  },
+      { title: 'mars',           value: -3.71  },
+      { title: 'sun',            value: -274   },
+      { title: 'jupiter',        value: -24.92 },
+      { title: 'neptune',        value: -11.15 },
+      { title: 'saturn',         value: -10.44 },
+      { title: 'uranus',         value: -8.87  },
+      { title: 'venus',          value: -8.87  },
+      { title: 'mercury',        value: -3.7   },
+      { title: 'pluto',          value: -0.58  },
+      { title: 'negativeEarth',  value: 9.8    }
     ]
   };
 
@@ -40,7 +40,7 @@ angular.module('beamng.stuff')
   vm.simSpeed = {
     value: 1.0,
     presets: [
-      { title: 'RealTime', value: 1 },
+      { title: 'realtime', value: 1 },
       { title: '2x',       value: 2 },
       { title: '4x',       value: 4 },
       { title: '10x',      value: 10 },

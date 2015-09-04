@@ -1,6 +1,6 @@
 angular.module('beamng.stuff', ['ngAnimate']);
 
-angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps', 'vAccordion', 'pascalprecht.translate'])  
+angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stuff', 'beamng.apps', 'vAccordion', 'pascalprecht.translate', 'ui.grid', 'ui.grid.grouping', 'ui.grid.resizeColumns'])  
   
 .filter('bytes', function() {
   return function(bytes, precision) {
@@ -155,7 +155,13 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
     .state('menu.mods', {
       url: '/modemanager',
       templateUrl: 'modules/modmanager/modmanager.html',
-      controller: 'HelpController'
+      controller: 'ModManagerController'
+    })
+
+    .state('menu.mainmenu', {
+      url: '/main',
+      templateUrl: 'modules/mainmenu/mainmenu.html',
+      controller: 'MainMenuController'
     })
 
   // Transition to this state is handled by some unknown dark force (Torque?).
@@ -298,7 +304,8 @@ angular.module('beamng.stuff')
       { translateid: 'dashboard.credits',     icon: 'people',         state: 'credits'         },
       { translateid: 'dashboard.vehicleconfig', icon: 'settings_applications', state: 'menu.vehicleconfig' },
       { translateid: 'dashboard.help',        icon: 'help', state: 'menu.help' },
-      { translateid: 'dashboard.mods',        icon: 'help', state: 'menu.mods' }
+      { translateid: 'dashboard.mods',        icon: 'shop', state: 'menu.mods' },
+      { translateid: 'dashboard.mainmenu',        icon: 'help', state: 'menu.mainmenu' },
       // { translateid: 'dashboard.controls', icon: 'games', state: 'menu.controls' }
     ]
   };

@@ -24,8 +24,9 @@
       <md-grid-tile ng-repeat="(i, scenario) in scenarios | filter:query | orderBy: 'difficulty'"
                       ng-click="clickTile(scenario);"
                       ng-class="(scenario == selected) ? 'selectedScenario' : 'unselectedScenario'"
+                      style="overflow: hidden;"
                       >
-        <img ng-src="/{{::scenario.path}}{{::scenario.preview}}" style="width: 100%;"></img>
+        <img ng-src="/{{::scenario.path}}{{::scenario.preview}}" style="width: 100%; min-height:100%;"></img>
         <md-grid-tile-footer><h3>{{::scenario.name}}</h3></md-grid-tile-footer>
       </md-grid-tile>
     </md-grid-list>

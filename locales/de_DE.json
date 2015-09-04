@@ -6,7 +6,7 @@
         "vehicles": "Fahrzeuge",
         "options": "Einstellungen",
         "debug": "Entwickleroptionen",
-        "fedback": "Rückmeldungen",
+        "feedback": "Rückmeldungen",
         "apps": "Apps",
         "photomode": "Foto Modus",
         "credits": "Abspann",
@@ -27,5 +27,49 @@
     },
     "modmanager": {
         "modmanager": "Mod Manager"
-    }
+    },
+    "environment": {
+        "environment": "Umwelt",
+        "timeOfDay": "Tageszeit",
+        "play": "Spielen",
+        "time": "Zeit",
+        "day": "Tag",
+        "scale": "Scale",
+        "night": "Nacht",
+        "weather": "Wetter",
+        "windSpeed": "Windgeschwindigkeit",
+        "cloudCover": "Wolkendecke",
+        "fogDensity": "Nebeldichte",
+        "gravity": "Erdanziehungskraft",
+        "zeroGravity": "Schwerelos",
+        "earth": "Erde",
+        "moon": "Mond",
+        "mars": "Mars",
+        "sun": "Sonne",
+        "jupiter": "Jupiter",
+        "neptune": "Neptun",
+        "saturn": "Saturn",
+        "uranus": "Uranus",
+        "venus": "Venus",
+        "mercury": "Merkur",
+        "pluto": "Pluto",
+        "negativeEarth": "Umgekehrte Erdanziehungskraft",
+        "simulationSpeed": "Simulationsgeschwindigkeit",
+        "realtime": "Echtzeit"
+    },
+    "credits": {
+        "programmers": "Programmierer",
+        "vehicleDesigners": "Vehicle Designers",
+        "environmentArtists": "Environment Artists",
+        "customerSupport": "Customer Support",
+        "organization": "Organisation",
+        "qa": "Quality Assurance",
+        "ui": "Benutzeroberfläche",
+        "ourAwesomeCommunity": "Our awesome community",
+        "specialThanksTo": "Vielen Dank an",
+        "madePossibleWith": "Made possible with"
+    },
+    "engine": {
+        "welcome": "Willkommen bei BeamNG.drive in Deutsch :)"
+    }    
 }

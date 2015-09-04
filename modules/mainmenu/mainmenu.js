@@ -1,15 +1,16 @@
-(function() {
-'use strict';
+// (function() {
+// 'use strict';
 
-angular
-.module('MainMenu', [])
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider
-    .when('/mainmenu', {
-      templateUrl: 'modules/mainmenu/mainmenu.html',
-      controller: 'MainMenuController'
-    });
-}])
+// angular
+// .module('MainMenu', [])
+// .config(['$routeProvider', function($routeProvider) {
+//   $routeProvider
+//     .when('/mainmenu', {
+//       templateUrl: 'modules/mainmenu/mainmenu.html',
+//       controller: 'MainMenuController'
+//     });
+// }])
+angular.module('beamng.stuff')
 
 .controller('MainMenuController', ['$log', '$scope', '$http', '$sce', function($log, $scope, $http, $sce) {
   if ($scope.initialized) {return; } // only run once
@@ -160,35 +161,6 @@ angular
       }
     })();
   });
-
-  function parseBBCode(text) {
-    text = text.replace(/\[url=http:\/\/([^\s\]]+)\s*\](.*(?=\[\/url\]))\[\/url\]/g, '<a href="http-external://$1">$2</a>');
-    text = text.replace(/\[url\]http:\/\/(.*(?=\[\/url\]))\[\/b\]/g, '<a href="http-external://$1">$1</a>');
-    text = text.replace(/\[URL=http:\/\/([^\s\]]+)\s*\](.*(?=\[\/URL\]))\[\/URL\]/g, '<a href="http-external://$1">$2</a>');
-    text = text.replace(/\[URL\]http:\/\/(.*(?=\[\/URL\]))\[\/b\]/g, '<a href="http-external://$1">$1</a>');
-    text = text.replace(/\[ico=([^\s\]]+)\s*\](.*(?=\[\/ico\]))\[\/ico\]/g, '<img src="images/icons/$1.png">$2</a>');
-    text = text.replace(/\[b\](.*(?=\[\/b\]))\[\/b\]/g, '<span style="font-family:OpenSans-ExtraBold">$1</span>');
-    text = text.replace(/\[h1\](.*(?=\[\/h1\]))\[\/h1\]/g, '<h4 style="margin:0">$1</h4>');
-    text = text.replace(/\[IMG\](.*(?=\[\/IMG\]))\[\/IMG\]/g, '<img src="$1" style="max-width:640px"></img>');
-    text = text.replace(/\[br\]/g, '</br>');
-    text = text.replace(/\[LIST\]\r\n/g, '<ul style="margin:0">');
-    text = text.replace(/\[\/LIST\]/g, '</ul>');
-    text = text.replace(/\[olist\]/g, '<ol>');
-    text = text.replace(/\[\/olist\]/g, '</ol>');
-    text = text.replace(/\[\*\](.*(?=\r))\r\n/g, '<li>$1</li>');
-    text = text.replace(/\[u\](.*(?=\[\/u\]))\[\/u\]/g, '<u>$1</u>');
-    text = text.replace(/\[s\](.*(?=\[\/s\]))\[\/s\]/g, '<s>$1</s>');
-    text = text.replace(/\[strike\](.*(?=\[\/strike\]))\[\/strike\]/g, '<s>$1</s>');
-    text = text.replace(/\[i\](.*(?=\[\/i\]))\[\/i\]/g, '<i>$1</i>');
-    text = text.replace(/\[ico=([^\s\]]+)\s*\]/g, '<img class="ico" src="images/icons/$1.png"/>');
-    text = text.replace(/\[code\](.*(?=\[\/code\]))\[\/code\]/g, '<span class="bbcode-pre">$1</span>');
-    text = text.replace(/\n/g, '<br/>');
-    return text;
-  }
-
-  function convertTimestamp(stamp) {
-    return new Date(stamp * 1000).toDateString();
-  }
 
   // api: http://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v0001/?format=json
   $http.get('http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?format=json&appid=284160&feeds=steam_community_announcements&count=1').

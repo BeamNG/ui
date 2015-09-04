@@ -1,10 +1,10 @@
-<div class="overviewContainer">
-  <md-card class="overviewItem" md-ink-ripple ng-repeat="card in cards;" ng-click="changeView($index)">
+<div class="overviewContainer" layout="row" layout-align="space-around start" layout-wrap>
+  <md-card class="card overviewItem" flex ng-repeat="card in cards;" ng-click="changeView($index)">
     <div layout="row" class="overviewItemHoverPrevent">
       <div class="imgContainer">
-        <ng-md-icon size=100 icon="{{card.icon}}" style="fill: rgba(158,158,158,0.7)"></ng-md-icon>
+        <md-icon class="material-icons" style="color: rgba(158,158,158,0.7); font-size: 100px; height:100px">{{ ::card.icon }}</md-icon>
       </div>
-      <div flex>
+      <div>
         <h3>{{card.title}}</h3>
         <div>
           {{card.des}}

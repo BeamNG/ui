@@ -9,6 +9,7 @@ html, body {
   cursor: default;
   font-family: 'Roboto';
   height: 100%;
+  overflow: hidden;
 }
 
 .active md-icon {

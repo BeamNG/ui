@@ -1,57 +1,57 @@
 <md-content style="width: 400px; height: 100%" layout="column">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <span flex>Environment</span>
+      <span flex>{{::'environment.environment' | translate}}</span>
     </div>
   </md-toolbar>
 
   <div flex layout-padding style="overflow-y: auto">
-    <md-subheader><b>Time Of Day</b></md-subheader>
+    <md-subheader><b>{{::'environment.timeOfDay' | translate}}</b></md-subheader>
     <md-list>
       <md-list-item>
-        <p>Play</p>
+        <p>{{::'environment.play' | translate}}</p>
         <md-checkbox md-no-ink class="md-secondary" ng-model="environment.state.play" aria-label="time-play"></md-checkbox>
       </md-list-item>
 
       <md-list-item layout>
-        <div flex="30">Time</div>
+        <div flex="30">{{::'environment.time' | translate}}</div>
         <md-slider flex min="0" max="1" step="0.01" ng-model="environment.state.time" aria-label="time"></md-slider>
       </md-list-item>
 
       <md-list-item layout >
-        <div flex="30">Day Scale</div>
+        <div flex="30">{{::'environment.day' | translate}}{{::'environment.scale' | translate}}</div>
         <md-slider flex min="0.01" max="10" step="0.01" ng-model="environment.state.dayScale" ng-disabled="!environment.state.play" aria-label="dayscale"></md-slider>
       </md-list-item>
 
       <md-list-item layout >
-        <div flex="30">Night Scale</div>
+        <div flex="30">{{::'environment.night' | translate}}{{::'environment.scale' | translate}}</div>
         <md-slider flex min="0.01" max="10" step="0.01" ng-model="environment.state.nightScale" ng-disabled="!environment.state.play" aria-label="nightscale"></md-slider>
       </md-list-item>
     </md-list>
 
     <md-divider></md-divider>
 
-    <md-subheader><b>Weather</b></md-subheader>
+    <md-subheader><b>{{::'environment.weather' | translate}}</b></md-subheader>
     <md-list>
       <md-list-item layout>
-        <div flex="30">Wind Speed</div>
+        <div flex="30">{{::'environment.windSpeed' | translate}}</div>
         <md-slider flex min="0" max="10" step="0.01" ng-model="environment.state.windSpeed" aria-label="wind speed"></md-slider>
       </md-list-item>
 
       <md-list-item layout>
-        <div flex="30">Cloud Cover</div>
+        <div flex="30">{{::'environment.cloudCover' | translate}}</div>
         <md-slider flex min="0" max="5" step="0.01" ng-model="environment.state.cloudCover" aria-label="cloud cover"></md-slider>
       </md-list-item>
 
       <md-list-item layout>
-        <div flex="30">Fog Density</div>
+        <div flex="30">{{::'environment.fogDensity' | translate}}</div>
         <md-slider flex min="0" max="0.2" step="0.001" ng-model="environment.state.fogDensity" aria-label="fog density"></md-slider>
       </md-list-item>
     </md-list>
 
     <md-divider></md-divider>
 
-    <md-subheader><b>Gravity</b></md-subheader>
+    <md-subheader><b>{{::'environment.gravity' | translate}}</b></md-subheader>
     <md-list>
       <md-list-item layout>
         <md-slider flex min="-280" max="10" ng-model="environment.gravity.value" aria-label="gravity"></md-slider>
@@ -60,14 +60,14 @@
 
       <md-list-item layout layout-wrap>
         <md-button class="md-primary" ng-repeat="preset in ::environment.gravity.presets" ng-click="environment.gravity.value = preset.value">
-          {{ ::preset.title }}
+          {{ ::preset.title | translate}}
         </md-button>
       </md-list-item>
 
     </md-list>
     <md-divider></md-divider>
 
-    <md-subheader><b>Simulation Speed</b></md-subheader>
+    <md-subheader><b>{{::'environment.simulationSpeed' | translate}}</b></md-subheader>
     <md-list>
       <md-list-item layout>
         <md-slider flex min="1" max="100" ng-model="environment.simSpeed.value" aria-label="simulation speed"></md-slider>
@@ -76,7 +76,7 @@
 
       <md-list-item layout layout-wrap>
         <md-button class="md-primary" ng-repeat="preset in ::environment.simSpeed.presets" ng-click="environment.simSpeed.value = preset.value">
-          {{ ::preset.title }}
+          {{ ::preset.title | translate}}
         </md-button>
       </md-list-item>
     </md-list>

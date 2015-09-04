@@ -1,11 +1,11 @@
-<div class="overviewContainer">
-  <md-card class="card" ng-repeat="item in changelog track by $index">
-    <div class="questionHeader md-default-theme apply-md" layout="row" layout-align="start center">
+<div class="overviewContainer" layout="row" layout-align="space-around start" layout-wrap>
+  <md-card style="min-width: 700px; max-height: 1000px; overflow-y: auto;" flex ng-repeat="item in changelog track by $index">
+    <div class="md-padding md-title" layout="row" layout-align="start center">
         <span flex>{{item.title}}</span> 
         <div style="font-size:small">{{item.date}}</div>
     </div>
-    <div class="questionAnswer">
-      
+    <md-divider></md-divider>
+    <div class="md-padding">
       <div ng-bind-html="item.html"></div>
     </div>
   </md-card>

@@ -26,21 +26,20 @@
     top: 100%;
   }
   100% {
-    top: -650%;
+    top: -3600px;
   }
 }
 
 .contentNavCredits .wrapper {
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: calc(50% - 300px);
   width: 600px;
-  margin-left: -300px;
   font: 300 30px/1 'Roboto Condensed', sans-serif;
   text-align: center;
   /* text-transform: uppercase; */
   color: #fff;
-  -webkit-animation: 120s credits linear infinite;
+  -webkit-animation: 90s credits linear;
 }
 
 .contentNavCredits movie {

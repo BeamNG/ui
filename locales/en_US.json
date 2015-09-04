@@ -27,5 +27,49 @@
     },
     "modmanager": {
         "modmanager" : "Mod Manager"
+    },
+    "environment": {
+        "environment": "Environment",
+        "timeOfDay": "Time Of Day",
+        "play": "Play",
+        "time": "Time",
+        "day": "Day",
+        "scale": "Scale",
+        "night": "Night",
+        "weather": "Weather",
+        "windSpeed": "Wind Speed",
+        "cloudCover": "Cloud Cover",
+        "fogDensity": "Fog Density",
+        "gravity": "Gravity",
+        "zeroGravity": "Zero Gravity",
+        "earth": "Earth",
+        "moon": "Moon",
+        "mars": "Mars",
+        "sun": "Sun",
+        "jupiter": "Jupiter",
+        "neptune": "Neptune",
+        "saturn": "Saturn",
+        "uranus": "Uranus",
+        "venus": "Venus",
+        "mercury": "Mercury",
+        "pluto": "Pluto",
+        "negativeEarth": "Negative Earth",
+        "simulationSpeed": "Simulation Speed",
+        "realtime": "Realtime"
+    },
+    "credits": {
+        "programmers": "Programmers",
+        "vehicleDesigners": "Vehicle Designers",
+        "environmentArtists": "Environment Artists",
+        "customerSupport": "Customer Support",
+        "organization": "Organization",
+        "qa": "Quality Assurance",
+        "ui": "User interface",
+        "ourAwesomeCommunity": "Our awesome community",
+        "specialThanksTo": "Special thanks to",
+        "madePossibleWith": "Made possible with"
+    },
+    "engine": {
+        "welcome": "Welcome to BeamNG.drive in US English :)"
     }
 }

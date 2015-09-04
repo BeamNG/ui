@@ -19,8 +19,8 @@
 // }])
 angular.module('beamng.stuff')
 
-.controller('HelpController', ['$log', '$scope', '$stateParams', '$timeout', 'bngApi', '$filter', '$http', '$sce',
-  function($log, $scope, $stateParams, $timeout, bngApi, $filter, $http, $sce) {
+.controller('HelpController', ['$log', '$scope', '$stateParams', '$state', '$timeout', 'bngApi', '$filter', '$http', '$sce',
+  function($log, $scope, $stateParams, $state, $timeout, bngApi, $filter, $http, $sce) {
   // set up the display
   $scope.useThemeBackground = true;
   $scope.tabs = [
@@ -67,14 +67,10 @@ angular.module('beamng.stuff')
 
   $scope.currentView = Number($stateParams.pageIndex) || 0;
   $scope.changeView = function(i) {
-    $scope.currentView = i + 1;
+    $state.transitionTo('menu.help', {pageIndex: i});
   };
   $scope.linkTo = function(location) {
-    window.location.hash = location;
-  };
-
-  $scope.goTo = function(ref) {
-    window.location.hash = ref;
+    $state.transitionTo(location);
   };
 
   $scope.$parent.appEnginePadding = $scope.$parent.menuWidth;
@@ -185,8 +181,8 @@ angular.module('beamng.stuff')
 
   for (var key in hookObj) {
     $scope.$on(key, function (event, data) {
-      $log.debug('[help.js] received' + key +' :', data);
-      hookObj[key]();
+      $log.debug('[help.js] received ' + key +' :', data);
+      hookObj[key](data);
     });
   }
  
@@ -384,7 +380,6 @@ angular.module('beamng.stuff')
     if (recRefHWPromise !== {}) {
       $timeout.cancel(recRefHWPromise);
     }
-    HookManager.unregisterAll(hookObj);
   });
 
 }]);
