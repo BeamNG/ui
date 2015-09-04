@@ -111,6 +111,14 @@
             "title": "Invalid user path",
             "msg": "BeamNG.drive cannot access UserPath defined in startup.ini (game folder). Change for a valid path: "
         },
-        "windowedModeReq"
+        "windowedModeReq": {
+            "title": "Windowed Mode Required",
+            "msgEditor": "Please exit the Mission Editor to switch to full screen.",
+            "msgGUI": "Please exit the GUI Editor to switch to full screen."
+        },
+        "levelModified": {
+            "title": "Level Modified",
+            "msg": "Level has been modified in the Editor. Save?"
+        }
     }
 }
