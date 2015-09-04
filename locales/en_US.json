@@ -110,6 +110,7 @@
         "invalidUserpath": {
             "title": "Invalid user path",
             "msg": "BeamNG.drive cannot access UserPath defined in startup.ini (game folder). Change for a valid path: "
-        }
+        },
+        "windowedModeReq"
     }
 }
