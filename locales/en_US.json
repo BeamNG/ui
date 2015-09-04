@@ -72,5 +72,11 @@
     },
     "engine": {
         "welcome": "Welcome to BeamNG.drive in US English :)"
+    },
+    "feedback": {
+        "leaveMessage": "Please add a message here",
+        "back": "Back",
+        "clear": "Clear",
+        "submit": "Submit"
     }
 }
