@@ -305,7 +305,7 @@ angular.module('beamng.stuff')
       { translateid: 'dashboard.vehicleconfig', icon: 'settings_applications', state: 'menu.vehicleconfig' },
       { translateid: 'dashboard.help',        icon: 'help', state: 'menu.help' },
       { translateid: 'dashboard.mods',        icon: 'shop', state: 'menu.mods' },
-      { translateid: 'dashboard.mainmenu',        icon: 'help', state: 'menu.mainmenu' },
+      { translateid: 'dashboard.mainmenu',        icon: 'collections', state: 'menu.mainmenu' },
       // { translateid: 'dashboard.controls', icon: 'games', state: 'menu.controls' }
     ]
   };
