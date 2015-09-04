@@ -87,5 +87,15 @@
         "userPresets": "User Presets",
         "colToPre": "Add color to Presets",
         "rightToDel": "Right click on Preset to delete it"
+    },
+    "vehicleconfig": {
+        "vehicleconfig": "Vehicle Customization",
+        "parts": "Parts",
+        "color": "Color",
+        "save": "Save",
+        "overwrite": "Overwrite",
+        "load": "Load",
+        "filename": "Filename",
+        "mouseOverUi": "Please keep the mouse over the ui while typing to make sure the keyboard input is directed to it"
     }
 }

@@ -42,11 +42,11 @@
 <md-content style="width:400px; height: 100%" layout="column" class="contentNavVehicleconfig">
   <md-toolbar class="md-primary">
     <h1 class="md-toolbar-tools">
-      <span flex>Vehicle Customization</span>
+      <span flex>{{::'vehicleconfig.vehicleconfig' | translate}}</span>
     </h1>
   </md-toolbar>
   <md-tabs flex style="overflow-y: auto" class="md-primary md-hue-1" md-selected="0"> <!-- md-selected="1" -->
-    <md-tab label="Parts">
+    <md-tab label="{{::'vehicleconfig.parts' | translate}}">
         <md-content class="md-padding md-default-theme">
             <!--Starts the recursiv representation of the config-->
             <div ng-repeat="entry in d.data" ng-include="'content'"></div>
@@ -55,27 +55,27 @@
             </div>
         </md-content>
     </md-tab>
-    <md-tab label="Color">
-        <md-content class="md-padding md-default-theme" ng-init="file='some Path'">
+    <md-tab label="{{::'vehicleconfig.color' | translate}}">
+        <md-content class="md-padding md-default-theme">
             <ng-color ng-model="color" presets-editable="true" show-preview="false" ng-change="updateColor(color)"></ng-color>
         </md-content>
     </md-tab>
-    <md-tab label="Save & Load">
+    <md-tab label="{{::'vehicleconfig.save' | translate}} & {{::'vehicleconfig.load' | translate}}">
         <md-content class="md-padding md-default-theme">
             <section>
-                <h3>Save</h3>
+                <h3>{{::'vehicleconfig.save' | translate}}</h3>
                 <div layout="row">
                     <md-input-container flex>
-                          <label>Filename</label>
+                          <label>{{::'vehicleconfig.filename' | translate}}</label>
                           <input ng-model="savename" ng-change="savenameChange(savename)">
                     </md-input-container>
-                    <md-button ng-disabled="!savename" ng-click="save(savename)">{{saveBtnLabel}}</md-button>
+                    <md-button ng-disabled="!savename" ng-click="save(savename)">{{saveBtnLabel || translate}}</md-button>
                 </div>
-                <span style="color: grey; font-size: 0.8em;">(Please keep the mouse over the ui while typing to make sure the keyboard input is directed to it)</span>
+                <span style="color: grey; font-size: 0.8em;">({{::'vehicleconfig.mouseOverUi' | translate}})</span>
             </section>
             <md-divider></md-divider>
             <section>
-                <h3>Load</h3>
+                <h3>{{::'vehicleconfig.load' | translate}}</h3>
                 <md-list layout="column">
                     <md-item ng-repeat="item in configList">
                         <md-button ng-click="load(item)">{{item}}</md-button>

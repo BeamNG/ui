@@ -305,7 +305,7 @@ angular.module('beamng.stuff')
     loadList();
 
     $scope.savenameChange = function(name) {
-      $scope.saveBtnLabel = $scope.configList.indexOf(name) != -1 ? 'Overwrite' : 'Save';
+      $scope.saveBtnLabel = $scope.configList.indexOf(name) != -1 ? 'overwrite' : 'save';
     };
 
     $scope.save = function(configFilename) {
