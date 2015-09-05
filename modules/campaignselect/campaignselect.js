@@ -135,7 +135,7 @@
     console.log('In controller:', campaignsList);
     
     vm.list = campaignsList;
-    vm.fallbackImgSrc = 'local://local/html/images/appDefault.png';
+    vm.fallbackImgSrc = 'local://local/html/modules/apps/appDefault.png';
     
     vm.selected = null;
     vm.canTakeAction = false;
@@ -199,7 +199,7 @@
     console.log('in controller', scenariosList);
     
     vm.list = scenariosList;
-    vm.fallbackImgSrc = 'local://local/html/images/appDefault.png';
+    vm.fallbackImgSrc = 'local://local/html/modules/apps/appDefault.png';
     
     vm.selected = null;
     

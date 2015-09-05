@@ -17,7 +17,7 @@
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 300;
-  src: local('Roboto Cond Light'), local('OpenSans-CondensedLight'), url(/html/v3/common/RobotoCondensed-Light.ttf) format('truetype');
+  src: local('Roboto Cond Light'), local('OpenSans-CondensedLight'), url(/html/common/RobotoCondensed-Light.ttf) format('truetype');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 

@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Roboto';
-  src: url(../fonts/Roboto-Regular.ttf);
+  src: url(common/Roboto-Regular.ttf);
 }
 
 html, body {
@@ -62,7 +62,7 @@ md-slider .md-focus-ring {
 
 
 .dashboardBackground {
-  background-image: url(../images/background_example.png);
+  background-image: url(dashbackground.png);
 }
 
 /* smaller sidebar */
@@ -233,7 +233,7 @@ md-select {
   font-weight: 400;
   src: local('Material Icons'),
        local('MaterialIcons-Regular'),
-        url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+        url(common/MaterialIcons-Regular.ttf) format('truetype');
 }
 
 @font-face {
