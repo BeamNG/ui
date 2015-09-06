@@ -20,10 +20,10 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
     suffix: '.json'
   });
   $translateProvider.useSanitizeValueStrategy('escaped');
-  $translateProvider.preferredLanguage('en_US');
-  $translateProvider.fallbackLanguage('en_US');
+  $translateProvider.preferredLanguage('en-US');
+  $translateProvider.fallbackLanguage('en-US');
 
-  //$translateProvider.use('de_DE');
+  //$translateProvider.use('de-DE');
 
   // ..... User Interface states
   $stateProvider
@@ -323,7 +323,7 @@ angular.module('beamng.stuff')
   // **************************************************************************
   // // language switching tests
   // var langid = 0;
-  // var lang_available = ['en_US', 'de_DE', 'el'];
+  // var lang_available = ['en-US', 'de-DE', 'el'];
   // function toggle_lang_example() {
   //   langid++;
   //   if(langid >= lang_available.length) langid = 0;
