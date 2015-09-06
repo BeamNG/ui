@@ -16,7 +16,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
   function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $translateProvider) {
  
   $translateProvider.useStaticFilesLoader({
-    prefix: 'locales/',
+    prefix: '/locales/',
     suffix: '.json'
   });
   $translateProvider.useSanitizeValueStrategy('escaped');
