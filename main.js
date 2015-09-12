@@ -345,6 +345,8 @@ angular.module('beamng.stuff')
 
   vm.isPaused = false;
   $scope.$on('updatePhysicsState', function (event, state) {
+    if ($state.current.name == 'photomode') return;
+    
     $scope.$evalAsync(function () {
       vm.isPaused = !state;
     });
