@@ -1,40 +1,81 @@
 angular.module('beamng.stuff')
 
-  // .config(['$routeProvider', 'dashMenuProvider', function($routeProvider, dashMenuProvider) {
-  //   $routeProvider
-  //     .when('/vehicleselect', {
-  //       templateUrl:  'modules/vehicleselect/vehicleselect.html',
-  //       controller:   'VehicleSelectController',
-  //       controllerAs: 'vehicles',
-  //       resolve: {
-  //         populate: ['Vehicles', function (Vehicles) {
-  //           return Vehicles.getModels();
-  //         }]
-  //       }
-  //     })
+  /**
+   * @ngdoc service
+   * @name  beamng.stuff:Vehicles
+   * @description Handles all vehicles-related stuff
+  **/
+  .service('Vehicles', ['$log', '$q', '$rootScope', '$timeout', 'bngApi', 'InstalledMods', 
+    function ($log, $q, $rootScope, $timeout, bngApi, InstalledMods) {
+      return {
+       
+        /**
+         * @ngdoc method
+         * @name  populate
+         * @methodOf beamng.stuff:Vehicles
+         * @description Retrieves all the available vehicles using the Lua interface and 
+         *              stores the result into InstalledMods.vehicles
+         * @returns {promise}
+         * @see beamng.stuff:InstalledMods
+        **/
+        populate: function () {
+          var d = $q.defer();
+          
+          bngApi.engineLua('vehicles.getVehicleList()', function (response) {
+            $log.debug('vehicles.getList() response:', response);
+            if (response) {
+              InstalledMods.vehicles.index = response.index;
+              InstalledMods.vehicles.list  = response.list;
+              for (var f in response.filters) {
+                if (InstalledMods.vehicles.filters[f]) continue;
+                else InstalledMods.vehicles.filters[f] = response.filters[f];
+              }
+            }
+            d.resolve();
+          });
 
-  //     .when('/vehicleselect/:modelName', {
-  //       templateUrl:  'modules/vehicleselect/vehicleselect-details.html',
-  //       controller:   'VehicleDetailsController',
-  //       controllerAs: 'details',
-  //     });
+          return d.promise;
+        },
 
-  //   dashMenuProvider.addMenu({hash: '#/vehicleselect', title: 'Vehicles', modes: ['play'], icon: 'directions_car', order: 20});
-  // }])
+        /**
+         * @ngdoc method
+         * @name addToGame
+         * @methodOf beamng.stuff:Vehicles
+         * @description Adds a new vehicle to the game
+         *
+         * @param {object} model
+         * @param {string} config
+         * @param {string} color
+         * @param {boolean} spawnNew Whether to spawn a new vehicle into game instead of replacing the current
+        **/
+        addToGame: function (model, config, color, spawnNew) {
+          $log.debug('got', model, config, color, spawnNew);
+          var d = $q.defer()
+            , pcFile = ['vehicles', model.key, config || model['default_pc'] || ''].join('/') + '.pc';
+
+          if (!color) {
+            if (model['colors']) color = model['colors'][ model['default_color'] ] || '';
+            else color = '';
+          }
+
+          if (spawnNew) bngApi.sendGameEngine('spawnVehicle();');
+
+          $log.info('launching vehicle %o', { model: model, pcFile: pcFile, color: color, spawnNew: spawnNew });
+          
+          $rootScope.$broadcast('app:waiting', true);
+          $rootScope.$broadcast('MenuToggle');
+          $timeout(function () {
+            $rootScope.$broadcast('app:waiting', false);
+          }, 2000);
+          
+          setTimeout(function () {
+            bngApi.sendGameEngine('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');  
+          }, 200);
+        }
+      };
+  }])
 
 
-
-  // .value('VehiclesInfo', {
-  //   index: {},
-  //   list: [],
-  // })
-
-  // .value('VehicleFilters', {
-  //   filters: {}
-  // })
-
-  // .service('Vehicles', ['$timeout', '$q', 'bngApi', 'VehiclesInfo', 'VehicleFilters',
-  //   function ($timeout, $q, bngApi, VehiclesInfo, VehicleFilters) {
   //   var service = {
 
   //     getModels: function () {
@@ -87,69 +128,106 @@ angular.module('beamng.stuff')
   //   return service;
   // }])
 
-
-  .controller('VehicleSelectController', ['bngApi', 'InstalledMods', function(bngApi, InstalledMods) {
-
+  /**
+   * @ngdoc controller
+   * @name  beamng.stuff:VehicleDetailsController
+   * @description 
+  **/
+  .controller('VehicleDetailsController', ['$log', '$stateParams', 'bngApi', 'InstalledMods', 'Vehicles',
+    function ($log, $stateParams, bngApi, InstalledMods, Vehicles) {
 
     var vm = this;
-    // vm.info = VehiclesInfo;
-    vm.info = InstalledMods.vehicles;
-    // vm.filters = angular.copy(VehicleFilters.filters);
 
-    // console.log('the vehicles:', VehiclesInfo);
-    // console.log('filters:', VehicleFilters);
+    vm.model          = InstalledMods.vehicles.list[ InstalledMods.vehicles.index[$stateParams.model] ];
+    vm.hasConfigs     = Object.keys(vm.model.configs).length > 1;
+    vm.selectedConfig = angular.copy(vm.model);
+    vm.selectedColor  = '';
+    vm.detailsKeys    = Object.keys(InstalledMods.vehicles.filters);
+
+    vm.selectConfig = function (config) {
+      for (var property in vm.model.configs[config])
+        vm.selectedConfig[property] = vm.model.configs[config][property];
+      vm.selectedConfig.key = config; // This is originally the key of the *model*, we need configuration related info.
+      
+      if (vm.selectedConfig['default_color'])
+        vm.selectedColor = vm.model['colors'][ vm.selectedConfig['default_color'] ];
+      
+      $log.debug('selected configuration %s: %o', config, vm.selectedConfig);
+    };
+
+    vm.launchConfig = function (config, spawnNew) {
+      vm.selectConfig(config);
+      Vehicles.addToGame(vm.model, config, vm.selectedColor, spawnNew);
+    };
+
+    if (vm.model['default_pc']) vm.selectConfig(vm.model['default_pc']);
+
+    $log.log('model:', vm.model);
+    $log.log('selectedConfig:', vm.selectedConfig);
+  }])
+
+  /**
+   * @ngdoc controller
+   * @name  VehicleSelectController
+   * @description
+  **/
+  .controller('VehicleSelectController', ['$log', 'bngApi', 'InstalledMods', 'Vehicles', function ($log, bngApi, InstalledMods, Vehicles) {
+
+    var vm = this;
+
+    vm.data = angular.copy(InstalledMods.vehicles);
+    vm.selected = null;
 
     vm.tilesOrder = function (vehicle) {
       return vehicle['Type'] + vehicle['key'];
     };
 
-    // vm.selectDefaultConfig = function (model) {
-    //   Vehicles.addToGame(model, null, null, false, $scope.$parent);
-    // };
+    vm.launchDefaultConfig = function (model) {
+      Vehicles.addToGame(model, null, null, false);
+    };
 
-    // vm.toDetailsScreen = function (model) {
-    //   $location.path('/vehicleselect/' + model['key']);
-    // };
 
-    // vm.userFilters = function () {
-    //   return function (model, index, array) {
+    vm.userFilters = function () {
+      return function (model, index, array) {
 
-    //     if (model['aggregates'].hasOwnProperty('Years')) {
+        if (model['aggregates'].hasOwnProperty('Years')) {
 
-    //       var inDateRange = model['aggregates']['Years'].min <= vm.filters['Years'].max && 
-    //                         model['aggregates']['Years'].max >= vm.filters['Years'].min;
-    //       if (!inDateRange) return false;
-    //     }
+          var inDateRange = model['aggregates']['Years'].min <= vm.data.filters['Years'].max && 
+                            model['aggregates']['Years'].max >= vm.data.filters['Years'].min;
+          if (!inDateRange) return false;
+        }
 
-    //     for (var filterId in vm.filters) {
-    //       if (model['aggregates'].hasOwnProperty(filterId)) {
-    //         // if (filterId == 'Years') {
-    //         //   return
-    //         //     (model['aggregates']['Years'].min > filters['Years'].min || -1e6) &&
-    //         //     (model['aggregates']['Years'].max < filters['Years'].max || 1e6)
-    //         // }
+        for (var filterId in vm.data.filters) {
+          if (model['aggregates'].hasOwnProperty(filterId)) {
+            // if (filterId == 'Years') {
+            //   return
+            //     (model['aggregates']['Years'].min > vm.data.filters['Years'].min || -1e6) &&
+            //     (model['aggregates']['Years'].max < vm.data.filters['Years'].max || 1e6)
+            // }
 
-    //         var isOk = false;
+            var isOk = false;
              
-    //         for (var propertyValue in model['aggregates'][filterId]) {
-    //           isOk = isOk || vm.filters[filterId][propertyValue];
-    //           // if (! vm.filters[filterId][propertyValue])
-    //           //   return false;
-    //         }
+            for (var propertyValue in model['aggregates'][filterId]) {
+              isOk = isOk || vm.data.filters[filterId][propertyValue];
+              // if (! vm.data.filters[filterId][propertyValue])
+              //   return false;
+            }
             
-    //         if (!isOk) return false;
-    //       }
-    //     }
+            if (!isOk) return false;
+          }
+        }
 
-    //     return true;
-    //   }
-    // };
+        return true;
+      }
+    };
+
+    vm.show = function () {
+      console.log('data', vm.data);
+    };
 
     vm.removeFilters = function () {
-      vm.filters = angular.copy(VehicleFilters.filters);
-      // for (var filt in vm.filters)
-      //   for (var option in vm.filters[filt])
-      //     vm.filters[filt][option] = true;
+      vm.data.filters = angular.copy(InstalledMods.vehicles.filters);  
+      console.log(vm.data);
     };
   }])
 
@@ -157,25 +235,25 @@ angular.module('beamng.stuff')
 
 
 
-  // .directive('vehicleFilter', function () {
-  //   return {
-  //     restrict: 'E',
-  //     templateUrl: 'modules/vehicleselect/vehicle-filter.html',
-  //     scope: {
-  //       title: '@',
-  //       items: '=',
-  //       defaultOpen: '@'
-  //     },
-  //     replace: true,
-  //     controller: ['$scope', '$attrs', function ($scope, $attrs) {
-  //       // $scope.showContents = $scope.$eval($attrs.defaultOpen);
-  //       $scope.showContents = $scope.$eval($scope.defaultOpen);
-  //       $scope.toggleContents = function () {
-  //         $scope.showContents = !$scope.showContents;
-  //       };
-  //     }]
-  //   };
-  // })
+  .directive('vehicleFilter', function () {
+    return {
+      restrict: 'E',
+      templateUrl: 'modules/vehicleselect/vehicle-filter.html',
+      scope: {
+        title: '@',
+        items: '=',
+        defaultOpen: '@'
+      },
+      replace: true,
+      controller: ['$scope', '$attrs', function ($scope, $attrs) {
+        // $scope.showContents = $scope.$eval($attrs.defaultOpen);
+        $scope.showContents = $scope.$eval($scope.defaultOpen);
+        $scope.toggleContents = function () {
+          $scope.showContents = !$scope.showContents;
+        };
+      }]
+    };
+  })
 
 
 

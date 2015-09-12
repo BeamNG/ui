@@ -1,82 +1,68 @@
-<style>
-  .VehicleSelect .bng-tile-button-secondary { position: absolute; top: 0; right: 10px; height:100% }
-  .VehicleSelect md-grid-tile-footer h3 { margin-right: 50px; text-shadow: 1px 1px black; }
-  .VehicleSelect md-grid-tile-footer { background: rgba(0, 0, 0, 0.4); }
-</style>
+<md-content style="width:1200px; height: 100%" layout="column" class="VehicleSelect">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <ng-md-icon class="material-icons" style="fill:white; margin: 0 10px; cursor:pointer" ui-sref="menu.vehicles">
+        arrow_back
+      </ng-md-icon>
+      <span flex> {{ ::vehicle.model['Brand'] }} {{ ::vehicle.model['Name'] }} </span>
+    </div>
+  </md-toolbar>
 
-<md-toolbar class="md-hue-1" style="max-height:50px;min-height:50px;height:50px;">
-  <div class="md-toolbar-tools">
-    <md-button class="md-icon-button md-default" aria-label="Back" ng-click="details.backToModels()">
-      <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
-    </md-button>
-    <h2>
-      <span> {{ ::details.info['Brand'] }} {{ ::details.info['Name'] }} </span>
-    </h2>
+   <div flex layout-padding style="overflow-y: auto">
+    <md-grid-list flex
+          md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3"
+          md-row-height-gt-md="25:12" md-row-height="25:12"
+          md-gutter="4px" md-gutter-gt-sm="4px">
+      <md-grid-tile ng-repeat="(key, config) in ::vehicle.model.configs" ng-click="vehicle.selectConfig(key)">
+        <img src="/{{ ::config.preview }}" style="width: 100%;height: 100%;"></img>
+        <md-grid-tile-footer>
+          <h3>{{ ::config['Configuration'] || 'Default' }}</h3>
+          <button class="md-icon-button md-button bng-tile-button-secondary" ng-click="vehicle.launchConfig(key, false)">
+            <md-icon class="material-icons" style="color: white">play_arrow</md-icon>
+          </button>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
   </div>
-</md-toolbar>
-
-<section class="VehicleSelect" layout="row" id="mainRightSection" style="position:absolute;left:0;right:0;top:50px;bottom:0;">
- <md-content flex style="overflow-y:scroll; height:100%; padding: 10px">
-    <div layout="row" layout-wrap ng-if="details.hasConfigs">
-      <div layout="row" layout-align="center center" class="bng-grid-tile"
-           ng-repeat="(key, value) in ::details.info.configs"
-           ng-click="details.selectConfig(key)"
-           style="background: url(/{{ value['preview']}}); background-size: cover; margin: 6px">
-        <div layout="row" layout-align="start center" class="bng-grid-tile-footer">
-          <p style="margin-right:0">
-            {{ ::details.info.configs[key]['Configuration'] || 'Default' }}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div style="height:100%;" ng-if="!details.hasConfigs" layout="column" layout-align="center center">
-      <ng-md-icon icon="block" style="fill: grey"></ng-md-icon>
-      <h3 style="color: grey">No Configurations</h3>
-    </div>
-  </md-content>
+</md-content>
 
 
-  <md-content flex="30" style="min-width: 320px; max-width: 400px; height:100%; padding:10px; overflow-y:hidden;" layout="column" class="md-whiteframe-z3">
-    <img ng-src="/{{ details.selected.preview }}" style="width:100%">
+<md-content ng-show="vehicle.selectedConfig" layout="column" style="width: 430px; height: 100%;">
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <span flex>{{ vehicle.selectedConfig['Configuration'] || 'Default' }}</span>
+    </div> 
+  </md-toolbar>
 
-    <h2>{{ details.selected['Configuration'] || details.selected['Name'] }}</h2>
-    <div flex style="overflow-y: auto">
-      <table class="bng-vehicleselect-details-table">
-        <tbody>
-          <tr ng-repeat="key in ::details.tableKeys" ng-if="details.info[key]">
-            <th>{{ ::key }}</th>
-            <td>{{ details.selected[key] || details.info[key] }}</td>
-          </tr>
+  <img src="/{{ vehicle.selectedConfig.preview }}" style="width: 100%;"></img>
 
-          <tr ng-if="details.info['Years']">
-            <th>Years</th>
-            <td>{{::details.info['Years'].min}} - {{::details.info['Years'].max}}
-          </tr>
+  <md-tabs flex>
+    <md-tab label="Details">
+      <md-list>
 
-          <tr ng-if="details.info.hasOwnProperty('colors')">
-            <th>Color</th>
-            <td>
-              <md-button style="background-color:{{ details.colorStringToRgba(details.vehicleColor.value)}}; border: solid 3px grey"
-                         ng-click="details.editColor = !details.editColor" aria-label="Edit Color">
-                <md-label ng-if="!details.editColor">More Options</md-label>
-                <md-label ng-if="details.editColor">Less Options</md-label>
-              </md-button>
-            </td>
-          </tr>
+        <md-list-item class="md-2-line" ng-repeat="property in vehicle.detailsKeys" ng-if="property != 'Years'">
+          <div class="md-list-item-text">
+            <h3>{{ ::property }}</h3>
+            <p>{{ vehicle.selectedConfig[property] || 'Unknown' }}</p>
+          </div>
+        </md-list-item>
 
-        </tbody>
-      </table>
+        <md-list-item class="md-2-line" ng-if="vehicle.selectedConfig['Years']">
+          <div class="md-list-item-text">
+            <h3>Years</h3>
+            <p>{{ ::vehicle.selectedConfig['Years'].min }} - {{ vehicle.selectedConfig['Years'].max }}</p>
+          </div>
+        </md-list-item>
+      </md-list>
+    </md-tab>
 
-      <div>
-        <ng-color ng-model="details.vehicleColor.value" pre-col="{{::details.info['colors']}}" show-main="{{details.editColor}}" show-alpha="{{details.editColor}}" width="265"></ng-color>
-      </div>
-    </div>
+    <md-tab label="Color">
+      <ng-color flex ng-model="vehicle.selectedColor"></ng-color>
+    </md-tab>
+  </md-tabs>
 
-    <div layout="row" layout-md="column">
-      <md-button flex ng-click="details.applySelection(true)" class="md-warn">Spawn New</md-button>
-      <md-button flex ng-click="details.applySelection(false)" class="md-raised md-primary">Replace</md-button>
-    </div>
-
-  </md-content>
-</section>
+  <div layout="row">
+    <md-button flex class="md-warn" ng-click="vehicle.launchConfig(vehicle.selectedConfig.key, true)">Spawn New</md-button>
+    <md-button flex class="md-primary" ng-click="vehicle.launchConfig(vehicle.selectedConfig.key, false)">Replace Current</md-button>
+  </div>
+</md-content>

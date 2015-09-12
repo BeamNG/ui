@@ -97,23 +97,16 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
       templateUrl: 'modules/vehicleselect/vehicleselect.html',
       controller: 'VehicleSelectController as vehicles',
       resolve: {
-        populate: ['$q', 'bngApi', 'InstalledMods', function ($q, bngApi, InstalledMods) {
-          var d = $q.defer();
-          bngApi.engineLua('vehicles.getVehicleList()', function (response) {
-            console.log('the vehicles:', response);
-            if (response) {
-              InstalledMods.vehicles.index = response.index;
-              InstalledMods.vehicles.list  = response.list;
-              for (var f in response.filters) {
-                if (InstalledMods.vehicles.filters[f]) continue;
-                else InstalledMods.vehicles.filters[f] = response.filters[f];
-              }
-            }
-            d.resolve();
-          });
-          return d.promise;
-        }] 
+        populate: ['Vehicles', function (Vehicles) { 
+          return Vehicles.populate(); 
+        }]
       }
+    })
+
+    .state('menu.vehicleDetails', {
+      url: '/vehicle-details/:model',
+      templateUrl: 'modules/vehicleselect/vehicleselect-details.html',
+      controller: 'VehicleDetailsController as vehicle'
     })
 
     .state('menu.options', {
@@ -134,7 +127,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
       controller:  'DebugController'
     })
 
-    .state('menu.feedback', {
+    .state('feedback', {
       url: '/feedback',
       templateUrl: 'modules/feedback/feedback.html',
       controller: 'FeedbackController'
@@ -239,7 +232,8 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
   };
 
   $window.updatePhysicsState = function (value) {
-    console.log('got updatePhysicsState w/', value);
+    console.log('[$window] got updatePhysicsState w/', value);
+    $rootScope.$broadcast('updatePhysicsState', value);
   };
 
 }]);
@@ -298,7 +292,7 @@ angular.module('beamng.stuff')
       { translateid: 'dashboard.vehicles',    icon: 'directions_car', state: 'menu.vehicles'   },
       { translateid: 'dashboard.options',     icon: 'tune',           state: 'menu.options'    },
       { translateid: 'dashboard.debug',       icon: 'bug_report',     state: 'menu.debug'      },
-      { translateid: 'dashboard.feedback',    icon: 'gesture',        state: 'menu.feedback'   },
+      { translateid: 'dashboard.feedback',    icon: 'gesture',        state: 'feedback'   },
       { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.apps'       },
       { translateid: 'dashboard.photomode',   icon: 'photo_camera',   state: 'photomode'       },
       { translateid: 'dashboard.credits',     icon: 'people',         state: 'credits'         },
@@ -338,20 +332,27 @@ angular.module('beamng.stuff')
 
   $scope.$on('MenuToggle', function (event, data) {
     $log.debug('[AppCtrl] received MenuToggle', data);
-    vm.showMenu = !vm.showMenu;
     
-    if (!vm.showMenu) {
-      console.log('going...');
-      $state.go('menu');
-    };
+    $scope.$evalAsync(function () {
+      vm.showMenu = !vm.showMenu;
 
-    $scope.$digest();
+      if (!vm.showMenu) {
+        console.log('going...');
+        $state.go('menu');
+      };
+    });
+  });
 
+  vm.isPaused = false;
+  $scope.$on('updatePhysicsState', function (event, state) {
+    $scope.$evalAsync(function () {
+      vm.isPaused = !state;
+    });
+  });
 
-    // REMOVE THIS!!! (and bngApi injection)
-    var luaCmd = {changes: ['streams'], streams: {escData: 1, engineInfo: 1, sensors: 1}};
-    beamng.sendActiveObjectLua('guiUpdate(' + bngApi.serializeToLua(luaCmd) + ')');
-    console.log('sent:', bngApi.serializeToLua(luaCmd));
+  vm.isWaiting = false;
+  $scope.$on('app:waiting', function (event, value) {
+    vm.isWaiting = value;
   });
 
 }]);

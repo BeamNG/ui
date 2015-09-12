@@ -10,6 +10,8 @@ html, body {
   font-family: 'Roboto';
   height: 100%;
   overflow: hidden;
+
+  -webkit-transition: none!important; transition: none!important;
 }
 
 .active md-icon {
@@ -301,3 +303,10 @@ md-select {
   /* standard transition styles */
   opacity:1;
 }
+
+/* vehicle selection */
+.VehicleSelect .bng-tile-button-secondary { position: absolute; top: 0; bottom: 0; right: 10px; height:100% }
+.VehicleSelect md-grid-tile-footer h3 { margin-right: 50px; text-shadow: 1px 1px black; }
+.VehicleSelect md-grid-tile-footer { background: rgba(0, 0, 0, 0.4); }
+
+v-pane-content > div { -webkit-transition: none!important; transition: none!important; }

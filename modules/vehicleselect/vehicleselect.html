@@ -1,4 +1,31 @@
-<md-content style="width:1200px; height: 100%" layout="column">
+<md-content style="padding:10px; height:100%; width: 300px; box-sizing: border-box" layout="column">
+  <v-accordion class="vAccordion--default" multiple style="overflow-y: auto">
+    <v-pane ng-repeat="(title, options) in vehicles.data.filters" ng-if="title != 'Years'">
+      <v-pane-header>{{ ::title }}</v-pane-header>
+      <v-pane-content>
+        <md-checkbox md-no-ink ng-repeat="(option, _) in ::options" ng-model="options[option]">{{ ::option }}</md-checkbox>
+      </v-pane-content>
+    </v-pane>
+
+    <v-pane>
+      <v-pane-header>Years</v-pane-header>
+      <v-pane-content>
+        <md-input-container>
+          <label>FROM</label>
+          <input ng-model="vehicles.data.filters['Years'].min" type="number">
+        </md-input-container>
+        <md-input-container>
+          <label>UNTIL</label>
+          <input ng-model="vehicles.data.filters['Years'].max" type="number">
+        </md-input-container>
+      </v-pane-content>
+    </v-pane>
+  </v-accordion>
+
+  <md-button style="margin-top:5px" class="md-warn md-raised" ng-click="vehicles.removeFilters()">Remove Filters</md-button>
+</md-content>
+
+<md-content style="width:1200px; height: 100%" layout="column" class="VehicleSelect">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <span flex>Vehicles</span>
@@ -13,72 +40,16 @@
     <md-grid-list flex
           md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3"
           md-row-height-gt-md="25:12" md-row-height="25:12"
-          md-gutter="4px" md-gutter-gt-sm="4px" 
-          >
-      <md-grid-tile ng-repeat="model in vehicles.info.list | filter: query | filter: vehicles.userFilters() | orderBy: vehicles.tilesOrder"
-           ng-click="vehicles.toDetailsScreen(model)">
-        <img src="/{{ model.preview }}" style="width: 100%;height: 100%;"></img>
-        <md-grid-tile-footer><h3>{{ ::model['Brand'] }} {{ ::model['Name'] || 'Unknown' }}</h3></md-grid-tile-footer>
+          md-gutter="4px" md-gutter-gt-sm="4px">
+      <md-grid-tile ng-repeat="model in vehicles.data.list | filter: query | filter: vehicles.userFilters() | orderBy: vehicles.tilesOrder">
+        <img src="/{{ model.preview }}" style="width: 100%;height: 100%;" ui-sref="menu.vehicleDetails({ model: model.key })"></img>
+        <md-grid-tile-footer>
+          <h3>{{ ::model['Brand'] }} {{ ::model['Name'] || 'Unknown' }}</h3>
+          <button class="md-icon-button md-button bng-tile-button-secondary" ng-click="vehicles.launchDefaultConfig(model)">
+            <md-icon class="material-icons" style="color: white">play_arrow</md-icon>
+          </button>
+        </md-grid-tile-footer>
       </md-grid-tile>
     </md-grid-list>
   </div>
 </md-content>
-
-<!--
-<md-toolbar class="md-hue-1" style="max-height:50px;min-height:50px;height:50px;">
-  <div class="md-toolbar-tools">
-    <span flex>Vehicles</span>
-    <ng-md-icon icon="search"></ng-md-icon>
-    <md-input-container flex>
-      <label>&nbsp;</label>
-      <input ng-model="modelQuery">
-    </md-input-container>
-  </div>
-</md-toolbar>
-
- <section class="VehicleSelect" layout="row" id="mainRightSection" style="position:absolute;left:0;right:0;top:50px;bottom:0;">
-
-  <md-content flex="20" flex-gt-lg="40" style="padding:10px; height:100%; max-width: 300px" layout="column">
-    <div style="overflow-y:auto">
-      <vehicle-filter ng-repeat="(key, value) in vehicles.filters" ng-if="key != 'Years'"
-                      title="{{ ::key }}" items="value" default-open="{{ key == 'Type' }}" style="width:100%"></vehicle-filter>
-
-      <div>
-        <md-button style="text-align: left; width:100%" class="md-raised" ng-click="showYears = !showYears" ng-init="showYears=false">Years</md-button>
-
-        <div ng-if="showYears" style="padding:10px">
-          <md-input-container>
-            <label>FROM</label>
-            <input ng-model="vehicles.filters['Years'].min" type="number">
-          </md-input-container>
-          <md-input-container>
-            <label>UNTIL</label>
-            <input ng-model="vehicles.filters['Years'].max" type="number">
-          </md-input-container>
-        </div>
-      </div>
-
-    </div>
-    <md-button style="margin-top:5px" class="md-warn md-raised" ng-click="vehicles.removeFilters()">Remove Filters</md-button>
-  </md-content>
-
-  <md-content flex style="overflow-y:auto; padding:10px; max-width: 2000px" class="md-whiteframe-z3">
-    <div layout="row" layout-wrap>
-      <div layout="row" layout-align="center center" class="bng-grid-tile"
-           ng-repeat="model in vehicles.info.list | filter: modelQuery | filter: vehicles.userFilters() | orderBy: vehicles.tilesOrder"
-           ng-click="vehicles.toDetailsScreen(model)"
-           style="background: url(/{{ model['preview']}}); background-size: cover; margin: 6px">
-        <div layout="row" layout-align="start center" class="bng-grid-tile-footer">
-          <p >
-            {{ ::model['Brand'] || '' }} {{ ::model['Name'] || 'Unknown' }}
-          </p>
-          <md-button class="md-icon-button bng-grid-tile-secondary" ng-click="vehicles.selectDefaultConfig(model)" aria-label="Get Default">
-            <ng-md-icon icon="play_circle_fill" style="fill: white; stroke: black"></ng-md-icon>
-          </md-button>
-        </div>
-      </div>
-    </div>
-  </md-content>
-
-</section>
- -->

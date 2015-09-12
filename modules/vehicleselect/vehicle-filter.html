@@ -1,6 +1,6 @@
 <div>
   <md-button style="text-align: left; width:100%" class="md-raised" ng-click="toggleContents()">{{ ::title }}</md-button>
   <div ng-if="showContents">
-    <md-checkbox ng-repeat="(key, value) in ::items" ng-model="items[key]">{{ ::key }}</md-checkbox>
+    <md-checkbox md-no-ink ng-repeat="(key, value) in ::items" ng-model="items[key]">{{ ::key }}</md-checkbox>
   </div>
 </div>
