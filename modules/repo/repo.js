@@ -133,7 +133,7 @@
     }
     $scope.removeFile = function(hash) {
       console.log('removeFile: ', hash);
-      bngApi.sendEngineLua('modmanager.removeMod("' + hash + '")');
+      bngApi.engineLua('modmanager.removeMod("' + hash + '")');
     };
 
     // var hookObj = {
@@ -146,7 +146,7 @@
       onModManagerModsChanged(data);
     });
 
-    bngApi.sendEngineLua('modmanager.requestState()');
+    bngApi.engineLua('modmanager.requestState()');
 
     vm.backToMenu = function () {
       $location.path('/');

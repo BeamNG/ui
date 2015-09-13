@@ -58,7 +58,8 @@ angular.module('beamng.stuff')
             else color = '';
           }
 
-          if (spawnNew) bngApi.sendGameEngine('spawnVehicle();');
+          // if (spawnNew) bngApi.sendGameEngine('spawnVehicle();');
+          if (spawnNew) bngApi.engineScript('spawnVehicle();');
 
           $log.info('launching vehicle %o', { model: model, pcFile: pcFile, color: color, spawnNew: spawnNew });
           
@@ -69,7 +70,8 @@ angular.module('beamng.stuff')
           }, 2000);
           
           setTimeout(function () {
-            bngApi.sendGameEngine('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');  
+            // bngApi.sendGameEngine('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');
+            bngApi.engineScript('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');
           }, 200);
         }
       };

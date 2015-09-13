@@ -14,16 +14,16 @@ angular.module('beamng.stuff')
 
   // $scope.steamAvailable = false;
 
-  bngApi.sendGameEngine('EditorGuiStatusBar.setCamera("Smooth Rot Camera");');
-  bngApi.sendGameEngine("commandToServer('SetEditorCameraNewtonDamped');"); // camera change if the editor was not loaded before
-  bngApi.sendGameEngine("commandToServer('SetCameraFree');"); // camera change if the editor was not loaded before
-  bngApi.sendGameEngine("commandToServer('SetCameraBank');"); // camera change if the editor was not loaded before
-  bngApi.sendGameEngine('$mvFreeLook = true;');
-  bngApi.sendGameEngine('$mvRoll = 0;');
+  bngApi.engineScript('EditorGuiStatusBar.setCamera("Smooth Rot Camera");');
+  bngApi.engineScript("commandToServer('SetEditorCameraNewtonDamped');"); // camera change if the editor was not loaded before
+  bngApi.engineScript("commandToServer('SetCameraFree');"); // camera change if the editor was not loaded before
+  bngApi.engineScript("commandToServer('SetCameraBank');"); // camera change if the editor was not loaded before
+  bngApi.engineScript('$mvFreeLook = true;');
+  bngApi.engineScript('$mvRoll = 0;');
 
-  bngApi.sendGameEngine('$Camera::movementSpeed = ' + $scope.cameraspeed + ';');
-  bngApi.sendGameEngine('beamNGsetPhysicsEnabled(false);');
-  bngApi.sendEngineLua('gAutoHideDashboard = false');
+  bngApi.engineScript('$Camera::movementSpeed = ' + $scope.cameraspeed + ';');
+  bngApi.engineScript('beamNGsetPhysicsEnabled(false);');
+  bngApi.engineLua('gAutoHideDashboard = false');
 
   var vm = this;
   
@@ -43,10 +43,10 @@ angular.module('beamng.stuff')
   vm.takePic = function() {
     vm.settings.visible = false;
     setTimeout(function() {
-      bngApi.sendGameEngine('hideCursor();');
-      bngApi.sendGameEngine('doScreenShot(1);');
+      bngApi.engineScript('hideCursor();');
+      bngApi.engineScript('doScreenShot(1);');
       setTimeout(function() {
-        bngApi.sendGameEngine('showCursor();');
+        bngApi.engineScript('showCursor();');
         vm.showControls = true;
         $scope.$digest();
       }, 200);
@@ -56,10 +56,10 @@ angular.module('beamng.stuff')
   vm.sharePic = function() {
     vm.settings.visible = false;    
     setTimeout(function() {
-      bngApi.sendGameEngine('hideCursor();');
-      bngApi.sendEngineLua('screenshot.publish()');
+      bngApi.engineScript('hideCursor();');
+      bngApi.engineLua('screenshot.publish()');
       setTimeout(function() {
-        bngApi.sendGameEngine('showCursor();');
+        bngApi.engineScript('showCursor();');
         vm.showControls = true;
         $scope.$digest();
       }, 200);
@@ -68,10 +68,10 @@ angular.module('beamng.stuff')
 
   vm.steamPic = function() {
     setTimeout(function() {
-      bngApi.sendGameEngine('hideCursor();');
-      bngApi.sendEngineLua('Steam.triggerScreenshot()');
+      bngApi.engineScript('hideCursor();');
+      bngApi.engineLua('Steam.triggerScreenshot()');
       setTimeout(function() {
-        bngApi.sendGameEngine('showCursor();');
+        bngApi.engineScript('showCursor();');
       }, 400);
     }, 200);
   };
@@ -82,30 +82,30 @@ angular.module('beamng.stuff')
   };
 
   $scope.$watch('photo.settings.fov', function(value) {
-      bngApi.sendGameEngine( 'setFov(' + newValue + ');' );
+      bngApi.engineScript( 'setFov(' + newValue + ');' );
   });
 
   $scope.$watch('photo.settings.cameraSpeed', function(value) {
     console.log('changed speed', value);
-    bngApi.sendGameEngine( '$Camera::movementSpeed = ' + value + ';' );
+    bngApi.engineScript( '$Camera::movementSpeed = ' + value + ';' );
   });
 
   $scope.$watch('photo.settings.roll', function (value) {
-    bngApi.sendGameEngine( 'rollAbs(' + (value * 100) + ');' ); // in rads
+    bngApi.engineScript( 'rollAbs(' + (value * 100) + ');' ); // in rads
   })
 
 
   $scope.$on('$destroy', function() {
     $log.debug('exiting photomode.');
-    bngApi.sendGameEngine('EditorGuiStatusBar.setCamera("1st Person Camera");');
-    bngApi.sendGameEngine("commandToServer('SetEditorCameraPlayer');"); // camera change if the editor was not loaded before
-    bngApi.sendGameEngine("commandToServer('SetCameraPlayer');"); // camera change if the editor was not loaded before
-    bngApi.sendGameEngine("commandToServer('SetCameraNoBank');"); // camera change if the editor was not loaded before
-    bngApi.sendGameEngine('$mvFreeLook = false;');
-    bngApi.sendGameEngine('$mvRoll = 0;');
-    bngApi.sendGameEngine('$Camera::movementSpeed = ' + $scope.cameraspeed_default + ';');
-    bngApi.sendGameEngine('beamNGsetPhysicsEnabled(true);');
-    bngApi.sendEngineLua('gAutoHideDashboard = true');
+    bngApi.engineScript('EditorGuiStatusBar.setCamera("1st Person Camera");');
+    bngApi.engineScript("commandToServer('SetEditorCameraPlayer');"); // camera change if the editor was not loaded before
+    bngApi.engineScript("commandToServer('SetCameraPlayer');"); // camera change if the editor was not loaded before
+    bngApi.engineScript("commandToServer('SetCameraNoBank');"); // camera change if the editor was not loaded before
+    bngApi.engineScript('$mvFreeLook = false;');
+    bngApi.engineScript('$mvRoll = 0;');
+    bngApi.engineScript('$Camera::movementSpeed = ' + $scope.cameraspeed_default + ';');
+    bngApi.engineScript('beamNGsetPhysicsEnabled(true);');
+    bngApi.engineLua('gAutoHideDashboard = true');
   });
 
 }]);

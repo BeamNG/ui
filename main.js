@@ -224,7 +224,8 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
 
   $window.bngApiCallback = function(idx, result) {
     apiCallbacks[idx](result);
-    apiCallbacks[idx] = undefined;
+    // apiCallbacks[idx] = undefined;
+    delete apiCallbacks[idx];
   };
 
   $window.sendCompleteObjectState = function (value, txt) {
@@ -262,7 +263,8 @@ angular.module('beamng.stuff')
     };
 
     vm.launch = function() {
-      bngApi.sendGameEngine('startLevel("' + vm.selected.misFilePath + '");');
+      // bngApi.sendGameEngine('startLevel("' + vm.selected.misFilePath + '");');
+      bngApi.engineScript('startLevel("' + vm.selected.misFilePath + '");');
     };
 }])
 

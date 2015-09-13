@@ -11,7 +11,7 @@ angular.module('beamng.stuff')
       document.getElementById('buttons').style.display = 'none';
       setTimeout(function() {
         // bn5RacZfbMK4ylCxtjbyixPpEiFwMDNL is the hardcoded support gallery id
-        bngApi.sendEngineLua('screenshot.publish("bn5RacZfbMK4ylCxtjbyixPpEiFwMDNL")');
+        bngApi.engineLua('screenshot.publish("bn5RacZfbMK4ylCxtjbyixPpEiFwMDNL")');
       }, 250);
 
       setTimeout(function () {

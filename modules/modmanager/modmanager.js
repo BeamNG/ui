@@ -83,49 +83,49 @@ angular.module('beamng.stuff')
 
   $scope.deactivateAllMods = function() {
     triggerLoadingScreen(function() {
-      bngApi.sendEngineLua('modmanager.deactivateAllMods()');
+      bngApi.engineLua('modmanager.deactivateAllMods()');
     });
   };
 
   $scope.activateAllMods = function() {
     triggerLoadingScreen(function() {
-      bngApi.sendEngineLua('modmanager.activateAllMods()');
+      bngApi.engineLua('modmanager.activateAllMods()');
     });
   };
 
   $scope.activateMod = function(mod) {
     //console.log('activateMod', mod);
-    bngApi.sendEngineLua('modmanager.activateMod("' + mod.fullpath + '")');
+    bngApi.engineLua('modmanager.activateMod("' + mod.fullpath + '")');
   };
 
   $scope.deactivateMod = function(mod) {
     //console.log('deactivateMod', mod);
-    bngApi.sendEngineLua('modmanager.deactivateMod("' + mod.fullpath + '")');
+    bngApi.engineLua('modmanager.deactivateMod("' + mod.fullpath + '")');
   };
   
   $scope.unpackMod = function(mod) {
     //console.log('unpackMod', mod);
     triggerLoadingScreen(function() {
-      bngApi.sendEngineLua('modmanager.unpackMod("' + mod.fullpath + '")');
+      bngApi.engineLua('modmanager.unpackMod("' + mod.fullpath + '")');
     });
   };
 
   $scope.openInExplorer = function(mod) {
     //console.log('openInExplorer', mod);
-    bngApi.sendEngineLua('modmanager.openEntryInExplorer("' + mod.fullpath + '")');
+    bngApi.engineLua('modmanager.openEntryInExplorer("' + mod.fullpath + '")');
   };
 
 
   $scope.packMod = function(mod) {
     //console.log('packMod', mod);
     triggerLoadingScreen(function() {
-      bngApi.sendEngineLua('modmanager.packMod("' + mod.fullpath + '")');
+      bngApi.engineLua('modmanager.packMod("' + mod.fullpath + '")');
     });
   };
 
   $scope.deleteMod = function(mod) {
     triggerLoadingScreen(function() {
-      bngApi.sendEngineLua('modmanager.deleteMod("' + mod.fullpath + '")');
+      bngApi.engineLua('modmanager.deleteMod("' + mod.fullpath + '")');
     });
   };
 
@@ -182,5 +182,5 @@ angular.module('beamng.stuff')
     onModManagerVehiclesChanged(data);
   });
 
-  bngApi.sendEngineLua('modmanager.requestState()');
+  bngApi.engineLua('modmanager.requestState()');
 }]);

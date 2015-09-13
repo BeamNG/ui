@@ -21,7 +21,7 @@ angular.module('beamng.stuff')
 
   function tsCodeInternal(code) {
     //console.log(code);
-    bngApi.sendGameEngine(code + ';');
+    bngApi.engineScript(code + ';');
   }
 
   function tsCode(code) {
@@ -39,7 +39,7 @@ angular.module('beamng.stuff')
       fakeState.bdebug[property] = value;
       var sendStr = 'guiUpdate(' + bngApi.serializeToLua(fakeState) + ')';
       //console.log(sendStr);
-      bngApi.sendActiveObjectLua(sendStr);
+      bngApi.activeObjectLua(sendStr);
     };
   }
 
@@ -112,11 +112,11 @@ angular.module('beamng.stuff')
 
 
   // initial request
-  bngApi.sendActiveObjectLua('bdebug.requestState()');
+  bngApi.activeObjectLua('bdebug.requestState()');
 
   $scope.$watch('state', function(newVal, oldState) {
     if($scope.justGotNewState || Object.keys($scope.state).length === 0) return false;
     //console.log(bngApi.serializeToLua($scope.state));
-    bngApi.sendActiveObjectLua('bdebug.setState(' + bngApi.serializeToLua($scope.state) + ')');
+    bngApi.activeObjectLua('bdebug.setState(' + bngApi.serializeToLua($scope.state) + ')');
   }, true);
 }]);

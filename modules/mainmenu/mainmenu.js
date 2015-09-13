@@ -12,7 +12,7 @@
 // }])
 angular.module('beamng.stuff')
 
-.controller('MainMenuController', ['$log', '$scope', '$http', '$sce', function($log, $scope, $http, $sce) {
+.controller('MainMenuController', ['$log', '$scope', '$http', '$sce', 'bngApi', function($log, $scope, $http, $sce, bngApi) {
   if ($scope.initialized) {return; } // only run once
   var intervalID;
   $scope.$on('$destroy', function() {
@@ -85,7 +85,7 @@ angular.module('beamng.stuff')
     onHardwareInfo(data);
   });
 
-  beamng.sendEngineLua('hardwareinfo.requestInfo()');
+  bngApi.engineLua('hardwareinfo.requestInfo()');
 
   var images = [
     'modules/mainmenu/1.jpg',

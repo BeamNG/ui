@@ -10,7 +10,7 @@ angular.module('beamng.stuff')
 
   $scope.$watchCollection('environment.state', function (value) {
     $log.debug('state changed to', value);
-    bngApi.sendEngineLua('environment.setState(' + bngApi.serializeToLua(value) + ')');
+    bngApi.engineLua('environment.setState(' + bngApi.serializeToLua(value) + ')');
   });
 
   vm.gravity = {
@@ -34,7 +34,7 @@ angular.module('beamng.stuff')
 
   $scope.$watch('environment.gravity.value', function (value) {
     $log.debug('gravity changed to', value);
-    bngApi.sendSystemLua('setGravity(' + bngApi.serializeToLua(value) + ')');
+    bngApi.systemLua('setGravity(' + bngApi.serializeToLua(value) + ')');
   });
 
   vm.simSpeed = {
@@ -50,7 +50,7 @@ angular.module('beamng.stuff')
 
   $scope.$watch('environment.simSpeed.value', function (value) {
     $log.debug('simulation speed changed to', value);
-    bngApi.sendActiveObjectLua('bullettime.set(' + value + ')');
+    bngApi.activeObjectLua('bullettime.set(' + value + ')');
 
     bngApi.engineLua('environment.getState()', function (data) {
       $log.log('got state from LUA:', data);
@@ -59,13 +59,13 @@ angular.module('beamng.stuff')
   });
 
   vm.requestState = function () {
-    bngApi.sendEngineLua('environment.requestState()');
+    bngApi.engineLua('environment.requestState()');
   };
 
   vm.sendState = function () {
     var stateStr = bngApi.serializeToLua(vm.state);
     console.log('sending state', stateStr);
-    bngApi.sendEngineLua('environment.setState(' + stateStr + ')');
+    bngApi.engineLua('environment.setState(' + stateStr + ')');
   };
 
 

@@ -92,12 +92,12 @@ angular.module('beamng.stuff')
   $scope.bananabenchRunning = false;
 
   $scope.requestHardwareInfo = function() {
-    beamng.sendEngineLua('hardwareinfo.requestInfo()');
+    bngApi.engineLua('hardwareinfo.requestInfo()');
   };
 
   $scope.runPhysicsBenchmark = function() {
     $scope.bananabenchRunning = true;
-    beamng.sendEngineLua('hardwareinfo.runPhysicsBenchmark()');
+    bngApi.engineLua('hardwareinfo.runPhysicsBenchmark()');
   };
 
   var recRefHWPromise = {};
@@ -186,7 +186,7 @@ angular.module('beamng.stuff')
     });
   }
  
-  bngApi.sendEngineLua('settings.requestState()');
+  bngApi.engineLua('settings.requestState()');
 
   function onSettingsChanged(data) {
     $scope.$apply(function() {
@@ -274,7 +274,7 @@ angular.module('beamng.stuff')
 
   $scope.subjects = ['Feedback', 'Problem', 'Performance', 'Other'];
 
-  beamng.sendEngineLua('bindings.requestState()');
+  bngApi.engineLua('bindings.requestState()');
   function actionCategoriesChanged(data) {
     $scope.actionCategories = data;
   }

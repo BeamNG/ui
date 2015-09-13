@@ -20,7 +20,7 @@ angular.module('beamng.stuff')
   function($scope,  $mdColorPalette, bngApi) {
 
 
-  bngApi.sendEngineLua('settings.requestState()');
+  bngApi.engineLua('settings.requestState()');
 
   $scope.FPSLimiterTemp = 0;
   $scope.FPSLimiterEnabled = false;
@@ -74,16 +74,16 @@ angular.module('beamng.stuff')
   
   $scope.$watch('values.devMode', function(isEnabled, wasEnabled) {
     if (isEnabled !== wasEnabled) {
-        beamng.sendEngineLua("bindings.updateDevmodeBlacklist("+(isEnabled?"true":"false")+")");
+        bngApi.engineLua("bindings.updateDevmodeBlacklist("+(isEnabled?"true":"false")+")");
     }
   });
 
   $scope.testSound = function() {
-    bngApi.sendGameEngine('sfxPlayOnce(AudioTestSound);');
+    bngApi.engineScript('sfxPlayOnce(AudioTestSound);');
   }
 
   $scope.openPostFXManager = function() {
-    bngApi.sendGameEngine('Canvas.pushDialog(PostFXManager);');
+    bngApi.engineScript('Canvas.pushDialog(PostFXManager);');
   };
 
   $scope.$on('SettingsChanged', function (event, data) {
@@ -150,7 +150,7 @@ angular.module('beamng.stuff')
 
     $scope.applyingVars = true;
     setTimeout(function() {
-      bngApi.sendEngineLua('settings.setState(' + bngApi.serializeToLua($scope.values) + ')');
+      bngApi.engineLua('settings.setState(' + bngApi.serializeToLua($scope.values) + ')');
       $scope.applyingVars = false;
     }, 500);
   }

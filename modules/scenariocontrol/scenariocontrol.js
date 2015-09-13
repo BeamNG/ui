@@ -24,7 +24,7 @@ angular.module('beamng.stuff')
 
   $scope.play = function() {
     $state.go('menu');
-    bngApi.sendEngineLua('scenarios.onScenarioUIReady()');
+    bngApi.engineLua('scenarios.onScenarioUIReady()');
   };
 
   $scope.$on('ScenarioChange', function (event, data) {
@@ -61,7 +61,7 @@ angular.module('beamng.stuff')
 
   $scope.retry = function() {
     window.location.hash = '#/';
-    bngApi.sendGameEngine('beamNGResetPhysics();');
+    bngApi.engineScript('beamNGResetPhysics();');
   };
 
   $scope.next = function() {

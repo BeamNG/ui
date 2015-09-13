@@ -52,7 +52,7 @@ angular.module('beamng.stuff')
 
   $scope.startScenario = function(scenario) {
     var lua = 'scenarios.start(' + bngApi.serializeToLua(scenario) + ')';
-    bngApi.sendEngineLua(lua);
+    bngApi.engineLua(lua);
     window.location.hash = '#/loading';
   };
 

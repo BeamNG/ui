@@ -1,6 +1,6 @@
 angular.module('beamng.stuff')
-.controller('LoadingController', ['$interval', '$log', '$scope', '$window', function ($interval, $log, $scope, $window) {
-  beamng.sendEngineLua('bindings.requestState()');
+.controller('LoadingController', ['$interval', '$log', '$scope', '$window', 'bngApi', function ($interval, $log, $scope, $window, bngApi) {
+  bngApi.engineLua('bindings.requestState()');
 
   var vm = this;
   vm.progress = { value: 0, text: '' };

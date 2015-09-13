@@ -100,16 +100,16 @@ angular.module('beamng.stuff')
     });
 
     // Initial data load
-    bngApi.sendActiveObjectLua('partmgmt.vehicleResetted()');
+    bngApi.activeObjectLua('partmgmt.vehicleResetted()');
 
     //Highlights the given part
     $scope.selectPart = function(element) { // onmousenter
-      bngApi.sendActiveObjectLua('partmgmt.selectPart("' + element + '")');
+      bngApi.activeObjectLua('partmgmt.selectPart("' + element + '")');
     };
 
     // Deselects everything
     $scope.selectReset = function() { // onmouseleave
-      bngApi.sendActiveObjectLua('partmgmt.selectReset()');
+      bngApi.activeObjectLua('partmgmt.selectReset()');
     };
 
     // Finds the name of the selected value
@@ -138,7 +138,7 @@ angular.module('beamng.stuff')
       var newConfig = generateConfig($scope.d.data);
       // console.log(newConfig)
 
-      bngApi.sendActiveObjectLua('partmgmt.setConfig(' + bngApi.serializeToLua(newConfig) + ')')
+      bngApi.activeObjectLua('partmgmt.setConfig(' + bngApi.serializeToLua(newConfig) + ')')
     };
 
     $scope.resetConfig = function() {
@@ -147,7 +147,7 @@ angular.module('beamng.stuff')
       } else {
         var newConfig = generateConfig(currentConfig);
         // console.log(newConfig)
-        bngApi.sendActiveObjectLua('partmgmt.setConfig(' + bngApi.serializeToLua(newConfig) + ')')
+        bngApi.activeObjectLua('partmgmt.setConfig(' + bngApi.serializeToLua(newConfig) + ')')
       }
     };
 
@@ -286,7 +286,7 @@ angular.module('beamng.stuff')
     $scope.onVehicleChangeColor();
 
     $scope.updateColor = function(val) {
-      bngApi.sendGameEngine('changeVehicleColor("' + val + '");');
+      bngApi.engineScript('changeVehicleColor("' + val + '");');
     };
 
     //Save & Load
@@ -310,11 +310,11 @@ angular.module('beamng.stuff')
 
     $scope.save = function(configFilename) {
       // console.log('save the configuration as: ' + name);
-      bngApi.sendActiveObjectLua('partmgmt.saveLocal("' + configFilename + '.pc")');
+      bngApi.activeObjectLua('partmgmt.saveLocal("' + configFilename + '.pc")');
     };
     $scope.load = function(configFilename) {
       currentConfig = configFilename;
       // console.log('load: ' + configFilename);
-      bngApi.sendActiveObjectLua('partmgmt.loadLocal("' + configFilename + '.pc")');
+      bngApi.activeObjectLua('partmgmt.loadLocal("' + configFilename + '.pc")');
     };
   }]);

@@ -281,7 +281,7 @@ angular.module('beamng.stuff')
         });
       });
 
-      bngApi.sendEngineLua('settings.requestState()');
+      bngApi.engineLua('settings.requestState()');
 
       $scope.toIntVal = function(val, div) {
         div = div || true;
@@ -298,7 +298,7 @@ angular.module('beamng.stuff')
 
       function updatePreStor() {
         $scope.values.userColorPresets = JSON.stringify($scope.presets.user);
-        bngApi.sendEngineLua('settings.setState(' + bngApi.serializeToLua($scope.values) + ')');
+        bngApi.engineLua('settings.setState(' + bngApi.serializeToLua($scope.values) + ')');
       }
 
       $scope.addPreset = function() {
