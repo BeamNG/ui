@@ -3,6 +3,13 @@ angular.module('beamng.stuff')
   /**
    * @ngdoc service
    * @name  beamng.stuff:Vehicles
+   * @requires $log
+   * @requires $q
+   * @requires $rootScope
+   * @requires $timeout
+   * @requires beamng.stuff:bngApi
+   * @requires beamng.stuff:InstalledMods
+   *
    * @description Handles all vehicles-related stuff
   **/
   .service('Vehicles', ['$log', '$q', '$rootScope', '$timeout', 'bngApi', 'InstalledMods', 
@@ -11,8 +18,8 @@ angular.module('beamng.stuff')
        
         /**
          * @ngdoc method
-         * @name  populate
-         * @methodOf beamng.stuff:Vehicles
+         * @name  .#populate
+         * @methodOf .
          * @description Retrieves all the available vehicles using the Lua interface and 
          *              stores the result into InstalledMods.vehicles
          * @returns {promise}
@@ -39,6 +46,29 @@ angular.module('beamng.stuff')
 
         /**
          * @ngdoc method
+         * @name .#colorStringToRgba
+         * @methodOf .
+         * @param {string} colorString A color string parsed by BeamNG's game engine.
+         *
+         * @description
+         * Utility function that converts a color string parsed by the game engine 
+         * to rgba format for all other uses.
+         *
+         * @returns {string} A CSS-readable rgba format equivalent string.
+        **/
+        colorStringToRgba:  function (colorString) {
+          console.log('getting string:', colorString);
+          var values = colorString.split(' ').map(function (x) { return parseFloat(x); });
+          var r = Math.round(255*values[0])
+            , g = Math.round(255*values[1])
+            , b = Math.round(255*values[2])
+            , a = values[3] / 2.0;
+
+          return 'rgba(' + [r, g, b, a].join(',') + ')';
+        },
+
+        /**
+         * @ngdoc method
          * @name addToGame
          * @methodOf beamng.stuff:Vehicles
          * @description Adds a new vehicle to the game
@@ -58,7 +88,6 @@ angular.module('beamng.stuff')
             else color = '';
           }
 
-          // if (spawnNew) bngApi.sendGameEngine('spawnVehicle();');
           if (spawnNew) bngApi.engineScript('spawnVehicle();');
 
           $log.info('launching vehicle %o', { model: model, pcFile: pcFile, color: color, spawnNew: spawnNew });
@@ -70,65 +99,12 @@ angular.module('beamng.stuff')
           }, 2000);
           
           setTimeout(function () {
-            // bngApi.sendGameEngine('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');
             bngApi.engineScript('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');
           }, 200);
         }
       };
   }])
 
-
-  //   var service = {
-
-  //     getModels: function () {
-  //       var d = $q.defer();
-
-  //       bngApi.engineLua('vehicles.getVehicleList()', function (response) {
-  //         if (response) {
-  //           VehiclesInfo.index = response.index;
-  //           VehiclesInfo.list  = response.list;
-  //           for (var f in response.filters) {
-  //             if (VehicleFilters.filters[f]) {
-  //               continue;
-  //             } else {
-  //               VehicleFilters.filters[f] = response.filters[f];
-  //             }
-  //           }
-  //         }
-
-  //         d.resolve();
-  //       });
-
-  //       return d.promise;
-  //     },
-
-  //     addToGame: function (model, config, color, spawnNew, parentScope) {
-  //       var d = $q.defer()
-  //         , pcFile = ['vehicles', model.key, config || model['default_pc'] || ''].join('/') + '.pc';
-
-  //       if (model['colors'])
-  //         color = color || model['colors'][ model['default_color'] ] || '';
-  //       else
-  //         color = color || '';
-
-  //       $location.path('');
-  //       parentScope.appEnginePadding = 0;
-  //       parentScope.fullScreenLoadingIndicator = true;
-
-  //       console.log('pcFile:', pcFile);
-  //       $timeout(function () {
-  //         if (spawnNew) bngApi.sendGameEngine('spawnVehicle();');
-  //         bngApi.sendGameEngine('chooseVehicle("' + model.key + '", "' + pcFile + '", "' + color + '");');
-  //         parentScope.fullScreenLoadingIndicator = false;
-  //         d.resolve();
-  //       }, 400);
-
-  //       return d.promise;
-  //     }
-  //   };
-
-  //   return service;
-  // }])
 
   /**
    * @ngdoc controller
@@ -146,20 +122,23 @@ angular.module('beamng.stuff')
     vm.selectedColor  = '';
     vm.detailsKeys    = Object.keys(InstalledMods.vehicles.filters);
 
-    vm.selectConfig = function (config) {
+    vm.selectConfig = function (config, launch) {
       for (var property in vm.model.configs[config])
         vm.selectedConfig[property] = vm.model.configs[config][property];
       vm.selectedConfig.key = config; // This is originally the key of the *model*, we need configuration related info.
       
-      if (vm.selectedConfig['default_color'])
+      if (vm.selectedConfig['default_color']) {
         vm.selectedColor = vm.model['colors'][ vm.selectedConfig['default_color'] ];
+        console.log('getting default color', vm.selectedColor);
+      }
       
       $log.debug('selected configuration %s: %o', config, vm.selectedConfig);
+
+      if (launch) vm.launchConfig(false);
     };
 
-    vm.launchConfig = function (config, spawnNew) {
-      vm.selectConfig(config);
-      Vehicles.addToGame(vm.model, config, vm.selectedColor, spawnNew);
+    vm.launchConfig = function (spawnNew) {
+      Vehicles.addToGame(vm.model, vm.selectedConfig, vm.selectedColor, spawnNew);
     };
 
     if (vm.model['default_pc']) vm.selectConfig(vm.model['default_pc']);
@@ -232,135 +211,3 @@ angular.module('beamng.stuff')
       console.log(vm.data);
     };
   }])
-
-
-
-
-
-  .directive('vehicleFilter', function () {
-    return {
-      restrict: 'E',
-      templateUrl: 'modules/vehicleselect/vehicle-filter.html',
-      scope: {
-        title: '@',
-        items: '=',
-        defaultOpen: '@'
-      },
-      replace: true,
-      controller: ['$scope', '$attrs', function ($scope, $attrs) {
-        // $scope.showContents = $scope.$eval($attrs.defaultOpen);
-        $scope.showContents = $scope.$eval($scope.defaultOpen);
-        $scope.toggleContents = function () {
-          $scope.showContents = !$scope.showContents;
-        };
-      }]
-    };
-  })
-
-
-
-
-
-
-
-  // .controller('VehicleDetailsController', 
-  //       ['$location', '$scope', '$routeParams', '$timeout', 'bngApi', 'Vehicles', 'VehicleFilters', 'VehiclesInfo',
-  //   function ($location, $scope, $routeParams, $timeout, bngApi, Vehicles, VehicleFilters, VehiclesInfo) {
-  //   /* COMPATIBILITY W/ HELL */
-  //   // set up the display
-  //   $scope.selectedMenu = '#/vehicleselect';  // This should not have any meaning. Does it??
-  //   $scope.$parent.showDashboard = true;      // Accessing parent scope???? Super-dangerous! This should be handled by an independent service (if at all)
-  //   $scope.$parent.appEnginePadding = $scope.$parent.menuWidth; // It will go away eventually, but really?
-  //   $scope.navClass = 'deletemeplease';
-  //   /* --------------------- */
-
-  //   var vm = this;
-
-  //   vm.info       = VehiclesInfo.list[ VehiclesInfo.index[$routeParams.modelName] ];
-  //   vm.hasConfigs = Object.keys(vm.info.configs).length > 1
-  //   vm.selected   = {};
-
-  //   vm.vehicleColor = {
-  //     name: '',
-  //     value: ''
-  //   };
-
-  //   vm.tableKeys = Object.keys(VehicleFilters.filters);
-  //   var yearsIndex = vm.tableKeys.indexOf('Years');
-  //   if (yearsIndex > -1) vm.tableKeys.splice(yearsIndex, 1);
-
-  //   // ------------------- CONFIG SELECTION ------------------------------------
-
-  //   var tileClicks = 0;
-
-  //   vm.selectConfig = function (config) {
-  //     tileClicks += 1;
-
-  //     console.log('selecting', config);
-  //     vm.selected = angular.copy( vm.info.configs[config] || vm.info );
-  //     vm.selected.key = config;
-  //     if (vm.selected.hasOwnProperty('default_color'))
-  //       vm.vehicleColor = { name: vm.selected['default_color'], value: vm.info.colors[ vm.selected['default_color'] ] };
-
-  //     if (tileClicks == 1) {
-  //       $timeout(function () {
-  //         if(tileClicks > 1)
-  //           vm.applySelection(false);
-  //         tileClicks = 0;
-  //       }, 300);
-  //     }
-
-  //   };
-
-  //   vm.applySelection = function (spawnNew) {
-  //     console.log('spawning', vm.selected.key);
-  //     Vehicles.addToGame(vm.info, vm.selected.key, vm.vehicleColor.value, spawnNew, $scope.$parent);
-  //   }
-
-  //   vm.backToModels = function () {
-  //     $location.path('/vehicleselect');
-  //   };
-
-  //   // ------------------- COLOR SELECTION ------------------------------------
-
-  //   vm.editColor = false; // Let the users define their own colors
-
-  //   vm.selectColor = function (colorKey) {
-  //     vm.vehicleColor.name  = colorKey;
-  //     vm.vehicleColor.value = vm.info['colors'][colorKey];
-  //   };
-
-  //   // Called when the preset-colors select is opened.
-  //   // Must have a $timeout wrapper for some reason (probably fixed in later versions).
-  //   vm.getPresetColor = function () {
-  //     return $timeout(function () {
-  //       vm.editColor = false;
-  //     }, 0);
-  //   };
-
-
-  //   if (vm.info.colors) {
-  //     $scope.$watch(function () {
-  //       return vm.vehicleColor.value;
-  //     }, function (newVal, oldVal) {
-  //       if (vm.editColor && newVal != oldVal)
-  //         vm.vehicleColor.name = 'Custom';
-  //     });
-  //   }
-
-
-  //   vm.colorStringToRgba = function (colorString) {
-  //     var values = colorString.split(' ').map(function (x) { return parseFloat(x); });
-  //     var r = Math.round(255*values[0])
-  //       , g = Math.round(255*values[1])
-  //       , b = Math.round(255*values[2])
-  //       , a = values[3] / 2.0;
-
-  //     return 'rgba(' + [r, g, b, a].join(',') + ')';
-  //   };
-
-  //   // run on load: have the default configuration pre-selected
-  //   vm.selectConfig(vm.info['default_pc'] || '');
-
-  // }]);
-

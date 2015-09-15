@@ -13,11 +13,11 @@
           md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3"
           md-row-height-gt-md="25:12" md-row-height="25:12"
           md-gutter="4px" md-gutter-gt-sm="4px">
-      <md-grid-tile ng-repeat="(key, config) in ::vehicle.model.configs" ng-click="vehicle.selectConfig(key)">
+      <md-grid-tile ng-repeat="(key, config) in ::vehicle.model.configs" ng-click="vehicle.selectConfig(key, false)">
         <img src="/{{ ::config.preview }}" style="width: 100%;height: 100%;"></img>
         <md-grid-tile-footer>
           <h3>{{ ::config['Configuration'] || 'Default' }}</h3>
-          <button class="md-icon-button md-button bng-tile-button-secondary" ng-click="vehicle.launchConfig(key, false)">
+          <button class="md-icon-button md-button bng-tile-button-secondary" ng-click="vehicle.selectConfig(key, true)">
             <md-icon class="material-icons" style="color: white">play_arrow</md-icon>
           </button>
         </md-grid-tile-footer>
@@ -62,7 +62,7 @@
   </md-tabs>
 
   <div layout="row">
-    <md-button flex class="md-warn" ng-click="vehicle.launchConfig(vehicle.selectedConfig.key, true)">Spawn New</md-button>
-    <md-button flex class="md-primary" ng-click="vehicle.launchConfig(vehicle.selectedConfig.key, false)">Replace Current</md-button>
+    <md-button flex class="md-warn" ng-click="vehicle.launchConfig(true)">Spawn New</md-button>
+    <md-button flex class="md-primary" ng-click="vehicle.launchConfig(false)">Replace Current</md-button>
   </div>
 </md-content>
