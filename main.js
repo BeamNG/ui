@@ -117,8 +117,54 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
 
     .state('menu.controls', {
       url: '/controls',
-      templateUrl: 'modules/options/options.html',
-      controller: 'OptionsController'
+      templateUrl: 'modules/options/controls.html',
+      controller: 'ControlsController as controls',
+      resolve: {
+        initialize: ['$q', '$rootScope', 'bngApi', 'controlsContents', function ($q, $rootScope, bngApi, controlsContents) {
+          bngApi.engineLua('bindings.requestState()');
+          
+          var acPromise = $q.defer()
+            , aPromise  = $q.defer()
+            , btPromise = $q.defer()
+            , bPromise  = $q.defer();
+
+          $rootScope.$on('ActionCategoriesChanged', function (event, data) {
+            controlsContents.actionCategories = data;
+            acPromise.resolve();
+          });
+
+          $rootScope.$on('ActionsChanged', function (event, data) {
+            controlsContents.actions = data;
+            aPromise.resolve();
+          });
+
+          $rootScope.$on('BindingTemplatesChanged', function (event, data) {
+            controlsContents.bindingTemplates = data;
+            btPromise.resolve();
+          });
+
+          $rootScope.$on('BindingsChanged', function (event, data) {
+            for (var device in data) {
+              switch (data[device].devname.slice(0, 3)) {
+              case 'key':
+                data[device].icon = 'keyboard';
+                break;
+              case 'mou':
+                data[device].icon = 'mouse';
+                break;
+              default:
+                data[device].icon = 'gamepad';
+                break;
+              }
+            }
+
+            controlsContents.bindings = data;
+            bPromise.resolve();
+          })
+
+          return $q.all([acPromise, aPromise, btPromise, bPromise]);
+        }]
+      }
     })
 
     .state('menu.debug', {
@@ -295,7 +341,8 @@ angular.module('beamng.stuff')
       { translateid: 'dashboard.options',     icon: 'tune',           state: 'menu.options'    },
       { translateid: 'dashboard.debug',       icon: 'bug_report',     state: 'menu.debug'      },
       { translateid: 'dashboard.feedback',    icon: 'gesture',        state: 'feedback'   },
-      { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.apps'       },
+      // { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.apps'       },
+      { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.controls'       },
       { translateid: 'dashboard.photomode',   icon: 'photo_camera',   state: 'photomode'       },
       { translateid: 'dashboard.credits',     icon: 'people',         state: 'credits'         },
       { translateid: 'dashboard.vehicleconfig', icon: 'settings_applications', state: 'menu.vehicleconfig' },
