@@ -60,13 +60,35 @@
 
     <md-list-item>
       <p>Device</p>
-      <div class="md-secondary">{{ controls.editing.devName }}</div>
+      <span class="md-secondary">{{ controls.editing.devName }}</span>
     </md-list-item>
+
+    <md-list-item>
+      <p>Control</p>
+      <span class="md-secondary">{{ controls.editing.message }}</span>
   </md-list>
 
-  <center flex>{{ controls.editing.message }}</center>
+  <div flex>
+    <md-card class="md-whiteframe-z3">
+      <div class="md-card-image" layout="row" align-layout="center center">
+        <md-icon class="material-icons" style="font-size:72px; color: rgb(228, 10, 10)">not_interested</md-icon>
+        <h3 style="text-align: center">
+          Control is already assigned
+        </h3>
+      </div>
+      <md-divider></md-divider>
+      <md-card-content>
+        <h2 class="md-title">Current Action</h2>
+        <p>Parking Brake</p>
+      </md-card-content>
+      <div class="md-actions" layout="row" layout-align="end center">
+        <md-button md-no-ink>Cancel</md-button>
+        <md-button class="md-primary" md-no-ink>Override</md-button>
+      </div>
+    </md-card>
+  </div>
 
-  <md-subheader>
-    Last Detected  <span class="md-primary">{{ controls.lastInput }}</span>
+  <md-subheader class="md-warn">
+    Last Detected: {{ controls.lastInput }}
   </md-subheader>
 </md-content>

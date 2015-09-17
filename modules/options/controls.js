@@ -1,67 +1,5 @@
 angular.module('beamng.stuff')
 
-/**
- * @ngdoc service
- * @name  beamng.stuff:RateLimiter
- *
- * @description Limits the rate of function calls by means of throttling or
- *              debouncing. Essentially the two functions of the service are
- *              (simplified) copies of {@link http://underscorejs.org/ underscore}
- *              library implementations.
- *
- * @note These are _not_ Angular ports of underscore's functions. This
- *       means that scope digests should be called manually (if at all).
- */
-.service('RateLimiter', function () {
-  return {
-    
-    // underscore.js debounce utility, partially rewritten as seen in
-    // http://davidwalsh.name/function-debounce
-    debounce: function (func, wait, immediate) {
-      var timeout;
-      return function () {
-        var context = this, args = arguments;
-        var later = function () {
-          timeout = null;
-          if (!immediate) func.apply(context, args);
-        };
-        var callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-      };
-    },
-
-    // underscore.js debounce utility, partially rewritten as seen in
-    // http://briantford.com/blog/huuuuuge-angular-apps
-    throttle: function (func, wait) {
-      var context, args, timeout, result;
-      var previous = 0;
-      var later = function () {
-        previous = new Date();
-        timeout = null;
-        result = func.apply(context, args);
-      };
-      return function () {
-        var now = new Date();
-        var remaining = wait - (now - previous);
-        context = this;
-        args = arguments;
-        if (remaining <= 0) {
-          clearTimeout(timeout);
-          timeout = null;
-          previous = now;
-          result = func.apply(context, args);
-        } else if (!timeout) {
-          timeout = setTimeout(later, remaining);
-        }
-        return result;
-      }
-    }
-  };
-})
-
-
 
 
 /**
@@ -121,12 +59,19 @@ function ($log, $scope, bngApi, controlsContents, RateLimiter, controls_init) {
     key: ['no', 'keypress']
   };
 
-  vm.editing = angular.copy(editingTmpl);
 
+  // This is used as a helper variable which gives its value to a
+  // newly assigned control. We don't make the assignment directly
+  // from the input data because of the possibly high rate, i.e. it
+  // helps us ignore incoming raw input data passing through *after*
+  // the desired control is found.
+  var triggered = null;
 
   vm.editActionBinding = function (action, devname) {
+    vm.editing = angular.copy(editingTmpl);
     vm.editing.state = true;
     vm.editing.action = action;
+    triggered = null;
     console.log('editing action:', action, 'for device', devname);
     vm.editing.devName = devname;
     
@@ -139,13 +84,6 @@ function ($log, $scope, bngApi, controlsContents, RateLimiter, controls_init) {
 
 
   vm.lastInput = '';
-
-  // This is used as a helper variable which gives its value to a
-  // newly assigned control. We don't make the assignment directly
-  // from the input data because of the possibly high rate, i.e. it
-  // helps us ignore incoming raw input data passing through *after*
-  // the desired control is found.
-  var triggered = null;
 
   $scope.$on('RawInputChanged', function (event, data) {
 
@@ -195,7 +133,7 @@ function ($log, $scope, bngApi, controlsContents, RateLimiter, controls_init) {
         // are a perfect example). The criterion is if there is *enough* motion in a given
         // direction.
         for (axis in vm.editing.axis) {
-          valid = Math.abs(vm.editing.axis[axis].end - vm.editing.axis[axis].start) > 0.1;
+          valid = Math.abs(vm.editing.axis[axis].end - vm.editing.axis[axis].start) > 0.4;
           if (valid) {
             bngApi.engineScript('disableUIControlForwarding();');
             triggered = angular.copy(data);

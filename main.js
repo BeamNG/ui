@@ -144,7 +144,6 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
           });
 
           var bc = $rootScope.$on('BindingsChanged', function (event, data) {
-            console.log('BC!!!!');
             for (var device in data) {
               switch (data[device].devname.slice(0, 3)) {
               case 'key':
@@ -158,7 +157,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
                 break;
               }
             }
-            
+
             controlsContents.bindings = data;
             bPromise.resolve();
           });
@@ -166,7 +165,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
           // pass the listeners to the controller, so they can be deregistered
           return $q.all([acPromise, aPromise, btPromise, bPromise])
           .then(function () {
-            return [ac, btc, bc, acc];
+            return [acc, ac, btc, bc];
           });
         }]
       }
@@ -300,6 +299,88 @@ angular.module('beamng.stuff')
   apps: []
 })
 
+
+/**
+ * @ngdoc service
+ * @name  beamng.stuff:RateLimiter
+ *
+ * @description 
+ * Limits the rate of function calls by means of throttling or
+ * debouncing. Essentially the two functions of the service are
+ * (simplified) copies of {@link http://underscorejs.org/ underscore}
+ * library implementations.
+ *
+ * @note 
+ * These are _not_ Angular ports of underscore's functions. This
+ * means that scope digests should be called manually (if at all).
+ */
+.service('RateLimiter', function () {
+  return {
+    
+    /**
+     * @ngdoc method
+     * @name .#debounce
+     * @methodOf .
+     * @param {function} func The function to be debounced
+     * @param {int} wait Time in milliseconds to allow between successive calls.
+     * @param {boolean} immediate Whether to allow first function call
+     *
+     * @description 
+     * underscore.js debounce utility, partially rewritten as
+     * seen in {@link http://davidwalsh.name/function-debounce}
+    **/
+    debounce: function (func, wait, immediate) {
+      var timeout;
+      return function () {
+        var context = this, args = arguments;
+        var later = function () {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    },
+
+    /**
+     * @ngdoc method
+     * @name .#throttle
+     * @methodOf .
+     * @param {func} The function to throttle
+     * @param {int} wait Number of milliseconds between successive calls.
+     *
+     * @description
+     * underscore.js debounce utility, partially rewritten as seen
+     * in {@link http://briantford.com/blog/huuuuuge-angular-apps}
+    **/
+    throttle: function (func, wait) {
+      var context, args, timeout, result;
+      var previous = 0;
+      var later = function () {
+        previous = new Date();
+        timeout = null;
+        result = func.apply(context, args);
+      };
+      return function () {
+        var now = new Date();
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0) {
+          clearTimeout(timeout);
+          timeout = null;
+          previous = now;
+          result = func.apply(context, args);
+        } else if (!timeout) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result;
+      }
+    }
+  };
+})
 
 
 .controller('LevelSelectController',  ['$location', 'bngApi', 'InstalledMods', function($location,  bngApi,  InstalledMods) {
