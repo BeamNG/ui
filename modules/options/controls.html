@@ -1,0 +1,72 @@
+ <md-content style="width:400px; height: 100%;" layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span flex>Controls</span>
+    </div> 
+  </md-toolbar>
+
+  <md-list-item>
+    <md-checkbox ng-model="controls.showAdvanced"></md-checkbox>
+    <p>Show Advanced</p>
+  </md-list-item>
+
+  <md-divider></md-divider>
+
+  <v-accordion class="vAccordion--default" style="overflow-y: auto" layout-padding>
+    <v-pane ng-repeat="(categoryKey, category) in ::controls.categories">
+      <v-pane-header>
+        <md-icon class="material-icons">{{ ::category.icon }}</md-icon>
+        {{ ::category.title }}
+      </v-pane-header>
+      
+      <v-pane-content>
+        <md-list>
+          <md-list-item ng-repeat="(actionKey, action) in ::controls.actions"  class="md-2-line"
+               ng-if="::action.cat == categoryKey" ng-show="action.isBasic || controls.showAdvanced">
+            <div class="md-list-item-text">
+              <h3>{{ ::action.title }}</h3>
+              <div ng-repeat="device in controls.bindings" style="margin-right: 25px;" layout="row" layout-wrap>
+                <span ng-repeat="binding in device.contents.bindings | filter: {'action': actionKey}"
+                      ng-click="controls.editActionBinding(action.title, device.devname)" class="bng-binding">
+                  <md-icon class="material-icons bng-binding-icon">{{ ::device.icon }}</md-icon> 
+                  {{ binding.control | uppercase }}
+                </span>
+                <md-divider></md-divider>
+              </div>
+              <md-icon class="md-secondary material-icons md-accent" 
+              ng-click="controls.editActionBinding(action.title, null)">
+                add_circle
+              </md-icon>
+            </div>
+          </md-list-item>
+        </md-list>
+      </v-pane-content>
+    </v-pane>
+  </v-accordion>
+</md-content>
+
+<md-content layout="column" ng-if="controls.editing.state" style="width: 300px; margin-left: 5px">
+  <md-toolbar class="md-hue-1">
+    <div class="md-toolbar-tools">
+      <span flex>Edit Binding</span>
+    </div> 
+  </md-toolbar>
+
+  <md-list>
+    <md-list-item>
+      <p>Action</p>
+      <span class="md-secondary">{{ controls.editing.action }}</span>
+    </md-list-item>
+
+    <md-list-item>
+      <p>Device</p>
+      <div class="md-secondary">{{ controls.editing.devName }}</div>
+    </md-list-item>
+  </md-list>
+
+  <center flex>{{ controls.editing.message }}</center>
+
+  <md-subheader>
+    Last Detected  <span class="md-primary">{{ controls.lastInput }}</span>
+  </md-subheader>
+</md-content>

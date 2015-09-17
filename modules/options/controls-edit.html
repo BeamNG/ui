@@ -1,0 +1,16 @@
+<md-content layout="column" style="width:100px">
+  <md-toolbar>
+    <div class="md-toolbar-tools md-hue-2">
+      <md-button class="md-icon-button md-default" aria-label="Back" ng-click="backToTop()">
+        <ng-md-icon icon="arrow_back" style="fill:white"></ng-md-icon>
+      </md-button>
+      <span flex>Edit Binding</span>
+      
+      <md-icon class="material-icons" md-font-icon="play">play</md-icon>
+    </div> 
+  </md-toolbar>
+  <div flex>{{ controls.bindings }}</div>
+
+  <md-button ng-click="controls.start()">start</md-button>
+  <md-button ng-click="controls.stop()" ui-sref="menu.controls">stop</md-button>
+</md-content>
