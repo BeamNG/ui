@@ -120,7 +120,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
       templateUrl: 'modules/options/controls.html',
       controller: 'ControlsController as controls',
       resolve: {
-        initialize: ['$q', '$rootScope', 'bngApi', 'controlsContents', function ($q, $rootScope, bngApi, controlsContents) {
+        controls_init: ['$q', '$rootScope', 'bngApi', 'controlsContents', function ($q, $rootScope, bngApi, controlsContents) {
           bngApi.engineLua('bindings.requestState()');
           
           var acPromise = $q.defer()
@@ -128,22 +128,23 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
             , btPromise = $q.defer()
             , bPromise  = $q.defer();
 
-          $rootScope.$on('ActionCategoriesChanged', function (event, data) {
+          var acc = $rootScope.$on('ActionCategoriesChanged', function (event, data) {
             controlsContents.actionCategories = data;
             acPromise.resolve();
           });
 
-          $rootScope.$on('ActionsChanged', function (event, data) {
+          var ac = $rootScope.$on('ActionsChanged', function (event, data) {
             controlsContents.actions = data;
             aPromise.resolve();
           });
 
-          $rootScope.$on('BindingTemplatesChanged', function (event, data) {
+          var btc = $rootScope.$on('BindingTemplatesChanged', function (event, data) {
             controlsContents.bindingTemplates = data;
             btPromise.resolve();
           });
 
-          $rootScope.$on('BindingsChanged', function (event, data) {
+          var bc = $rootScope.$on('BindingsChanged', function (event, data) {
+            console.log('BC!!!!');
             for (var device in data) {
               switch (data[device].devname.slice(0, 3)) {
               case 'key':
@@ -157,12 +158,16 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
                 break;
               }
             }
-
+            
             controlsContents.bindings = data;
             bPromise.resolve();
-          })
+          });
 
-          return $q.all([acPromise, aPromise, btPromise, bPromise]);
+          // pass the listeners to the controller, so they can be deregistered
+          return $q.all([acPromise, aPromise, btPromise, bPromise])
+          .then(function () {
+            return [ac, btc, bc, acc];
+          });
         }]
       }
     })
@@ -270,7 +275,6 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
 
   $window.bngApiCallback = function(idx, result) {
     apiCallbacks[idx](result);
-    // apiCallbacks[idx] = undefined;
     delete apiCallbacks[idx];
   };
 
@@ -309,15 +313,14 @@ angular.module('beamng.stuff')
     };
 
     vm.launch = function() {
-      // bngApi.sendGameEngine('startLevel("' + vm.selected.misFilePath + '");');
       bngApi.engineScript('startLevel("' + vm.selected.misFilePath + '");');
     };
 }])
 
 
 
-.controller('AppCtrl', ['$document', '$log', '$scope', '$state', '$mdToast', 'bngApi', '$translate',
-  function($document, $log, $scope, $state, $mdToast, bngApi, $translate) {  
+.controller('AppCtrl', ['$document', '$log', '$scope', '$state', '$translate', '$mdToast', 'bngApi',
+  function($document, $log, $scope, $state, $translate, $mdToast, bngApi) {  
   var vm = this;
 
   vm.showMenu = true;
@@ -340,28 +343,17 @@ angular.module('beamng.stuff')
       { translateid: 'dashboard.vehicles',    icon: 'directions_car', state: 'menu.vehicles'   },
       { translateid: 'dashboard.options',     icon: 'tune',           state: 'menu.options'    },
       { translateid: 'dashboard.debug',       icon: 'bug_report',     state: 'menu.debug'      },
-      { translateid: 'dashboard.feedback',    icon: 'gesture',        state: 'feedback'   },
-      // { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.apps'       },
-      { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.controls'       },
+      { translateid: 'dashboard.feedback',    icon: 'gesture',        state: 'feedback'        },
+      { translateid: 'dashboard.apps',        icon: 'apps',           state: 'menu.apps'       },
+      { translateid: 'dashboard.controls',    icon: 'gamepad',        state: 'menu.controls'   },
       { translateid: 'dashboard.photomode',   icon: 'photo_camera',   state: 'photomode'       },
       { translateid: 'dashboard.credits',     icon: 'people',         state: 'credits'         },
       { translateid: 'dashboard.vehicleconfig', icon: 'settings_applications', state: 'menu.vehicleconfig' },
-      { translateid: 'dashboard.help',        icon: 'help', state: 'menu.help' },
-      { translateid: 'dashboard.mods',        icon: 'shop', state: 'menu.mods' },
-      { translateid: 'dashboard.mainmenu',        icon: 'collections', state: 'menu.mainmenu' },
-      // { translateid: 'dashboard.controls', icon: 'games', state: 'menu.controls' }
+      { translateid: 'dashboard.help',          icon: 'help',        state: 'menu.help' },
+      { translateid: 'dashboard.mods',          icon: 'shop',        state: 'menu.mods' },
+      { translateid: 'dashboard.mainmenu',      icon: 'collections', state: 'menu.mainmenu' }
     ]
   };
-
-  $scope.$on('XIControllerChanged', function (event, data) {
-    $log.debug('[AppCtrl] received XIControllerChanged', data);
-    $mdToast.show(
-      $mdToast.simple()
-      .content('XBox controller (dis)connected.')
-      .position('top right')
-      .hideDelay(5000)
-    );
-  });
 
   // **************************************************************************
   // // language switching tests

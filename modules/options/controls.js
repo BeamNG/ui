@@ -91,9 +91,13 @@ angular.module('beamng.stuff')
  *
  * @description
 **/
-.controller('ControlsController', ['$log', '$scope', 'bngApi', 'controlsContents', 'RateLimiter',
-function ($log, $scope, bngApi, controlsContents, RateLimiter) {
+.controller('ControlsController', ['$log', '$scope', 'bngApi', 'controlsContents', 'RateLimiter', 'controls_init',
+function ($log, $scope, bngApi, controlsContents, RateLimiter, controls_init) {
   var vm = this;
+  
+  for (var promise in controls_init) {
+    controls_init[promise]();
+  }
 
   // Timeout used for starting input detection. Remember to cancel
   // this on the $destroy event! If the view is discarded fast enough
