@@ -231,7 +231,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
   .state('credits', {
     url: '/credits',
     templateUrl: 'modules/credits/credits.html',
-    controller: 'CreditsController'
+    controller: 'CreditsController as credits'
   });
 
   $urlRouterProvider.otherwise('/menu');

@@ -3,6 +3,13 @@
   src: url(common/Roboto-Regular.ttf);
 }
 
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 300;
+  src: url(common/RobotoCondensed-Regular.ttf);
+}
+
 html, body {
   background: none;
   -webkit-user-select: none;
@@ -315,8 +322,47 @@ v-pane-content > div { -webkit-transition: none!important; transition: none!impo
 .bng-binding {
   border-radius: 25px;
   background: rgb(250,250,250);
-  /*border: solid 2px rgb(224, 224, 224);*/
   margin: 5px;
   padding:  0 10px 0 10px;
   font-size: 1rem;
+}
+
+/* -=-=-=--=-=-=-=-=-=-=-=-=-=-=--=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+   ------------------------ [ Credits ] -------------------------------
+   -=-=-=--=-=-=-=-=-=-=-=-=-=-=--=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+@-webkit-keyframes bng-credits-roll {
+  0%   { top: 100%;    }
+  100% { top: -3600px; }
+}
+
+#bng-credits-wrapper {
+  width:100%;
+  height: 100%;
+  background: radial-gradient(ellipse at top left, #334455 0%, #000 100%);
+  text-align: center;
+}
+
+.bng-credits-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  font-family: Roboto Condensed;
+  text-transform: uppercase;
+  color: #fff;
+  -webkit-animation: 90s bng-credits-roll linear;
+}
+
+.bng-credits-content job {
+  display:block;
+  margin-top: 120px;
+  margin-bottom: 25px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.bng-credits-content name {
+  display:block;
+  margin-bottom: 8px;
+  font-size: 24px;
 }
