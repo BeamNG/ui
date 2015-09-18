@@ -47,7 +47,7 @@
 
   <script src="modules/apps/app-container.js"></script>
   <script src="modules/apps/Tacho2/app.js"></script>
-
+  <script src="modules/apps/Winds/app.js"></script>
   <script src="modules/apps/ForceFeedbackGraph/app.js"></script>
 
   <link type="text/css" rel="stylesheet" href="main.css">
@@ -82,9 +82,10 @@
 
   <body ng-controller="AppCtrl as app">
     <!-- <app-container style="border: solid black; box-sizing: border-box">
-        <force-feedback-graph style="border: solid orange; position: absolute; top: 10px; left: 120px"></force-feedback-graph>
+      <force-feedback-graph style="border: solid orange; position: absolute; top: 10px; left: 120px"></force-feedback-graph>
+      <winds></winds>
     </app-container> -->
-    
+
     <!--  .............. waiting screen overlay ..............  -->
     <div ng-if="app.isWaiting" style="width:100%; height:100%; background: rgba(0, 0, 0, 0.6)" layout="row" layout-align="center center">
       <ng-md-icon class="material-icons" style="font-size: 20rem; color: white; text-shadow: -1px 1px 8px #DB7B00, 1px -1px 8px #DB7B00;">
