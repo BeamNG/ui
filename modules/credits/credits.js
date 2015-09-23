@@ -116,8 +116,8 @@ angular.module('beamng.stuff')
  * @description
  * Basic controller for the credits scene
 **/
-.controller('CreditsController', ['$log', '$scope', '$state', 'Contributors',
-function($log, $scope, $state, Contributors) {
+.controller('CreditsController', ['$log', '$scope', '$state', '$timeout', 'Contributors',
+function($log, $scope, $state, $timeout, Contributors) {
   document.getElementById('bng-credits-wrapper').focus();
 
   var vm = this;
@@ -129,13 +129,14 @@ function($log, $scope, $state, Contributors) {
     $state.go('menu'); 
   };
 
-  var forceExitTimeout = setTimeout(function () { 
-    $log.debug('[CreditsController] forceExit timeout fired.');
-    vm.exit();
-  }, 100000);
+  document.getElementsByClassName('bng-credits-content')[0].addEventListener('webkitAnimationEnd', function() {
+      vm.timeOutPromise = $timeout(function() {
+        vm.exit();
+      }, 500);
+    });
 
   $scope.$on('$destroy', function () {
-    $log.debug('[CreditsController] destroyed. Clearing timeout %o', forceExitTimeout);
-    clearTimeout(forceExitTimeout); 
+    $log.debug('[CreditsController] destroyed. Clearing timeout %o', vm.timeOutPromise);
+    $timeout.cancel(vm.timeOutPromise); 
   });
 }]);
