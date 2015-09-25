@@ -7,6 +7,8 @@
         <label>&nbsp;</label>
         <input ng-model="query" class="md-accent" style="text-transform: uppercase">
       </md-input-container>
+
+      <md-button md-no-ink class="md-accent md-raised" ng-click="apps.edit()">edit mode</md-button>
     </div> 
   </md-toolbar>
 
@@ -16,7 +18,7 @@
           md-row-height="25:12"
           md-gutter="4px" md-gutter-gt-sm="4px" 
           >
-      <md-grid-tile ng-repeat="app in apps.list | filter:query" style="background-image: url(/{{ ::app.info['preview'] }}); background-size: cover">
+      <md-grid-tile ng-repeat="app in apps.list | filter:query" style="background-image: url(/{{ ::app.info['preview'] }}); background-size: cover" ng-click="apps.spawn('winds')">
         <md-grid-tile-footer><h3>{{ ::app.info.name }}</h3></md-grid-tile-footer>
       </md-grid-tile>
     </md-grid-list>
