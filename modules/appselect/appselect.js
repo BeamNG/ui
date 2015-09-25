@@ -3,6 +3,5 @@ angular.module('beamng.stuff')
 	var vm = this;
 	vm.list = InstalledMods.apps;
 
-	console.log('the app list is:', vm.list);
-	
+	$log.info('the app list:', vm.list);
 }]);

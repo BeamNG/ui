@@ -1,17 +1,30 @@
-<md-content class="startScreen md-padding">
-  <h1>{{data.name}}</h1>
+<md-content style="width: 100%; height:100%; background-color: transparent; color: white;" layout="row" layout-align="center">
+  <div style="height: 100%; width: 500px; background-color: rgba(0, 0, 0, 0.4)" layout="column" class="md-padding">
+    <h2 class="md-title">{{ scenarioStart.data.name }}</h2>
+    <ng-include flex ng-if="scenarioStart.descriptionHref" src="scenarioStart.descriptionHref"></ng-include>
+    <md-button class="md-accent md-raised" md-no-ink ng-click="scenarioStart.play()">Start</md-button>
+  </div>
+</md-content>
+<!-- 
+<div layout="row" class="contentNavScenarioControl" layout-align="center" style="position:absolute;bottom:0;right:0;left:0;top:0;margin:20px;">
 
-  <ng-include ng-if="data.startHTML" src="'/' + data.sourcePath + data.startHTML"></ng-include>
-  <div ng-if="!data.startHTML">{{data.description}}</div>
+  <md-content class="startScreen md-padding" align="left">
 
-  <br/>
-  <br/>
-  
+    <h1>{{scenarioControl.data.name}}</h1>
+
+    <ng-include ng-if="data.startHTML" src="'/' + scenarioControl.data.sourcePath + scenarioControl.data.startHTML"></ng-include>
+    <div ng-if="!scenarioControl.data.startHTML">{{scenarioControl.data.description}}</div>
   <md-divider></md-divider>
 
-  <center>
-  <md-button class="md-raised md-accent" aria-label="" ng-click="play()" style="padding:0px;margin:30px;width:50%;">
-    <ng-md-icon size=100  icon="play_arrow" style="fill:white;"></ng-md-icon>
+
+
+  </md-content>
+</div>
+
+<div style="position:absolute;bottom:20px;right:20px;">
+  <md-button class="md-raised md-accent" aria-label="" ng-click="scenarioControl.play()">
+    <ng-md-icon size=160  icon="play_arrow" style="fill:white;"></ng-md-icon>
   </md-button>
-  </center>
-</md-content>
+</div>
+
+ -->

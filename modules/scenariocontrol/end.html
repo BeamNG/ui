@@ -1,34 +1,13 @@
-
-<md-content class="endScreen md-padding">
-
-  <div layout-align="center">
-    <h1 layout="row" layout-align="center center">Leaderboard</h1>
-    <h2>Time Used:&nbsp;&nbsp;&nbsp;{{time}}</h3>
-    <h2>Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{status}}</h1>
-    <ng-md-icon size=100  icon={{rewardPic}} style="fill:white;"layout="row" layout-align="center"></ng-md-icon>
-    <md-divider></md-divider>
-    <md-divider></md-divider>
+<md-content style="width: 100%; height:100%; background-color: transparent; color: white;" layout="row" layout-align="center" >
+  <div style="height: 100%; width: 500px; background-color: rgba(0, 0, 0, 0.4)" layout="column">
+    <div flex layout="column" layout-align="center center">
+      <span class="material-icons" style="font-size: 5em; color: {{ scenarioEnd.result.color }}">{{ scenarioEnd.result.icon }}</span>
+      <div style="font-size: 1.5em">{{ scenarioEnd.result.message }}</div>
+    </div>
+    <div layout="row" layout-align="space-around center" style="margin-bottom:30px">
+      <span class="material-icons" style="font-size:3em; cursor:pointer; outline: none" ng-click="scenarioEnd.retry()">replay</span>
+      <span class="material-icons" style="font-size:3em; cursor:pointer; outline: none" ng-click="scenarioEnd.freeRoam()">play_arrow</span>
+      <span class="material-icons" style="font-size:3em; cursor:pointer; outline: none" ng-click="scenarioEnd.next()">skip_next</span>
+    </div>
   </div>
-
-  <div layout="row" layout-align="space-around center">
-  <md-button class="md-raised md-accent" aria-label="Retry" ng-click="retry()" style="padding:0px;margin:30px;width:50%;">
-    <ng-md-icon size=50  icon="replay" style="fill:white;"></ng-md-icon>
-  </md-button>
-  <md-button class="md-raised md-accent" aria-label="Next" ng-click="freeRoam()" style="padding:0px;margin:30px;width:50%;">
-    <ng-md-icon size=50  icon="play_arrow" style="fill:white;"></ng-md-icon>
-  </md-button>
-  <md-button class="md-raised md-accent" aria-label="Freeroam" ng-click="next()" style="padding:0px;margin:30px;width:50%;">
-    <ng-md-icon size=50  icon="skip_next" style="fill:white;"></ng-md-icon>
-  </md-button>
-  </div>
-
-<!--
-<md-divider></md-divider>
-
-  <h1>Scenario debug data</h1>
-  <pre>
-    {{data | json}}
-  </pre>
-      
--->
 </md-content>

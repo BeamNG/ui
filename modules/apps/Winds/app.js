@@ -42,7 +42,6 @@ angular.module('beamng.apps')
           , yawDegrees = 0
           , dragging = false
           , auxPt  = svg[0].rootElement.createSVGPoint() // auxiliary svg point to get transform matrix between window and SVG element
-          // , layer1 = svg[0].getElementById('layer1')
           , groupTransform = svg[0].rootElement.getTransformToElement(svg[0].getElementById('layer1'))
           , posInGroup = function (event) { 
               // First convert window coordinates to SVG coordinates by taking the root element's transform matrix

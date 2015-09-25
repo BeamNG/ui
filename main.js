@@ -76,6 +76,7 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
       controller: 'ScenarioSelectController'
     })
 
+
     .state('menu.apps', {
       url: '/apps',
       templateUrl: 'modules/appselect/appselect.html',
@@ -112,7 +113,25 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
     .state('menu.options', {
       url: '/options', 
       templateUrl: 'modules/options2/options2.html',
-      controller: 'Options2Controller'
+      controller: 'Options2Controller as options',
+      resolve: {
+        settings_init: ['$q', '$rootScope', 'bngApi', 'Settings', function ($q, $rootScope, bngApi, Settings) {
+          var d = $q.defer();
+
+          var sc = $rootScope.$on('SettingsChanged', function (event, data) {
+            Settings.values = data.values;
+            Settings.options = data.options;
+
+            d.resolve();
+          });
+
+          bngApi.engineLua('settings.requestState()');
+          return d.promise.then(function () {
+            return sc;
+          });
+
+        }]
+      }
     })
 
     .state('menu.controls', {
@@ -206,6 +225,18 @@ angular.module('BeamNG.ui', ['ngMaterial', 'ngAnimate', 'ui.router', 'beamng.stu
       templateUrl: 'modules/mainmenu/mainmenu.html',
       controller: 'MainMenuController'
     })
+
+  .state('scenario-start', {
+    url: '/scenariocontrol/start',
+    templateUrl: 'modules/scenariocontrol/start.html',
+    controller: 'ScenarioStartController as scenarioStart'
+  })
+
+  .state('scenario-end', {
+    url: '/scenariocontrol/end',
+    templateUrl: 'modules/scenariocontrol/end.html',
+    controller: 'ScenarioEndController as scenarioEnd'
+  })
 
   // Transition to this state is handled by some unknown dark force (Torque?).
   // Until this chanages, keep the url hash to "loading".
@@ -383,20 +414,6 @@ angular.module('beamng.stuff')
 })
 
 
-.controller('LevelSelectController',  ['$location', 'bngApi', 'InstalledMods', function($location,  bngApi,  InstalledMods) {
-    var vm = this;
-    vm.installed = InstalledMods.levels;
-
-    vm.selected = null;
-
-    vm.select = function (level) {
-      vm.selected = level;
-    };
-
-    vm.launch = function() {
-      bngApi.engineScript('startLevel("' + vm.selected.misFilePath + '");');
-    };
-}])
 
 
 
