@@ -25,3 +25,14 @@
 .contentNavVehicleconfig .md-button {
   min-width: 0;
 }
+
+
+
+.vAccordion--default v-pane-header::after, .vAccordion--default v-pane-header::before {
+  left: 0;
+}
+
+.vAccordion--default v-pane-header{
+  padding:5px 0 5px 15px;
+}
+
