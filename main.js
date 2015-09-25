@@ -482,6 +482,13 @@ angular.module('beamng.stuff')
     });
   });
 
+  $scope.$on('MenuHide', function (event, data) {
+    $log.debug('[AppCtrl] received MenuHide w/', data);
+    $scope.$evalAsync(function () {
+      vm.showMenu = false;
+    });
+  });
+
   vm.isPaused = false;
   $scope.$on('updatePhysicsState', function (event, state) {
     if ($state.current.name == 'photomode') return;

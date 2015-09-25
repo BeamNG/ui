@@ -7,7 +7,7 @@ angular.module('beamng.stuff')
   vm.play = function () {
     bngApi.engineLua('scenarios.onScenarioUIReady("play")');
     bngApi.engineLua('extensions.hook("onScenarioRaceCountingDone")');
-    HookManager.trigger('MenuToggle');
+    $scope.$emit('MenuHide', null);
     $state.go('menu');
   };
 
@@ -42,6 +42,7 @@ angular.module('beamng.stuff')
 
   vm.retry = function () {
     bngApi.engineScript('beamNGResetPhysics();')
+    $scope.$emit('MenuHide', null);
     $state.go('menu');
   };
 
@@ -50,6 +51,7 @@ angular.module('beamng.stuff')
   };
 
   vm.freeRoam = function() {
+    $scope.$emit('MenuHide', null);
     $state.go('menu');
   };
 
