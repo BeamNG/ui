@@ -10,7 +10,7 @@
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
-    background: url(local://local/html/v3/modules/loading/mainmenu_loading_01.jpg) no-repeat center center fixed;
+    background: url(modules/loading/mainmenu_loading_01.jpg) no-repeat center center fixed;
     background-size: cover;
     position:absolute;
     z-index: 1;
